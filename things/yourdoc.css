@@ -30,3 +30,9 @@ a {
 a:visited {
   color: #cc0000;
 }
+
+.code {
+  background-color: #000;
+  color: #fff;
+  padding: 5px
+}
