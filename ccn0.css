@@ -88,6 +88,16 @@ body {
   color: #ff0000;
 }
 
+.wcard:active {
+  border-color: #0000ff;
+  color: #0000ff;
+}
+
+.scard:active {
+  border-color: #0000ff;
+  color: #0000ff;
+}
+
 a {
   color: #00ff00;
   text-decoration: none;
@@ -95,6 +105,10 @@ a {
 
 a:hover {
   color: #ff0000;
+}
+
+a:active {
+  color:#0000ff;
 }
 
 abbr {
