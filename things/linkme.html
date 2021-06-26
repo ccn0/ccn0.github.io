@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LinkType</title>
+<style>
+::-moz-selection {
+  color: #fff;
+  background: #000;
+  font-weight:bold;
+}
+
+::selection {
+  color: #fff;
+  background: #000;
+  font-weight:bold;
+}
+
+
+body {
+  margin: 0;
+  background-color: #000;
+}
+
+#glow {
+  box-shadow: 0 4px 8px 0 #d1d1d1, 0 6px 20px 0 #d1d1d1;
+}
+
+.bgtop {
+  background-image: url("https://ccn0.github.io/img/rapper360dark.png");
+  background-repeat: no-repeat;
+  background-position: center top; 
+  height: 360px;
+  float: center;
+  min-width: 140px;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  justify-content: center;
+  color:#fff;
+  text-shadow: 2px 2px 4px #d1d1d1;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  border-radius: 0px 0px 2px 2px;
+  cursor: default;
+}
+
+.link {
+  background-color: #fff;
+  width: 95%;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius:5px;
+  padding: 2px 5px 2px 5px;
+  max-width: 360px;
+  text-align: right;
+  cursor: default;
+  transition: padding 0.2s;
+}
+
+.link:hover {
+  padding: 3px 6px 3px 6px;
+}
+
+.button {
+  padding: 7px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  margin-left:10px;
+  border-radius: 36px;
+  cursor: pointer;
+  transition: background-color 0.2s, padding 0.5s, margin-left 0.5s, color 0.2s;
+}
+
+.button:hover {
+  background-color: #242424;
+  color: #fff;
+  padding:9px;
+  margin-left: 2px;
+}
+
+.button:active {
+  background-color: #d1d1d1;
+  color: #fff;
+}
+</style>
+</head>
+<body>
+<div class="bgtop">
+  <h1>Title</h1>
+</div>
+<div id="glow" class="link">
+  <p>PAge button links to <a class="button" href="#">go</a></p>
+</div>
+<div id="glow" class="link">
+  <p>another one <a class="button" href="#">go</a></p>
+</div>
+</body>
+
+</html>
