@@ -142,3 +142,23 @@ abbr {
   background-color: #fff;
   overflow: visible;
 }
+
+.gameframe {
+  background-color: #000;
+  border-radius: 12px;
+}
+
+.new {
+  border-color: #ffff00;
+}
+
+.warning {
+  color: #ff0000;
+  font-weight: bold;
+  text-decoration: underline;
+  background-color:#000;
+}
+
+.warning:hover {
+  color: #00ffff;
+}
