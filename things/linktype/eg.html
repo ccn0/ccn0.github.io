@@ -43,7 +43,7 @@ body {
   display: flex;
   align-items: center;
   background-size: cover;
-  border-radius: 0px 0px 2px 2px;
+  border-radius: 0px 0px 12px 12px;
   cursor: default;
 }
 
@@ -63,7 +63,7 @@ body {
 }
 
 .link:hover {
-  padding: 3px 6px 3px 6px;
+  padding: 4px 7px 4px 7px;
 }
 
 .button {
@@ -80,7 +80,7 @@ body {
 .button:hover {
   background-color: #242424;
   color: #fff;
-  padding:9px;
+  padding:10px;
   margin-left: 2px;
 }
 
@@ -88,11 +88,48 @@ body {
   background-color: #d1d1d1;
   color: #fff;
 }
+
+.title {
+  font-size: 200%;
+  transition: font-size 0.5s;
+}
+
+.title:hover {
+  font-size: 250%;
+}
+
+abbr {
+  text-decoration: none;
+}
+
+.card {
+  background-color: #fff;
+  width: 95%;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius:5px;
+  padding: 2px 5px 2px 5px;
+  max-width: 360px;
+  text-align: center;
+  cursor: default;
+  transition: padding 0.2s;
+}
+
+.card:hover {
+  padding: 4px 7px 4px 7px;
+}
+
 </style>
 </head>
 <body>
 <div class="bgtop">
-  <h1>Average Viewer</h1>
+  <abbr title="Everything's better in Miami"><h1 class="title">Average Viewer</h1></abbr>
+</div>
+<div id="glow" class="card">
+  <h2>The Rapper in Miami, FL!</h2>
+  <p>"I mean, you just gotta catch the dough when it comes to ya!"<br><br>-Average Viewer</p>
 </div>
 <div id="glow" class="link">
   <p>MUSIC <a class="button" href="https://bandlab.com/aviewer" target="_blank">GO</a></p>
