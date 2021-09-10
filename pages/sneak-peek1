@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CCN0 Blog - Sneak Peek</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg" href="/ccn0.svg">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://ccn0.github.io/ccn0.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="https://ccn0.github.io/blog" style="font-weight:bold;"><span style="color:#ff0000">CC</span><span style="color:#00ff00">N</span><span style="color:#0000ff">0</span> Blog</a>
+</div>
+
+<div class="content">
+  <h1>A sneak peek of CCN0's next game</h1>
+  <p>9/9/2021 by ccn0</p>
+</div>
+
+<div class="content">
+<p>get ready for a game</p><img src="https://ccn0.github.io/img/sneakpeeksw1.png"><p>picture taken at 9/9/21</p><br><br>
+</div>
+
+<div class="footer">
+  <p>MADE BY <a href="https://github.com/ccn0" style="font-weight:bold;text-decoration:none;"><span style="color:#ff0000">CC</span><span style="color:#00ff00">N</span><span style="color:#0000ff">0</a></span></p>
+</div>
+</body>
+</html>
