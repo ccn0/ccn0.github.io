@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Notepad</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+
+.topnav {
+  background-color: #000;
+  height: 25px;
+  padding: 5px
+}
+
+.topnav a {
+  color: #fff;
+  padding: 0px 0px 5px 5px
+}
+
+.topnav a:active {
+  color: #000;
+  background-color: #fff;
+}
+
+a {
+  color: #0000ff;
+  text-decoration: none;
+}
+
+a:active {
+  color: #ff0000;
+}
+
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.con {
+  margin: 0px 0px 0px 5px;
+}
+
+.docarea {
+  float:left;
+  text-align: center;
+}
+
+textarea {
+  float:left;
+  margin: 3px;
+  border-width:2px;
+  border-style:solid;
+  width:300px;
+  height:300px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 100%;
+}
+
+.code {
+  font-family: 'Source Code Pro', monospace;
+}
+
+button {
+  width: 50px;
+  height:50px;
+  background-color:#25c22a;
+  border:none;
+}
+
+button:hover {
+  background-color:#47de4c;
+  cursor: pointer;
+}
+
+button:active {
+  background-color:#1a7a1d;
+}
+</style>
+<script>
+function copy() {
+  let textarea = document.getElementById("textarea");
+  textarea.select();
+  document.execCommand("copy");
+}
+</script>
+</head>
+<body>
+<div class="topnav">
+<i><a href="/things/notepad">CCN0 Notepad</a></i> 
+<a href="/things/notepad/darkmode">Dark</a>
+<a href="/home" style="float:right;" class="code">CCN0</a>
+</div><br><div class="con">
+<div class="docarea"><h2 class="aleft"><i>Notepad</i></h2>
+<textarea id="textarea"></textarea><br>
+<button onclick="copy()"><img src="https://ccn0.github.io/img/copy.svg" width="60%"></button></div>
+</div>
+</body>
+<!-- enjoy -->
+</html>
