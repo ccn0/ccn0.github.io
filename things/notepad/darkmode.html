@@ -100,16 +100,20 @@ function copy() {
 function eraseText() {
     document.getElementById("textarea").value = "";
 }
+
+function asciTempl() {
+    document.getElementById("textarea").value = "░▒▓█▄▀";
+}
 </script>
 </head>
 <body>
 <div class="topnav">
 <i><a href="/things/notepad/darkmode"> CCN0 Notepad</a></i> 
 <a href="/things/notepad">Light</a>
-<a href="/home" style="float:right;" class="code">CCN0</a>
-<a href="http://keep.new">Save to Keep</a><br>
+<a href="/home" style="float:right;" class="code">CCN0</a><br>
 <button onclick="copy()">Copy</button>
 <button onclick="eraseText();">Erase</button> 
+<button onclick="asciTempl();">ASCII</button> 
 </div><br>
 <div class="con">
 <div class="docarea"><h2 class="aleft"><i>Notepad</i></h2>
