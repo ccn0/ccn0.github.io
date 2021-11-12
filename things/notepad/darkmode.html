@@ -8,12 +8,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
 
-body {
-  max-width:100%;
-}
 .topnav {
   background-color: #000;
-  height: 25px;
+  height: auto;
   padding: 5px
 }
 
@@ -40,6 +37,7 @@ body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
   background-color: #212121;
+  max-width:100%;
 }
 
 .con {
@@ -74,33 +72,22 @@ textarea {
 }
 
 button {
-  width: 50px;
-  height:50px;
-  background-color:#25c22a;
-  border:none;
+  background-color:#000;
+  border-style:solid;
+  font-family: 'Open Sans', sans-serif;
+  color:#fff;
+  border-width:2px;
+  border-color:#fff;
 }
 
 button:hover {
-  background-color:#47de4c;
   cursor: pointer;
 }
 
 button:active {
-  background-color:#1a7a1d;
-}
-
-.k {
-  width: 50px;
-  height:50px;
-  background-color:#f5b400;
-}
-
-.k:hover {
-  background-color:#f2c13a;
-}
-
-.k:active {
-  background-color:#bf8f0a;
+  background-color:#fff;
+  color:#000;
+  border-color:#000
 }
 </style>
 <script>
@@ -109,6 +96,10 @@ function copy() {
   textarea.select();
   document.execCommand("copy");
 }
+
+function eraseText() {
+    document.getElementById("textarea").value = "";
+}
 </script>
 </head>
 <body>
@@ -116,10 +107,15 @@ function copy() {
 <i><a href="/things/notepad">CCN0 Notepad</a></i> 
 <a href="/things/notepad">Light</a>
 <a href="/home" style="float:right;" class="code">CCN0</a>
-</div><br><div class="con">
+<a href="http://keep.new">Save to Keep</a><br>
+<button onclick="copy()">Copy</button>
+<button onclick="eraseText();">Erase</button> 
+</div><br>
+<div class="con">
 <div class="docarea"><h2 class="aleft"><i>Notepad</i></h2>
 <textarea id="textarea"></textarea><br>
-<button onclick="copy()"><img src="https://ccn0.github.io/img/copy.svg" width="60%"></button> <button class="k" onclick=" window.open('http://keep.new','_blank')"><img src="https://ccn0.github.io/img/gkeep.svg" width="65%"></button></div><p>
+
+</div><p>
 </div>
 </body>
 
