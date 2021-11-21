@@ -1,0 +1,55 @@
+Red Wallpaper
+Yellow Wallpaper
+Green Wallpaper
+Blue Wallpaper
+Purple Wallpaper
+White Wallpaper
+Black Wallpaper
+Brick Wall
+Bricks
+Brick
+Black/White Tiles
+Black/White Tile
+White Tiles
+White Tile
+Black Tiles
+Black Tile
+Red Sofa
+Yellow Sofa
+Blue Sofa
+Black Sofa
+White Sofa
+Red Armchair
+Yellow Armchair
+Blue Armchair
+Black Armchair
+White Armchair
+Wooden Stool
+White Stool
+Slanted Wooden Stool
+Slanted White Stool
+Wooden Nightstand
+Wooden Desk
+White Nightstand
+White Desk
+Wooden Table
+Wide Wooden Table
+White Table
+Wide White Table
+White/White Lamp
+Yellow/White Lamp2
+White/Black Lamp2
+Yellow/Black Lamp
+White/Red Lamp
+Yellow/Red Lamp
+White/Green Lamp
+Yellow/Green Lamp
+White/Blue Lamp
+Yellow/Blue Lamp
+White/White Floor Lamp
+Black/White Floor Lamp
+White/Black Floor Lamp
+Black/Black Floor Lamp
+Light Circle
+Light Square
+Light Triangle
