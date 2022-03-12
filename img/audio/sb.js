@@ -224,3 +224,33 @@ snd45.src = "https://ccn0.github.io/img/audio/4/spicyaf.mp3";
 function PlaySnd45() {
     snd45.play();
 }
+var snd46 = new Audio();
+snd46.src = "https://ccn0.github.io/img/audio/4/betterbettersam.mp3";
+function PlaySnd46() {
+    snd46.play();
+}
+var snd47 = new Audio();
+snd47.src = "https://ccn0.github.io/img/audio/4/bettertrip.mp3";
+function PlaySnd47() {
+    snd47.play();
+}
+var snd48 = new Audio();
+snd48.src = "https://ccn0.github.io/img/audio/4/clashroyale.mp3";
+function PlaySnd48() {
+    snd48.play();
+}
+var snd49 = new Audio();
+snd49.src = "https://ccn0.github.io/img/audio/4/fartreversed.mp3";
+function PlaySnd49() {
+    snd49.play();
+}
+var snd50 = new Audio();
+snd50.src = "https://ccn0.github.io/img/audio/4/hungerstrike.mp3";
+function PlaySnd50() {
+    snd50.play();
+}
+var snd51 = new Audio();
+snd51.src = "https://ccn0.github.io/img/audio/4/21.mp3";
+function PlaySnd51() {
+    snd51.play();
+}
