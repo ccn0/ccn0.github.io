@@ -1,5 +1,3 @@
-// it was getting hard to maintain
-
 var snd1 = new Audio();
 snd1.src = "https://ccn0.github.io/img/audio/balljaw.mp3";
 function PlaySnd1() {
@@ -190,4 +188,39 @@ var snd38 = new Audio();
 snd38.src = "https://ccn0.github.io/img/audio/3/yourmombelike.mp3";
 function PlaySnd38() {
     snd38.play();
+}
+var snd39 = new Audio();
+snd39.src = "https://ccn0.github.io/img/audio/4/augh.mp3";
+function PlaySnd39() {
+    snd39.play();
+}
+var snd40 = new Audio();
+snd40.src = "https://ccn0.github.io/img/audio/4/cipher.mp3";
+function PlaySnd40() {
+    snd40.play();
+}
+var snd41 = new Audio();
+snd41.src = "https://ccn0.github.io/img/audio/4/daytrip.mp3";
+function PlaySnd41() {
+    snd41.play();
+}
+var snd42 = new Audio();
+snd42.src = "https://ccn0.github.io/img/audio/4/dingdingdingdidingdong.mp3";
+function PlaySnd42() {
+    snd42.play();
+}
+var snd43 = new Audio();
+snd43.src = "https://ccn0.github.io/img/audio/4/felloff.mp3";
+function PlaySnd43() {
+    snd43.play();
+}
+var snd44 = new Audio();
+snd44.src = "https://ccn0.github.io/img/audio/4/ichigoscream.mp3";
+function PlaySnd44() {
+    snd44.play();
+}
+var snd45 = new Audio();
+snd45.src = "https://ccn0.github.io/img/audio/4/spicyaf.mp3";
+function PlaySnd45() {
+    snd45.play();
 }
