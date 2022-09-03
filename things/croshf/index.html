@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>crosh</title>
+    <meta name="description" content="This is a phony crosh to do stuff with. no commands are actually ran.">
+    <link rel="icon" href="favicon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+        html{
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        }
+        ::selection,::-moz-selection {
+            background:#8F0B18;
+        }
+        body{
+            margin:0;
+            font-family: 'Roboto Mono', monospace;
+            background-color: #171717;
+            overflow: -moz-hidden-unscrollable;
+            overflow: hidden;
+            color:#B9B8B8;
+        }
+        *:focus {
+            outline: none;
+        }
+        /*
+        Palette
+
+        F8DF61 crosh> text
+        8F0B18 selected area
+        171717 grey
+        B9B8B8 text
+
+        */
+        textarea{
+            border: none;
+            width:100%;
+            font-size: 115%;
+            height:100vh;
+            background-color:#171717;
+            color:#B9B8B8;
+            cursor:default;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="textarea" spellcheck="false" autocomplete="none" autofocus></textarea>
+    <script>
+        // bull shit text stuff
+        var textarea = $('#textarea');
+        textarea.val('');
+        textarea.val(textarea.val() + '\nWelcome to crosh, the Chrome OS development shell.');
+        textarea.val(textarea.val() + '\n ');
+        textarea.val(textarea.val() + "\nIf you think this is real, it ain't. This is for funnies and shit.");
+        textarea.val(textarea.val() + '\n ');
+        textarea.val(textarea.val() + "\nType 'help me god' for a list of reasons why we won't.");
+        textarea.val(textarea.val() + '\n ');
+        textarea.val(textarea.val() + "\nIf you want to customize this terminal-ish lookin' ass window,");
+        textarea.val(textarea.val() + "\ndo Esc+Refresh+Power or Esc+Refresh+Lock to change the colors 'n shit.");
+        textarea.val(textarea.val() + '\n ');
+        textarea.val(textarea.val() + '\ncrosh>');
+
+        function newLine() {
+            textarea.val(textarea.val() + '\ncrosh>');
+        }
+    </script>
+    <script>
+        // enter key thing
+    document.onkeydown = function(e){
+        e = e || window.event;
+        var key = e.which || e.keyCode;
+        if(key===13){
+            newLine();
+        }
+    }
+      </script>      
+</body>
+</html>
