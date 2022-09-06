@@ -53,7 +53,7 @@ a:active {
     width:fit-content;
 }
 .post p {
-    text-align:center;
+    text-align:justify;
 }
 hr {
     border-style:dashed;
