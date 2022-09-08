@@ -66,3 +66,27 @@ hr {
     border: 2px solid #fff;
     width: fit-content;
 }
+
+/* color tags for sh */
+
+.news { /*guess*/
+    border-left: 8px solid #ff00ff ;
+}
+.fh { /*funny hahas*/
+    border-left: 5px solid #ff5858;
+}
+.np { /*ccnotepad*/
+    border-left: 5px solid rgb(118, 115, 133);
+}
+.cf { /*croshf*/
+    border-left: 5px solid rgb(255, 236, 92);
+}
+.yd { /*yourdoc*/
+    border-left: 5px solid rgb(255, 119, 0);
+}
+.pa { /*presentablecss*/
+    border-left: 5px solid #d096ff;
+}
+.tt { /*toolkit*/
+    border-left: 5px solid rgb(100, 239, 72);
+}
