@@ -117,7 +117,9 @@ hr {
 .tt { /*toolkit*/
     border-left: 5px solid rgb(100, 239, 72);
 }
-
+.impr { /*important tag*/
+    border-left-width: 8px;
+}
 /* List Shits */
 
 ul {
