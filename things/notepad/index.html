@@ -6,35 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CCN0tepad</title>
     <style>
+        * {
+            scrollbar-width: thin;
+            scroll-behavior: smooth;
+        }
+        textarea:focus {
+            outline: rgb(19, 16, 33) dashed 4px;
+        }
         body {
             margin:0;
             font-family: monospace;
-            background-color: #fff;
+            background-color: rgb(236, 234, 230);
             color:#000;
         }
         .topnav {
             background-color: rgb(168, 168, 168);
-            border-bottom: 5px dashed rgb(0, 0, 0);
+            border-bottom: 5px dashed rgb(92, 89, 94);
+            display:inline-flex;
+            height: fit-content;
+            width:100%;
+            margin:0;
+            padding: 15px;
         }
         a {
             color:#000;
             text-decoration: none;
+            background-color: #00000000;
+            border: 5px solid #00000000;
         }
         a:active {
             color:#fff;
             text-decoration: dashed;
         }
-        .dark-mode {
-            background-color: rgb(35, 26, 40);
-            color: white;
+        .darkmode {
+            background-color: rgb(92, 89, 94);
+            color: #fff;
         }
         textarea {
-            background-color: #fff;
-            border: 2px solid rgb(52, 52, 52);
-            color:#000;
-        }
-        .topnav {
-            padding:15px;
+            background-color: #ffffff77;
+            border: 4px solid #e2e2e2;
+            color:rgb(20, 36, 99);
+            width: 75%;
+            height: 400px;
+            min-width: 150px;
+            max-width: 100%;
+            min-height: 50px;
+            font-size: 115%;
         }
         .text {
             padding:25px;
@@ -50,24 +67,55 @@
         }
         .cclink {
             background-color: #000;
-            border: 5px solid #000;
+            outline: 2px solid #000;
+        }
+        .overhid {
+            overflow: hidden;
+        }
+        h2 {
+            margin: 15px;
         }
     </style>
 </head>
 <body>
-    <div class="topnav">
-        <a href="https://ccn0.github.io/things/notepad">CCN0tepad</a> | 
-        <a href="javascript:darkMode()">Toggle Theme</a>
-        <a class="cclink" href="https://github.com/ccn0" style="float: right;"><cr>CC</cr><cg>N</cg><cb>0</cb></a>
+    <div class="overhid">
+        <div class="topnav">
+            <a href="https://ccn0.github.io/things/notepad" style="float:left;"><i>Notepad</i></a>
+            <a style="float:left;">|</a>
+            <a href="javascript:darkMode()" style="float:left;">Theme</a>
+            <a style="float:left;">|</a>
+            <a href="javascript:clearNotes()" style="float:left;">Erase</a>
+            <a style="float:left;">|</a>
+            <a href="javascript:copy()" style="float:left;">Copy</a>
+            <a style="float:left;">|</a>
+            <a href="javascript:elongateNotes()" style="float:left;">Taller</a>
+            <a style="float:left;">|</a>
+            <a class="cclink" href="https://github.com/ccn0" style="float:left;"><b><cr>CC</cr><cg>N</cg><cb>0</cb></b></a>
+        </div>
     </div>
     <div class="text">
-        <textarea id="notepad" spellcheck="false" width="500" height="500"></textarea>
+        <h2><i>Notepad</i></h2>
+        <textarea id="notepad" spellcheck="false"></textarea>
     </div>
     <script>
+        const notepad = document.getElementById('notepad')
+
         function darkMode() {
             var element = document.body;
-            element.classList.toggle("dark-mode");
+            element.classList.toggle("darkmode");
         } 
+        function clearNotes() {
+            notepad.value = "";
+        }
+        function elongateNotes() {
+            var height = notepad.offsetHeight;
+            var newHeight = height + 200;
+            notepad.style.height = newHeight + 'px';
+        }
+        function copy() {
+            notepad.select();
+            document.execCommand("copy");
+        }
     </script>
 </body>
 </html>
