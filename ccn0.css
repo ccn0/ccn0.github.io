@@ -1,13 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
-
 * {
   box-sizing: border-box;
-  font-family: 'Source Code Pro', monospace;
+  font-family: monospace;
 }
 
 body {
   margin: 0;
-  font-family: 'Source Code Pro', monospace;
+  font-family: monospace;
   background-color: #000;
 }
 
@@ -146,6 +144,7 @@ abbr {
 .gameframe {
   background-color: #000;
   border-radius: 12px;
+  padding:5px;
 }
 
 .new {
@@ -156,7 +155,6 @@ abbr {
   color: #ff0000;
   font-weight: bold;
   text-decoration: underline;
-  background-color:#000;
 }
 
 .warning:hover {
