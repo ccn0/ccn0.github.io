@@ -1,1 +1,1 @@
-additional audio files. these *can* be used in the soundboard, but will not be added.
+extra audio files used in wikinoise
