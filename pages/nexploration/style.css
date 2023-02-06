@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    background-color: #000;
+    color:#fff;
+    width: 100%;
+}
+
+.content {
+    text-align: center;
+    margin: 15px 50px;
+}
+
+p {
+    margin: auto;
+    max-width: 50%;
+}
+
+hr {
+    border: 1px solid #fff;
+}
+
+.topnav {
+    color: #fff;
+    height: 10px;
+}
+
+.topnav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px;
+    background-color: #f00;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.topnav a:hover {
+    text-decoration: underline;
+    padding-bottom: 15px;
+    background-color: #f55;
+}
