@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-color: #000;
+    background-color: #0f140d;
     color:#fff;
     width: 100%;
 }
@@ -10,7 +10,7 @@ body {
     margin: 15px 50px;
 }
 
-p {
+p,li {
     margin: auto;
     max-width: 50%;
 }
@@ -21,20 +21,20 @@ hr {
 
 .topnav {
     color: #fff;
-    height: 10px;
+    height: 40px;
+    text-align: center;
 }
 
 .topnav a {
     color: #fff;
     text-decoration: none;
     padding: 5px;
-    background-color: #f00;
+    background-color: #cea2ff;
     border-radius: 6px;
     transition: all 0.2s;
 }
 
 .topnav a:hover {
-    text-decoration: underline;
     padding-bottom: 15px;
-    background-color: #f55;
+    background-color: #7b57a3;
 }
