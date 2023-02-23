@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="/ccn0.svg">
+    <title>CCN0 / Bookmarklets</title>
+    <link rel="stylesheet" href="https://ccn0.github.io/ccn02.css">
+</head>
+<body>
+    <div class="top">
+        <h1>Bookmarklet Collection</h1>
+        <p>Credits given in JavaScript comments. /* fuck you */</p>
+        </div>
+    </div>
+    <hr>
+    <div class="posts">
+        <ul>
+            <!-- 
+            <li title="#">
+                <a href="#">Text</a><br>desc
+            </li>
+            -->
+            <li title="while true {}">
+                <a href='javascript:(function () { var script = document.createElement("script"); script.src="//cdn.jsdelivr.net/npm/eruda"; document.body.appendChild(script); script.onload = function () { eruda.init() } })();"'>
+                    Inspect Element</a><br>Run javascript, edit elements on webpage, and a whole bunch of other things
+            </li>
+            <li title="Porno - Google Search">
+                <a href='javascript:(function(){var title=prompt("New title?");document.title=title})();'>
+                    Rename Tab</a><br>Change the name of the current tab.
+            </li>
+            <li title="free bobux free - Google Search * 2">
+                <a href='javascript:var num=prompt("Enter #%20of%20times%20you%20want%20this%20site%20to%20appear%20in%20your%20history");done=false;x=window.location.href;for%20(var%20i=1;%20i<=num;%20i++){history.pushState(0,%200,%20i==num?x:i.toString());if(i==num){done=true}}if(done===true){alert("History%20Flooding%20Successful!\n%20"+window.location.href+"%20\nNow%20Appears%20In%20Your%20History%20"+num+(num==1?"%20time.":"%20Times.%20\nYoinked%20by%202emk7"))}'>
+                    History Flooder</a><br>Flood your history with the current tab. (up to 1000) (might freeze computer)
+            </li>
+        </ul>
+        <hr>
+        <h3>MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></h3>
+    </div>
+</body>
+</html>
