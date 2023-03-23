@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCN0 Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="grid-container-n">
+        <div class="wide">
+            <h1>CCN0 Portal</h1>
+        </div>
+        <div class="side">
+            <form action="https://google.com/search">
+                <a href="https://google.com">
+                    <img src="https://lh3.googleusercontent.com/d_S5gxu_S1P6NR1gXeMthZeBzkrQMHdI5uvXrpn3nfJuXpCjlqhLQKH_hbOxTHxFhp5WugVOEcl4WDrv9rmKBDOMExhKU5KmmLFQVg">
+                </a>
+                <br>
+                <input id="q" name="q" placeholder="Search on Google" type="text"><br>
+                <input type="submit" value="Search">
+            </form>
+        </div>
+        <div class="main">
+            <h1>Welcome!</h1>
+            <p>
+                This is a portal to many different sites. It also includes Front-end alternatives to websites
+                and other nifty tools. Made to take you to places easily and faster than you'd think.
+            </p>
+        </div>  
+        <div class="right">
+            <h2>Front-Ends (Courtesy of Lunar.ICU)</h2>
+            <ul>
+                <li>
+                    <a href="https://invidious.lunar.icu/feed/popular">Youtube (Invidious)</a>
+                </li>
+                <li>
+                    <a href="https://proxitok.lunar.icu/">TikTok (ProxiTok)</a>
+                </li>
+                <li>
+                    <a href="https://nitter.lunar.icu/">Twitter (Nitter)</a>
+                </li>
+            </ul></div>
+        <div class="long">
+            <p>
+                <b>Common Services</b><br>
+                <a href="https://youtube.com">YouTube</a>
+                <a href="https://google.com">Google</a> 
+                <a href="https://instagram.com">Instagram</a> 
+                <a href="https://facebook.com">Facebook</a> 
+                <a href="https://amazon.com">Amazon</a> 
+                <a href="https://myaccount.mail.com">Mail.com</a> 
+                <a href="https://coolmathgames.com">Cool Math Games</a> 
+                <a href="https://github.com">GitHub</a> 
+                <a href="https://twitter.com">Twitter</a> 
+            </p>
+        </div>
+    </div>
+    <div class="grid-container-n">
+        <div class="side">
+            <h2>Go to a URL</h2>
+            <form id="urlform">
+                <input type="text" name="url" placeholder="https://">
+                <input type="submit" value="Go">
+            </form>
+        </div>
+        <div class="main">
+            <h2>How to get back here:</h2>
+            <ul>
+                <li>
+                    Find a way to the Google homepage,
+                </li>
+                <li>
+                    Search for "Github",
+                </li>
+                <li>
+                    On GitHub, search for "@ccn0",
+                </li>
+                <li>
+                    Go to 'Portal' on my bio.
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <h2>Awesome places</h2>
+            <ul>
+                <li>
+                    <a href="https://github.com/skoolgq/skoolgq.github.io">Skool Links</a>
+                </li>
+                <li>
+                    <a href="https://now.gg">Now.gg Games</a>
+                </li>
+                <li>
+                    <a href="https://poki.com">poki Games</a>
+                </li>
+                <li>
+                    <a href="https://trello.com">Trello</a>
+                </li>
+            </ul>
+        </div>
+        <div class="long">
+            <p>MADE BY CCN0 | This is not an endorsement for these websites.</p>
+        </div>
+    </div>
+    <script>
+        var form = document.getElementById('urlform');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var url = form.elements.url.value;
+            window.location.replace(url);
+        });
+    </script>
+</body>
+</html>
