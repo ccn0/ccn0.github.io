@@ -10,3 +10,5 @@ a github pages website where i do some wacky things. and yes, the homepage is a 
    - i talk about things sometimes.
 - Wikinoise `/things/wikinoise`
    - soundboard (scroll down)
+- Games `/games`
+-  - my games i made
