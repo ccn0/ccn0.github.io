@@ -10,13 +10,49 @@
       color:000;
       font-family:monospace;
       }
+      slist {
+      background-color:#d14c00;
+      color:fff;
+      border-radius:6px;
+      }
+      svar {
+      background-color:#d19200;
+      color:fff;
+      border-radius:6px;
+      }
     </style>
   </head>
   <body>
     <h1>MenuEngine Docs</h1>
     <h2>How to use MenuEngine to it's fullest.</h2>
-    <p><b>Headings:</b>
-       You can create headings by adding "#" at the beginning of a line. e.g. <iscode>#template</iscode>
+    <p>
+       <b>Necessities:</b>
+       You import your own assets, follow the same principals as the templates provided.
+       You must add a semicolon <iscode>;</iscode> at the end of every line.
+       Seperate values using a semicolon and space. e.g. <iscode>#template; center;</iscode>.
+       You should add a <iscode>@~closemenu;</iscode> at the top of your script if your menu is opened via a different method.
+       <br>
+       <b>Headings:</b>
+       You can create headings by adding "#" at the beginning of a line. e.g. <iscode>#template;</iscode>.
+       You can adjust the position using <iscode>left</iscode> <iscode>right</iscode> or <iscode>center</iscode>.
+       e.g. <iscode>#template: center;</iscode>.
+       <br>
+       <b>Buttons:</b>
+       You can create buttons by adding "@" at the beginning of a line. e.g. <iscode>@template;</iscode>.
+       You must add a second value for whatever event you want to broadcast. e.g. <iscode>@template; event;</iscode>
+       The third value is the position of the button, such as <iscode>left</iscode> <iscode>right</iscode> or <iscode>center</iscode>.
+       e.g. <iscode>@template; event; center;</iscode> would create a centered button that broadcasts "event" when clicked.
+       <br>
+       <b>Boolean:</b>
+       You can create switches by adding "&gt;" at the beginning of a line. e.g. <iscode>&gt;template;</iscode>.
+       This first value is the slot in the <slist>~FOR</slist> list. It can only be 1 of 2 values, 0 or 1 (binary).
+       The next value is the position, such as <iscode>left</iscode> <iscode>right</iscode> or <iscode>center</iscode>.
+       e.g. <iscode>&gt;template; center;</iscode> would create a switch centered within the stage.
+       <br>
+       <b>Margin Radius:</b>
+       Add a margin radius using "!" at the beginning of a line. This bounds elements to a certain space.
+       e.g. <iscode>!; 100;</iscode> would space every object within 100 pixels from the center of the stage.
+       <br>
     </p>
   </body>
 </html>
