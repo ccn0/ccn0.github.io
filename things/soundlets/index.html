@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soundlets</title>
+    <style>
+        body {
+            background-color: #222833;
+            color: #f3f3f3;
+            text-align: center;
+            font-family: sans-serif;
+        }
+        a {
+            text-decoration: underline;
+            color: #6aca6a;
+            font-weight: bold;
+        }
+        a:active {
+            color:#1d3e21
+        }
+        p {
+            margin: 20px auto;
+            text-align: center;
+            font-size: 90%;
+        }
+        h1 {
+            font-size: 310%;
+            margin:20px;
+        }
+        .form {
+            border: 2px solid #fff;
+            padding: 20px;
+            max-width: 33%;
+            margin: 10px auto;
+        }
+
+        .madeit {
+            border: 2px solid #fff;
+            padding:10px;
+            margin:10px;
+        }
+
+        .middle {
+            max-width: 33%;
+        }
+
+        button {
+            background-color: #fff;
+            color:#000;
+            border: 2px solid #000;
+            padding:2px 6px;
+            margin-top:4px;
+        }
+
+        button:active {
+            background-color: #919191;
+        }
+
+        input[type=text] {
+            background-color: #fff;
+            color:#000;
+            border: 2px solid #000;
+            padding:2px 6px;
+        }
+
+        cr {
+            color:rgb(255, 72, 72);
+        }
+
+        cg {
+            color:rgb(84, 179, 84);
+        }
+
+        cb {
+            color:rgb(77, 77, 255);
+        }
+    </style>
+</head>
+<body>
+    <h1>Soundlets</h1>
+    <p class="middle">
+        Did you know you can place Javascript code in the bookmark bar?
+        These are called, bookmarklets, which can be used to run arbitrary code on any website,
+        including soundboard sounds.
+    </p>
+    <div class="form">
+        <label for="soundurl">Audio File URL (e.g. .mp3, .wav):</label>
+        <input type="text" name="soundurl" id="soundurl" placeholder="Audio File URL"><br>
+        <button onclick="makeBookmark()">Make Bookmark</button>
+        <div class="madeit">
+            <p>
+            Drag this link into your bookmark bar!<br>
+            Remember to rename it as something else to not get caught.
+            </p>
+            <a id="madebookmarkyes" href="">Soundlet</a>
+        </div>
+    </div>
+    <p>MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></p>
+    <script>
+        function makeBookmark() {
+            var surl = document.getElementById('soundurl').value;
+            var madebookmark = "javascript: var snd = new Audio();snd.src = '" + surl + "';function PlaySnd() {snd.play();}PlaySnd()";
+            document.getElementById('madebookmarkyes').href = madebookmark;
+            alert('Built Bookmarklet!');
+        }
+    </script>
+</body>
+</html>
