@@ -51,6 +51,7 @@
             border: 2px solid #000;
             padding:2px 6px;
             margin-top:4px;
+            cursor: pointer;
         }
 
         button:active {
@@ -85,6 +86,8 @@
         including soundboard sounds.
     </p>
     <div class="form">
+        <label for="names" title="/* like this */">Name (will appear when hover):</label>
+        <input type="text" name="names" id="names" placeholder="Sound Name"><br>
         <label for="soundurl">Audio File URL (e.g. .mp3, .wav):</label>
         <input type="text" name="soundurl" id="soundurl" placeholder="Audio File URL"><br>
         <button onclick="makeBookmark()">Make Bookmark</button>
@@ -100,10 +103,12 @@
     <script>
         function makeBookmark() {
             var surl = document.getElementById('soundurl').value;
-            var madebookmark = "javascript: var snd = new Audio();snd.src = '" + surl + "';function PlaySnd() {snd.play();}PlaySnd()";
+            var names = document.getElementById('names').value;
+            var madebookmark = "javascript: /* " + names +" */ var snd = new Audio();snd.src = '" + surl + "';function PlaySnd() {snd.play();}PlaySnd()";
             document.getElementById('madebookmarkyes').href = madebookmark;
             alert('Built Bookmarklet!');
         }
     </script>
+    <!-- v2 made by ccn0, credit if downloaded as HTML file or hosted on other sites -->
 </body>
 </html>
