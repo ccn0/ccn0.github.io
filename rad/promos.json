@@ -1,10 +1,14 @@
 [
     {
-        "promos":1
+        "promos":2
     },
 
     {
         "number": 1,
         "text": "/rad/whatisthis.html"
+    },
+    {
+        "number":2,
+        "text": "/things/soundlets/"
     }
 ]
