@@ -1,6 +1,6 @@
 [
     {
-        "promos":2
+        "promos":3
     },
 
     {
@@ -10,5 +10,9 @@
     {
         "number": 2,
         "text": "/things/soundlets/"
-    }
+    },
+    {
+        "number": 3,
+        "text": "https://ccn0.itch.io/wordleforever"
+    },
 ]
