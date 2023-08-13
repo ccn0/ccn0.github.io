@@ -50,64 +50,51 @@
     </div>
     <!--====================== ENTERING SCRIPT TERRITORY ===========================-->
     <script>
-        let promosValue;
-        
-        fetch("https://ccn0.github.io/rad/promos.json")
-          .then(response => response.json())
-          .then(jsonData => {
-            const promosObject = jsonData.find(item => item.hasOwnProperty('promos'));
-        
-            if (promosObject) {
-              promosValue = promosObject.promos;
-              console.log("Value of promos:", promosValue);
-        
-              // Continue with the rest of the code that depends on promosValue
-              const rmin = 1;
-              const rmax = promosValue;
-              const randomNum = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
-              const targetNumber = randomNum;
-        
-              function loadRad() {
-                randomNumb();
-                fetchAdNumber(targetNumber);
-              }
-              function randomNumb() {
-                console.log(randomNum);
-              }
-        
-              function setRadUp(link) {
-                document.getElementById('adBox').href = link;
-                document.getElementById('sphoto').src = "rad" + targetNumber + ".jpg";
-                console.log("rad" + targetNumber + ".jpg")
-                randomNumb()
-              }
-        
-              function fetchAdNumber() {
-                fetch("promos.json")
-                  .then(response => response.json())
-                  .then(jsonData => {
-                    const entry = jsonData.find(item => item.number === targetNumber);
-                    if (entry) {
-                      console.log("Text:", entry.text);
-                      const radLinksTo = entry.text;
-                      setRadUp(radLinksTo);
-                    } else {
-                      console.log("Number not found in JSON.");
-                    }
-                  })
-                  .catch(error => {
-                    console.error("Error fetching data:", error);
-                  });
-              }
-        
-              loadRad();
+    fetch("promos.json")
+        .then(response => response.json())
+        .then(jsonData => {
+          const promosObject = jsonData.find(item => item.hasOwnProperty('promos'));
+      
+          if (promosObject) {
+            const promosValue = promosObject.promos;
+            console.log("Value of promos:", promosValue);
+      
+            const rmin = 1;
+            const rmax = promosValue;
+            const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
+      
+            const entry = jsonData.find(item => item.number === targetNumber);
+            if (entry) {
+              console.log("Text:", entry.text);
+              const radLinksTo = entry.text;
+      
+              loadRad(targetNumber, radLinksTo);
             } else {
-              console.log("No 'promos' key found in JSON.");
+              console.log("Number not found in JSON.");
             }
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
+          } else {
+            console.log("No 'promos' key found in JSON.");
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+      
+      function loadRad(targetNumber, radLinksTo) {
+        randomNumb(targetNumber);
+        setRadUp(targetNumber, radLinksTo);
+      }
+      
+      function randomNumb(targetNumber) {
+        console.log(targetNumber);
+      }
+      
+      function setRadUp(targetNumber, link) {
+        document.getElementById('adBox').href = link;
+        document.getElementById('sphoto').src = "rad" + targetNumber + ".jpg";
+        console.log("rad" + targetNumber + ".jpg");
+        randomNumb(targetNumber);
+      }
     </script>
 </body>
 </html>
