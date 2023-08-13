@@ -50,13 +50,9 @@
     </div>
     <!--====================== ENTERING SCRIPT TERRITORY ===========================-->
     <script>
-        const domainName = window.location.hostname;
-        if (domainName !== 'ccn0.github.io') {
-            console.log("Script will not run on this domain.");
-        } else {
         let promosValue;
         
-        fetch("promos.json")
+        fetch("https://ccn0.github.io/rad/promos.json")
           .then(response => response.json())
           .then(jsonData => {
             const promosObject = jsonData.find(item => item.hasOwnProperty('promos'));
@@ -112,7 +108,6 @@
           .catch(error => {
             console.error('Error fetching data:', error);
           });
-        }
     </script>
 </body>
 </html>
