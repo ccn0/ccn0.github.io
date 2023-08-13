@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rAd</title>
+    <meta name="robots" content="noindex">   
+    <style>
+        html {
+            overflow:hidden;
+        }
+        body {
+            background-color: #000;
+            background-image: url(https://ccn0.github.io/img/ccn0.png);
+            background-size:cover;
+            background-position: center;
+            margin:0;
+        }
+        div {
+            position: relative;
+            display: inline-block;
+        }
+        img {
+            margin-top: auto;
+            margin-bottom: auto;
+            max-width: 100%;
+            height: 100vh;
+        }
+        .floating-link {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 0;
+            text-decoration: none;
+            font-size: 50%;
+        }
+        .floating-link:hover {
+            font-size:75%;
+        }
+    </style> 
+</head>
+<body title="This ad is for a page on this site.">
+    <div>
+        <a href="" id="adBox" target="_top">
+            <img src="" id="sphoto">
+        </a>
+            <a href="whatisthis.html" class="floating-link" target="_top">Ad</a>
+    </div>
+    <!--====================== ENTERING SCRIPT TERRITORY ===========================-->
+    <script>
+        const domainName = window.location.hostname;
+        if (domainName !== 'ccn0.github.io') {
+            console.log("Script will not run on this domain.");
+        } else {
+        let promosValue;
+        
+        fetch("promos.json")
+          .then(response => response.json())
+          .then(jsonData => {
+            const promosObject = jsonData.find(item => item.hasOwnProperty('promos'));
+        
+            if (promosObject) {
+              promosValue = promosObject.promos;
+              console.log("Value of promos:", promosValue);
+        
+              // Continue with the rest of the code that depends on promosValue
+              const rmin = 1;
+              const rmax = promosValue;
+              const randomNum = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
+              const targetNumber = randomNum;
+        
+              function loadRad() {
+                randomNumb();
+                fetchAdNumber(targetNumber);
+              }
+              function randomNumb() {
+                console.log(randomNum);
+              }
+        
+              function setRadUp(link) {
+                document.getElementById('adBox').href = link;
+                document.getElementById('sphoto').src = "rad" + targetNumber + ".jpg";
+                console.log("rad" + targetNumber + ".jpg")
+                randomNumb()
+              }
+        
+              function fetchAdNumber() {
+                fetch("promos.json")
+                  .then(response => response.json())
+                  .then(jsonData => {
+                    const entry = jsonData.find(item => item.number === targetNumber);
+                    if (entry) {
+                      console.log("Text:", entry.text);
+                      const radLinksTo = entry.text;
+                      setRadUp(radLinksTo);
+                    } else {
+                      console.log("Number not found in JSON.");
+                    }
+                  })
+                  .catch(error => {
+                    console.error("Error fetching data:", error);
+                  });
+              }
+        
+              loadRad();
+            } else {
+              console.log("No 'promos' key found in JSON.");
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+        }
+    </script>
+</body>
+</html>
