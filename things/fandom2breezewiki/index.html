@@ -43,7 +43,7 @@
     <script>
         function buildLink() {
             var customUrl = document.getElementById('surl').value;
-            var builtLink = "javascript: /* " + customUrl + " version */ var fullHostname = window.location.hostname;var hostnameParts = fullHostname.split('.');var subdomain = hostnameParts.length >= 2 ? hostnameParts[0] : '';var fullUrl = window.location.href;var urlParts = fullUrl.split('/');var lastSegment = urlParts[urlParts.length - 1];var breezeUrl = '" + customUrl + "' + subdomain + '/wiki/' + lastSegment;window.location = breezeUrl;";
+            var builtLink = "javascript: /* " + customUrl + " version */ var fullHostname = window.location.hostname;var hostnameParts = fullHostname.split('.');var subdomain = hostnameParts.length >= 2 ? hostnameParts[0] : '';var fullUrl = window.location.href;var urlParts = fullUrl.split('/');var lastSegment = urlParts[urlParts.length - 1];var breezeUrl = 'https://" + customUrl + "/' + subdomain + '/wiki/' + lastSegment;window.location = breezeUrl;";
             document.getElementById('customLink').href = builtLink.toString();
             alert('Built Bookmarklet!');
         }
