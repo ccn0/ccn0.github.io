@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soundlets Plus</title>
+    <style>
+        body {
+            background-color: #222833;
+            color: #f3f3f3;
+            text-align: center;
+            font-family: sans-serif;
+            overflow: wrap;
+        }
+        .boardarea a {
+            text-decoration: underline;
+            color: #6aca6a;
+            background-color: #1d3e21;
+            font-weight: bold;
+            padding:2px 5px;
+            margin:3px;
+            display: inline-flex;
+            overflow: wrap;
+        }
+        .boardarea a:active {
+            color:#1d3e21;
+            background-color: #6aca6a;
+        }
+        p {
+            margin: -20px 0 20px 0;
+            text-align: center;
+            font-size: 90%;
+        }
+        h1 {
+            font-size: 310%;
+            margin:20px;
+        }
+        .editbar {
+            border-bottom: 2px solid #fff;
+            padding: 0 5px 15px 5px;
+        }
+        span {
+            font-size: 150%;
+            font-weight: bold;
+        }
+        .boardarea {
+            padding:10px;
+        }
+        button {
+            cursor:pointer;
+            background-color: #f3f3f3;
+            border:2px solid #03060b;
+            color:#03060b;
+            padding:3px 6px;
+            font-family: sans-serif;
+        }
+        button:active {
+            background-color: #03060b;
+            border:2px solid #f3f3f3;
+            color:#f3f3f3
+        }
+        input[type=text] {
+            background-color: #f3f3f3;
+            border:2px solid #03060b;
+            color:#03060b;
+            padding:3px 6px;
+            font-family: sans-serif;
+        }
+        cr {
+            color:rgb(255, 72, 72);
+        }
+        cg {
+            color:rgb(84, 179, 84);
+        }
+        cb {
+            color:rgb(77, 77, 255);
+        }
+        .bottom {
+            overflow: hidden;
+            background-color: #00000056;
+            color:#fff;
+            text-align: center;
+            padding:15px;
+            cursor:default;
+            border-radius: 6px;
+            position:fixed;
+            bottom:0;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Soundlets+</h1>
+    <p>Create your own soundboard.</p>
+    <div class="editbar">
+        <input type="text" id="nameOfSound" placeholder="Name">
+        <input type="text" id="urlOfSound" placeholder="Audio URL">
+        <button onclick="addSoundNode()">Add</button>
+        <span>|</span>
+        <button onclick="addDividerNode()">Add Divider</button>
+        <button onclick="addBreakNode()">Add Break</button>
+        <span>|</span>
+        <button onclick="undoNode()">Undo</button>
+        <span>|</span>
+        <button onclick="convertToJson()">Download</button>
+        <button onclick="loadFromJson()">Load Board</button>
+    </div>
+    <div class="boardarea" id="boardArea">
+    </div>
+    <p class="bottom">MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></p>
+    <script>
+        function addSoundNode() {
+            var nameos = document.getElementById("nameOfSound").value;
+            var urlos = document.getElementById("urlOfSound").value;
+
+            var linkContainers = document.getElementById("boardArea");
+            var linkElements = document.createElement("a");
+            linkElements.href = "javascript: var snd = new Audio();snd.src = '" + urlos + "';function PlaySnd() {snd.play();}PlaySnd()";
+            linkElements.textContent = nameos;
+
+            linkContainers.appendChild(linkElements);
+        }
+        function addDividerNode() {
+            var separatorElement = document.createElement("span");
+            separatorElement.textContent = "|";
+
+            var contentContainer = document.getElementById("boardArea");
+            contentContainer.appendChild(separatorElement);
+        }
+        function addBreakNode() {
+            var breakElement = document.createElement("br");
+
+            var contentContainer = document.getElementById("boardArea");
+            contentContainer.appendChild(breakElement);
+        }
+        function undoNode() {
+            var contentContainer = document.getElementById("boardArea");
+            
+            // Check if there is a last child (separator) to remove
+            if (contentContainer.lastChild) {
+                contentContainer.removeChild(contentContainer.lastChild);
+            }
+        }
+        // JSON TERRITORY
+        
+        function downloadFile(data, filename) {
+            var blob = new Blob([data], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function convertToJson() {
+            var jsonOutput = [];
+            var container = document.getElementById('boardArea');
+
+            for (var i = 0; i < container.childNodes.length; i++) {
+                var node = container.childNodes[i];
+
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    if (node.tagName === 'A') {
+                        var linkObject = {
+                            "name": node.textContent,
+                            "url": node.getAttribute('href')
+                        };
+                        jsonOutput.push(linkObject);
+                    } else if (node.tagName === 'SPAN') {
+                        var dividerObject = {
+                            "divider": "line"
+                        };
+                        jsonOutput.push(dividerObject);
+                    } else if (node.tagName === 'BR') {
+                        var breakObject = {
+                            "divider": "break"
+                        };
+                        jsonOutput.push(breakObject);
+                    }
+                }
+            }
+
+            var jsonString = JSON.stringify(jsonOutput, null, 2);
+            downloadFile(jsonString, 'soundboard.json');
+        }
+
+        // load
+        
+        function loadFromJson() {
+            var fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'application/json';
+
+            fileInput.addEventListener('change', function(event) {
+                var file = event.target.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var jsonData = JSON.parse(e.target.result);
+                        generateNodesFromJson(jsonData);
+                    };
+                    reader.readAsText(file);
+                }
+            });
+
+            fileInput.click();
+        }
+
+        function generateNodesFromJson(jsonData) {
+            var contentContainer = document.getElementById('boardArea');
+            contentContainer.innerHTML = '';
+
+            jsonData.forEach(function(item) {
+                if (item.hasOwnProperty('name') && item.hasOwnProperty('url')) {
+                    var linkElement = document.createElement('a');
+                    linkElement.href = item.url;
+                    linkElement.textContent = item.name;
+                    contentContainer.appendChild(linkElement);
+                } else if (item.hasOwnProperty('divider') && item.divider === 'line') {
+                    var spanElement = document.createElement('span');
+                    spanElement.textContent = '|';
+                    contentContainer.appendChild(spanElement);
+                } else if (item.hasOwnProperty('divider') && item.divider === 'break') {
+                    contentContainer.appendChild(document.createElement('br'));
+                }
+            });
+        }
+    </script>
+</body>
+</html>
