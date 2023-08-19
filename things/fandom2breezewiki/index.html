@@ -34,5 +34,19 @@
     </p>
     <a href="javascript: /* breezewiki.com version */ var fullHostname = window.location.hostname;var hostnameParts = fullHostname.split('.');var subdomain = hostnameParts.length >= 2 ? hostnameParts[0] : '';var fullUrl = window.location.href;var urlParts = fullUrl.split('/');var lastSegment = urlParts[urlParts.length - 1];var breezeUrl = 'https://breezewiki.com/' + subdomain + '/wiki/' + lastSegment;window.location = breezeUrl;">Fandom2Breezewiki</a>
     <a href="javascript: /* antifandom.com version */ var fullHostname = window.location.hostname;var hostnameParts = fullHostname.split('.');var subdomain = hostnameParts.length >= 2 ? hostnameParts[0] : '';var fullUrl = window.location.href;var urlParts = fullUrl.split('/');var lastSegment = urlParts[urlParts.length - 1];var breezeUrl = 'https://antifandom.com/' + subdomain + '/wiki/' + lastSegment;window.location = breezeUrl;">Fandom2Antifandom</a>
+    <p>Or, use a custom domain.</p>
+    <label for="urlToUse">BreezeWiki Instance:</label>
+    <input type="text" value="breezewiki.com" id="surl">
+    <button onclick="buildLink()">Build</button><br><br>
+    <p>Drag this after building:</p>
+    <a href="" id="customLink">Fandom2Custom</a>
+    <script>
+        function buildLink() {
+            var customUrl = document.getElementById('surl').value;
+            var builtLink = "javascript: /* " + customUrl + " version */ var fullHostname = window.location.hostname;var hostnameParts = fullHostname.split('.');var subdomain = hostnameParts.length >= 2 ? hostnameParts[0] : '';var fullUrl = window.location.href;var urlParts = fullUrl.split('/');var lastSegment = urlParts[urlParts.length - 1];var breezeUrl = '" + customUrl + "' + subdomain + '/wiki/' + lastSegment;window.location = breezeUrl;";
+            document.getElementById('customLink').href = builtLink.toString();
+            alert('Built Bookmarklet!');
+        }
+    </script>
 </body>
 </html>
