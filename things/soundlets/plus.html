@@ -15,12 +15,14 @@
         .boardarea a {
             text-decoration: underline;
             color: #6aca6a;
-            background-color: #1d3e21;
+            background-color: #131513;
             font-weight: bold;
-            padding:2px 5px;
+            padding:6px 10px;
             margin:3px;
             display: inline-flex;
             overflow: wrap;
+            border:2px solid #1b261d;
+            border-radius: 6px;
         }
         .boardarea a:active {
             color:#1d3e21;
@@ -36,8 +38,13 @@
             margin:20px;
         }
         .editbar {
+            margin-top: 5px;
             border-bottom: 2px solid #fff;
-            padding: 0 5px 15px 5px;
+            padding: 0 5px 5px 5px;
+            background-color: #747a85;
+            transition: all 0.2s;
+            border-radius: 8px 8px 0 0 ;
+            overflow: hidden;
         }
         span {
             font-size: 150%;
@@ -88,12 +95,34 @@
             margin-left: auto;
             margin-right: auto;
         }
+        .viewbar {
+            height: 5px;
+            background-color: #747a85;
+            transition: all 0.2s;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .viewbar:hover {
+            height:25px;
+        }
+        .viewbar button {
+            font-size: 70%;
+            padding:1px 3px;
+            height:20px;
+        }
+        input[type=number] {
+            height:20px;
+            width: 50px;
+        }
     </style>
 </head>
 <body>
     <h1>Soundlets+</h1>
     <p>Create your own soundboard.</p>
-    <div class="editbar">
+    <div class="viewbar" id="viewbar">
+        <button onclick="hideEditbar()" id="collapse">Collapse</button>
+    </div>
+    <div class="editbar" id="editbar">
         <input type="text" id="nameOfSound" placeholder="Name">
         <input type="text" id="urlOfSound" placeholder="Audio URL">
         <button onclick="addSoundNode()">Add</button>
@@ -103,6 +132,7 @@
         <span>|</span>
         <button onclick="undoNode()">Undo</button>
         <span>|</span>
+        <button onclick="copyLink()">Copy Link To Board</button>
         <button onclick="convertToJson()">Download</button>
         <button onclick="loadFromJson()">Load Board</button>
     </div>
@@ -229,6 +259,86 @@
                     contentContainer.appendChild(document.createElement('br'));
                 }
             });
+        }
+        function getJsonFromUrl() {
+            var fragment = window.location.hash;
+            fragment = fragment.substring(1);
+            fragment = decodeURIComponent(fragment)
+            console.log(fragment);
+            try {
+                var jsonData = JSON.parse(fragment);
+                generateNodesFromJson(jsonData);
+                hideEditbar();
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+        function copyLink() {
+            var jsonOutput = [];
+            var container = document.getElementById('boardArea');
+
+            for (var i = 0; i < container.childNodes.length; i++) {
+                var node = container.childNodes[i];
+
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    if (node.tagName === 'A') {
+                        var linkObject = {
+                            "name": node.textContent,
+                            "url": node.getAttribute('href')
+                        };
+                        jsonOutput.push(linkObject);
+                    } else if (node.tagName === 'SPAN') {
+                        var dividerObject = {
+                            "divider": "line"
+                        };
+                        jsonOutput.push(dividerObject);
+                    } else if (node.tagName === 'BR') {
+                        var breakObject = {
+                            "divider": "break"
+                        };
+                        jsonOutput.push(breakObject);
+                    }
+                }
+            }
+
+            var jsonString = JSON.stringify(jsonOutput, null, 2);
+            var linkWithJSON = window.location.origin + window.location.pathname + "#" + jsonString;
+            console.log(linkWithJSON);
+            copyToClipboard(linkWithJSON);
+        }
+        function copyToClipboard(text) {
+            // Create a temporary input element
+            var tempInput = document.createElement("input");
+            document.body.appendChild(tempInput);
+            
+            // Set the input value to the text you want to copy
+            tempInput.value = text;
+            
+            // Select the text inside the input
+            tempInput.select();
+            
+            // Copy the selected text to the clipboard
+            document.execCommand("copy");
+            
+            // Remove the temporary input element
+            document.body.removeChild(tempInput);
+        }
+        function hideEditbar() {
+            document.getElementById('editbar').style = "display:none";
+            document.getElementById('collapse').textContent = "Edit Menu";
+            document.getElementById('collapse').onclick = showEditbar;
+        }
+        function showEditbar() {
+            document.getElementById('editbar').style = "display:block";
+            document.getElementById('collapse').textContent = "Collapse";
+            document.getElementById('collapse').onclick = hideEditbar;
+        }
+
+        if (window.location.hash) {
+            getJsonFromUrl();
+        } else {
+            console.log("no hash, no data to collect")
         }
     </script>
 </body>
