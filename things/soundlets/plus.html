@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- version 1.2 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soundlets Plus</title>
@@ -13,7 +14,7 @@
             overflow: wrap;
         }
         .boardarea a {
-            text-decoration: underline;
+            text-decoration: none;
             color: #6aca6a;
             background-color: #131513;
             font-weight: bold;
@@ -72,6 +73,15 @@
             color:#03060b;
             padding:3px 6px;
             font-family: sans-serif;
+            max-width: 80px;
+        }
+        input[type=number] {
+            background-color: #f3f3f3;
+            border:2px solid #03060b;
+            color:#03060b;
+            padding:3px 6px;
+            font-family: sans-serif;
+            max-width: 60px;
         }
         cr {
             color:rgb(255, 72, 72);
@@ -110,10 +120,6 @@
             padding:1px 3px;
             height:20px;
         }
-        input[type=number] {
-            height:20px;
-            width: 50px;
-        }
     </style>
 </head>
 <body>
@@ -125,12 +131,14 @@
     <div class="editbar" id="editbar">
         <input type="text" id="nameOfSound" placeholder="Name">
         <input type="text" id="urlOfSound" placeholder="Audio URL">
+        <input type="number" id="speedOfSound" placeholder="Speed">
         <button onclick="addSoundNode()">Add</button>
         <span>|</span>
         <button onclick="addDividerNode()">Add Divider</button>
         <button onclick="addBreakNode()">Add Break</button>
         <span>|</span>
         <button onclick="undoNode()">Undo</button>
+        <button onclick="clearNodes()">Clear Board</button>
         <span>|</span>
         <button onclick="copyLink()">Copy Link To Board</button>
         <button onclick="convertToJson()">Download</button>
@@ -143,11 +151,24 @@
         function addSoundNode() {
             var nameos = document.getElementById("nameOfSound").value;
             var urlos = document.getElementById("urlOfSound").value;
+            var speedos = document.getElementById("speedOfSound").value;
 
             var linkContainers = document.getElementById("boardArea");
             var linkElements = document.createElement("a");
-            linkElements.href = "javascript: var snd = new Audio();snd.src = '" + urlos + "';function PlaySnd() {snd.play();}PlaySnd()";
-            linkElements.textContent = nameos;
+            if (!urlos) { // if no url file
+                alert("Enter an Audio File's URL");
+                throw new Error('No Audio File');
+            } else if (!speedos) { //nospeed?
+                linkElements.href = "javascript: var snd = new Audio();snd.src = '" + urlos + "'; snd.playbackRate = 1; function PlaySnd() {snd.play();}PlaySnd()";
+            } else {
+                linkElements.href = "javascript: var snd = new Audio();snd.src = '" + urlos + "'; snd.playbackRate = " + speedos + "; function PlaySnd() {snd.play();}PlaySnd()";
+
+            }
+            if (!nameos) { // if no name
+                linkElements.textContent = "Sound";
+            } else {
+                linkElements.textContent = nameos;
+            }
 
             linkContainers.appendChild(linkElements);
         }
@@ -166,10 +187,20 @@
         }
         function undoNode() {
             var contentContainer = document.getElementById("boardArea");
-            
-            // Check if there is a last child (separator) to remove
+
             if (contentContainer.lastChild) {
                 contentContainer.removeChild(contentContainer.lastChild);
+            }
+        }
+
+        function clearNodes() {
+            const rootNode = document.getElementById("boardArea");
+            const usersChoice = window.confirm("Are you sure you want to clear the board?");
+
+            if (usersChoice) {
+                while (rootNode.firstChild) {
+                    rootNode.removeChild(rootNode.firstChild);
+                }
             }
         }
         // JSON TERRITORY
@@ -306,22 +337,14 @@
             var linkWithJSON = window.location.origin + window.location.pathname + "#" + jsonString;
             console.log(linkWithJSON);
             copyToClipboard(linkWithJSON);
+            alert('Link copied!')
         }
         function copyToClipboard(text) {
-            // Create a temporary input element
             var tempInput = document.createElement("input");
             document.body.appendChild(tempInput);
-            
-            // Set the input value to the text you want to copy
             tempInput.value = text;
-            
-            // Select the text inside the input
             tempInput.select();
-            
-            // Copy the selected text to the clipboard
             document.execCommand("copy");
-            
-            // Remove the temporary input element
             document.body.removeChild(tempInput);
         }
         function hideEditbar() {
