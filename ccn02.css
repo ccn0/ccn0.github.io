@@ -1,12 +1,15 @@
 /*
 
-blog.css
+not implanted yet!
+beta ccn0.css update
+no peeping no pls pls plsssssss :((((((((((((((((((((
 
 */
 body {
     margin:0;
     background-color:#000;
     color:#fff;
+    font-family: monospace;
 }
 ::selection {
     background:#fff;
@@ -88,6 +91,24 @@ hr {
     transition: padding 0.2s;
 }
 
+cr {
+    color:#f00
+}
+cg {
+    color:#0f0
+}
+cb {
+    color:#00f
+}
+cy {
+    color:#ff0
+}
+cc {
+    color:#0ff
+}
+cm {
+    color:#f0f
+}
 /* color tags for sh */
 
 .news { /*guess*/
@@ -111,14 +132,8 @@ hr {
 .tt { /*toolkit*/
     border-left: 5px solid rgb(100, 239, 72);
 }
-.wn { /*wikinoise*/
-    border-left: 5px solid rgb(105, 105, 105);
-}
 .impr { /*important*/
     border-left-width: 8px;
-}
-.th { /*things*/
-    border-left: 8px solid #d7d7d7;
 }
 /* List Shits */
 

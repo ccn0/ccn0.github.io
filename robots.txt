@@ -1,0 +1,9 @@
+# bro why
+
+User-agent: *
+Disallow: /wiki/
+Disallow: /game/
+Disallow: /quick/
+Disallow: /daily/
+Disallow: /img/
+Disallow: /info/

@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <style>
+      body {
+      background-color:#000;
+      color:#fff;
+      }
+      iscode {
+      background-color:#fff;
+      color:000;
+      font-family:monospace;
+      padding:5px;
+      }
+      slist {
+      background-color:#d14c00;
+      color:fff;
+      border-radius:6px;
+      padding:5px;
+      }
+      svar {
+      background-color:#d19200;
+      color:fff;
+      border-radius:6px;
+      padding:5px;
+      }
+      nolonger {
+      text-decoration:line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>MenuEngine Docs</h1>
+    <h2>How to use MenuEngine to it's fullest.</h2>
+    <p>
+       Hovering over bold text shows you more information.
+    </p>
+    <p>
+       <b title="all versions">Necessities:</b>
+       You must add a semicolon <iscode>;</iscode> at the end of every line.
+       Seperate values using a semicolon and space. e.g. <iscode>#template; center;</iscode>.
+       You should add a <iscode>@~closemenu;</iscode> at the top of your script if your menu is opened via a different method.
+       <br><br>
+       <b title="all versions">Assets:</b>
+       The height of graphics should be about 28 pixels, know that graphics will be scaled up by 133%.
+       Button heights should be about 28 pixels.
+       Labels for switches and sliders should be about 22 pixels tall.
+       <br><br>
+       <b title="all versions">Graphics:</b>
+       You can create graphics by adding "#" at the beginning of a line. e.g. <iscode>#template;</iscode>.
+       You can adjust the position using <iscode>left</iscode> <iscode>right</iscode> or <iscode>center</iscode>.
+       e.g. <iscode>#template: center;</iscode>. Graphics can also be used as headers.
+       <br><br>
+       <b title="all versions">Buttons:</b>
+       You can create buttons by adding "@" at the beginning of a line. e.g. <iscode>@template;</iscode>.
+       You must add a second value for whatever event you want to broadcast. e.g. <iscode>@template; event;</iscode>
+       The third value is the position of the button, such as <iscode>left</iscode> <iscode>right</iscode> or <iscode>center</iscode>.
+       e.g. <iscode>@template; event; center;</iscode> would create a centered button that broadcasts "event" when clicked.
+       <br><br>
+       <b title="all versions">Boolean:</b>
+       You can create switches by adding "&gt;" at the beginning of a line. e.g. <iscode>&gt;template;</iscode>.
+       This first value is the slot in the <slist>~FOR</slist> list. It can only be 1 of 2 values, 0 or 1 (binary).
+       The next value is the position, such as <iscode>left</iscode> <iscode>right</iscode> or <iscode>center</iscode>.
+       e.g. <iscode>&gt;template; center;</iscode> would create a switch centered within the stage.
+       <br><br>
+       <nolonger>
+       <b title="1.11 below">Margin Radius:</b>
+       Add a margin radius using "!" at the beginning of a line. This bounds elements to a certain space.
+       e.g. <iscode>!; 100;</iscode> would space every object within 100 pixels from the center of the stage.
+       Just know that sprites may overlap beyond the margin.
+       </nolonger>
+       This was removed with the 1.12 beta.
+       <br><br>
+    </p>
+  </body>
+</html>
