@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- version 1.3 | made by ccn0 https://github.com/ccn0 -->
 <head>
-    <!-- version 1.2   -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soundlets Plus</title>
@@ -115,10 +115,34 @@
         .viewbar:hover {
             height:25px;
         }
+        .viewbar > * {
+            display:none;
+        }
+        .viewbar:hover > * {
+            display: inline-block;
+        }
         .viewbar button {
             font-size: 70%;
             padding:1px 3px;
             height:20px;
+        }
+        .viewbar input {
+            font-size: 70%;
+            margin:0;
+            height:10px;
+        }
+        .editbar iframe {
+            border:1px solid #fff;
+            margin:10px 0 0 0;
+            height:40px;
+            padding:0;
+            width:100%;
+        }
+        #addonSection {
+            display: none;
+        }
+        #importAddons {
+            display: none;
         }
     </style>
 </head>
@@ -143,11 +167,14 @@
         <button onclick="copyLink()">Copy Link To Board</button>
         <button onclick="convertToJson()">Download</button>
         <button onclick="loadFromJson()">Load Board</button>
+        <div id="addonSection">
+        </div>
     </div>
     <div class="boardarea" id="boardArea">
     </div>
     <p class="bottom">MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></p>
     <script>
+        // everything below works so dont fuck this up
         function addSoundNode() {
             var nameos = document.getElementById("nameOfSound").value;
             var urlos = document.getElementById("urlOfSound").value;
@@ -158,7 +185,7 @@
             if (!urlos) { // if no url file
                 alert("Enter an Audio File's URL");
                 throw new Error('No Audio File');
-            } else if (!speedos) { //nospeed?
+            } else if (!speedos) {
                 linkElements.href = "javascript: var snd = new Audio();snd.src = '" + urlos + "'; snd.playbackRate = 1; function PlaySnd() {snd.play();}PlaySnd()";
             } else {
                 linkElements.href = "javascript: var snd = new Audio();snd.src = '" + urlos + "'; snd.playbackRate = " + speedos + "; function PlaySnd() {snd.play();}PlaySnd()";
@@ -187,7 +214,8 @@
         }
         function undoNode() {
             var contentContainer = document.getElementById("boardArea");
-
+            
+            // Check if there is a last child (separator) to remove
             if (contentContainer.lastChild) {
                 contentContainer.removeChild(contentContainer.lastChild);
             }
@@ -334,17 +362,27 @@
             }
 
             var jsonString = JSON.stringify(jsonOutput, null, 2);
-            var linkWithJSON = window.location.origin + window.location.pathname + "#" + jsonString;
+            var jsonEncoded = encodeURIComponent(jsonString)
+            var linkWithJSON = window.location.origin + window.location.pathname + "#" + jsonEncoded;
             console.log(linkWithJSON);
             copyToClipboard(linkWithJSON);
-            alert('Link copied!')
+            alert('Link copied!');
         }
         function copyToClipboard(text) {
+            // Create a temporary input element
             var tempInput = document.createElement("input");
             document.body.appendChild(tempInput);
+            
+            // Set the input value to the text you want to copy
             tempInput.value = text;
+            
+            // Select the text inside the input
             tempInput.select();
+            
+            // Copy the selected text to the clipboard
             document.execCommand("copy");
+            
+            // Remove the temporary input element
             document.body.removeChild(tempInput);
         }
         function hideEditbar() {
@@ -360,8 +398,6 @@
 
         if (window.location.hash) {
             getJsonFromUrl();
-        } else {
-            console.log("no hash, no data to collect")
         }
     </script>
 </body>
