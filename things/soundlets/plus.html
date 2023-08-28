@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- version 1.3 | made by ccn0 https://github.com/ccn0 -->
+<!-- version 1.4 | made by ccn0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -245,7 +245,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-
+        
         function convertToJson() {
             var jsonOutput = [];
             var container = document.getElementById('boardArea');
@@ -255,9 +255,20 @@
 
                 if (node.nodeType === Node.ELEMENT_NODE) {
                     if (node.tagName === 'A') {
+                        const script = node.getAttribute("href");
+
+                        const urlRegex = /snd\.src = '([^']+)';/;
+                        const urlMatch = script.match(urlRegex);
+                        const audioURL = urlMatch && urlMatch[1];
+
+                        const playbackRateRegex = /snd\.playbackRate = ([^;]+);/;
+                        const playbackRateMatch = script.match(playbackRateRegex);
+                        const playbackRate = playbackRateMatch && parseFloat(playbackRateMatch[1]);
+
                         var linkObject = {
                             "name": node.textContent,
-                            "url": node.getAttribute('href')
+                            "url": audioURL,
+                            "speed": playbackRate
                         };
                         jsonOutput.push(linkObject);
                     } else if (node.tagName === 'SPAN') {
@@ -277,6 +288,7 @@
             var jsonString = JSON.stringify(jsonOutput, null, 2);
             downloadFile(jsonString, 'soundboard.json');
         }
+        
 
         // load
         
@@ -299,7 +311,7 @@
 
             fileInput.click();
         }
-
+        
         function generateNodesFromJson(jsonData) {
             var contentContainer = document.getElementById('boardArea');
             contentContainer.innerHTML = '';
@@ -307,7 +319,12 @@
             jsonData.forEach(function(item) {
                 if (item.hasOwnProperty('name') && item.hasOwnProperty('url')) {
                     var linkElement = document.createElement('a');
-                    linkElement.href = item.url;
+                    if (item.speed) {
+                        linkElement.href = "javascript: var snd = new Audio();snd.src = '" + item.url + "'; snd.playbackRate = " + item.speed + "; function PlaySnd() {snd.play();}PlaySnd()";
+                    } else {
+                        linkElement.href = "javascript: var snd = new Audio();snd.src = '" + item.url + "'; snd.playbackRate = 1; function PlaySnd() {snd.play();}PlaySnd()";
+
+                    }
                     linkElement.textContent = item.name;
                     contentContainer.appendChild(linkElement);
                 } else if (item.hasOwnProperty('divider') && item.divider === 'line') {
@@ -319,6 +336,7 @@
                 }
             });
         }
+        
         function getJsonFromUrl() {
             var fragment = window.location.hash;
             fragment = fragment.substring(1);
@@ -342,9 +360,20 @@
 
                 if (node.nodeType === Node.ELEMENT_NODE) {
                     if (node.tagName === 'A') {
+                        const script = node.getAttribute("href");
+
+                        const urlRegex = /snd\.src = '([^']+)';/;
+                        const urlMatch = script.match(urlRegex);
+                        const audioURL = urlMatch && urlMatch[1];
+
+                        const playbackRateRegex = /snd\.playbackRate = ([^;]+);/;
+                        const playbackRateMatch = script.match(playbackRateRegex);
+                        const playbackRate = playbackRateMatch && parseFloat(playbackRateMatch[1]);
+
                         var linkObject = {
                             "name": node.textContent,
-                            "url": node.getAttribute('href')
+                            "url": audioURL,
+                            "speed": playbackRate
                         };
                         jsonOutput.push(linkObject);
                     } else if (node.tagName === 'SPAN') {
