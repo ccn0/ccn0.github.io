@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v2 of rAdBOX. MADE BY CCN0 https://github.com -->
+<!-- v3 of rAdBOX. MADE BY CCN0 https://github.com -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,16 +101,18 @@
         document.getElementById('sphoto').alt = alttext + " (Ad)";
         console.log("rad" + targetNumber + ".jpg");
         randomNumb(targetNumber);
-      }
+      };
 
-      getSite() {
+      function getSite() {
         const approvedSites = ["ccn0.github.io","ccn0guy.blogspot.com","127.0.0.1"];
-        const currentSite = window.parent.location.hostname 
+        const currentSite = window.parent.location.hostname;
 
         if(!approvedSites.includes(currentSite)) {
           window.location.href = "https://ccn0.github.io/rad/notpermitted.html"
-        }
-      }
+        };
+      };
+
+      getSite()
     </script>
 </body>
 </html>
