@@ -71,8 +71,9 @@
               console.log("Text:", entry.text);
               const radLinksTo = entry.text;
               const title = entry.title;
+              const alttext = entry.alttext;
       
-              loadRad(targetNumber, radLinksTo, title);
+              loadRad(targetNumber, radLinksTo, title, alttext);
             } else {
               console.log("Number not found in JSON.");
             }
@@ -84,21 +85,31 @@
           console.error('Error fetching data:', error);
         });
       
-      function loadRad(targetNumber, radLinksTo, title) {
+      function loadRad(targetNumber, radLinksTo, title, alttext) {
         randomNumb(targetNumber);
-        setRadUp(targetNumber, radLinksTo, title);
+        setRadUp(targetNumber, radLinksTo, title, alttext);
       }
       
       function randomNumb(targetNumber) {
         console.log(targetNumber);
       }
       
-      function setRadUp(targetNumber, link, title) {
+      function setRadUp(targetNumber, link, title, alttext) {
         document.getElementById('adBox').href = link;
         document.getElementById('adBox').title = title + " (Ad)";
         document.getElementById('sphoto').src = "rad" + targetNumber + ".jpg";
+        document.getElementById('sphoto').alt = alttext + " (Ad)";
         console.log("rad" + targetNumber + ".jpg");
         randomNumb(targetNumber);
+      }
+
+      getSite() {
+        const approvedSites = ["ccn0.github.io","ccn0guy.blogspot.com","127.0.0.1"];
+        const currentSite = window.parent.location.hostname 
+
+        if(!approvedSites.includes(currentSite)) {
+          window.location.href = "https://ccn0.github.io/rad/notpermitted.html"
+        }
       }
     </script>
 </body>

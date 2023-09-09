@@ -6,16 +6,19 @@
     {
         "number": 1,
         "text": "https://ccn0guy.blogspot.com/",
+        "alttext": "The CCN0 Blog",
         "title": "Changelogs?????"
     },
     {
         "number": 2,
         "text": "/things/soundlets/plus",
+        "alttext": "Soundlets Plus",
         "title": "Make your own soundboards!"
     },
     {
         "number": 3,
         "text": "https://ccn0.itch.io/wordleforever/",
+        "alttext": "Wordle Forever",
         "title": "Code is HELLO"
     }
 ]
