@@ -5,14 +5,17 @@
 
     {
         "number": 1,
-        "text": "https://ccn0guy.blogspot.com/"
+        "text": "https://ccn0guy.blogspot.com/",
+        "title": "Changelogs?????"
     },
     {
         "number": 2,
-        "text": "/things/soundlets/plus"
+        "text": "/things/soundlets/plus",
+        "title": "Make your own soundboards!"
     },
     {
         "number": 3,
-        "text": "https://ccn0.itch.io/wordleforever/"
+        "text": "https://ccn0.itch.io/wordleforever/",
+        "title": "Code is HELLO"
     }
 ]

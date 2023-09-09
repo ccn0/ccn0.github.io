@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- v2 of rAdBOX. MADE BY CCN0 https://github.com -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,18 +33,20 @@
             right: 0;
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
-            padding: 0;
+            padding: 5px 10px;
             text-decoration: none;
-            font-size: 50%;
+            font-size: 5vw;
+			border-radius:0 0 0 12px;
+			transition: all 0.2s;
         }
         .floating-link:hover {
-            font-size:75%;
+            font-size:10vw;
         }
     </style> 
 </head>
-<body title="This ad is for a page on this site.">
+<body>
     <div>
-        <a href="" id="adBox" target="_top">
+        <a href="" id="adBox" title="" target="_top">
             <img src="" id="sphoto">
         </a>
             <a href="whatisthis.html" class="floating-link" target="_top">Ad</a>
@@ -67,8 +70,9 @@
             if (entry) {
               console.log("Text:", entry.text);
               const radLinksTo = entry.text;
+              const title = entry.title;
       
-              loadRad(targetNumber, radLinksTo);
+              loadRad(targetNumber, radLinksTo, title);
             } else {
               console.log("Number not found in JSON.");
             }
@@ -80,17 +84,18 @@
           console.error('Error fetching data:', error);
         });
       
-      function loadRad(targetNumber, radLinksTo) {
+      function loadRad(targetNumber, radLinksTo, title) {
         randomNumb(targetNumber);
-        setRadUp(targetNumber, radLinksTo);
+        setRadUp(targetNumber, radLinksTo, title);
       }
       
       function randomNumb(targetNumber) {
         console.log(targetNumber);
       }
       
-      function setRadUp(targetNumber, link) {
+      function setRadUp(targetNumber, link, title) {
         document.getElementById('adBox').href = link;
+        document.getElementById('adBox').title = title + " (Ad)";
         document.getElementById('sphoto').src = "rad" + targetNumber + ".jpg";
         console.log("rad" + targetNumber + ".jpg");
         randomNumb(targetNumber);
