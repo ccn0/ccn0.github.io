@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v1 patch for #create | MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v2 support for countdowns | MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,25 +35,27 @@
         } catch (error) {
             console.error("Error parsing JSON:", error);
         }
-
         function updateTimeDifference() {
             const date2 = new Date();
             const timeDifference = date2 - date1;
-            const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+            const isNegative = timeDifference < 0;
+
+            const daysDifference = Math.abs(Math.floor(timeDifference / (1000 * 60 * 60 * 24)));
+            const hours = Math.abs(Math.floor(timeDifference / (1000 * 60 * 60)));
+            const minutes = Math.abs(Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)));
+            const seconds = Math.abs(Math.floor((timeDifference % (1000 * 60)) / 1000));
+
             const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
             const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-        
+
             let timeDiff, fullDiff;
-        
-            if (daysDifference < 1) {
-                timeDiff = `${hours}:${formattedMinutes}:${formattedSeconds}`;
-                fullDiff = `${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
+
+            if (isNegative) {
+                timeDiff = `${daysDifference} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
+                fullDiff = `It is in ${daysDifference} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
             } else {
                 timeDiff = `${daysDifference} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
-                fullDiff = `${daysDifference} days, ${hours - (daysDifference * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
+                fullDiff = `It has been ${daysDifference} days, ${hours - (daysDifference * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
             }
         
             document.getElementById('timeSince').textContent = timeDiff;
