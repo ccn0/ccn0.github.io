@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- v1 | MADE BY CCN0 https://github.com/ccn0 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="tabTitle">Global Clocks</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="item">
+        <h2 id="title"></h2>
+        <h1 id="timeSince"></h1>
+        <p id="extraLong"></p>
+    </div>
+
+    <script>
+        const theJson = decodeURIComponent(window.location.hash.slice(1));
+        console.log(theJson)
+        let date1 = 0;
+        try {
+            const jsonData = JSON.parse(theJson);
+            console.log(jsonData);
+            date1 = new Date(jsonData.date);
+            console.log("Title:", jsonData.title);
+            document.getElementById('title').textContent = jsonData.title
+            document.getElementById('tabTitle').textContent = "GlobalClocks: " + jsonData.title
+            console.log("Title:", date1);
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+        }
+
+        function updateTimeDifference() {
+            const date2 = new Date();
+            const timeDifference = date2 - date1;
+            const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+            const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+            const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+        
+            let timeDiff, fullDiff;
+        
+            if (daysDifference < 1) {
+                timeDiff = `${hours}:${formattedMinutes}:${formattedSeconds}`;
+                fullDiff = `${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
+            } else {
+                timeDiff = `${daysDifference} days, ${hours}:${formattedMinutes}:${formattedSeconds}`;
+                fullDiff = `${daysDifference} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
+            }
+        
+            document.getElementById('timeSince').textContent = timeDiff;
+            document.getElementById('extraLong').textContent = fullDiff;
+        }
+        updateTimeDifference()
+        setInterval(updateTimeDifference, 1000);
+    </script>
+</body>
+</html>
