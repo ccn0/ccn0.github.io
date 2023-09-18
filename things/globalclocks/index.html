@@ -46,8 +46,8 @@
                 timeDiff = `${hours}:${formattedMinutes}:${formattedSeconds}`;
                 fullDiff = `${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
             } else {
-                timeDiff = `${daysDifference} days, ${hours}:${formattedMinutes}:${formattedSeconds}`;
-                fullDiff = `${daysDifference} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
+                timeDiff = `${daysDifference} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
+                fullDiff = `${daysDifference} days, ${hours - (daysDifference * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
             }
         
             document.getElementById('timeSince').textContent = timeDiff;
