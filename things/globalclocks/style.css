@@ -16,13 +16,8 @@ h1 {
     font-size: 500%;
     margin: 0;
 }
-h2 {
+h2,p {
     margin:0;
-}
-@media screen and (max-width: 768px) {
-    h1 {
-        font-size: 12vw;
-    }
 }
 input,button {
     background-color: #fff;
@@ -40,4 +35,12 @@ input,button {
 }
 button {
     cursor: pointer;
+}
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 10vw;
+    }
+    h2,p {
+        font-size: 3vw;
+    }
 }
