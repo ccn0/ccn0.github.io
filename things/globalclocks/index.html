@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="tabTitle">GlobalClocks</title>
     <meta id="metaContent" content="GlobalClocks" property="og:title" />
-    <meta id="metaDescription" content="" property="og:description" />
-    <meta id="metaURL" content="" property="og:url" />
+    <meta id="metaDescription" content="The difference between now and then." property="og:description" />
+    <meta id="metaURL" content="https://ccn0.github.io/things/globalclocks/#create" property="og:url" />
     <meta content="#fff" data-react-helmet="true" name="theme-color" />
     <link rel="stylesheet" href="style.css">
 </head>
@@ -66,9 +66,6 @@
             date1 = new Date(jsonData.date);
             document.getElementById('title').textContent = jsonData.title
             document.getElementById('tabTitle').textContent = "GlobalClocks: " + jsonData.title;
-            document.getElementById('metaContent').textContent = "GlobalClocks: " + jsonData.title;
-            document.getElementById('metaTitle').textContent = "GlobalClocks: Time set for " + jsonData.date;
-            document.getElementById('metaURL').textContent = window.location.href;
         } catch (error) {
             console.error("Error parsing JSON:", error);
         }
