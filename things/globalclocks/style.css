@@ -21,6 +21,23 @@ h2 {
 }
 @media screen and (max-width: 768px) {
     h1 {
-        font-size: 15vw;
+        font-size: 12vw;
     }
+}
+input,button {
+    background-color: #fff;
+    border: 1px solid #000;
+    font-family: inherit;
+    padding: 2px 4px;
+}
+#createbox {
+    display: none;
+    border: 1px solid #fff;
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 12px;
+}
+button {
+    cursor: pointer;
 }
