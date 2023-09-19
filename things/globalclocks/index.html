@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v2 support for countdown | MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v3 create gui | MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="tabTitle">Global Clocks</title>
+    <title id="tabTitle">GlobalClocks</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="item">
+        <div id="createbox">
+            <h2>Create</h2>
+            <label for="inputTitle">Title: </label>
+            <input type="text" id="inputTitle" name="inputTitle" placeholder="Title">
+            <label for="inputTitle">Date: </label>
+            <input type="date" id="inputDate" name="inputDate">
+            <label for="inputTitle">Time: </label>
+            <input type="time" id="inputTime" name="inputTime">
+            <button onclick="createLink()" id="inputCreate">Create</button>
+        </div>
         <h2 id="title"></h2>
+        <p id="description"></p>
         <h1 id="timeSince"></h1>
         <p id="extraLong"></p>
     </div>
@@ -17,13 +28,32 @@
     <script>
         const theJson = decodeURIComponent(window.location.hash.slice(1));
         if (theJson === "create") {
-            var date = prompt('Date?');
-            var title = prompt('Title?');
-            var mixed = '{"date":"' + date + '","title":"' + title + '"}'
+            document.getElementById('createbox').style.display = "block";
+        }
+        function createLink() {
+            const inputTime = document.getElementById('inputTime').value
+            if (!inputTime) {
+                var date = document.getElementById('inputDate').value;
+            } else {
+                var date = document.getElementById('inputDate').value + "T" +  document.getElementById('inputTime').value;
+            }
+            var title = document.getElementById('inputTitle').value;
+            var mixed = '{"date":"' + date + '","title":"' + title + '"}';
             var encodedMix = encodeURIComponent(mixed)
             var cleanURL = window.location.href.split('#')[0];
             var finalURL = cleanURL + "#" + encodedMix;
-            alert(finalURL);
+            console.log(mixed);
+            console.log(finalURL);
+            copyText(finalURL);
+            alert('Copied to clipboard!')
+        }
+        function copyText(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
         }
         let date1 = 0;
         try {
@@ -52,10 +82,10 @@
 
             if (isNegative) {
                 timeDiff = `${daysDifference} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
-                fullDiff = `It is in ${daysDifference} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
+                fullDiff = `Upcoming in ${daysDifference} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
             } else {
                 timeDiff = `${daysDifference} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
-                fullDiff = `It has been ${daysDifference} days, ${hours - (daysDifference * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
+                fullDiff = `It has since been ${daysDifference} days, ${hours - (daysDifference * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
             }
         
             document.getElementById('timeSince').textContent = timeDiff;
