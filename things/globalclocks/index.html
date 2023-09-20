@@ -87,7 +87,7 @@
 
             if (isNegative) {
                 timeDiff = `${daysDifference - 1} days or ${(hours-1)}:${formattedMinutes}:${formattedSeconds}`;
-                fullDiff = `Upcoming in ${daysDifference - 1} days, ${hours-1} hours, ${minutes} minutes, and ${seconds} seconds.`;
+                fullDiff = `Upcoming in ${daysDifference - 1} days, ${Math.abs((hours-1) - (daysDifference * 24))} hours, ${minutes} minutes, and ${seconds} seconds.`;
             } else {
                 timeDiff = `${daysDifference} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
                 fullDiff = `It has since been ${daysDifference} days, ${(hours) - (daysDifference * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
