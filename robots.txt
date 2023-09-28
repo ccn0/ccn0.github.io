@@ -7,3 +7,4 @@ Disallow: /quick/
 Disallow: /daily/
 Disallow: /img/
 Disallow: /info/
+Disallow: /rad/
