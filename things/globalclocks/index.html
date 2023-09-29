@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v4 math math math and descriptions | MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v5 no lies | MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,10 +42,10 @@
                 var date = document.getElementById('inputDate').value + "T" +  document.getElementById('inputTime').value;
             }
             var title = document.getElementById('inputTitle').value;
-            var mixed = '{"date":"' + date + '","title":"' + title + '"}';
+            var mixed = `{"date":"${date}","title":"${title}"}`;
             var encodedMix = encodeURIComponent(mixed)
             var cleanURL = window.location.href.split('#')[0];
-            var finalURL = cleanURL + "#" + encodedMix;
+            var finalURL = `${cleanURL}#${encodedMix}`;
             console.log(mixed);
             console.log(finalURL);
             copyText(finalURL);
@@ -65,7 +65,7 @@
             console.log(jsonData);
             date1 = new Date(jsonData.date);
             document.getElementById('title').textContent = jsonData.title
-            document.getElementById('tabTitle').textContent = "GlobalClocks: " + jsonData.title;
+            document.getElementById('tabTitle').textContent = `GlobalClocks: ${jsonData.title}`;
             document.getElementById('description').textContent = jsonData.description;
         } catch (error) {
             console.error("Error parsing JSON:", error);
@@ -86,8 +86,8 @@
             let timeDiff, fullDiff;
 
             if (isNegative) {
-                timeDiff = `${daysDifference - 1} days or ${(hours-1)}:${formattedMinutes}:${formattedSeconds}`;
-                fullDiff = `Upcoming in ${daysDifference - 1} days, ${Math.abs((hours-1) - (daysDifference * 24))} hours, ${minutes} minutes, and ${seconds} seconds.`;
+                timeDiff = `${daysDifference} days or ${(hours)}:${formattedMinutes}:${formattedSeconds}`;
+                fullDiff = `Upcoming in ${daysDifference} days, ${Math.abs((hours-1) - (daysDifference * 24))} hours, ${minutes} minutes, and ${seconds} seconds.`;
             } else {
                 timeDiff = `${daysDifference} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
                 fullDiff = `It has since been ${daysDifference} days, ${(hours) - (daysDifference * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
