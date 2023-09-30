@@ -3,8 +3,11 @@
 User-agent: *
 Disallow: /wiki/
 Disallow: /game/
+Disallow: /game.html/
 Disallow: /quick/
 Disallow: /daily/
 Disallow: /img/
 Disallow: /info/
 Disallow: /rad/
+Disallow: /pages/
+Allow: /rad/whatisthis.html

@@ -1,4 +1,4 @@
-the best Minecraft mod for your food needs!!! (not Java edition, Java sucks!)
+# the best Minecraft mod for your food needs!!! (not Java edition, Java sucks!)
 
 mod will release in a bit, but while you wait, here are some of the features (and their recipes) in the mod!
 
