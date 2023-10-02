@@ -42,9 +42,9 @@
         function createLink() {
             const inputTime = document.getElementById('inputTime').value
             if (!inputTime) {
-                var date = document.getElementById('inputDate').value;
+                var date = `${document.getElementById('inputDate').value}`;
             } else {
-                var date = document.getElementById('inputDate').value + "T" +  document.getElementById('inputTime').value;
+                var date = `${document.getElementById('inputDate').value}T${document.getElementById('inputTime').value}`;
             }
             var title = document.getElementById('inputTitle').value;
             var mixed = `{"date":"${date}","title":"${title}"}`;
