@@ -85,16 +85,23 @@
             const minutes = Math.abs(Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)));
             const seconds = Math.abs(Math.floor((timeDifference % (1000 * 60)) / 1000));
 
-            const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+            let formattedMinutes
+
+            if (!isCountdown) {
+                formattedMinutes = minutes < 10 ? `0${minutes}` : minutes; // days since
+            } else {
+                formattedMinutes = minutes < 10 ? `0${minutes-1}` : minutes-1; // countdown
+            }
+
             const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
             let timeDiff, fullDiff;
 
-            if (isCountdown) { // COUNTDOWN
-                timeDiff = `${days-1} days or ${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;
+            if (isCountdown) { // COUNTDOWN RIGHT HERE THIS IS THE COUNTDOWN
+                timeDiff = `${days-1} days or ${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
                 fullDiff = `Upcoming in ${days-1} days, ${Math.abs((hours-1) - ((days-1) * 24))} hours, ${minutes-1} minutes, and ${seconds} seconds.`;
-            } else { // DAYS SINCE
-                timeDiff = `${days} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
+            } else { // DAYS SINCE DAYS SINCE DA DAYS SINCE DAYS
+                timeDiff = `${days} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
                 fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
             }
         
