@@ -26,5 +26,11 @@
         "text": "https://ccn0.github.io/things/globalclocks/#create",
         "alttext": "GlobalClocks",
         "title": "Time Since, Countdowns, you name it!"
+    },
+    {
+        "number": 5,
+        "text": "https://github.com/ccn0/terter",
+        "alttext": "Terter",
+        "title": "Load your own HTML on any webpage"
     }
 ]
