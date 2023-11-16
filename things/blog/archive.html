@@ -4,13 +4,148 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCN0 Things / Blog</title>
-    <link rel="stylesheet" href="style.css">
+    <title>CCN0 Things / Blog Archive</title>
     <link rel="icon" href="/ccn0.svg">
+    <style>
+        /*
+
+        ccn0.css beta pack!
+        
+        */
+        body {
+            margin:0;
+            background-color:#000;
+            color:#fff;
+        }
+        ::selection {
+            background:#fff;
+            color:#000;
+        }
+        ::moz-selection {
+            background:#fff;
+            color:#000;
+        }
+        p,span,h1,h2,h3,h4,h5,h6 {
+            cursor:default;
+        }
+        .top {
+            text-align:center;
+            cursor:default;
+            margin:10px;
+        }
+        a {
+            text-decoration:none;
+            color:#00ffff;
+        }
+        a:hover {
+            color:#ffff00;
+        }
+        a:active {
+            color:#ff00ff;
+        }
+        .posts {
+            margin:5px;
+            text-align:center;
+        }
+        .post {
+            border-style:solid;
+            border-width:3px;
+            border-color:#fff;
+            padding:5px 15px;
+            margin:15px;
+            display:flex;
+            width:fit-content;
+        }
+        .post p {
+            text-align:justify;
+        }
+        hr {
+            border-style:dashed;
+            border-width:2px;
+            border-color:#fff;
+        }
+        
+        .question {
+            background-color: rgb(0, 0, 0);
+            border: 4px solid #fff;
+            width: 95%;
+            margin-top: 7px;
+            margin-bottom: 7px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 12px 15px 12px 15px;
+            min-width: none;
+            max-width: 360px;
+            text-align: left;
+            cursor: default;
+            transition: padding 0.2s;
+        }
+        .answer {
+            background-color: rgb(255, 255, 255);
+            border: 4px solid rgb(0, 0, 0);
+            color:#000;
+            width: 95%;
+            margin-top: 7px;
+            margin-bottom: 7px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 12px 15px 12px 15px;
+            min-width: none;
+            max-width: 360px;
+            text-align: left;
+            cursor: default;
+            transition: padding 0.2s;
+        }
+        
+        /* color tags for sh */
+        
+        .news { /*guess*/
+            border-left: 8px solid #ff00ff ;
+        }
+        .fh { /*funny hahas*/
+            border-left: 5px solid #ff5858;
+        }
+        .np { /*ccnotepad*/
+            border-left: 5px solid rgb(118, 115, 133);
+        }
+        .cf { /*croshf*/
+            border-left: 5px solid rgb(255, 236, 92);
+        }
+        .yd { /*yourdoc*/
+            border-left: 5px solid rgb(255, 119, 0);
+        }
+        .pa { /*presentablecss*/
+            border-left: 5px solid #d096ff;
+        }
+        .tt { /*toolkit*/
+            border-left: 5px solid rgb(100, 239, 72);
+        }
+        .impr { /*important tag*/
+            border-left-width: 8px;
+        }
+        /* List Shits */
+        
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        li {
+            border-style:solid;
+            border-width:3px;
+            border-color:#fff;
+            padding:5px 15px;
+            margin: 5px;
+            display:block;
+            width: fit-content;
+            max-width: 300px;
+            margin: 5px auto;
+        }
+        </style>
 </head>
 <body>
     <div class="top">
-        <h1>CCN0 Blog</h1>
+        <h1>CCN0 Blog (Archived)</h1>
         <h3>i write about new drops, updates, and news regarding any of the '<a href="/things">things</a>' or something else who knows.</h3>
         <div>
             <a href="#no-thanks">Ask a Question</a> | 
