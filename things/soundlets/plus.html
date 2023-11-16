@@ -191,8 +191,9 @@
         <button onclick="clearNodes()">Clear Board</button>
         <span>|</span>
         <button onclick="copyLink()">Copy Link To Board</button>
-        <button onclick="convertToJson()">Download</button>
-        <button onclick="loadFromJson()">Load Board</button>
+        <button onclick="downloadAsJson()">Download</button>
+        <button onclick="loadFromJson()">Load JSON</button>
+        <!-- <button onclick="loadFromSnbd()">Load SNBD</button> -->
         <div id="addonSection">
         </div>
     </div>
@@ -276,7 +277,7 @@
             URL.revokeObjectURL(url);
         }
         
-        function convertToJson() {
+        function downloadAsJson() {
             var jsonOutput = [];
             var container = document.getElementById('boardArea');
 
@@ -350,9 +351,9 @@
                 if (item.hasOwnProperty('name') && item.hasOwnProperty('url')) {
                     var linkElement = document.createElement('a');
                     if (item.speed) {
-                        linkElement.href = `javascript: var snd = new Audio();snd.src = '${item.url}'; snd.playbackRate = ${item.speed}; function PlaySnd() {snd.play();}PlaySnd()`;
+                        linkElement.href = `javascript: /* ${item.name} */ var snd = new Audio();snd.src = '${item.url}'; snd.playbackRate = ${item.speed}; function PlaySnd() {snd.play();}PlaySnd()`;
                     } else {
-                        linkElement.href = `javascript: var snd = new Audio();snd.src = '${item.url}'; snd.playbackRate = 1; function PlaySnd() {snd.play();}PlaySnd()`;
+                        linkElement.href = `javascript: /* ${item.name} */ var snd = new Audio();snd.src = '${item.url}'; snd.playbackRate = 1; function PlaySnd() {snd.play();}PlaySnd()`;
 
                     }
                     linkElement.textContent = item.name;
@@ -428,20 +429,15 @@
             alert('Link copied!');
         }
         function copyToClipboard(text) {
-            // Create a temporary input element
             var tempInput = document.createElement("input");
             document.body.appendChild(tempInput);
             
-            // Set the input value to the text you want to copy
             tempInput.value = text;
             
-            // Select the text inside the input
             tempInput.select();
             
-            // Copy the selected text to the clipboard
             document.execCommand("copy");
             
-            // Remove the temporary input element
             document.body.removeChild(tempInput);
         }
         function hideEditbar() {
