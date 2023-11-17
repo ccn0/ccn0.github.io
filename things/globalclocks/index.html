@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v6 no lies, for real again again | MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v7 embed | MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +25,8 @@
             <input type="date" id="inputDate" name="inputDate">
             <label for="inputTitle">Time: </label>
             <input type="time" id="inputTime" name="inputTime">
+            <label for="inputTitle">Embed?: </label>
+            <input type="checkbox" id="embedCheck" name="embedCheck">
             <button onclick="createLink()" id="inputCreate">Create</button>
         </div>
         <!--end create box-->
@@ -32,9 +34,21 @@
         <p id="description"></p>
         <h1 id="timeSince"></h1>
         <p id="extraLong"></p>
+        <div class="fixed" id="fixed">
+            <a href="https://ccn0.github.io/">GlobalClocks</a> - 
+            <a href="javascript:copyText(window.location.href.replace(/\?embed=1/, ''))">Copy Link</a>
+        </div>
     </div>
 
     <script>
+        const isEmbed = new URLSearchParams(window.location.search).get('embed') == '1';
+        console.log(isEmbed)
+        
+        if (isEmbed) {
+            document.getElementById('fixed').style.display = "block";
+        } else {
+            console.log('The embed parameter is either not present or not set to 1.');
+        }
         const theJson = decodeURIComponent(window.location.hash.slice(1));
         if (theJson === "create") {
             document.getElementById('createbox').style.display = "block";
@@ -50,11 +64,14 @@
             var mixed = `{"date":"${date}","title":"${title}"}`;
             var encodedMix = encodeURIComponent(mixed)
             var cleanURL = window.location.href.split('#')[0];
+            const embedCheckbox = document.getElementById('embedCheck');
+            if (embedCheckbox.checked) {
+                cleanURL += '?embed=1';
+            }
             var finalURL = `${cleanURL}#${encodedMix}`;
             console.log(mixed);
             console.log(finalURL);
             copyText(finalURL);
-            alert('Copied to clipboard!')
         }
         function copyText(text) {
             const textArea = document.createElement("textarea");
@@ -63,6 +80,7 @@
             textArea.select();
             document.execCommand("copy");
             document.body.removeChild(textArea);
+            alert('Copied to clipboard!')
         }
         let date1 = 0;
         try {
@@ -97,12 +115,22 @@
 
             let timeDiff, fullDiff;
 
-            if (isCountdown) { // COUNTDOWN RIGHT HERE THIS IS THE COUNTDOWN
-                timeDiff = `${days-1} days or ${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
-                fullDiff = `Upcoming in ${days-1} days, ${Math.abs((hours-1) - ((days-1) * 24))} hours, ${minutes-1} minutes, and ${seconds} seconds.`;
-            } else { // DAYS SINCE DAYS SINCE DA DAYS SINCE DAYS
-                timeDiff = `${days} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
-                fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
+            if (isEmbed) {
+                if (isCountdown) { // COUNTDOWN RIGHT HERE THIS IS THE COUNTDOWN
+                    timeDiff = `${days-1}:${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
+                    fullDiff = `Upcoming in ${days-1} days, ${Math.abs((hours-1) - ((days-1) * 24))} hours, ${minutes-1} minutes, and ${seconds} seconds.`;
+                } else { // DAYS SINCE DAYS SINCE DA DAYS SINCE DAYS
+                    timeDiff = `${days}:${hours}:${formattedMinutes}:${formattedSeconds}`;
+                    fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
+                }
+            } else {
+                if (isCountdown) { // COUNTDOWN
+                    timeDiff = `${days-1} days or ${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
+                    fullDiff = `Upcoming in ${days-1} days, ${Math.abs((hours-1) - ((days-1) * 24))} hours, ${minutes-1} minutes, and ${seconds} seconds.`;
+                } else { // DAYS SINCE
+                    timeDiff = `${days} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
+                    fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
+                }
             }
         
             document.getElementById('timeSince').textContent = timeDiff;

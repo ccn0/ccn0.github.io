@@ -44,3 +44,18 @@ button {
         font-size: 3vw;
     }
 }
+.fixed {
+    display: none;
+    overflow: hidden;
+    background-color: #101010ee;
+    color:#393939;
+    text-align: center;
+    padding:15px;
+    cursor:default;
+    position:absolute;
+    bottom:0;
+    right: 0;
+}
+.fixed a {
+    color:#393939;
+}
