@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rAd</title>
+    <title>rAdBOX by CCN0</title>
     <meta name="robots" content="noindex">   
     <style>
         html {
@@ -36,7 +36,7 @@
             padding: 5px 10px;
             text-decoration: none;
             font-size: 5vw;
-			border-radius:0 0 0 12px;
+			border-radius:0 0 0 6px;
 			transition: all 0.2s;
         }
         .floating-link:hover {
@@ -44,7 +44,7 @@
         }
     </style> 
 </head>
-<body>
+<body aria-hidden="true">
     <div>
         <a href="" id="adBox" title="" target="_top">
             <img src="" id="sphoto">
@@ -56,63 +56,53 @@
     fetch("promos.json")
         .then(response => response.json())
         .then(jsonData => {
-          const promosObject = jsonData.find(item => item.hasOwnProperty('promos'));
-      
-          if (promosObject) {
-            const promosValue = promosObject.promos;
-            console.log("Value of promos:", promosValue);
-      
-            const rmin = 1;
-            const rmax = promosValue;
-            const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
-      
-            const entry = jsonData.find(item => item.number === targetNumber);
-            if (entry) {
-              console.log("Text:", entry.text);
-              const radLinksTo = entry.text;
-              const title = entry.title;
-              const alttext = entry.alttext;
-      
-              loadRad(targetNumber, radLinksTo, title, alttext);
+            const promosObject = jsonData.find(item => item.hasOwnProperty('promos'));
+          
+            if (promosObject) {
+                const promosValue = promosObject.promos;
+                // console.log("Value of promos:", promosValue);
+            
+                const rmin = 1;
+                const rmax = promosValue;
+                const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
+            
+                const entry = jsonData.find(item => item.number === targetNumber);
+                if (entry) {
+                    // console.log("Text:", entry.text);
+                    const radLinksTo = entry.text;
+                    const title = entry.title;
+                    const alttext = entry.alttext;
+                  
+                    setRadUp(targetNumber, radLinksTo, title, alttext);
+                } else {
+                    // console.log("Number not found in JSON.");
+                }
             } else {
-              console.log("Number not found in JSON.");
+                // console.log("No 'promos' key found in JSON.");
             }
-          } else {
-            console.log("No 'promos' key found in JSON.");
-          }
         })
         .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-      
-      function loadRad(targetNumber, radLinksTo, title, alttext) {
-        randomNumb(targetNumber);
-        setRadUp(targetNumber, radLinksTo, title, alttext);
-      }
-      
-      function randomNumb(targetNumber) {
-        console.log(targetNumber);
-      }
-      
-      function setRadUp(targetNumber, link, title, alttext) {
-        document.getElementById('adBox').href = link;
-        document.getElementById('adBox').title = title + " (Ad)";
-        document.getElementById('sphoto').src = "rad" + targetNumber + ".jpg";
-        document.getElementById('sphoto').alt = alttext + " (Ad)";
-        console.log("rad" + targetNumber + ".jpg");
-        randomNumb(targetNumber);
-      };
+            // console.error('Error fetching data:', error);
+      	});
+	  
+      	function setRadUp(targetNumber, link, title, alttext) {
+      	    document.getElementById('adBox').href = link;
+      	    document.getElementById('adBox').title = title + " (Ad)";
+      	    document.getElementById('sphoto').src = "rad" + targetNumber + ".jpg";
+      	    document.getElementById('sphoto').alt = alttext + " (Ad)";
+      	    // console.log("rad" + targetNumber + ".jpg");
+      	};
 
-      function getSite() {
-        const approvedSites = ["ccn0.github.io","ccn0guy.blogspot.com","127.0.0.1"];
-        const currentSite = window.parent.location.hostname;
+      	function getSite() {
+      	  	const approvedSites = ["ccn0.github.io","ccn0guy.blogspot.com","127.0.0.1"];
+      	  	const currentSite = window.parent.location.hostname;
+			
+      	  	if(!approvedSites.includes(currentSite)) {
+      	  	  	window.location.href = "https://ccn0.github.io/rad/notpermitted.html"
+      	  	};
+      	};
 
-        if(!approvedSites.includes(currentSite)) {
-          window.location.href = "https://ccn0.github.io/rad/notpermitted.html"
-        };
-      };
-
-      getSite()
+      	getSite()
     </script>
 </body>
 </html>
