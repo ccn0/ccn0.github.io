@@ -46,8 +46,9 @@
         
         if (isEmbed) {
             document.getElementById('fixed').style.display = "block";
-        } else {
-            console.log('The embed parameter is either not present or not set to 1.');
+            const embedstyles = document.createElement('style');
+            embedstyles.textContent = "h1 {font-size: 10vw;}h2,p {font-size: 3vw;}"
+            document.head.appendChild(embedstyles)
         }
         const theJson = decodeURIComponent(window.location.hash.slice(1));
         if (theJson === "create") {
@@ -71,7 +72,8 @@
             var finalURL = `${cleanURL}#${encodedMix}`;
             console.log(mixed);
             console.log(finalURL);
-            copyText(finalURL);
+            if (!embedCheckbox.checked){copyText(finalURL)}
+            else{copyText(`<iframe width="400" height="100" src="${finalURL}" title="GlobalClocks:${title}" frameborder="0"></iframe>`,"embed")};
         }
         function copyText(text) {
             const textArea = document.createElement("textarea");
@@ -117,10 +119,10 @@
 
             if (isEmbed) {
                 if (isCountdown) { // COUNTDOWN RIGHT HERE THIS IS THE COUNTDOWN
-                    timeDiff = `${days-1}:${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
+                    timeDiff = `${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
                     fullDiff = `Upcoming in ${days-1} days, ${Math.abs((hours-1) - ((days-1) * 24))} hours, ${minutes-1} minutes, and ${seconds} seconds.`;
                 } else { // DAYS SINCE DAYS SINCE DA DAYS SINCE DAYS
-                    timeDiff = `${days}:${hours}:${formattedMinutes}:${formattedSeconds}`;
+                    timeDiff = `${hours}:${formattedMinutes}:${formattedSeconds}`;
                     fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
                 }
             } else {
