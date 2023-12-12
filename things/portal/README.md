@@ -4,7 +4,7 @@ This was made for a vulnerability in log in kiosks and or other browser panels t
 
 ## How to get back
 
-### NEW METHOD
+### ~~METHOD~~ FIXED
 
 * On Microsoft's homepage, search for Bing and click 'Learn about the new Bing'
 * Click on the hamburger menu
