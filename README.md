@@ -10,3 +10,5 @@ a github pages website where i do some wacky things. and yes, the homepage is a 
   - create your own soundboard
 - Games `/games/`
   - my games i made
+- CCN0 Portal `/things/portal`
+  - best kiosk hack homepage ever
