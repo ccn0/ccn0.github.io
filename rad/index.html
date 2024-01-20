@@ -12,7 +12,7 @@
         }
         body {
             background-color: #000;
-            background-image: url(https://ccn0.github.io/img/ccn0.png);
+            background-image: url(radgoeshere.png);
             background-size:cover;
             background-position: center;
             margin:0;
@@ -35,6 +35,8 @@
             color: white;
             padding: 5px 10px;
             text-decoration: none;
+            font-weight: bold;
+            font-family: 'Roboto', Arial, sans-serif;
             font-size: 5vw;
 			border-radius:0 0 0 6px;
 			transition: all 0.2s;
@@ -60,7 +62,6 @@
           
             if (promosObject) {
                 const promosValue = promosObject.promos;
-                // console.log("Value of promos:", promosValue);
             
                 const rmin = 1;
                 const rmax = promosValue;
@@ -68,29 +69,20 @@
             
                 const entry = jsonData.find(item => item.number === targetNumber);
                 if (entry) {
-                    // console.log("Text:", entry.text);
                     const radLinksTo = entry.text;
                     const title = entry.title;
                     const alttext = entry.alttext;
                   
                     setRadUp(targetNumber, radLinksTo, title, alttext);
-                } else {
-                    // console.log("Number not found in JSON.");
                 }
-            } else {
-                // console.log("No 'promos' key found in JSON.");
             }
         })
-        .catch(error => {
-            // console.error('Error fetching data:', error);
-      	});
 	  
       	function setRadUp(targetNumber, link, title, alttext) {
       	    document.getElementById('adBox').href = link;
       	    document.getElementById('adBox').title = title + " (Ad)";
       	    document.getElementById('sphoto').src = "rad" + targetNumber + ".jpg";
       	    document.getElementById('sphoto').alt = alttext + " (Ad)";
-      	    // console.log("rad" + targetNumber + ".jpg");
       	};
 
       	function getSite() {
