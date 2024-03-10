@@ -12,3 +12,7 @@ a github pages website where i do some wacky things. and yes, the homepage is a 
   - my games i made
 - CCN0 Portal `/things/portal`
   - best kiosk hack homepage ever
+ 
+## License???
+
+assume i own everything unless stated otherwise. credits might be in the filename or on the page the file is used. or maybe i just hosted something from somewhere else, in which they probably did a better job at using a license and crediting people.
