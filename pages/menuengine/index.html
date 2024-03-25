@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MenuEngine</title>
+    <style>
+        body {
+            background-color: #fff;
+            color: #000;
+            font-family: sans-serif;
+            margin: 15px;
+        }
+        code {
+            background-color:#000;
+            color:#fff;
+            font-family:monospace;
+            padding:1.5px 3px;
+        }
+        scratchlist {
+            background-color:#d14c00;
+            color:#fff;
+            border-radius:6px;
+            padding:1.5px 3px;
+        }
+        scratchvar {
+            background-color:#d19200;
+            color:#fff;
+            border-radius:6px;
+            padding:1.5px 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="menuengine-docs">MenuEngine Docs</h1>
+    <p>MenuEngine is a sprite for Scratch that allows you to load a script as a list to create GUI elements, graphics, and other menus.</p>
+    <h2 id="necessities-all-versions">Necessities (all versions)</h2>
+    <ul>
+        <li>You must add a semicolon <code>;</code> at the end of every line.</li>
+        <li>Seperate values using a semicolon and space. e.g. <code>#template; center;</code>.</li>
+        <li>You should add a <code>@~closemenu;</code> at the top of your script if your menu is opened via a different method.</li>
+    </ul>
+    <h2 id="assets-all-versions">Assets (all versions)</h2>
+    <ul>
+        <li>The height of graphics should be about 28 pixels, know that graphics will be scaled up by 133%.</li>
+        <li>Button heights should be about 28 pixels.</li>
+        <li>Labels for switches and sliders should be about 22 pixels tall.</li>
+        <li>Names should reflect the actual type the asset is for, e.g. <code>#template</code> is the costume and the code is <code>#template; left;</code>.</li>
+    </ul>
+    <h2 id="graphics-all-versions">Graphics (all versions)</h2>
+    <p>You can create graphics by adding <code>#</code> at the beginning of a line. e.g. <code>#template;</code>.
+    You can adjust the position using left right or center. e.g. <code>#template: center;</code>.
+    Graphics can be used to display text, images, symbols, or any other elements.</p>
+    <h2 id="buttons-all-versions">Buttons (all versions)</h2>
+    <p>You can create buttons by adding <code>@</code> at the beginning of a line. e.g. <code>@template;</code>.
+    You must add a second value for whatever event you want to broadcast. e.g. <code>@template; event;</code>
+    The third value is the position of the button, such as left right or center. e.g. <code>@template; event; center;</code> would create a centered button that broadcasts &quot;event&quot; when clicked.</p>
+    <h2 id="boolean-all-versions">Boolean (all versions)</h2>
+    <p>You can create switches by adding <code>&gt;</code> at the beginning of a line. e.g. <code>&gt;template;</code>.
+    This first value is the slot in the <scratchlist>~FOR</scratchlist> list.
+    It can only be 1 of 2 values, 0 or 1 (a single binary value).
+    The second value is the position, such as left right or center. e.g. <code>&gt;template; center;</code> would create a switch centered within the stage.</p>
+    <h2 id="sliders-113">Sliders (&gt;1.13)</h2>
+    <p>Sliders are created by adding a <code>|</code> at the beginning of a line. e.g. <code>|template;</code>.
+    Sliders have a minimum and maximum of 0 to 100.
+    The second value is the slot in the <scratchlist>~FOR</scratchlist> list. e.g. <code>|template; range;</code> would make the slider change the range value.
+    The third value is the position, such as left right or center. e.g. <code>|template; range; center;</code>.</p>
+    <h2 id="margin-radius-v111">Margin Radius (&lt;v1.11)</h2>
+    <p>Add a margin radius using <code>!</code> at the beginning of a line.
+    This bounds elements to a certain space. e.g. <code>!; 100;</code> would space every object within 100 pixels from the center of the stage.
+    Just know that sprites may overlap beyond the margin. <strong>This feature was removed with the 1.12 beta.</strong></p>
+
+</body>
+</html>
