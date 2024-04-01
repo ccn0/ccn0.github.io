@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v3 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v4 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rAdBOX by CCN0</title>
-    <meta name="robots" content="noindex">   
+    <meta name="robots" content="noindex">
     <style>
         html {
             overflow:hidden;
@@ -27,7 +27,7 @@
             max-width: 100%;
             height: 100vh;
         }
-        .floating-link {
+        .floating {
             position: absolute;
             top: 0;
             right: 0;
@@ -40,61 +40,52 @@
             font-size: 5vw;
 			border-radius:0 0 0 6px;
 			transition: all 0.2s;
-        }
-        .floating-link:hover {
-            font-size:10vw;
+            &:hover {
+                font-size:10vw;
+            }
         }
     </style> 
 </head>
 <body aria-hidden="true">
-    <div>
+    <div id="rAdBOXarea">
         <a href="" id="adBox" title="" target="_top">
             <img src="" id="sphoto">
         </a>
-            <a href="whatisthis.html" class="floating-link" target="_top">Ad</a>
+        <a href="whatisthis.html" class="floating" target="_top">Ad</a>
     </div>
     <!--====================== ENTERING SCRIPT TERRITORY ===========================-->
     <script>
-    fetch("promos.json")
-        .then(response => response.json())
-        .then(jsonData => {
-            const promosObject = jsonData.find(item => item.hasOwnProperty('promos'));
-          
-            if (promosObject) {
-                const promosValue = promosObject.promos;
-            
-                const rmin = 1;
-                const rmax = promosValue;
-                const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
-            
-                const entry = jsonData.find(item => item.number === targetNumber);
-                if (entry) {
-                    const radLinksTo = entry.text;
-                    const title = entry.title;
-                    const alttext = entry.alttext;
-                  
-                    setRadUp(targetNumber, radLinksTo, title, alttext);
-                }
-            }
-        })
-	  
-      	function setRadUp(targetNumber, link, title, alttext) {
-      	    document.getElementById('adBox').href = link;
-      	    document.getElementById('adBox').title = title + " (Ad)";
-      	    document.getElementById('sphoto').src = "rad" + targetNumber + ".jpg";
-      	    document.getElementById('sphoto').alt = alttext + " (Ad)";
-      	};
-
-      	function getSite() {
-      	  	const approvedSites = ["ccn0.github.io","ccn0guy.blogspot.com","127.0.0.1"];
-      	  	const currentSite = window.parent.location.hostname;
-			
-      	  	if(!approvedSites.includes(currentSite)) {
-      	  	  	window.location.href = "https://ccn0.github.io/rad/notpermitted.html"
-      	  	};
-      	};
-
-      	getSite()
+        function randomInteger(min, max) {
+            const rmin = min;
+            const rmax = max;
+            const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
+            return targetNumber;
+        }
+        let promosData = {};
+        fetch("promos.json")
+            .then(response => response.json())
+            .then(jsonData => {
+                promosData = jsonData;
+                displayRad();
+            })
+        
+        function displayRad() {
+            radToShow = promosData.promos[randomInteger(0,promosData.running.length-1)];
+            console.log(radToShow);
+            document.getElementById('adBox').href = radToShow.url;
+            document.getElementById('adBox').title = radToShow.title + " (Ad)";
+            document.getElementById('sphoto').src = radToShow.img;
+            document.getElementById('sphoto').alt = radToShow.alt + " (Ad)";
+        };
+        function getSite() {
+          	const approvedSites = ["ccn0.github.io","ccn0guy.blogspot.com","127.0.0.1"];
+          	const currentSite = window.parent.location.hostname;
+        
+          	if(!currentSite) {
+          	  	window.location.href = "https://ccn0.github.io/rad/notpermitted.html"
+          	};
+        };
+        getSite();
     </script>
 </body>
 </html>

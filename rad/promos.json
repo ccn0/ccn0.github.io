@@ -1,30 +1,45 @@
-[
-    {
-        "promos":4
-    },
-
-    {
-        "number": 1,
-        "text": "https://ccn0guy.blogspot.com/",
-        "alttext": "The CCN0 Blog",
-        "title": "Changelogs?????"
-    },
-    {
-        "number": 2,
-        "text": "/things/soundlets/plus",
-        "alttext": "Soundlets Plus",
-        "title": "Make your own soundboards!"
-    },
-    {
-        "number": 3,
-        "text": "https://ccn0.github.io/things/globalclocks/#create",
-        "alttext": "GlobalClocks",
-        "title": "Time Since, Countdowns, you name it!"
-    },
-    {
-        "number": 4,
-        "text": "https://github.com/ccn0/terter",
-        "alttext": "Terter",
-        "title": "Load your own HTML on any webpage"
-    }
-]
+{
+    "running":["ccn0blog","soundlets","globalclocks","terter"],
+    "promos":[
+        {
+            "id": "ccn0blog",
+            "img": "assets/ccn0blogposter.jpg",
+            "url": "https://ccn0guy.blogspot.com/",
+            "alt": "The CCN0 Blog",
+            "title": "Changelogs?????",
+            "desc": "The official CCN0 Blog where I share changelogs, announcements, games, and more."
+        },
+        {
+            "id": "soundlets",
+            "img": "assets/soundletsad.jpg",
+            "url": "https://ccn0.github.io/things/soundlets/plus",
+            "alt": "Soundlets Plus",
+            "title": "Make your own soundboards!",
+            "desc": "Soundlets Plus allows you to make a soundboard and share that soundboard as a link."
+        },
+        {
+            "id": "globalclocks",
+            "img": "assets/gbposter.jpg",
+            "url": "https://ccn0.github.io/things/globalclocks/#create",
+            "alt": "GlobalClocks",
+            "title": "The difference between now and then.",
+            "desc": "GlobalClocks allows you to show the difference between 2 times and share it as a link or embed."
+        },
+        {
+            "id": "terter",
+            "img": "assets/terterposter.jpg",
+            "url": "https://github.com/ccn0/terter",
+            "alt": "Terter",
+            "title": "Load your own HTML on any webpage",
+            "desc": "Terter is a browser extension that allows you to change what loads when you enter a URL."
+        },
+        {
+            "id": "birthday2024",
+            "img": "assets/ccn0birthday2024poster.png",
+            "url": "https://ccn0.github.io/quick/birthday2024",
+            "alt": "CCN0's 4th Birthday",
+            "title": "More little projects, announcements, and more!",
+            "desc": "CCN0 is turning 4 years old. I am announcing many things, projects, games, and tools."
+        }
+    ]
+}
