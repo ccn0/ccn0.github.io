@@ -71,7 +71,6 @@
         
         function displayRad() {
             radToShow = promosData.promos[randomInteger(0,promosData.running.length-1)];
-            console.log(radToShow);
             document.getElementById('adBox').href = radToShow.url;
             document.getElementById('adBox').title = radToShow.title + " (Ad)";
             document.getElementById('sphoto').src = radToShow.img;
@@ -82,10 +81,11 @@
           	const currentSite = window.parent.location.hostname;
         
           	if(!approvedSites.includes(currentSite) || typeof currentSite !== undefined) {
-          	  	location.href = "https://ccn0.github.io/rad/notpermitted.html";
+                if (!approvedSites.includes(location.hostname)){
+          	  	    location.href = "https://ccn0.github.io/rad/notpermitted.html";
+                }
           	};
         };
-        getSite();
     </script>
 </body>
 </html>
