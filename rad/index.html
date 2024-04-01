@@ -81,8 +81,8 @@
           	const approvedSites = ["ccn0.github.io","ccn0guy.blogspot.com","127.0.0.1"];
           	const currentSite = window.parent.location.hostname;
         
-          	if(!currentSite) {
-          	  	window.location.href = "https://ccn0.github.io/rad/notpermitted.html"
+          	if(!approvedSites.includes(currentSite) || typeof currentSite !== undefined) {
+          	  	location.href = "https://ccn0.github.io/rad/notpermitted.html";
           	};
         };
         getSite();
