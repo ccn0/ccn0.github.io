@@ -109,6 +109,22 @@ cc {
 cm {
     color:#f0f
 }
+
+code {
+    border: 1px #fff solid;
+    font-family: monospace;
+}
+
+del {
+    background-color: #f00;
+    color: #000;
+}
+
+ins {
+    background-color: #0f0;
+    color: #000;
+}
+
 /* color tags for sh */
 
 .news { /*guess*/
