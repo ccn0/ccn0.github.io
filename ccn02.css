@@ -183,3 +183,9 @@ li {
         color: #fff;
     }
 }
+
+/* games and players */
+
+.player {
+    text-align: center;
+}
