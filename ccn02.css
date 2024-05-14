@@ -188,4 +188,7 @@ li {
 
 .player {
     text-align: center;
+    iframe {
+        max-width:100%;
+    }
 }
