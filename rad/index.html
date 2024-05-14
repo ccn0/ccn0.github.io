@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v4 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v4.1 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,9 +44,33 @@
                 font-size:10vw;
             }
         }
+        .jsdisabled {
+            background-color: #ff0;
+            color: #000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            font-size: 200%;
+            font-family: monospace;
+            font-weight: bold;
+            text-align: center;
+            cursor: default;
+            ::selection {
+                background-color: #000;
+                color:#fff;
+            }
+        }
     </style> 
 </head>
 <body aria-hidden="true">
+    <noscript>
+        <div class="jsdisabled">
+            <p>Your adblocker has worked!</p>
+            <a href="https://ccn0.github.io/rad/whatisthis.html">rAdBOX</a>
+        </div>
+    </noscript>
     <div id="rAdBOXarea">
         <a href="" id="adBox" title="" target="_top">
             <img src="" id="sphoto">
