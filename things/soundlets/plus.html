@@ -1,175 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- version 1.5 | made by ccn0 https://github.com/ccn0 -->
+<!-- version 1.5.1 | made by ccn0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soundlets Plus</title>
     <style>
         body {
-          font-family: "Roboto", Arial, sans-serif;
-          background-color: #222833;
-          color: #f3f3f3;
-          text-align: center;
-          font-family: sans-serif;
-          overflow: wrap;
-          max-width:100℅;
-          padding-bottom: 50px;
+            font-family: "Roboto", Arial, sans-serif;
+            background-color: #222833;
+            color: #f3f3f3;
+            text-align: center;
+            font-family: sans-serif;
+            overflow: wrap;
+            max-width:100℅;
+            padding-bottom: 50px;
         }
         
         .boardarea a {
-          text-decoration: none;
-          color: #6aca6a;
-          background-color: #223326;
-          font-weight: bold;
-          padding: 6px 10px;
-          margin: 3px;
-          display: inline-flex;
-          overflow: wrap;
-          border: 2px solid #03060b;
-          border-radius: 6px;
+            text-decoration: none;
+            color: #6aca6a;
+            background-color: #223326;
+            font-weight: bold;
+            padding: 6px 10px;
+            margin: 3px;
+            display: inline-flex;
+            overflow: wrap;
+            border: 2px solid #03060b;
+            border-radius: 6px;
         }
         
         .boardarea a:active {
-          color: #223326;
-          background-color: #6aca6a;
+            color: #223326;
+            background-color: #6aca6a;
         }
         
         p {
-          margin: -20px 0 20px 0;
-          text-align: center;
-          font-size: 90%;
+            margin: -20px 0 20px 0;
+            text-align: center;
+            font-size: 90%;
         }
         
         h1 {
-          font-size: 310%;
-          margin: 20px;
+            font-size: 310%;
+            margin: 20px;
         }
         
         .editbar {
-          margin-top: 5px;
-          border-bottom: 2px solid #f3f3f3;
-          padding: 0 5px 5px 5px;
-          background-color: #747a85;
-          transition: all 0.2s;
-          border-radius: 8px 8px 0 0;
-          overflow: hidden;
+            margin-top: 5px;
+            border-bottom: 2px solid #f3f3f3;
+            padding: 0 5px 5px 5px;
+            background-color: #747a85;
+            transition: all 0.2s;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
         }
         
         span {
-          font-size: 150%;
-          font-weight: bold;
+            font-size: 150%;
+            font-weight: bold;
         }
         
         .boardarea {
-          padding: 10px;
+            padding: 10px;
         }
         
         button {
-          cursor: pointer;
-          background-color: #f3f3f3;
-          border: 2px solid #03060b;
-          color: #03060b;
-          padding: 3px 6px;
-          font-family: sans-serif;
+            cursor: pointer;
+            background-color: #f3f3f3;
+            border: 2px solid #03060b;
+            color: #03060b;
+            padding: 3px 6px;
+            font-family: sans-serif;
         }
         
         button:active {
-          background-color: #03060b;
-          border: 2px solid #f3f3f3;
-          color: #f3f3f3;
+            background-color: #03060b;
+            border: 2px solid #f3f3f3;
+            color: #f3f3f3;
         }
         
         input[type=text] {
-          background-color: #f3f3f3;
-          border: 2px solid #03060b;
-          color: #03060b;
-          padding: 3px 6px;
-          font-family: sans-serif;
-          max-width: 80px;
+            background-color: #f3f3f3;
+            border: 2px solid #03060b;
+            color: #03060b;
+            padding: 3px 6px;
+            font-family: sans-serif;
+            max-width: 80px;
         }
         
         input[type=number] {
-          background-color: #f3f3f3;
-          border: 2px solid #03060b;
-          color: #03060b;
-          padding: 3px 6px;
-          font-family: sans-serif;
-          max-width: 60px;
+            background-color: #f3f3f3;
+            border: 2px solid #03060b;
+            color: #03060b;
+            padding: 3px 6px;
+            font-family: sans-serif;
+            max-width: 60px;
         }
         
         cr {
-          color: rgb(255, 72, 72);
+            color: rgb(255, 72, 72);
         }
         
         cg {
-          color: rgb(84, 179, 84);
+            color: rgb(84, 179, 84);
         }
         
         cb {
-          color: rgb(77, 77, 255);
+            color: rgb(77, 77, 255);
         }
         
         .bottom {
-          overflow: hidden;
-          background-color: rgba(0, 0, 0, 0.337254902);
-          color: #f3f3f3;
-          text-align: center;
-          padding: 15px;
-          cursor: default;
-          border-radius: 6px;
-          position: fixed;
-          bottom: 0;
-          margin-left: auto;
-          margin-right: auto;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.337254902);
+            color: #f3f3f3;
+            text-align: center;
+            padding: 15px;
+            cursor: default;
+            border-radius: 6px;
+            position: fixed;
+            bottom: 0;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .viewbar {
-          height: 5px;
-          background-color: #747a85;
-          transition: all 0.2s;
-          border-radius: 8px;
-          overflow: hidden;
+            height: 5px;
+            background-color: #747a85;
+            transition: all 0.2s;
+            border-radius: 8px;
+            overflow: hidden;
         }
         
         .viewbar:hover {
-          height: 25px;
+            height: 25px;
         }
         
         .viewbar > * {
-          display: none;
+            display: none;
         }
         
         .viewbar:hover > * {
-          display: inline-block;
+            display: inline-block;
         }
         
         .viewbar button {
-          font-size: 70%;
-          padding: 1px 3px;
-          height: 20px;
+            font-size: 70%;
+            padding: 1px 3px;
+            height: 20px;
         }
         
         .viewbar input {
-          font-size: 70%;
-          margin: 0;
-          height: 10px;
+            font-size: 70%;
+            margin: 0;
+            height: 10px;
         }
         
         .editbar iframe {
-          border: 1px solid #f3f3f3;
-          margin: 10px 0 0 0;
-          height: 40px;
-          padding: 0;
-          width: 100%;
+            border: 1px solid #f3f3f3;
+            margin: 10px 0 0 0;
+            height: 40px;
+            padding: 0;
+            width: 100%;
         }
         
         #addonSection {
-          display: none;
+            display: none;
         }
         
         #importAddons {
-          display: none;
+            display: none;
         }
     </style>
 </head>
@@ -180,6 +180,7 @@
         <button onclick="hideEditbar()" id="collapse">Collapse</button>
     </div>
     <div class="editbar" id="editbar">
+        <noscript>Enable JavaScript</noscript>
         <input type="text" id="nameOfSound" placeholder="Name">
         <input type="text" id="urlOfSound" placeholder="Audio URL">
         <input type="number" id="speedOfSound" placeholder="Speed">
