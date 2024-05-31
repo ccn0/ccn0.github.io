@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.webp">
+    <title>Notepad</title>
+    <style>
+        html{
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            margin: 0;
+            overflow: -moz-hidden-unscrollable;
+            overflow: hidden;
+        }
+        textarea {
+            height: calc(100vh - 48px);
+            width: 100%;
+            resize: none;
+            border: none;
+            outline: #fff;
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+        .bar {
+            background-color: #fff;
+            cursor: default;
+            display: flex;
+            position: fixed;
+            font-family: sans-serif;
+            max-width: 100%;
+            width: 100%;
+            border-bottom: 1px solid #EFEFEF;
+            height: max-content;
+            overflow: hidden;
+            text-wrap: nowrap;
+            span {
+                font-size: 80%;
+                padding: 2px 3px;
+                border: 1px solid #00000000;
+                &:hover {
+                    background-color: #E5F3FF;
+                    border-color: #C8E6FF;
+                }
+                &:active {
+                    background-color: #CCE8FF;
+                    border-color: #97D0FF;
+                }
+            }
+            &.bottom {
+                position: fixed;
+                bottom: 0;
+            }
+        }
+        .hidden {
+            /* display: none; */
+        }
+        .dropdown {
+            background-color: #F0F0F0;
+            border:1px solid #ccc;
+            width: max-content;
+            position: fixed;
+            top: 0;
+            left: 0;
+            button {
+                width: 100%;
+                padding-left: 24px;
+                border: none;
+                &:hover {
+                    background-color: #90C8F6;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bar top">
+        <span>File</span>
+    </div>
+    <textarea spellcheck="false" id="textarea"></textarea>
+    <div class="bar bottom">
+        <span>File</span>
+    </div>
+    <!--DROPDOWN TERRITORY-->
+    <div class="dropdown hidden">
+        <button>New</button>
+    </div>
+    <script>
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.key === 's') {
+                event.preventDefault();
+                saveToFile();
+            }
+        });
+        function saveToFile() {
+            const content = textarea.value;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'text.txt';
+            a.click();
+        }
+        textarea.addEventListener('keydown', function(event) {
+            if (event.key === 'Tab') {
+            event.preventDefault();
+            const start = this.selectionStart;
+            const end = this.selectionEnd;
+            const spaces = '    ';
+            this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
+            this.selectionStart = this.selectionEnd = start + spaces.length;
+            }
+        });
+  </script>
+</body>
+</html>
