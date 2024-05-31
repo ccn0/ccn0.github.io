@@ -71,13 +71,15 @@
             <div class="elem">
                 <div style='text-align: center;'>
                     <h1 style="margin:0"><span style="font-family: monospace;">CCN0</span> Portal</h1>
-                    <p>We have a new look!</p>
+                    <p id="splashtext"><noscript>Javascript is disabled!</noscript></p>
                     <input type='text' id='urlInput' placeholder="Enter URL with https://">
                     <button onclick='goURL()'>Go</button>
                     <script>
                         function goURL() {
                             location.href = document.getElementById('urlInput').value
                         }
+                        const splashes = ["Welcome to the portal!","Welcome!","We have a new look!","Kiosk World!","Yahoo is nothing!","Enter a URL Below!","Javascript is Enabled!","You need to wake up!","Some of these are blocked!","GitHub for the methods!","You are braindead!","HTTPS:// Then where you wanna go!","Eaglercraft coming soon!","Permanent Run 3!","Hope they don't patch this!","Who's reading this shit!","Brought to you by See See No!","Exclamation!","Also try Skiovox!","Remember the Collegeboard method!","Viva la Revolution!","I do!","How tall are you!","Fuck off!","I know someone's reading this!","Cry me a river!","I'm on Bing!","Polaris is bullshit!","RIP Skool!","RIP POP SMOKE!","People also asked!","Try anuraOS!","Where the Chromebooks at!","This is reality!","You are dreaming!","Don't trust people!","Javascript Sucks!","You suck!","Fuck You!","CCN0!","Who is this guy anyway!"]
+                        document.getElementById('splashtext').textContent = splashes[Math.floor(Math.random() * splashes.length)]
                     </script>
                 </div>
             </div>
