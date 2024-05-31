@@ -8,8 +8,8 @@ This was made for a vulnerability in login kiosks and or other browser panels th
 
 * On Microsoft.com's homepage, search for 'bing maps' then hit enter
 * Click on the result for **Getting Started with Bing Maps - Bing Maps | Microsoft Learn**\
-* Scroll to the **Bing Maps Keys** section and click Create a Bing Maps Key
-* Scroll to **To create a key, follow the steps below:** and click Bing Maps Dev Center
+* Scroll to the **Simple non-API Bing Maps Options** section
+* Find 'Option 1: Go to [https://www.bing.com/maps](https://www.bing.com/maps)' and click the link
 * Click the Microsoft Bing logo in the top left corner
 * Search on Bing for 'ccn0 portal' and click the result for `ccn0.github.io`
 
