@@ -11,9 +11,9 @@ a github pages website where i do some wacky things. and yes, the homepage is a 
 - Soundlets Plus `/things/soundlets/plus`
   - create your own soundboard
 - Games `/games/`
-  - my games i made
+  - my games i made on many places
 - CCN0 Portal `/things/portal`
-  - best kiosk-hack's homepage ever
+  - yahoo for everything youd want for a kiosk hack
  
 ## Licenses???
 
