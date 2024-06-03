@@ -6,7 +6,7 @@ This was made for a vulnerability in login kiosks and or other browser panels th
 
 ### BING MAPS METHOD
 
-* On Microsoft.com's homepage, search for 'bing maps' then hit enter
+* On Microsoft.com's homepage, search for 'getting started with bing maps' then hit enter
 * Click on the result for **Getting Started with Bing Maps - Bing Maps | Microsoft Learn**
 * Scroll to the **Simple non-API Bing Maps Options** section
 * Find 'Option 1: Go to [https://www.bing.com/maps](https://www.bing.com/maps)' and click the link
