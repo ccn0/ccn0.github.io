@@ -63,6 +63,9 @@
                 color: rgb(48, 131, 255);
             }
         }
+        h2 {
+            margin: 15px;
+        }
     </style>
 </head>
 <body>
@@ -70,16 +73,21 @@
         <div class="col c1" id="column1">
             <div class="elem">
                 <div style='text-align: center;'>
-                    <h1 style="margin:0"><span style="font-family: monospace;">CCN0</span> Portal</h1>
+                    <h1 style="margin:5px"><span style="font-family: monospace;">CCN0</span> Portal</h1>
                     <p id="splashtext"><noscript>Javascript is disabled!</noscript></p>
                     <input type='text' id='urlInput' placeholder="Enter URL with https://">
                     <button onclick='goURL()'>Go</button>
                     <script>
                         function goURL() {
-                            location.href = document.getElementById('urlInput').value
-                        }
-                        const splashes = ["Welcome to the portal!","Welcome!","We have a new look!","Kiosk World!","Yahoo is nothing!","Enter a URL Below!","Javascript is Enabled!","You need to wake up!","Some of these are blocked!","GitHub for the methods!","You are braindead!","HTTPS:// Then where you wanna go!","Eaglercraft coming soon!","Permanent Run 3!","Hope they don't patch this!","Who's reading this shit!","Brought to you by See See No!","Exclamation!","Also try Skiovox!","Remember the Collegeboard method!","Viva la Revolution!","I do!","How tall are you!","Fuck off!","I know someone's reading this!","Cry me a river!","I'm on Bing!","Polaris is bullshit!","RIP Skool!","RIP POP SMOKE!","People also asked!","Try anuraOS!","Where the Chromebooks at!","This is reality!","You are dreaming!","Don't trust people!","Javascript Sucks!","You suck!","Fuck You!","CCN0!","Who is this guy anyway!"]
-                        document.getElementById('splashtext').textContent = splashes[Math.floor(Math.random() * splashes.length)]
+                            location.href = document.getElementById('urlInput').value;
+                        };
+                        document.getElementById('urlInput').addEventListener('keydown',function(event){
+                            if (event.key === 'Enter' && document.getElementById('urlInput').value !== ''){
+                                goURL();
+                            };
+                        });
+                        const splashes = ["Welcome to the portal!","Welcome!","We have a new look!","Kiosk World!","Yahoo is nothing!","Enter a URL Below!","Javascript is Enabled!","You need to wake up!","Some of these are blocked!","GitHub for the methods!","You are braindead!","HTTPS:// Then where you wanna go!","Eaglercraft coming soon!","Permanent Run 3!","Hope they don't patch this!","Who's reading this shit!","Brought to you by See See No!","Exclamation!","Also try Skiovox!","Remember the Collegeboard method!","Viva la Revolution!","I do!","How tall are you!","Fuck off!","I know someone's reading this!","Cry me a river!","I'm on Bing!","Polaris is bullshit!","RIP Skool!","RIP POP SMOKE!","People also asked!","Try anuraOS!","Where the Chromebooks at!","This is reality!","You are dreaming!","Don't trust people!","Javascript Sucks!","You suck!","Fuck You!","CCN0!","Who is this guy anyway!","You aren't cute!","Childish!"]
+                        document.getElementById('splashtext').textContent = splashes[Math.floor(Math.random() * splashes.length)];
                     </script>
                 </div>
             </div>
@@ -96,14 +104,14 @@
                     <li><a href="https://github.com/">GitHub</a></li>
                     <li><a href="https://mail.com/">Mail.com</a></li>
                 </ul>
-                <h3>How to get back (as of May 2024):</h3>
+                <h2>How to get back (as of May 2024):</h2>
                 <ul>
                     <li>On Microsoft.com's homepage, search for 'getting started with bing maps' then hit enter</li>
-                    <li>Click on the result for **Getting Started with Bing Maps - Bing Maps | Microsoft Learn**</li>
-                    <li>Scroll to the **Simple non-API Bing Maps Options** section</li>
+                    <li>Click on the result for <b>Getting Started with Bing Maps - Bing Maps | Microsoft Learn</b></li>
+                    <li>Scroll to the <b>Simple non-API Bing Maps Options</b> section or click to skip to News & Resources</li>
                     <li>Find 'Option 1: Go to https://www.bing.com/maps' and click the link</li>
                     <li>Click the Microsoft Bing logo in the top left corner</li>
-                    <li>Search on Bing for 'ccn0 portal' and click the result for `ccn0.github.io`</li>
+                    <li>Search on Bing for 'ccn0 portal' and click the result for `ccn0.github.io/things/portal`</li>
                 </ul>
             </div>
         </div>
@@ -124,7 +132,7 @@
                 <ul>
                     <li><a href="https://www.coolmathgames.com">CoolMath Games</a></li>
                     <li><a href="https://www.poki.com">Poki</a></li>
-                    <li><a href="https://www.google.com/search?q=unblocked+games">Search on Google</a></li>
+                    <li><a href="https://www.google.com/search?q=unblocked+games">Search on Google for Unblocked Games</a></li>
                     <li><a href="https://ccn0.pages.dev/run-3/">Permanent Run 3</a></li>
                 </ul>
             </div>
@@ -144,7 +152,7 @@
         </div>
         <div class="col c3" id="column3">
             <div class="elem">
-                <h3>Chat</h3>
+                <h2>Chat</h2>
                 <ul>
                     <li><a href="https://instagram.com">Instagram</a></li>
                     <li><a href="https://web.whatsapp.com">Whatsapp Web</a></li>
@@ -156,16 +164,29 @@
                 </ul>
             </div>
             <div class="elem">
-                <h3>Media</h3>
+                <h2>Media</h2>
                 <ul>
                     <li><a href="https://youtube.com">YouTube</a></li>
                     <li><a href="https://netflix.com">Netflix</a></li>
-                    <li><a href="https://max.com">Max (HBO Max)</a></li>
+                    <li><a href="https://play.max.com">Max (HBO Max)</a></li>
                     <li><a href="https://hulu.com">Hulu</a></li>
-                    <li><a href="https://molkify.github.io/instances/">movie-web instances</a></li>
+                    <li><a href="https://erynith.github.io/movie-web-instances/">movie&hyphen;web instances</a></li>
                     <li><a href="https://open.spotify.com">Spotify</a></li>
+                    <li><a href="https://music.apple.com">Apple Music</a></li>
                     <li><a href="https://soundcloud.com">SoundCloud</a></li>
                     <li><a href="https://tidal.com">Tidal</a></li>
+                </ul>
+            </div>
+            <div class="elem">
+                <h2>Other</h2>
+                <ul>
+                    <li><a href="https://github.com/ccn0/ccn0.github.io">CCN0 Website Repo</a></li>
+                    <li><a href="https://github.com/ccn0/ccn0.github.io/issues">CCN0 Website Issues and Requests</a></li>
+                    <li>This is not an endorsement for any of the websites mentioned.
+                        Submit takedown requests <a href="mailto:ccn0@mail.com?subject=CCN0 Portal">here</a>.
+                        Just because you think you have authority does not give you authority.
+                        There is a nonzero chance your email will be ignored or unnoticed.
+                        Please submit an issue if you want to request something be added.</li>
                 </ul>
             </div>
         </div>
