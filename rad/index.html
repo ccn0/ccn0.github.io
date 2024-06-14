@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v4.1 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v4.2 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +12,8 @@
         }
         body {
             background-color: #000;
-            background-image: url(radgoeshere.png);
-            background: size 20px;
-            background-position: center;
+            background-image: url('radgoeshere.png');
+            background: size 20px repeat center;
             margin:0;
         }
         div {
@@ -88,17 +87,17 @@
         let promosData = {};
         fetch("promos.json")
             .then(response => response.json())
-            .then(jsonData => {
-                promosData = jsonData;
+            .then(json => {
+                promosData = json;
                 displayRad();
             })
         
         function displayRad() {
             radToShow = promosData.promos[randomInteger(0,promosData.running.length-1)];
             document.getElementById('adBox').href = radToShow.url;
-            document.getElementById('adBox').title = radToShow.title + " (Ad)";
+            document.getElementById('adBox').title = `${radToShow.title} (Ad)`;
             document.getElementById('sphoto').src = radToShow.img;
-            document.getElementById('sphoto').alt = radToShow.alt + " (Ad)";
+            document.getElementById('sphoto').alt = `${radToShow.alt} (Ad)`;
         };
         function getSite() {
           	const approvedSites = ["ccn0.github.io","ccn0guy.blogspot.com","127.0.0.1"];
