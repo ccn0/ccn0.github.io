@@ -34,12 +34,28 @@
             "desc": "Terter is a browser extension that allows you to change what loads when you enter a URL."
         },
         {
-            "id": "birthday2024",
-            "img": "assets/ccn0birthday2024poster.png",
-            "url": "https://ccn0.github.io/quick/birthday2024",
-            "alt": "CCN0's 4th Birthday",
-            "title": "More little projects, announcements, and more!",
-            "desc": "CCN0 is turning 4 years old. I am announcing many things, projects, games, and tools."
+            "id": "ccn0tebook",
+            "img": "assets/x",
+            "url": "https://github.com/ccn0/ccn0tebook",
+            "alt": "CCN0TEBOOK v2",
+            "title": "2D Flipbook/Drawing, for free!",
+            "desc": "CCN0TEBOOK v2 features lines and points, colors, opacity, and going forward and back pages."
+        },
+        {
+            "id": "ccn0tepadwin",
+            "img": "assets/x",
+            "url": "https://ccn0.github.io/things/notepad/win",
+            "alt": "CCN0TEPAD Win",
+            "title": "Notepad, but better.",
+            "desc": "A simple notepad that loads instantly and has many features and keybinds, like the Windows Notepad."
+        },
+        {
+            "id": "mastodon",
+            "img": "assets/x",
+            "url": "https://mastodon.social/@ccn0",
+            "alt": "@CCN0@mastodon.social",
+            "title": "I say shit here sometimes",
+            "desc": "My Mastodon, which replaced the Things Blog all those years ago."
         }
     ]
 }
