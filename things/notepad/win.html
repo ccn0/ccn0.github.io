@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.webp">
     <title>Notepad</title>
+    <meta name="description" content="CCN0's Notepad with keyboard shortcuts, dark mode, saving, and more.">
     <style>
         html{
             height: 100%;
@@ -18,33 +19,75 @@
             overflow: hidden;
         }
         textarea {
+            margin: -1px 0 0 0;
             height: 100vh;
             width: 100%;
             resize: none;
             border: none;
             outline: #fff;
             padding: 2px;
+            &[dark] {
+                background-color: #000;
+                color: #fff;
+            }
         }
     </style>
 </head>
 <body>
-    <noscript>Keybinds require JavaScript</noscript>
+    <noscript>JavaScript is disabled, try <a href="light.html"><i>Notepad</i> Premium</a> made for use without JavaScript.</noscript>
     <textarea spellcheck="false" id="textarea"></textarea>
     <script>
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('dark')) {
+            textarea.setAttribute('dark','');
+        };
+        if (params.has('file')) {
+            const url = decodeURIComponent(params.get('file'));
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`http error ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    a = confirm(`Are you sure you want to load this file from "${url}"?`);
+                    if (a) {textarea.value = text;}
+                })
+                .catch(error => {
+                    console.error('cant get:', error);
+                    alert("Couldn't get file.")
+                });
+        };
+
+
         document.addEventListener('keydown', function(event) {
-            if (event.ctrlKey && event.key === 's') {
+            if (event.ctrlKey && event.key === 's' && !event.altKey) {
                 event.preventDefault();
                 saveToFile();
             }
         });
-        function saveToFile() {
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.altKey && event.key === 's') {
+                event.preventDefault();
+                a = prompt('Name of file? e.g. File.txt or File.js');
+                saveToFile(a);
+            };
+        });
+        function saveToFile(x) {
             const content = textarea.value;
             const blob = new Blob([content], { type: 'text/plain' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = 'text.txt';
+            if (x) {
+                a.download = `${x}`;
+            } else {
+                a.download = 'text.txt';
+            };
             a.click();
-        }
+            a.remove();
+        };
         textarea.addEventListener('keydown', function(event) {
             if (event.key === 'Tab') {
             event.preventDefault();
@@ -53,7 +96,17 @@
             const spaces = '    ';
             this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
             this.selectionStart = this.selectionEnd = start + spaces.length;
-            }
+            };
+        });
+        textarea.addEventListener('keydown', function(event) {
+            if (event.altKey && event.key === 'd') {
+            event.preventDefault();
+            if (textarea.getAttribute('dark') === '') {
+                textarea.removeAttribute('dark');
+            } else {
+                textarea.setAttribute('dark','');
+            };
+            };
         });
   </script>
 </body>
