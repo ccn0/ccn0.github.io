@@ -9,9 +9,11 @@
     <meta name="description" content="CCN0's Notepad with keyboard shortcuts, dark mode, saving, and more.">
     <style>
         html{
-            height: 100%;
+            max-height: 100vh;
+            height: 100vh;
             margin: 0;
             padding: 0;
+            overflow: hidden;
         }
         body {
             margin: 0;
@@ -20,7 +22,7 @@
         }
         textarea {
             margin: -1px 0 0 0;
-            height: 100vh;
+            height: calc(100vh + 1px);
             width: 100%;
             resize: none;
             border: none;
