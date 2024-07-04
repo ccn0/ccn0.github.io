@@ -108,6 +108,14 @@
             };
             };
         });
+        window.addEventListener('beforeunload', function(event) {
+            const textareaValue = textarea.value.trim();
+            if (textareaValue !== '') {
+                event.preventDefault();
+                event.returnValue = '';
+                return 'Are you sure you want to leave without saving?';
+            }
+        });
   </script>
 </body>
 </html>
