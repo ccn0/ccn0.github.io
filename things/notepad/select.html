@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCN0tepad / Select</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" href="favicon.webp">
+    <style>
+        body {
+            margin:0;
+            font-family: sans-serif
+        }
+        * {
+            box-sizing: border-box;
+        }
+        .wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+        @media (max-width: 500px) {
+            .wrapper {
+                flex-direction: column;
+            }
+        }
+        .col {
+            display: flex;
+            flex: 1;
+            min-height: 50vh;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+        .elem {
+            text-align: center !important;
+            display: block;
+            width: 100%;
+            padding: 15px;
+            transition: all 0.2s;
+            &:hover {
+                font-size: 105%;
+            }
+        }
+        img {
+            width: 100%;
+        }
+        a {
+            text-decoration: none;
+            color: #000;
+            &:hover {
+                text-decoration: underline;
+                color: rgb(48, 131, 255) !important;
+            }
+        }
+        h2 {
+            margin: 15px;
+        }
+        .topnav {
+            max-width: 100%;
+            text-align: center;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="topnav">
+        <h1>CCN0's <i>Notepad</i></h1>
+        <span>Pick a flavor:</span>
+    </div>
+    <div class="wrapper">
+        <div class="col">
+            <a href="index.html"><div class="elem">
+                <h1><i>Notepad</i></h1>
+                <span>The original <i>Notepad</i>, with an adjustable&nbsp;size, toolbar, and theme.</span>
+            </div></a>
+        </div>
+        <div class="col">
+            <a href="light.html"><div class="elem">
+                <h1><i>Notepad</i>&nbsp;Premium</h1>
+                <span>Small, light, no JavaScript required.<noscript><br><b>Recommended</b></noscript></span>
+            </div></a>
+        </div>
+        <div class="col">
+            <a href="win.html"><div class="elem">
+                <h1><i>Notepad</i>&nbsp;Win</h1>
+                <span>Comes with keyboard&nbsp;shortcuts, dark&nbsp;mode, URL&nbsp;parameters, saving files.</span>
+            </div></a>
+        </div>
+        <div class="col">
+            <a href="beta.html"><div class="elem">
+                <h1><i>Notepad</i>&nbsp;Beta</h1>
+                <span>An actual attempt at recreating the Windows Notepad.</span>
+            </div></a>
+        </div>
+    </div>
+</body>
+</html>
