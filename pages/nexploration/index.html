@@ -2,147 +2,266 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexploration by CCN0</title>
-    <link rel="stylesheet" href="style.css">
+    <title>CCN0 / Nexploration</title>
+    <style>
+        body {
+            margin:0;
+            font-family: sans-serif;
+            background-color: #0c0c0c;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        .column-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+        @media (max-width: 500px) {
+            .column-wrapper {
+                flex-direction: column;
+            }
+        }
+        .col {
+            display: flex;
+            flex: 1;
+            min-height: 100vh;
+            flex-wrap: wrap;
+            flex-direction: column;
+            padding: 15px;
+            align-items: start;
+            justify-content: start;
+            gap: 15px;
+        }
+        .elem {
+            display: block;
+            background-color: #0f140d;
+            height: auto;
+            color: #fff;
+            width: 100%;
+            padding: 30px 15px;
+            border-radius: 12px;
+        }
+        hr {
+            border: 1px solid #fff;
+        }
+        a {
+            color: #cea2ff;
+            &:hover {
+                font-weight: bold;
+            }
+            &.bigbutton {
+                margin: 15px;
+                padding: 10px 15px;
+                color: #fff;
+                background-color: #cea2ff;
+                font-weight: bold;
+                text-decoration: none;
+                border-radius: 6px;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+        h2 {
+            margin: 15px;
+            margin-top: 0;
+        }
+        .topnav {
+            padding: 15px;
+            text-align: center;
+            img {
+                max-width: 75%;
+                width: 75%;
+            }
+            
+        }
+        .center {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <div class="topnav">
-        <a href="https://ccn0.itch.io/nexploration">itch.io</a> <a href="mailto:ccn0ask@mail.com?subject=Nexploration feedback">Feedback</a> <a href="#spoilers">Hints/Spoilers</a>
-    </div>
     <div class="content">
-        <img src="logo.svg" width="50%">
-        <h2>What is Nexploration?</h2>
-        <p>
-            Nextploration is a PC/Mobile survival game where you play in a world cursed by the higher powers
-            to be forever dark and smoggy. Explore the far reaches of the world and challenge the powers to fight you.
-            You should watch your Health, Water, Sanity, and even Heat. 
-        </p>
-        <h3>Credits</h3>
-        <ul>
-            <li>Programmer - CCN0</li>
-            <li>Graphics - CCN0, Unsplash.com</li>
-            <li>Music - CCN0, Kevin MacLeod</li>
-            <li>SFX from public domain</li>
-        </ul>
-        <hr><!-- here we go again -->
-        <h2 id="tutorial">How to play</h2>
-        <p>
-            There are several things on screen when you start the game:</p>
-            <ul>
-                <li>Status bar</li>
-                <li>Map button</li>
-                <li>Scavenge button (eye button)</li>
-                <li>Item slot</li>
-                <li>And health, thirst, sanity meters</li>
-            </ul>
-            <h3>Map</h3><p>
-            If you click the Map button, it'll open the Map screen. (WASD to move, QE to zoom)
-            You can click on undiscovered tiles to search them. Click on discovered tiles to move to them.
-            When you search an undiscovered tile, you might get an item.</p>
-            <h3>Scavenge</h3><p>
-            Clicking on the Eye button will scavenge your current location. You might not get an item.
-            You cannot scavenge the same location twice.</p>
-            <h3>Items</h3><p>
-            There are many items in Nexploration.</p>
-            <ul>
-                <li>Water bottles (Lesser, Normal, Greater)</li>
-                <li>Healing items (First Aid, Pills)</li>
-                <li>Food (Crackers, Milk, Chocolate Milk)</li>
-                <li>Gizmoes (Watch, Thermometer, Backpack)</li>
-                <li>And other goodies (Coin, Sticks)</li>
-            </ul>
-            <p>These items can help you survive and other nice things. 
-                A Backpack allows you to carry one more item. It'll appear sideways when empty. Click it when
-                you have an item in the main slot, and click it again to retrieve it.<br>
-                A Watch shows the time.<br>
-                A Clover shows your luck.<br>
-                A Life Crystal shows your life force.<br>
-                Water will quench your thirst, food will heal you.
-                If you get your hand on a flask, go to a Well and click it to turn it into water.
-            </p>
-            <h3>Meters</h3>
-            <p>You can see your current Health, Thirst, and Sanity. You can see more with gizmoes.
-               You die if you have 0 health or sanity. You can increase your health with food or
-               first aid items. Pills make you sane again. When your thirst reaches 0, you will 
-               lose 3 health every second. Make sure to keep all of these bars high.
-            </p>
-            <h3>Locations</h3>
-            <ul>
-                <li><b>Campfire:</b><br>
-                    The campfire can be made using twigs on a non-campfire area.
-                    This area provides heat, speeds up time, and is an all around nice spot to be in.
-                </li>
-                <li><b>Well:</b><br>
-                    The well has some pretty neat features. 
-                    It allows you to toss a coin into it (be careful which coins you use).
-                    It can also be used to collect water.
-                    You might find some silver too!
-                </li>
-                <li><b>Ruined Towns:</b><br>
-                    These towns were once filled with thriving communities, now dead thanks to the infinite dark.
-                    You might find something interesting if you scavenge them.
-                </li>
-                <li><b>Werewolf Statues:</b><br>
-                    This is a statue of a werewolf. With 2 mysterious gems as the eyes, there seems to be an evil
-                    precense inside of the statue. I wonder what happens if you silver gets near it.
-                </li>
-                <li><b>Ash:</b><br>
-                    These areas of the world were set on fire during the Blaze event. They reveal previously
-                    undiscovered things, so scavenge these areas a second time for more loot!
-                </li>
-                <li><b>Alters:</b><br>
-                    This large rock contains a mysterious diamond shaped hole. It looks very un-natural. 
-                    Maybe something might fit in the hole.
-                </li>
-            </ul>
-            <!-- end tutorial -->
-            <hr>
-            <h1 id="spoilers">SPOILERS BELOW!</h1>
-            <p>Please only read below if you have found a peculiar coin, silver bullet, large gem, finished the game, or are stuck. Or you know, don't give a shit.</p>
-            <h2>Luck</h2>
-            <p>
-                Luck is a useful tool in your arsenal. You start with zero, but by throwing coins into wells
-                and surviving challenging battles, you can increase this amount. Luck is used to determine
-                searching times, which items you find, and more.
-            </p>
-            <h2>Life Force</h2>
-            <p>
-                Life Force is the maximum amount of health you can have. You can increase this by surviving 
-                boss battles and other events.
-            </p>
-            <h2>Plague</h2>
-            <p>
-                The Plague event is summoned by tossing the red coin (Plague Coin) into a well.
-                You must survive for 100 seconds as everything around you gets infected.
-                Once the event is over, you get luckier, and the powers are more angry.
-            </p>
-            <h2>Werewolf</h2>
-            <p>
-                The Werewolf event is summoned by using the silver bullet at the Werewolf statue.
-                You must survive for 100 seconds whilst scaring off wolves.
-                Once the event is over, you get luckier, and the powers are angrier than before.
-            </p>
-            <h2>Blaze</h2>
-            <p>
-                The Blaze event occurs at 12:00 after you beat the Werewolf event. 
-                You must survive for 50 seconds as you watch the world around you be burned.
-                Once the event is over, you're the luckiest as you can be, and the powers have sent 
-                otherworldly creatures to hunt you.
-            </p>
-            <h2>Greedy</h2>
-            <p>
-                The Greedy event is summoned by placing a gem into the Greedy Alter (the giant blue stone). 
-                You must survive for 2 minutes as you fight away Greedy's gems.
-                After this, there is no more battles.
-            </p>
-            <h2>The End</h2>
-            <p>
-                After defeating Greedy, return to the center of the land. There is a spotlight. Scavenging will
-                reveal a battery. Use the battery at the spotlight. Watch the ending. Your game has been saved.
-                You can watch it again, but why would you do that?
-            </p>
+        <div class="topnav">
+            <img src="logo.svg" class="logo">
+        </div>
+        <div class="column-wrapper">
+            <div class="col">
+                <div class="elem center">
+                    <h1>Play Nexploration</h1>
+                    <a class="bigbutton" href="https://ccn0.itch.io/nexploration">Play on itch.io</a>
+                </div>
+                <div class="elem">
+                    <h2>What's Nexploration?</h2>
+                    <p>
+                        Nexploration is a PC and Mobile survival exploration game where you play in a world
+                        cursed by the higher powers to be forever darkened and smoggy. Explore the
+                        far reaches of the world and challenge the powers to fight you. Survive
+                        and manage you vitals carefully and clear the darkness.
+                    </p>
+                </div>
+                <div class="elem">
+                    <h2>What's next?</h2>
+                    <p>
+                        Nexploration isn't dead. I have updated this page for the purpose of making it easier to view,
+                        and in preparation for the next game in the series. Keep an eye on my blog and this page for news
+                        and updates for Nexploration and it's soon to come sequel. There is no defined date.
+                    </p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="elem">
+                    <h1 title="Nexploration 1">Nexploration</h1>
+                    <p class="center">Most recent version: <a href="https://ccn0guy.blogspot.com/2024/02/nexploration-v132-final-update.html">v1.3.2</a></p>
+                    <h2>How to Play</h2>
+                    <p>
+                        There are several things on screen when you start a new game:
+                        <ul>
+                            <li>Status bar (box at the top left)</li>
+                            <li>Map button (top right)</li>
+                            <li>Scavenge button (eye button)</li>
+                            <li>Item slot (bottom left)</li>
+                            <li>And health, thirst, sanity meters</li>
+                        </ul>
+                    </p>
+                    <h3>Map</h3>
+                    <p>
+                        If you click the Map button, it'll open the Map screen. (WASD to move,
+                        QE to zoom) You can click on undiscovered tiles to search them. Click
+                        on discovered tiles to move to them. When you search an undiscovered
+                        tile, you might get an item.
+                    </p>
+                    <h3>Scavenging</h3>
+                    <p>
+                        Clicking on the Eye button will scavenge your current location. You might
+                        not get an item. You cannot scavenge the same location twice.
+                    </p>
+                    <h3>Items</h3>
+                    <p>
+                        There are many items that vary in value and utility. Examples:
+                        <ul>
+                            <li>Quenching and Food like Water Bottles, Milk, Crackers</li>
+                            <li>Healing items like Health, Pills</li>
+                            <li>Gizmoes like Thermometers, Watches, Calendars</li>
+                        </ul>
+                        These items can help you survive and other nice things. A Backpack allows
+                        you to carry one more item. It'll appear sideways when empty. Click it when
+                        you have an item in the main slot, and click it again to retrieve it and replace
+                        what's currently in your item slot. Gizmoes allow you to see extra information
+                        like the temperature, your max health, luck, what day it is, and more.
+                    </p>
+                    <h3>Vitals</h3>
+                    <p>
+
+                        You can see your current Health, Thirst, and Sanity. You can see more with gizmoes.
+                        You die if you have 0 health or sanity. You can increase your health with food or
+                        first aid items. Pills make you sane again. When your thirst reaches 0, you will lose
+                        3 health every second. Make sure to keep all of these bars high.
+                    </p>
+
+                    <hr>
+
+                    <h2>Credits</h2>
+                    <ul>
+                        <li>
+                            Programming and scripting
+                            <ul>
+                                <li>CCN0</li>
+                                <li>With scripts from @Will_Wam on Scratch</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Art and Graphics
+                            <ul>
+                                <li>CCN0 - original assets</li>
+                                <li>Various users on Unsplash.com</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Music and SFX
+                            <ul>
+                                <li>"IHTWS" by arry</li>
+                                <li>"Cross" by arry</li>
+                                <li>"Measle" by arry</li>
+                                <li>"pulloff" by arry</li>
+                                <li>"Dread" by arry</li>
+                                <li>"Mistake the Getaway" by Kevin MacLeod</li>
+                                <li>"Shiny Tech" by Kevin MacLeod</li>
+                                <li>"Exhilerate" by Kevin MacLeod</li>
+                                <li>"Two Together" by Kevin MacLeod</li>
+                                <li>CCN0 - original sounds</li>
+                                <li>freesfx.co.uk</li>
+                                <li>Scratch Asset Gallery</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Engine
+                            <ul>
+                                <li>Scratch from MIT</li>
+                                <li>Turbowarp & Turbowarp Packager by GarboMuffin</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Other Credits
+                            <ul>
+                                <li>itch.io for hosting</li>
+                                <li>"Greedy" is owned by Nice Code</li>
+                            </ul>
+                        </li>
+                        <li>Thanks for Playing.</li>
+                    </ul>
+                    
+                    <hr>
+                    <h2>Spoilers!!!</h2>
+                    <p>
+                        If you haven't played the game, run!
+                    </p>
+                    <h3>Luck</h3>
+                    <p>
+                        Luck is a useful tool in your arsenal. You start with zero, but by throwing
+                        coins into wells and surviving challenging battles, you can increase this amount.
+                        Luck is used to determine searching times, which items you find, and more.
+                    </p>
+                    <h3>Plague</h3>
+                    <p>
+                        The Plague event is summoned by tossing the red coin (Plague Coin) into a well.
+                        You must survive for 100 seconds as everything around you gets infected. Once the
+                        event is over, you get luckier, and the powers are more angry. 
+                    </p>
+                    <h3>Werewolf</h3>
+                    <p>
+                        The Werewolf event is summoned by using the silver bullet at the Werewolf statue.
+                        You must survive for 100 seconds whilst scaring off wolves. Once the event is over,
+                        you get luckier, and the powers are angrier than before.
+                    </p>
+                    <h3>Blaze</h3>
+                    <p>
+                        The Blaze event occurs at 12:00 after you beat the Werewolf event. You must survive
+                        for 50 seconds as you watch the world around you be burned. Once the event is over,
+                        you're the luckiest as you can be, and the powers have sent otherworldly creatures to
+                        hunt you. 
+                    </p>
+                    <h3>Greedy</h3>
+                    <p>
+                        The Greedy event is summoned by placing a gem into the Greedy Alter (the giant blue stone).
+                        You must survive for 2 minutes as you fight away Greedy's gems. After this, there is no more
+                        battles. 
+                    </p>
+                    <h3>The End</h3>
+                    <p>
+                        After defeating Greedy, return to the center of the land. There is a spotlight. Scavenging will
+                        reveal a battery. Use the battery at the spotlight. Watch the ending. Your game has been saved.
+                        You can watch it again, but why would you do that?
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
