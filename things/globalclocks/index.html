@@ -127,8 +127,8 @@
                 }
             } else {
                 if (isCountdown) { // COUNTDOWN
-                    timeDiff = `${days} days or ${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
-                    fullDiff = `Upcoming in ${days} days, ${Math.abs((hours-1) - ((days-1) * 24))} hours, ${minutes-1} minutes, and ${seconds} seconds.`;
+                    timeDiff = `${days-1} days or ${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
+                    fullDiff = `Upcoming in ${days-1} days, ${Math.abs((hours-1) - ((days-1) * 24))} hours, ${minutes-1} minutes, and ${seconds} seconds.`;
                 } else { // DAYS SINCE
                     timeDiff = `${days} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
                     fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
