@@ -36,7 +36,7 @@
         <p id="extraLong"></p>
         <div class="fixed" id="fixed">
             <a href="https://ccn0.github.io/things/globalclocks">GlobalClocks</a> - 
-            <a href="javascript:copyText(window.location.href.replace(/\?embed=1/, ''))">Copy Link</a>
+            <a href="javascript:navigator.clipboard.writeText(window.location.href.replace(/\?embed=1/, ''))">Copy Link</a>
         </div>
     </div>
 
@@ -72,17 +72,8 @@
             var finalURL = `${cleanURL}#${encodedMix}`;
             console.log(mixed);
             console.log(finalURL);
-            if (!embedCheckbox.checked){copyText(finalURL)}
-            else{copyText(`<iframe width="400" height="100" src="${finalURL}" title="GlobalClocks:${title}" frameborder="0"></iframe>`,"embed")};
-        }
-        function copyText(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textArea);
-            alert('Copied to clipboard!')
+            if (!embedCheckbox.checked){navigator.clipboard.writeText(finalURL)}
+            else{navigator.clipboard.writeText(`<iframe width="400" height="100" src="${finalURL}" title="GlobalClocks:${title}" frameborder="0"></iframe>`,"embed")};
         }
         let date1 = 0;
         try {
@@ -127,10 +118,10 @@
                 }
             } else {
                 if (isCountdown) { // COUNTDOWN
-                    timeDiff = `${days} days or ${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
-                    fullDiff = `Upcoming in ${days} days, ${Math.abs((hours-1) - ((days-1) * 24))} hours, ${minutes-1} minutes, and ${seconds} seconds.`;
+                    timeDiff = `${days == 1 ? '': String(days + " days or ")}${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
+                    fullDiff = `Upcoming in ${days == 1 ? '': String(days + " days, ")}${Math.abs((hours-1) - ((days-1) * 24))} hours, ${minutes-1} minutes, and ${seconds} seconds.`;
                 } else { // DAYS SINCE
-                    timeDiff = `${days} days or ${hours}:${formattedMinutes}:${formattedSeconds}`;
+                    timeDiff = `${days == 1 ? '': String(days + " days or ")}${hours}:${formattedMinutes}:${formattedSeconds}`;
                     fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
                 }
             }
