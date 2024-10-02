@@ -99,9 +99,9 @@
             let formattedMinutes
 
             if (!isCountdown) {
-                formattedMinutes = minutes < 10 ? `0${minutes}` : minutes; // days since
+                formattedMinutes = String(minutes) < 2 ? `0${minutes}` : minutes; // days since
             } else {
-                formattedMinutes = minutes < 10 ? `0${minutes-1}` : minutes-1; // countdown
+                formattedMinutes = String(minutes) < 2 ? `0${minutes-1}` : minutes-1; // countdown
             }
 
             const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
