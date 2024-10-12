@@ -13,6 +13,14 @@ This was made for a vulnerability in login kiosks and or other browser panels th
 * Click the Microsoft Bing logo in the top left corner
 * Search on Bing for 'ccn0 portal' and click the result for `ccn0.github.io`
 
+### GITHUB METHOD
+
+* On Microsoft.com's homepage, search for 'github' and hit enter
+* Click on the result for **GitHub Foundations - Training | Microsoft Learn**
+* Under the **Prerequisites**, click **A GitHub** to visit GitHub
+* Search for 'repo:ccn0/ccn0'
+* Click on the link for the portal
+
 ### ~~BING AI METHOD FAST~~ GONE
 
 * On Microsoft.com's homepage, search for Bing and click the autocomplete result 'Learn about the new Bing'
