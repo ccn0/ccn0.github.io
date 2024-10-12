@@ -44,5 +44,10 @@ Disallow: /quick/
 Disallow: /daily/
 Disallow: /img/
 Disallow: /rad/
-Disallow: /pages/
+Disallow: /pages/updates/
+Disallow: /blah/
 Allow: /rad/whatisthis.html
+Allow: /pages/menuengine/
+Allow: /pages/quickfunctions/
+Allow: /pages/pre/
+Allow: /pages/nexploration/

@@ -2,6 +2,7 @@ def makeRedirect():
     title = input("title: ")
     print("https://ccn0.github.io")
     url = input("url: ")
+    filename = input("name of file: ")
 
     html_content = f'''<!DOCTYPE html>
 <html lang="en">
@@ -19,7 +20,7 @@ def makeRedirect():
 </body>
 </html>'''
 
-    with open(f'''{title}.html''', "w") as file:
+    with open(f'''{filename}.html''', "w") as file:
         file.write(html_content)
 
     print("did it preobalby")
