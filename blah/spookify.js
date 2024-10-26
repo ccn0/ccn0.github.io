@@ -1,6 +1,6 @@
 /*
 
-made by CCN0 v1.0
+made by CCN0 v1.01
 this is a screamer, so click cancel when it pops up if you dont want to partake, ever.
 
 */
@@ -95,10 +95,52 @@ this is a screamer, so click cancel when it pops up if you dont want to partake,
         
         document.head.appendChild(style);
     } else {
-        if (localStorage.getItem('spooky') != "false" && (confirm('WARNING: Flashing lights & loud noises. // If you click CONFIRM, you will be participating in the Halloween festivities. Clicking CANCEL will opt you out of playing any of the Halloween festivities to come.'))) {
-            localStorage.setItem('spooky','true');
-        } else {
-            localStorage.setItem('spooky','false');
-        }
+        if (localStorage.getItem('spooky') != "false") {
+            const modalcontainer = document.createElement("div");
+            modalcontainer.classList.add('modal')
+            modalcontainer.style.display = "flex";
+            modalcontainer.style.justifyContent = "center";
+            modalcontainer.style.alignItems = "center";
+            modalcontainer.style.display = "flex";
+            modalcontainer.style.position = "fixed";
+            modalcontainer.style.textAlign = "center";
+            modalcontainer.style.top = "0";
+            modalcontainer.style.left = "0";
+            modalcontainer.style.width = "100%";
+            modalcontainer.style.height = "100vh";
+            modalcontainer.style.backgroundColor = "#00000080";
+
+            const contain = document.createElement('div');
+            contain.style.backgroundColor = "#000";
+            contain.style.border = "2px dashed #fff";
+            contain.style.padding = "15px";
+
+            const h1 = document.createElement('h1');
+            h1.textContent = 'WARNING: Flashing lights & loud noises.';
+            contain.appendChild(h1);
+            
+            const par = document.createElement('p');
+            par.textContent = 'If you click CONFIRM, you will be participating in the Halloween festivities. Clicking CANCEL will opt you out of playing any of the Halloween festivities to come.';
+            contain.appendChild(par);
+
+            const confirmbutton = document.createElement('button');
+            confirmbutton.textContent = "CONFIRM";
+            confirmbutton.classList.add("rec");
+            confirmbutton.setAttribute('onclick',"localStorage.setItem('spooky','true');document.querySelector('.modal').remove();");
+            contain.appendChild(confirmbutton);
+
+            const optoutbutton = document.createElement('button');
+            optoutbutton.textContent = "OPT OUT";
+            optoutbutton.setAttribute('onclick',"localStorage.setItem('spooky','false');document.querySelector('.modal').remove();");
+            contain.appendChild(optoutbutton);
+
+            const closebutton = document.createElement('button');
+            closebutton.textContent = "later pls";
+            closebutton.setAttribute('onclick',"document.querySelector('.modal').remove();");
+            contain.appendChild(closebutton);
+
+            modalcontainer.appendChild(contain);
+            document.body.appendChild(modalcontainer);
+        };
     };
 })();

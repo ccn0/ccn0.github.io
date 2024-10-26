@@ -128,28 +128,28 @@ ins {
 
 /* color tags for sh */
 
-.news { /*guess*/
+li.news { /*guess*/
     border-left: 8px solid #ff00ff ;
 }
-.fh { /*funny hahas*/
+li.fh { /*funny hahas*/
     border-left: 5px solid #ff5858;
 }
-.np { /*ccnotepad*/
+li.np { /*ccnotepad*/
     border-left: 5px solid rgb(118, 115, 133);
 }
-.cf { /*croshf*/
+li.cf { /*croshf*/
     border-left: 5px solid rgb(255, 236, 92);
 }
-.yd { /*yourdoc*/
+li.yd { /*yourdoc*/
     border-left: 5px solid rgb(255, 119, 0);
 }
-.pa { /*presentablecss*/
+li.pa { /*presentablecss*/
     border-left: 5px solid #d096ff;
 }
-.tt { /* soundlets plus */
+li.tt { /* soundlets plus */
     border-left: 5px solid rgb(100, 239, 72);
 }
-.impr { /*important*/
+li.impr { /*important*/
     border-left-width: 8px;
 }
 /* List Shits */
@@ -197,11 +197,37 @@ li {
     }
 }
 
-/* games and players */
+/* games and players and buttons and inputs */
 
 .player {
     text-align: center;
     iframe {
         max-width:100%;
+    }
+}
+
+button {
+    background-color: #fff;
+    border: 2px solid #000;
+    padding: 14px 20px;
+    font-family: monospace;
+    font-size: 2rem;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 10px;
+    &.rec {
+        background-color: #ff0;
+    }
+    &.neg {
+        background-color: #f00;
+    }
+    &.pos {
+        background-color: #0ff;
+    }
+    &:hover {
+        text-decoration: underline;
+    }
+    &:active {
+        background-color: #808080!important;
     }
 }
