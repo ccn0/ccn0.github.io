@@ -123,6 +123,11 @@ this is a screamer, so click cancel when it pops up if you dont want to partake,
             par.textContent = 'If you click CONFIRM, you will be participating in the Halloween festivities. Clicking CANCEL will opt you out of playing any of the Halloween festivities to come.';
             contain.appendChild(par);
 
+            const a = document.createElement('a');
+            a.innerHTML = 'For more information, check my blog.<br>';
+            a.href = 'https://ccn0guy.blogspot.com/2024/10/halloween-2024.html';
+            contain.appendChild(a);
+
             const confirmbutton = document.createElement('button');
             confirmbutton.textContent = "CONFIRM";
             confirmbutton.classList.add("rec");
