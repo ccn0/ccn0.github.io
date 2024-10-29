@@ -1,6 +1,6 @@
 /*
 
-made by CCN0 v1.01
+made by CCN0 v1.02
 this is a screamer, so click cancel when it pops up if you dont want to partake, ever.
 
 */
@@ -42,6 +42,7 @@ this is a screamer, so click cancel when it pops up if you dont want to partake,
                 spookySound.play();
                 spookElem.style.display = 'block';
                 spookySound.addEventListener('ended', () => {
+                    spookElem.style.display = 'none';
                     resolve();
                 });
             });
@@ -56,8 +57,21 @@ this is a screamer, so click cancel when it pops up if you dont want to partake,
         links[chosenLink].classList.add('spooky');
         links[chosenLink].setAttribute('title',links[chosenLink].href);
         links[chosenLink].removeAttribute('href');
-        links[chosenLink].addEventListener('click',()=>{
-            scare().then(finale);
+        links[chosenLink].addEventListener('mousedown',(e)=>{
+            console.log(e.button)
+            switch (e.button) {
+                case 0:
+                    scare().then(finale);
+                    break;
+                case 1:
+                    e.preventDefault();
+                    scare();
+                    window.open(originalDestination, "_blank");
+                    break;
+            
+                default:
+                    break;
+            }
         });
     
         const css = `
@@ -120,7 +134,7 @@ this is a screamer, so click cancel when it pops up if you dont want to partake,
             contain.appendChild(h1);
             
             const par = document.createElement('p');
-            par.textContent = 'If you click CONFIRM, you will be participating in the Halloween festivities. Clicking CANCEL will opt you out of playing any of the Halloween festivities to come.';
+            par.textContent = 'If you click CONFIRM, you will be participating in the Halloween festivities. Clicking OPT OUT will opt you out of playing any of the Halloween festivities to come.';
             contain.appendChild(par);
 
             const a = document.createElement('a');
@@ -140,7 +154,7 @@ this is a screamer, so click cancel when it pops up if you dont want to partake,
             contain.appendChild(optoutbutton);
 
             const closebutton = document.createElement('button');
-            closebutton.textContent = "later pls";
+            closebutton.textContent = "ask later idk";
             closebutton.setAttribute('onclick',"document.querySelector('.modal').remove();");
             contain.appendChild(closebutton);
 
