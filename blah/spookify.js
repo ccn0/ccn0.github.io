@@ -1,6 +1,6 @@
 /*
 
-made by CCN0 v1.02
+made by CCN0 v1.03
 this is a screamer, so click cancel when it pops up if you dont want to partake, ever.
 
 */
@@ -13,6 +13,7 @@ this is a screamer, so click cancel when it pops up if you dont want to partake,
             ["https://media.tenor.com/E_HSK33-xokAAAAi/fnaf-bunny.gif","https://ccn0.github.io/img/audio/plus/fnaf3jumpscare.mp3"],
             ["https://ccn0.github.io/img/spooky/smilegirl.png","https://ccn0.github.io/img/audio/plus/funandlaughing.mp3"],
             ["https://ccn0.github.io/img/spooky/spookyhillman.gif","https://ccn0.github.io/img/audio/plus/cardrivinghills.mp3"],
+            ["https://ccn0.github.io/img/spooky/niceman24kbfile.png","https://ccn0.github.io/img/audio/plus/southparkbestofcousinelvin.mp3"],
         ];
         const chosenScare = spookyList[Math.floor(spookyList.length * Math.random())];
     
