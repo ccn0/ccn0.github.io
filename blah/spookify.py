@@ -54,4 +54,4 @@ def rem_string_before_body_end(file_list_path, string_to_remove):
 # add_string_before_body_end("blah/spooked.txt", "<script src='/blah/spookify.js'></script>")
 
 # TO UNDO EVERYTHING
-# rem_string_before_body_end("blah/spooked.txt", "<script src='/blah/spookify.js'></script>")
+rem_string_before_body_end("blah/spooked.txt", "<script src='/blah/spookify.js'></script>")
