@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="/ccn0.svg">
+    <title>CCN0 | Settings</title>
+    <link rel="stylesheet" href="/ccn02.css">
+</head>
+<body>
+    <div class="top">
+        <h1>Settings</h1>
+        <h3>How do you want your experience to go?</h3>
+        <div>
+            <a href="/index.html">Home</a> | 
+            <a href="/things/blog/">Blog</a> | 
+            <a href="/games">'Games'</a> | 
+            <a href="/things/">Things</a>
+        </div>
+    </div>
+    <hr>
+    <div class="posts">
+        <ul>
+            <!-- 
+            <li title="#">
+                <a href="#">Text</a><br>desc
+            </li>
+            -->
+            <div class="form">
+                <button onclick="saveSettings()" id="savebutton">Save</button>
+                <button onclick="tryReset()" class="neg" id="resetbutton">Reset All Settings</button>
+                <hr>
+
+                <h2>Holidays</h2>
+                <p>Some holiday events have flashing lights! You will never be automatically enrolled.</p>
+                
+                <label for="aprilfools">Opt In to any April Fools jokes?</label>
+                <select name="aprilfools">
+                    <option value="">~~ SELECT ~~</option>
+                    <option value="true">YES</option>
+                    <option value="false">NO</option>
+                </select><br>
+                <label for="spooky">Opt In to any Halloween festivities?</label>
+                <select name="spooky">
+                    <option value="">~~ SELECT ~~</option>
+                    <option value="true">YES</option>
+                    <option value="false">NO</option>
+                </select><br>
+                <label for="christmas">Opt In to any Christmas festivities?</label>
+                <select name="christmas">
+                    <option value="">~~ SELECT ~~</option>
+                    <option value="true">YES</option>
+                    <option value="false">NO</option>
+                </select><br>
+            </div>
+        </ul>
+        <hr>
+        <h3>MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></h3>
+    </div>
+    <script>
+        function loadSettings() {
+            document.querySelector("select[name='spooky']").value = localStorage.getItem("spooky");
+            document.querySelector("select[name='aprilfools']").value = localStorage.getItem("aprilfools");
+            document.querySelector("select[name='christmas']").value = localStorage.getItem("christmas");
+        };
+
+        function saveSettings() {
+            localStorage.setItem("aprilfools",String(document.querySelector("select[name='aprilfools']").value));
+            localStorage.setItem("spooky",String(document.querySelector("select[name='spooky']").value));
+            localStorage.setItem("christmas",String(document.querySelector("select[name='christmas']").value));
+            buttonAlert("savebutton","Saved");
+        };
+
+        function tryReset() {
+            if (confirm("Are you sure you want to reset all settings?") == true) {
+                localStorage.removeItem("aprilfools");
+                localStorage.removeItem("spooky");
+                localStorage.removeItem("christmas");
+                buttonAlert("resetbutton","Reset Successfully");
+            };
+            loadSettings();
+        };
+
+        function buttonAlert(buttonId, alert) {
+            const button = document.getElementById(buttonId);
+            const ogText = button.textContent;
+            const ogBG = button.style.backgroundColor;
+            button.textContent = alert;
+            setTimeout(() => {
+                button.textContent = ogText
+                button.style.backgroundColor = ogBG
+            }, 1000);
+        };
+    </script>
+    </body>
+</html>
