@@ -59,6 +59,8 @@
         <h3>MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></h3>
     </div>
     <script>
+        document.addEventListener("DOMContentLoaded",()=>{loadSettings()});
+
         function loadSettings() {
             document.querySelector("select[name='spooky']").value = localStorage.getItem("spooky");
             document.querySelector("select[name='aprilfools']").value = localStorage.getItem("aprilfools");
