@@ -184,22 +184,22 @@
                 const [command, ...args] = cursorLine.split(' ');
 
                 if (command?.startsWith('>')) {
-                    switch (command) {
-                        case ">cmds":
+                    switch (command.slice(1)) {
+                        case "cmds":
                             textarea.value += "\n>cmds: shows this\n>replace <regex> <text>: replaces text that matches regex\n>eval <code>: run javascript and print to line\n>dark: toggle dark mode\n>open: append a file to notepad";
-                        case ">eval":
+                        case "eval":
                             try {
                                 replaceLine(location, eval(args.join(' ')));
                             } catch (error) {
                                 replaceLine(location, error);
                             };
                             break;
-                        case ">replace":
+                        case "replace":
                             let regex = new RegExp(args[0], 'g');
                             textarea.value = textarea.value.replace(regex, args[1]);
                             deleteLine(location);
                             break;
-                        case ">dark":
+                        case "dark":
                             deleteLine(location);
                             if (textarea.getAttribute('dark') === '') {
                                 textarea.removeAttribute('dark');
@@ -209,7 +209,7 @@
                                 history.replaceState(null, 1, window.location.href + "?dark");
                             };
                             break;
-                        case ">wrap":
+                        case "wrap":
                             deleteLine(location);
                             if (textarea.getAttribute('enablewrap') === '') {
                                 textarea.removeAttribute('enablewrap');
@@ -217,7 +217,7 @@
                                 textarea.setAttribute('enablewrap','');
                             };
                             break;
-                        case ">open":
+                        case "open":
                             const input = document.createElement("input");
                             input.type = "file";
                             input.accept = "text/*";
@@ -237,7 +237,7 @@
                             });
                             input.click();
                             break;
-                        case ">name":
+                        case "name":
                             if (args[0] && args[0].length > 0) {
                                 nameOfDocument = args[0];
                                     document.title = nameOfDocument;
@@ -247,7 +247,7 @@
                             document.title = nameOfDocument;
                             deleteLine(location);
                             break;
-                        case ">font":
+                        case "font":
                             if (args[0] && args[0].length > 0) {
                                 textarea.style.fontFamily = args[0];
                             } else {
@@ -255,7 +255,7 @@
                             };
                             deleteLine(location);
                             break;
-                        case ">saveas":
+                        case "saveas":
                             deleteLine(location);
                             xcontent = textarea.value;
                             xblob = new Blob([xcontent], { type: 'text/plain' });
@@ -265,7 +265,7 @@
                             xa.click();
                             xa.remove();
                             break;
-                        case ">save":
+                        case "save":
                             deleteLine(location);
                             xcontent = textarea.value;
                             xblob = new Blob([xcontent], { type: 'text/plain' });
