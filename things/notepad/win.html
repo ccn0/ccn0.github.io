@@ -97,8 +97,10 @@
                 e.preventDefault();
                 if (textarea.getAttribute('dark') === '') {
                     textarea.removeAttribute('dark');
+                    history.replaceState(null, 1, location.href.replace('?dark',''));
                 } else {
                     textarea.setAttribute('dark','');
+                    history.replaceState(null, 1, location.href + "?dark");
                 };
             };
         });
