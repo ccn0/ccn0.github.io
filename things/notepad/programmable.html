@@ -21,9 +21,14 @@
             overflow: hidden;
         }
         textarea {
+            text-wrap: nowrap;
+            &[enablewrap] {
+                text-wrap: wrap;
+            }
+            font-family: monospace;
             margin: -1px 0 -1px 0;
-            height: calc(100vh + 1px);
-            width: 100%;
+            min-height: calc(100vh + 1px);
+            min-width: 100%;
             resize: none;
             border: none;
             outline: #fff;
@@ -62,54 +67,22 @@
                     alert("Couldn't get file.")
                 });
         };
+        let lastInput = "";
+        let nameOfDocument = "text.txt";
 
-
-        document.addEventListener('keydown', function(event) {
-            if (event.ctrlKey && event.key === 's' && !event.altKey) {
-                event.preventDefault();
-                saveToFile();
-            }
-        });
-        document.addEventListener('keydown', function(event) {
-            if (event.ctrlKey && event.altKey && event.key === 's') {
-                event.preventDefault();
-                a = prompt('Name of file? e.g. File.txt or File.js');
-                saveToFile(a);
-            };
-        });
         function saveToFile(x) {
             const content = textarea.value;
             const blob = new Blob([content], { type: 'text/plain' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             if (x) {
-                a.download = `${x}`;
+                a.download = x;
             } else {
-                a.download = 'text.txt';
+                a.download = nameOfDocument;
             };
             a.click();
             a.remove();
         };
-        textarea.addEventListener('keydown', function(event) {
-            if (event.key === 'Tab') {
-            event.preventDefault();
-            const start = this.selectionStart;
-            const end = this.selectionEnd;
-            const spaces = '    ';
-            this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
-            this.selectionStart = this.selectionEnd = start + spaces.length;
-            };
-        });
-        textarea.addEventListener('keydown', function(event) {
-            if (event.altKey && event.key === 'd') {
-            event.preventDefault();
-            if (textarea.getAttribute('dark') === '') {
-                textarea.removeAttribute('dark');
-            } else {
-                textarea.setAttribute('dark','');
-            };
-            };
-        });
         // window.addEventListener('beforeunload', function(event) {
         //     const textareaValue = textarea.value.trim();
         //     if (textareaValue !== '') {
@@ -124,7 +97,7 @@
                 lines[lineNumber - 1] = newContent;
                 textarea.value = lines.join("\n");
             } else {
-                alert("No line exists at this location.");
+                console.error("No line exists at this location.");
             };
         };
         function deleteLine(lineNumber) {
@@ -136,9 +109,73 @@
             lines.splice(lineNumber - 1, 1);
             textarea.value = lines.join("\n");
         };
+        function getLineAtCursor() {
+            const text = textarea.value;
 
+            const cursorPosition = textarea.selectionStart;
+
+            const lines = text.split('\n');
+
+            let charCount = 0;
+
+            for (let i = 0; i < lines.length; i++) {
+                charCount += lines[i].length + 1;
+            
+                if (cursorPosition < charCount) {
+                    return lines[i]
+                }
+            }
+
+            return null;
+        };
+        function getLine(lineNumber) {
+            const lines = textarea.value.split('\n');
+            const line = lines[lineNumber - 1];
+            if (line !== undefined) {
+                return line;
+            } else {
+                return null;
+            }
+        }
         textarea.addEventListener('keydown', (e) => {
+            if (event.ctrlKey && event.key === 's' && !event.altKey) {
+                event.preventDefault();
+                saveToFile();
+            };
+            if (event.ctrlKey && event.altKey && event.key === 's') {
+                event.preventDefault();
+                a = prompt('Name of file? e.g. File.txt or File.js');
+                saveToFile(a);
+            };
+            if (event.key === 'Tab') {
+                event.preventDefault();
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
+                const spaces = '    ';
+                this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
+                this.selectionStart = this.selectionEnd = start + spaces.length;
+            };
+            if (event.ctrlKey && event.key === 'd') {
+                e.preventDefault();
+                if (textarea.getAttribute('dark') === '') {
+                    textarea.removeAttribute('dark');
+                } else {
+                    textarea.setAttribute('dark','');
+                };
+            };
+            if (event.ctrlKey && event.altKey && event.key === 'w') {
+                e.preventDefault();
+                if (textarea.getAttribute('enablewrap') === '') {
+                    textarea.removeAttribute('enablewrap');
+                } else {
+                    textarea.setAttribute('enablewrap','');
+                };
+            };
+            if (e.key === "ArrowUp" && e.ctrlKey) {
+                textarea.value += lastInput;
+            };
             if (e.key === "Enter") {
+                lastInput = getLineAtCursor();
                 const lines = textarea.value.split('\n');
                 const location = textarea.value.substring(0, textarea.selectionStart).split('\n').length;
                 const cursorLine = lines[textarea.value.substring(0, textarea.selectionStart).split('\n').length - 1];
@@ -146,6 +183,8 @@
 
                 if (command?.startsWith('>')) {
                     switch (command) {
+                        case ">cmds":
+                            textarea.value += "\n>cmds: shows this\n>replace <regex> <text>: replaces text that matches regex\n>eval <code>: run javascript and print to line\n>dark: toggle dark mode\n>open: append a file to notepad";
                         case ">eval":
                             try {
                                 replaceLine(location, eval(args.join(' ')));
@@ -154,9 +193,55 @@
                             };
                             break;
                         case ">replace":
-                            deleteLine(location);
                             let regex = new RegExp(args[0], 'g');
                             textarea.value = textarea.value.replace(regex, args[1]);
+                            deleteLine(location);
+                            break;
+                        case ">dark":
+                            deleteLine(location);
+                            if (textarea.getAttribute('dark') === '') {
+                                textarea.removeAttribute('dark');
+                            } else {
+                                textarea.setAttribute('dark','');
+                            };
+                            break;
+                        case ">open":
+                            const input = document.createElement("input");
+                            input.type = "file";
+                            input.accept = "text/*";
+                            input.addEventListener("change", (event) => {
+                                const file = event.target.files[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onload = (e) => {
+                                        deleteLine(location);
+                                        const content = e.target.result;
+                                        textarea.value += content;
+                                    };
+                                    reader.readAsText(file);
+                                    nameOfDocument = file.name;
+                                    document.title = nameOfDocument;
+                                }
+                            });
+                            input.click();
+                            break;
+                        case ">name":
+                            if (args[0] && args[0].length > 0) {
+                                nameOfDocument = args[0];
+                                    document.title = nameOfDocument;
+                            } else {
+                                nameOfDocument = "text.txt";
+                            };
+                            document.title = nameOfDocument;
+                            deleteLine(location);
+                            break;
+                        case ">font":
+                            if (args[0] && args[0].length > 0) {
+                                textarea.style.fontFamily = args[0];
+                            } else {
+                                textarea.style.fontFamily = "monospace";
+                            };
+                            deleteLine(location);
                             break;
                         default:
                             break;
