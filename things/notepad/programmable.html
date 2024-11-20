@@ -174,7 +174,8 @@
                 };
             };
             if (e.key === "ArrowUp" && e.ctrlKey) {
-                textarea.value += lastInput;
+                e.preventDefault();
+		textarea.value += lastInput;
             };
             if (e.key === "Enter") {
                 lastInput = getLineAtCursor();
