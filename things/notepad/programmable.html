@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.webp">
     <title>Programmable Notepad</title>
-    <meta name="description" content="CCN0's latest notepad, featuring commands like find and replace, and evaluating scripts.">
+    <meta name="description" content="CCN0's Programmable Notepad, featuring commands for find and replace, and running scripts.">
     <style>
         html{
             max-height: 100vh;
@@ -19,10 +19,14 @@
             margin: 0;
             overflow: -moz-hidden-unscrollable;
             overflow: hidden;
+            background-color: #fff;
+            &[dark] {
+                background-color: #000;
+            }
         }
         textarea {
             text-wrap: nowrap;
-            &[enablewrap] {
+            &[wrap] {
                 text-wrap: wrap;
             }
             font-family: monospace;
@@ -44,31 +48,21 @@
     <noscript>JavaScript is disabled, try <a href="light.html"><i>Notepad</i> Premium</a> made for use without JavaScript.</noscript>
     <textarea spellcheck="false" id="textarea"></textarea>
     <script>
+        const textarea = document.getElementById('textarea');
+        const Notepad = {
+            version: "0.003",
+            field: textarea,
+            filename: "text.txt",
+            lastInput: "",
+            location: 0,
+            saved: false,
+            neveraskbeforeleaving: false,
+        };
+
         const params = new URLSearchParams(window.location.search);
         if (params.has('dark')) {
             textarea.setAttribute('dark','');
         };
-        if (params.has('file')) {
-            const url = decodeURIComponent(params.get('file'));
-
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`http error ${response.status}`);
-                    }
-                    return response.text();
-                })
-                .then(text => {
-                    a = confirm(`Are you sure you want to load this file from "${url}"?`);
-                    if (a) {textarea.value = text;}
-                })
-                .catch(error => {
-                    console.error('cant get:', error);
-                    alert("Couldn't get file.")
-                });
-        };
-        let lastInput = "";
-        let nameOfDocument = "text.txt";
 
         function saveToFile(x) {
             const content = textarea.value;
@@ -78,19 +72,24 @@
             if (x) {
                 a.download = x;
             } else {
-                a.download = nameOfDocument;
+                a.download = Notepad.filename;
             };
             a.click();
             a.remove();
+            Notepad.saved = true;
+            refreshTitle();
         };
-        // window.addEventListener('beforeunload', function(event) {
-        //     const textareaValue = textarea.value.trim();
-        //     if (textareaValue !== '') {
-        //         event.preventDefault();
-        //         event.returnValue = '';
-        //         return 'Are you sure you want to leave without saving?';
-        //     }
-        // });
+        function refreshTitle() {
+            document.title = `${!Notepad.saved && !Notepad.neveraskbeforeleaving ? "* ":""}${Notepad.filename} - Programmable Notepad`;
+        };
+        window.addEventListener('beforeunload', function(e) {
+            const textareaValue = textarea.value.trim();
+            if (!Notepad.saved && !Notepad.neveraskbeforeleaving) {
+                e.preventDefault();
+                e.returnValue = '';
+                return 'Are you sure you want to leave without saving?';
+            };
+        });
         function replaceLine(lineNumber, newContent) {
             const lines = textarea.value.split("\n");
             if (lineNumber > 0 && lineNumber <= lines.length) {
@@ -98,6 +97,7 @@
                 textarea.value = lines.join("\n");
             } else {
                 console.error("No line exists at this location.");
+                textarea.value += "\n";
             };
         };
         function deleteLine(lineNumber) {
@@ -123,8 +123,8 @@
             
                 if (cursorPosition < charCount) {
                     return lines[i]
-                }
-            }
+                };
+            };
 
             return null;
         };
@@ -135,87 +135,132 @@
                 return line;
             } else {
                 return null;
-            }
-        }
+            };
+        };
+        textarea.addEventListener('input', (e)=>{
+            refreshTitle();
+            Notepad.saved = false;
+        });
         textarea.addEventListener('keydown', (e) => {
-            if (event.ctrlKey && event.key === 's' && !event.altKey) {
+            Notepad.location = textarea.value.substring(0, textarea.selectionStart).split('\n').length;
+
+            if (event.ctrlKey && event.key === 's') {
                 event.preventDefault();
                 saveToFile();
             };
-            if (event.ctrlKey && event.altKey && event.key === 's') {
+            if (event.ctrlKey && event.key === 'S') {
                 event.preventDefault();
                 a = prompt('Name of file? e.g. File.txt or File.js');
                 saveToFile(a);
             };
             if (event.key === 'Tab') {
                 event.preventDefault();
-                const start = this.selectionStart;
-                const end = this.selectionEnd;
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
                 const spaces = '    ';
-                this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
-                this.selectionStart = this.selectionEnd = start + spaces.length;
+                textarea.value = textarea.value.substring(0, start) + spaces + textarea.value.substring(end);
+                textarea.selectionStart = textarea.selectionEnd = start + spaces.length;
             };
             if (event.ctrlKey && event.key === 'd') {
                 e.preventDefault();
-                if (textarea.getAttribute('dark') === '') {
-                    textarea.removeAttribute('dark');
-                    history.replaceState(null, 1, location.href.replace('?dark',''));
-                } else {
-                    textarea.setAttribute('dark','');
-                    history.replaceState(null, 1, location.href + "?dark");
-                };
+                    let locationhref = new URL(window.location.href);
+
+                    if (textarea.hasAttribute('dark')) {
+                        textarea.removeAttribute('dark');
+                        document.body.removeAttribute('dark');
+                        locationhref.searchParams.delete('dark');
+                    } else {
+                        textarea.setAttribute('dark', '');
+                        document.body.setAttribute('dark', '');
+                        locationhref.searchParams.set('dark', '');
+                    };
+
+                    history.replaceState(null, '', locationhref.href);
             };
             if (event.ctrlKey && event.altKey && event.key === 'w') {
                 e.preventDefault();
-                if (textarea.getAttribute('enablewrap') === '') {
-                    textarea.removeAttribute('enablewrap');
+                if (textarea.getAttribute('wrap') === '') {
+                    textarea.removeAttribute('wrap');
                 } else {
-                    textarea.setAttribute('enablewrap','');
+                    textarea.setAttribute('wrap','');
                 };
             };
             if (e.key === "ArrowUp" && e.ctrlKey) {
                 e.preventDefault();
-		textarea.value += lastInput;
+		        textarea.value += Notepad.lastInput;
+                textarea.selectionStart = textarea.selectionEnd = textarea.selectionStart + Notepad.lastInput.length;
             };
             if (e.key === "Enter") {
-                lastInput = getLineAtCursor();
+                if (getLineAtCursor() != "") {
+                    Notepad.lastInput = getLineAtCursor();
+                }
+
                 const lines = textarea.value.split('\n');
-                const location = textarea.value.substring(0, textarea.selectionStart).split('\n').length;
                 const cursorLine = lines[textarea.value.substring(0, textarea.selectionStart).split('\n').length - 1];
                 const [command, ...args] = cursorLine.split(' ');
+                const argsExist = (args[0] && args[0].length > 0);
+                const slash = ">";
 
-                if (command?.startsWith('>')) {
-                    switch (command.slice(1)) {
-                        case "cmds":
-                            textarea.value += "\n>cmds: shows this\n>replace <regex> <text>: replaces text that matches regex\n>eval <code>: run javascript and print to line\n>dark: toggle dark mode\n>open: append a file to notepad";
+                if (command?.startsWith(slash)) {
+                    e.preventDefault();
+                    switch (command.slice(slash.length)) {
+                        case "help":
+                            deleteLine(Notepad.location);
+                            helpmessage = ">help: shows this\n>replace <regex> <text>: replaces text that matches regex\n>eval <code>: run javascript and print to line\n>dark: toggle dark mode\n>wrap: toggle line wrap\n>font: specify a font for notepad\n>askbeforeleaving: toggle asking before leaving\n>open: append a file to notepad\n>web <url>: fetch and append a file to notepad\n>save: save current file\n>saveas <filename>: save current file as filename";
+                            if (typeof textarea.value === "undefined") {
+                                textarea.value = helpmessage;
+                            } else {
+                                textarea.value += helpmessage;
+                            };
+                            break;
                         case "eval":
                             try {
-                                replaceLine(location, eval(args.join(' ')));
+                                replaceLine(Notepad.location, eval(args.join(' ')) + "\n");
                             } catch (error) {
-                                replaceLine(location, error);
+                                replaceLine(Notepad.location, error + "\n");
                             };
                             break;
                         case "replace":
                             let regex = new RegExp(args[0], 'g');
                             textarea.value = textarea.value.replace(regex, args[1]);
-                            deleteLine(location);
+                            replaceLine(Notepad.location,'');
                             break;
                         case "dark":
-                            deleteLine(location);
-                            if (textarea.getAttribute('dark') === '') {
-                                textarea.removeAttribute('dark');
-                                history.replaceState(null, 1, window.location.href.replace('?dark',''));
+                            replaceLine(Notepad.location,'');
+                            let locationhref = new URL(window.location.href);
+                            if (!argsExist) {
+                                if (textarea.hasAttribute('dark')) {
+                                    textarea.removeAttribute('dark');
+                                    locationhref.searchParams.delete('dark');
+                                } else {
+                                    textarea.setAttribute('dark', '');
+                                    locationhref.searchParams.set('dark', '');
+                                };
                             } else {
-                                textarea.setAttribute('dark','');
-                                history.replaceState(null, 1, window.location.href + "?dark");
+                                if (args.join(' ') == "true") {
+                                    textarea.setAttribute('dark', '');
+                                    locationhref.searchParams.set('dark', '');
+                                } else {
+                                    textarea.removeAttribute('dark');
+                                    locationhref.searchParams.delete('dark');
+                                };
                             };
+                            history.replaceState(null, '', locationhref.href);
                             break;
                         case "wrap":
-                            deleteLine(location);
-                            if (textarea.getAttribute('enablewrap') === '') {
-                                textarea.removeAttribute('enablewrap');
+                            replaceLine(Notepad.location,'');
+                            if (!argsExist) { 
+                                if (textarea.getAttribute('wrap') === '') {
+                                    textarea.removeAttribute('wrap');
+                                } else {
+                                    textarea.setAttribute('wrap','');
+                                };
                             } else {
-                                textarea.setAttribute('enablewrap','');
+                                if (args.join(' ') == "true") {
+                                    textarea.setAttribute('wrap','');
+                                } else {
+                                    textarea.removeAttribute('wrap');
+                                };
                             };
                             break;
                         case "open":
@@ -227,60 +272,91 @@
                                 if (file) {
                                     const reader = new FileReader();
                                     reader.onload = (e) => {
-                                        deleteLine(location);
+                                        deleteLine(Notepad.location);
                                         const content = e.target.result;
                                         textarea.value += content;
                                     };
                                     reader.readAsText(file);
-                                    nameOfDocument = file.name;
-                                    document.title = nameOfDocument;
+                                    Notepad.filename = file.name;
+                                    refreshTitle();
                                 }
                             });
                             input.click();
                             break;
                         case "name":
-                            if (args[0] && args[0].length > 0) {
-                                nameOfDocument = args[0];
-                                    document.title = nameOfDocument;
+                            if (argsExist) {
+                                Notepad.filename = args.join(" ");
                             } else {
-                                nameOfDocument = "text.txt";
+                                Notepad.filename = "text.txt";
                             };
-                            document.title = nameOfDocument;
-                            deleteLine(location);
+                            refreshTitle();
+                            replaceLine(Notepad.location,'');
                             break;
                         case "font":
-                            if (args[0] && args[0].length > 0) {
-                                textarea.style.fontFamily = args[0];
+                            if (argsExist) {
+                                textarea.style.fontFamily = args.join(" ");
                             } else {
                                 textarea.style.fontFamily = "monospace";
                             };
-                            deleteLine(location);
+                            replaceLine(Notepad.location,'');
+                            break;
+                        case "color":
+                            if (argsExist) {
+                                textarea.style.color = args.join(" ");
+                            } else {
+                                textarea.style.color = "";
+                            };
+                            replaceLine(Notepad.location,'');
+                            break;
+                        case "background":
+                            if (argsExist) {
+                                textarea.style.background = args.join(" ");
+                            } else {
+                                textarea.style.background = "";
+                            };
+                            replaceLine(Notepad.location,'');
                             break;
                         case "saveas":
-                            deleteLine(location);
-                            xcontent = textarea.value;
-                            xblob = new Blob([xcontent], { type: 'text/plain' });
-                            xa = document.createElement('a');
-                            xa.href = URL.createObjectURL(xblob);
-                            xa.download = args;
-                            xa.click();
-                            xa.remove();
+                            deleteLine(Notepad.location);
+                            saveToFile(args.join(" "));
                             break;
                         case "save":
-                            deleteLine(location);
-                            xcontent = textarea.value;
-                            xblob = new Blob([xcontent], { type: 'text/plain' });
-                            xa = document.createElement('a');
-                            xa.href = URL.createObjectURL(xblob);
-                            xa.download = nameOfDocument;
-                            xa.click();
-                            xa.remove();
+                            deleteLine(Notepad.location);
+                            saveToFile();
+                            break;
+                        case "web":
+                            let url = args.join(" ");
+                            if (confirm(`Are you sure you want to load this file from "${url}"?`)) {
+                                fetch(url)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error(`http error ${response.status}`);
+                                        }
+                                        return response.text();
+                                    })
+                                    .then(text => {
+                                        deleteLine(Notepad.location);
+                                        textarea.value += text;
+                                    })
+                                    .catch(error => {
+                                        textarea.value += error;
+                                    });
+                            };
+                        case "askbeforeleaving":
+                            deleteLine(Notepad.location);
+                            if (argsExist) {
+                                Notepad.neveraskbeforeleaving = args.join(' ') == "true" ? true: false;
+                            } else {
+                                Notepad.neveraskbeforeleaving = !Notepad.neveraskbeforeleaving;
+                            };
                             break;
                         default:
+                            textarea.value += "\n";
+                            console.warn('Malformed command was entered, proceeding with new line.');
                             break;
-                    }
-                }
-            }
+                    };
+                };
+            };
         });
 
   </script>
