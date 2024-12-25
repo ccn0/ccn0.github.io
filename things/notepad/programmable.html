@@ -80,7 +80,7 @@
             refreshTitle();
         };
         function refreshTitle() {
-            document.title = `${!Notepad.saved && !Notepad.neveraskbeforeleaving ? "* ":""}${Notepad.filename} - Programmable Notepad`;
+            document.title = `${!Notepad.saved && !Notepad.neveraskbeforeleaving ? "*":""}${Notepad.filename} - Programmable Notepad`;
         };
         window.addEventListener('beforeunload', function(e) {
             const textareaValue = textarea.value.trim();
@@ -109,6 +109,12 @@
             lines.splice(lineNumber - 1, 1);
             textarea.value = lines.join("\n");
         };
+        function insertAtCursor(text) {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            textarea.value = textarea.value.substring(0, start) + text + textarea.value.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + text.length;
+        }
         function getLineAtCursor() {
             const text = textarea.value;
 
@@ -155,11 +161,7 @@
             };
             if (event.key === 'Tab') {
                 event.preventDefault();
-                const start = textarea.selectionStart;
-                const end = textarea.selectionEnd;
-                const spaces = '    ';
-                textarea.value = textarea.value.substring(0, start) + spaces + textarea.value.substring(end);
-                textarea.selectionStart = textarea.selectionEnd = start + spaces.length;
+                insertAtCursor("    ");
             };
             if (event.ctrlKey && event.key === 'd') {
                 e.preventDefault();
@@ -351,7 +353,7 @@
                             };
                             break;
                         default:
-                            textarea.value += "\n";
+                            insertAtCursor("\n");
                             console.warn('Malformed command was entered, proceeding with new line.');
                             break;
                     };

@@ -4,10 +4,10 @@ any changes will probably be massive and anything made
 within the notepad may be unstable.
 
 do not trust random programs you find on the internet,
-and dont use eval for any other purposes but your own.
+and dont use eval from any other places but your own.
 
 i am not liable for any problems faced with programmable notepad.
-
+data loss is not my fault.
 
 >help: shows this
 >replace <regex> <text>: replaces text that matches regex
@@ -21,32 +21,50 @@ i am not liable for any problems faced with programmable notepad.
 >save: save current file
 >saveas <filename>: save current file as filename
 
-BEGINNING OF BULLSHIT
+everything above are built in already made
+
+TYPES
+
+floating point numbers
+strings (in quotes or apostrophes)
+variables
+
+>number <var>
+swaps the type of variable to a number
+>string <var>
+swaps the type of variable to a string
+
+VARIABLE MANIPULATION
 
 >var <name> <value>
- sets a variable
+ sets a variable, or change the value of it
 
->add <variable> <number>
->sub <variable> <number>
->mul <variable> <number>
->div <variable> <number>
+>add <var> <number>
+ variable + number is then set to the variable
+>sub <var> <number>
+ variable - number is then set to the variable
+>mul <var> <number>
+ variable * number is then set to the variable
+>div <var> <number>
+ variable / number is then set to the variable
 
 MATH FUNCTIONS
 
->random <min> <max> <variable>
+>random <min> <max> <var>
  stores a random integer in a variable
 
->sqrt <variable>
+>sqrt <var>
  sets variable to the square root of itself
 
->abs <variable>
+>abs <var>
  absolute
 
->round <variable>
+>round <var>
+ removes everything after the decimal point
 
 BASIC
 
->print <variable>
+>print <var>
  prints a variable
 
 >prompt <variable> <value> <message>
@@ -74,54 +92,31 @@ BASIC
 
 NOTEPAD MANIPULATION
 
- >get <row> <column> <variable>
+>get <row> <column> <var>
+ sets variable to the specified row, or letter at position
 
- >line <row> <string>
+>line <row> <value>
+ sets the row to the value
 
- >delete <row>
+>delete <row>
+ deletes row
 
-BUILT IN VARIABLES
+BUILT IN VARIABLES (all from Notepad object)
 
  filename
+returns Notepad.filename
 
  lastinput
+returns Notepad.lastinput
 
  cursorrow
+returns Notepad.cursorlocation()[0]
 
  cursorcolumn
+returns Notepad.cursorlocation()[1]
 
 functions inside of functions are banned
-eval is banned
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+eval is banned in program
+comments are // for single line or /* */ for multiline
+indentation using spaces before the command
+the > symbol is only to show that it is a command, and is not required in scripts
