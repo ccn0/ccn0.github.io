@@ -10,16 +10,16 @@
     <link rel="stylesheet" href="/ccn02.css">
 </head>
 <body>
-    <div class="top">
+    <hgroup class="top">
         <h1>Settings</h1>
-        <h3>Pick your preferences</h3>
+        <h2>Pick your preferences</h2>
         <div>
             <a href="/index.html">Home</a> | 
             <a href="/things/blog/">Blog</a> | 
             <a href="/games">'Games'</a> | 
             <a href="/things/">Things</a>
         </div>
-    </div>
+    </hgroup>
     <hr>
     <div class="posts">
         <ul>
@@ -60,12 +60,19 @@
         <h3>MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></h3>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded",()=>{loadSettings()});
+        document.addEventListener("DOMContentLoaded",()=>{
+            loadSettings();
+        });
+        const settings = {
+            spooky: localStorage.getItem("spooky") || false,
+            aprilfools: localStorage.getItem("aprilfools") || false,
+            christmas: localStorage.getItem("christmas") || false
+        };
 
         function loadSettings() {
-            document.querySelector("select[name='spooky']").value = localStorage.getItem("spooky");
-            document.querySelector("select[name='aprilfools']").value = localStorage.getItem("aprilfools");
-            document.querySelector("select[name='christmas']").value = localStorage.getItem("christmas");
+            document.querySelector("select[name='spooky']").value = settings.spooky;
+            document.querySelector("select[name='aprilfools']").value = settings.aprilfools;
+            document.querySelector("select[name='christmas']").value = settings.christmas;
         };
 
         function saveSettings() {
