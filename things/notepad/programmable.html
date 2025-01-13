@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.webp">
+    <link rel="icon" href="favicon.png">
     <title>Programmable Notepad</title>
     <meta name="description" content="CCN0's Programmable Notepad, featuring commands for find and replace, and running scripts.">
     <style>
@@ -56,7 +56,7 @@
             lastInput: "",
             location: 0,
             saved: false,
-            neveraskbeforeleaving: false,
+            askbeforeleaving: true,
         };
 
         const params = new URLSearchParams(window.location.search);
@@ -80,11 +80,11 @@
             refreshTitle();
         };
         function refreshTitle() {
-            document.title = `${!Notepad.saved && !Notepad.neveraskbeforeleaving ? "*":""}${Notepad.filename} - Programmable Notepad`;
+            document.title = `${!Notepad.saved && Notepad.askbeforeleaving ? "*":""}${Notepad.filename} - Programmable Notepad`;
         };
         window.addEventListener('beforeunload', function(e) {
             const textareaValue = textarea.value.trim();
-            if (!Notepad.saved && !Notepad.neveraskbeforeleaving) {
+            if (!Notepad.saved && !Notepad.askbeforeleaving) {
                 e.preventDefault();
                 e.returnValue = '';
                 return 'Are you sure you want to leave without saving?';
@@ -347,9 +347,9 @@
                         case "askbeforeleaving":
                             deleteLine(Notepad.location);
                             if (argsExist) {
-                                Notepad.neveraskbeforeleaving = args.join(' ') == "true" ? true: false;
+                                Notepad.askbeforeleaving = args.join(' ') == "true" ? true: false;
                             } else {
-                                Notepad.neveraskbeforeleaving = !Notepad.neveraskbeforeleaving;
+                                Notepad.askbeforeleaving = !Notepad.askbeforeleaving;
                             };
                             break;
                         default:

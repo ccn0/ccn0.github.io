@@ -112,18 +112,7 @@ this is a screamer, so click cancel when it pops up if you dont want to partake,
     } else {
         if (localStorage.getItem('spooky') != "false") {
             const modalcontainer = document.createElement("div");
-            modalcontainer.classList.add('modal')
-            modalcontainer.style.display = "flex";
-            modalcontainer.style.justifyContent = "center";
-            modalcontainer.style.alignItems = "center";
-            modalcontainer.style.display = "flex";
-            modalcontainer.style.position = "fixed";
-            modalcontainer.style.textAlign = "center";
-            modalcontainer.style.top = "0";
-            modalcontainer.style.left = "0";
-            modalcontainer.style.width = "100%";
-            modalcontainer.style.height = "100vh";
-            modalcontainer.style.backgroundColor = "#00000080";
+            modalcontainer.classList.add('modal');
 
             const contain = document.createElement('div');
             contain.style.backgroundColor = "#000";
