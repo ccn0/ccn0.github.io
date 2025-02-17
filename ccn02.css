@@ -32,7 +32,8 @@ a {
     text-decoration:none;
     color:#0ff;
     &:hover {
-        color:#ff0
+        color:#ff0;
+        text-decoration: underline;
     }
     &:active {
         color:#f0f;
@@ -182,6 +183,12 @@ li {
     &::selection {
         background-color: #000;
         color: #fff;
+    }
+    a {
+        color: #00f;
+        &:active {
+            color: #f00;
+        }
     }
 }
 

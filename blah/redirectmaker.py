@@ -1,6 +1,5 @@
 def makeRedirect():
     title = input("title: ")
-    print("https://ccn0.github.io")
     url = input("url: ")
     filename = input("name of file: ")
 

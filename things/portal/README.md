@@ -2,6 +2,8 @@
 
 This was made for a vulnerability in login kiosks and or other browser panels that dont let you put in a URL.
 
+**CCN0 PORTAL IS NOW AT CCN0.NET, SEARCH ENGINES MAY TAKE A BIT TO LEARN OF THIS**
+
 ## How to get back
 
 ### BING MAPS METHOD
