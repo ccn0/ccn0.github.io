@@ -1,10 +1,10 @@
 {
-    "running":["ccn0blog","soundlets","globalclocks","terter"],
+    "running":["ccn0blog","soundlets","globalclocks"],
     "promos":[
         {
             "id": "ccn0blog",
             "img": "assets/ccn0blogposter.jpg",
-            "url": "https://ccn0guy.blogspot.com/",
+            "url": "https://blog.ccn0.net/",
             "alt": "The CCN0 Blog",
             "title": "Changelogs?????",
             "desc": "The official CCN0 Blog where I share changelogs, announcements, games, and more."
@@ -12,7 +12,7 @@
         {
             "id": "soundlets",
             "img": "assets/soundletsad.jpg",
-            "url": "https://ccn0.github.io/things/soundlets/plus",
+            "url": "https://ccn0.net/things/soundlets/plus",
             "alt": "Soundlets Plus",
             "title": "Make your own soundboards!",
             "desc": "Soundlets Plus allows you to make a soundboard and share that soundboard as a link."
@@ -20,7 +20,7 @@
         {
             "id": "globalclocks",
             "img": "assets/gbposter.jpg",
-            "url": "https://ccn0.github.io/things/globalclocks/#create",
+            "url": "https://ccn0.net/things/globalclocks/#create",
             "alt": "GlobalClocks",
             "title": "The difference between now and then.",
             "desc": "GlobalClocks allows you to show the difference between 2 times and share it as a link or embed."
@@ -42,20 +42,20 @@
             "desc": "CCN0TEBOOK v2 features lines and points, colors, opacity, and going forward and back pages."
         },
         {
-            "id": "ccn0tepadwin",
+            "id": "pnp",
             "img": "assets/x",
-            "url": "https://ccn0.github.io/things/notepad/win",
-            "alt": "CCN0TEPAD Win",
+            "url": "https://ccn0.net/things/notepad/programmable",
+            "alt": "Programmable Notepad",
             "title": "Notepad, but better.",
-            "desc": "A simple notepad that loads instantly and has many features and keybinds, like the Windows Notepad."
+            "desc": "A simple notepad that loads instantly and has many features and keybinds, with programs and commands to make life easier."
         },
         {
-            "id": "mastodon",
+            "id": "bluesky",
             "img": "assets/x",
-            "url": "https://mastodon.social/@ccn0",
-            "alt": "@CCN0@mastodon.social",
+            "url": "https://bsky.app/profile/ccn0.net",
+            "alt": "on bluesky as @ccn0.net",
             "title": "I say shit here sometimes",
-            "desc": "My Mastodon, which replaced the Things Blog all those years ago."
+            "desc": "My Bluesky, which replaced the Things Blog all those years ago."
         }
     ]
 }
