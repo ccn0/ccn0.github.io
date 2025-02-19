@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- version 1.6 | made by ccn0 https://github.com/ccn0 -->
+<!-- version 1.6.1 | made by ccn0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,9 +31,11 @@
             padding: 6px 10px;
             margin: 3px;
             display: inline-flex;
-            overflow: wrap;
             border: 2px solid #03060b;
             border-radius: 6px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 90%;
         }
         
         .boardarea a:active {
@@ -62,7 +64,7 @@
             overflow: hidden;
         }
         
-        span {
+        .divider {
             font-size: 150%;
             font-weight: bold;
         }
@@ -105,15 +107,15 @@
         }
         
         cr {
-            color: rgb(255, 72, 72);
+            color: rgb(255, 79, 79);
         }
         
         cg {
-            color: rgb(84, 179, 84);
+            color: rgb(48, 219, 48);
         }
         
         cb {
-            color: rgb(77, 77, 255);
+            color: rgb(40, 112, 255);
         }
         
         .bottom {
@@ -125,9 +127,15 @@
             cursor: default;
             border-radius: 6px;
             position: fixed;
-            bottom: 0;
-            margin-left: auto;
-            margin-right: auto;
+            left: 1rem;
+            bottom: 1rem;
+            a {
+                color: #fff;
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
         }
         
         .viewbar {
@@ -191,13 +199,13 @@
         <input type="text" id="urlOfSound" placeholder="Audio URL">
         <input type="number" id="speedOfSound" placeholder="Speed">
         <button onclick="addSoundNode()">Add</button>
-        <span>|</span>
+        <span class="divider">|</span>
         <button onclick="addDividerNode()">Add Divider</button>
         <button onclick="addBreakNode()">Add Break</button>
-        <span>|</span>
+        <span class="divider">|</span>
         <button onclick="undoNode()">Undo</button>
         <button onclick="clearNodes()">Clear Board</button>
-        <span>|</span>
+        <span class="divider">|</span>
         <button onclick="copyLink()">Copy Link To Board</button>
         <button onclick="downloadAsJson()">Download</button>
         <button onclick="loadFromJson()">Load JSON</button>
@@ -207,7 +215,7 @@
     </div>
     <div class="boardarea" id="boardArea">
     </div>
-    <p class="bottom">MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></p>
+    <span class="bottom">MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></span>
     <script>
         // everything below works so dont fuck this up
         function addSoundNode() {
@@ -236,6 +244,7 @@
         }
         function addDividerNode() {
             var separatorElement = document.createElement("span");
+            separatorElement.classList.add("divider");
             separatorElement.textContent = "|";
 
             var contentContainer = document.getElementById("boardArea");
@@ -463,7 +472,6 @@
         }
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text)
-            alert("Copied!");
         };
         function hideEditbar() {
             document.getElementById('editbar').style = "display:none";
