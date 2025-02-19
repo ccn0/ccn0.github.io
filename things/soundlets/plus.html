@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- version 1.6.1 | made by ccn0 https://github.com/ccn0 -->
+<!-- version 1.6.2 | made by ccn0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -219,20 +219,20 @@
     <script>
         // everything below works so dont fuck this up
         function addSoundNode() {
-            var nameos = document.getElementById("nameOfSound").value;
-            var urlos = document.getElementById("urlOfSound").value;
-            var speedos = document.getElementById("speedOfSound").value;
+            const nameos = document.getElementById("nameOfSound").value;
+            const urlos = document.getElementById("urlOfSound").value;
+            const speedos = document.getElementById("speedOfSound").value;
 
-            var linkContainers = document.getElementById("boardArea");
-            var linkElements = document.createElement("a");
+            const linkContainers = document.getElementById("boardArea");
+            const linkElements = document.createElement("a");
+
+            linkElements.setAttribute('data-sound',urlos);
+            linkElements.setAttribute('data-speed',speedos || 1);
             if (!urlos) { // if no url file
                 alert("Enter an Audio File's URL");
                 throw new Error('No Audio File');
-            } else if (!speedos) {
-                linkElements.href = `javascript: var snd = new Audio();snd.src = '${urlos}'; snd.playbackRate = 1; function PlaySnd() {snd.play();}PlaySnd()`;
             } else {
-                linkElements.href = `javascript: var snd = new Audio();snd.src = '${urlos}'; snd.playbackRate = ${speedos}; function PlaySnd() {snd.play();}PlaySnd()`;
-
+                linkElements.href = `javascript: var snd = new Audio();snd.src = '${urlos}'; snd.playbackRate = ${speedos || 1}; function PlaySnd() {snd.play();}PlaySnd()`;
             }
             if (!nameos) { // if no name
                 linkElements.textContent = "Sound";
@@ -243,23 +243,22 @@
             linkContainers.appendChild(linkElements);
         }
         function addDividerNode() {
-            var separatorElement = document.createElement("span");
+            const separatorElement = document.createElement("span");
             separatorElement.classList.add("divider");
             separatorElement.textContent = "|";
 
-            var contentContainer = document.getElementById("boardArea");
+            const contentContainer = document.getElementById("boardArea");
             contentContainer.appendChild(separatorElement);
         }
         function addBreakNode() {
-            var breakElement = document.createElement("br");
+            const breakElement = document.createElement("br");
 
-            var contentContainer = document.getElementById("boardArea");
+            const contentContainer = document.getElementById("boardArea");
             contentContainer.appendChild(breakElement);
         }
         function undoNode() {
-            var contentContainer = document.getElementById("boardArea");
+            const contentContainer = document.getElementById("boardArea");
             
-            // Check if there is a last child (separator) to remove
             if (contentContainer.lastChild) {
                 contentContainer.removeChild(contentContainer.lastChild);
             }
@@ -303,20 +302,10 @@
 
                 if (node.nodeType === Node.ELEMENT_NODE) {
                     if (node.tagName === 'A') {
-                        const script = node.getAttribute("href");
-
-                        const urlRegex = /snd\.src = '([^']+)';/;
-                        const urlMatch = script.match(urlRegex);
-                        const audioURL = urlMatch && urlMatch[1];
-
-                        const playbackRateRegex = /snd\.playbackRate = ([^;]+);/;
-                        const playbackRateMatch = script.match(playbackRateRegex);
-                        const playbackRate = playbackRateMatch && parseFloat(playbackRateMatch[1]);
-
                         var linkObject = {
                             "name": node.textContent,
-                            "url": audioURL,
-                            "speed": playbackRate
+                            "url": node.getAttribute('data-sound'),
+                            "speed": node.getAttribute('data-speed')
                         };
                         jsonOutput.push(linkObject);
                     } else if (node.tagName === 'SPAN') {
@@ -341,42 +330,46 @@
         // load
         
         function loadFromJson() {
-            var fileInput = document.createElement('input');
+            const fileInput = document.createElement('input');
             fileInput.type = 'file';
             fileInput.accept = 'application/json';
 
             fileInput.addEventListener('change', function(event) {
-                var file = event.target.files[0];
+                const file = event.target.files[0];
                 if (file) {
                     var reader = new FileReader();
                     reader.onload = function(e) {
-                        var jsonData = JSON.parse(e.target.result);
-                        generateNodesFromJson(jsonData);
+                        try {
+                            var jsonData = JSON.parse(e.target.result);
+                            generateNodesFromJson(jsonData);
+                        } catch (error) {
+                            alert("This is not valid JSON.");
+                            console.error(error);
+                        };
                     };
                     reader.readAsText(file);
                 }
             });
 
             fileInput.click();
-        }
+        };
         
         function generateNodesFromJson(jsonData) {
-            var contentContainer = document.getElementById('boardArea');
+            const contentContainer = document.getElementById('boardArea');
             contentContainer.innerHTML = '';
 
             jsonData.forEach(function(item) {
                 if (item.hasOwnProperty('name') && item.hasOwnProperty('url')) {
-                    var linkElement = document.createElement('a');
-                    if (item.speed) {
-                        linkElement.href = `javascript: /* ${item.name} */ var snd = new Audio();snd.src = '${item.url}'; snd.playbackRate = ${item.speed}; function PlaySnd() {snd.play();}PlaySnd()`;
-                    } else {
-                        linkElement.href = `javascript: /* ${item.name} */ var snd = new Audio();snd.src = '${item.url}'; snd.playbackRate = 1; function PlaySnd() {snd.play();}PlaySnd()`;
-
-                    }
+                    const linkElement = document.createElement('a');
+                    linkElement.href = `javascript: /* ${item.name} */ var snd = new Audio();snd.src = '${item.url}'; snd.playbackRate = ${item.speed || 1}; function PlaySnd() {snd.play();}PlaySnd()`;
+                    
                     linkElement.textContent = item.name;
+                    linkElement.setAttribute('data-sound',item.url);
+                    linkElement.setAttribute('data-speed',item.speed || 1);
+
                     contentContainer.appendChild(linkElement);
                 } else if (item.hasOwnProperty('divider') && item.divider === 'line') {
-                    var spanElement = document.createElement('span');
+                    const spanElement = document.createElement('span');
                     spanElement.textContent = '|';
                     contentContainer.appendChild(spanElement);
                 } else if (item.hasOwnProperty('divider') && item.divider === 'break') {
@@ -385,23 +378,23 @@
             });
         }
         function getJsonFromUrl() {
-            var fragment = window.location.hash.substring(1);
+            const fragment = window.location.hash.substring(1);
             fragment = decodeURIComponent(fragment);
             console.log(fragment);
                 
             if (isURL(fragment)) {
                 externalFile(fragment);
                 return true;
-            }
+            };
         
             try {
-                var jsonData = JSON.parse(fragment);
+                const jsonData = JSON.parse(fragment);
                 generateNodesFromJson(jsonData);
                 hideEditbar();
                 return true;
             } catch (error) {
                 return false;
-            }
+            };
         };
         function isURL(str) {
             try {
@@ -413,23 +406,34 @@
         };
         function externalFile(url) {
             hideEditbar();
-            let soundboardJSON = {};
             fetch(url)
                 .then(response => response.json())
                 .then(json => {
-                    if (confirm(`Do you want to load a soundboard from "${url}"?`)) {
+                    let soundboardJSON = {};
+
+                    if (url.startsWith("https://ccn0.net/") || url.startsWith("http://localhost") || url.startsWith("http://127.0.0.1")) {
                         soundboardJSON = json;
                         generateNodesFromJson(soundboardJSON);
+                    } else {
+                        if (confirm(`Do you want to load a soundboard from "${url}"?`)) {
+                            soundboardJSON = json;
+                            generateNodesFromJson(soundboardJSON);
+                        }
                     }
                 })
+                .catch(error => {
+                    console.error("Error loading soundboard:", error);
+                    alert("Failed to fetch soundboard")
+                });
         };
 
-        function copyLink() {
-            var jsonOutput = [];
-            var container = document.getElementById('boardArea');
 
-            for (var i = 0; i < container.childNodes.length; i++) {
-                var node = container.childNodes[i];
+        function copyLink() {
+            let jsonOutput = [];
+            const container = document.getElementById('boardArea');
+
+            for (let i = 0; i < container.childNodes.length; i++) {
+                const node = container.childNodes[i];
 
                 if (node.nodeType === Node.ELEMENT_NODE) {
                     if (node.tagName === 'A') {
@@ -443,19 +447,19 @@
                         const playbackRateMatch = script.match(playbackRateRegex);
                         const playbackRate = playbackRateMatch && parseFloat(playbackRateMatch[1]);
 
-                        var linkObject = {
+                        const linkObject = {
                             "name": node.textContent,
                             "url": audioURL,
                             "speed": playbackRate
                         };
                         jsonOutput.push(linkObject);
                     } else if (node.tagName === 'SPAN') {
-                        var dividerObject = {
+                        const dividerObject = {
                             "divider": "line"
                         };
                         jsonOutput.push(dividerObject);
                     } else if (node.tagName === 'BR') {
-                        var breakObject = {
+                        const breakObject = {
                             "divider": "break"
                         };
                         jsonOutput.push(breakObject);
@@ -463,9 +467,9 @@
                 }
             }
 
-            var jsonString = JSON.stringify(jsonOutput, null, 2);
-            var jsonEncoded = encodeURIComponent(jsonString)
-            var linkWithJSON = window.location.origin + window.location.pathname + "#" + jsonEncoded;
+            const jsonString = JSON.stringify(jsonOutput, null, 2);
+            const jsonEncoded = encodeURIComponent(jsonString)
+            const linkWithJSON = window.location.origin + window.location.pathname + "#" + jsonEncoded;
             console.log(linkWithJSON);
             copyToClipboard(linkWithJSON);
             alert('Link copied!');
