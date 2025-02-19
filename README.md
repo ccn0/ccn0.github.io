@@ -4,15 +4,15 @@ a github pages website where i do some wacky things. and yes, the homepage is a 
 
 ## highlights
 
-- CCN0 Things `/things/`
+- [CCN0 Things](https://ccn0.net/things/) `/things/`
   - things i made that aren't good enough to be featured (still interesting though.)
-- CCN0 Wiki `/info/`
+- [CCN0 Wiki](https://ccn0.net/info/) `/info/`
   - info on basically every thing ive made for the most part
-- Soundlets Plus `/things/soundlets/plus`
+- [Soundlets Plus](https://ccn0.net/things/soundlets/plus) `/things/soundlets/plus`
   - create your own soundboard
-- Games `/games/`
+- [Games](https://ccn0.net/games/) `/games/`
   - my games i made on many places
-- CCN0 Portal `/things/portal/`
+- [CCN0 Portal](https://ccn0.net/things/portal/) `/things/portal/`
   - yahoo for everything youd want for a kiosk hack
  
 ## Licenses???
