@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- version 1.5.1 | made by ccn0 https://github.com/ccn0 -->
+<!-- version 1.6 | made by ccn0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soundlets Plus</title>
     <meta name="creator" content="CCN0">
+    <meta name="og:title" content="Soundlets Plus">
+    <meta name="og:url" content="https://ccn0.net/things/soundlets/plus.html">
     <meta name="keywords" content="soundlet,soundlets,soundlets plus,ccn0 soundboard,funny hahas,hahas,sound bookmarklet,bookmarklet,soundboard,unblocked soundboard,unblockable soundboard">
-    <meta name="description" content="Make your own soundboard using audio from the web, and use them from your bookmark bar too.">
+    <meta name="description" content="Make your own soundboard using audio from the web, and use them from your bookmark bar.">
+    <meta name="og:description" content="Make your own soundboard using audio files from the web!">
     <style>
         body {
             font-family: "Roboto", Arial, sans-serif;
@@ -372,12 +375,16 @@
                 }
             });
         }
-        
         function getJsonFromUrl() {
-            var fragment = window.location.hash;
-            fragment = fragment.substring(1);
-            fragment = decodeURIComponent(fragment)
+            var fragment = window.location.hash.substring(1);
+            fragment = decodeURIComponent(fragment);
             console.log(fragment);
+                
+            if (isURL(fragment)) {
+                externalFile(fragment);
+                return true;
+            }
+        
             try {
                 var jsonData = JSON.parse(fragment);
                 generateNodesFromJson(jsonData);
@@ -386,7 +393,28 @@
             } catch (error) {
                 return false;
             }
-        }
+        };
+        function isURL(str) {
+            try {
+                new URL(str);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        };
+        function externalFile(url) {
+            hideEditbar();
+            let soundboardJSON = {};
+            fetch(url)
+                .then(response => response.json())
+                .then(json => {
+                    if (confirm(`Do you want to load a soundboard from "${url}"?`)) {
+                        soundboardJSON = json;
+                        generateNodesFromJson(soundboardJSON);
+                    }
+                })
+        };
+
         function copyLink() {
             var jsonOutput = [];
             var container = document.getElementById('boardArea');
@@ -434,30 +462,33 @@
             alert('Link copied!');
         }
         function copyToClipboard(text) {
-            var tempInput = document.createElement("input");
-            document.body.appendChild(tempInput);
-            
-            tempInput.value = text;
-            
-            tempInput.select();
-            
-            document.execCommand("copy");
-            
-            document.body.removeChild(tempInput);
-        }
+            navigator.clipboard.writeText(text)
+            alert("Copied!");
+        };
         function hideEditbar() {
             document.getElementById('editbar').style = "display:none";
             document.getElementById('collapse').textContent = "Edit Menu";
             document.getElementById('collapse').onclick = showEditbar;
-        }
+        };
         function showEditbar() {
             document.getElementById('editbar').style = "display:block";
             document.getElementById('collapse').textContent = "Collapse";
             document.getElementById('collapse').onclick = hideEditbar;
-        }
+        };
 
         if (window.location.hash) {
             getJsonFromUrl();
+        };
+        if (window.location.search) {
+            const params = new URLSearchParams(window.location.search);
+            hideEditbar();
+            if (params.has('url')) {
+                externalFile(params.get('url'));
+            };
+            if (params.has('json')) {
+                const json = JSON.parse(params.get('json'));
+                generateNodesFromJson(json);
+            }
         }
     </script>
 </body>
