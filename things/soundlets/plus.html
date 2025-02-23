@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- version 1.6.2 | made by ccn0 https://github.com/ccn0 -->
+<!-- version 1.6.3 | made by ccn0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -234,6 +234,9 @@
                 throw new Error('No Audio File');
             } else {
                 linkElements.href = `javascript: var snd = new Audio();snd.src = '${urlos}'; snd.playbackRate = ${speedos || 1}; function PlaySnd() {snd.play();}PlaySnd()`;
+                const preload = new Audio(urlos);
+                preload.preload = "auto";
+                preload.load();
             }
             if (!nameos) { // if no name
                 linkElements.textContent = "Sound";
@@ -362,11 +365,15 @@
             jsonData.forEach(function(item) {
                 if (item.hasOwnProperty('name') && item.hasOwnProperty('url')) {
                     const linkElement = document.createElement('a');
-                    linkElement.href = `javascript: /* ${item.name} */ var snd = new Audio();snd.src = '${item.url}'; snd.playbackRate = ${item.speed || 1}; function PlaySnd() {snd.play();}PlaySnd()`;
+                    linkElement.href = `javascript: /* ${item.name} */ (function() { var snd = new Audio();snd.src = '${item.url}'; snd.playbackRate = ${item.speed || 1}; function PlaySnd() {snd.play();}PlaySnd(); })();`;
                     
                     linkElement.textContent = item.name;
                     linkElement.setAttribute('data-sound',item.url);
                     linkElement.setAttribute('data-speed',item.speed || 1);
+
+                    const preload = new Audio(item.url);
+                    preload.preload = "auto";
+                    preload.load();
 
                     contentContainer.appendChild(linkElement);
                 } else if (item.hasOwnProperty('divider') && item.divider === 'line') {
