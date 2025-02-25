@@ -61,3 +61,5 @@ Allow: /pages/menuengine/
 Allow: /pages/quickfunctions/
 Allow: /pages/pre/
 Allow: /pages/nexploration/
+
+Sitemap: https://ccn0.net/sitemap.xml
