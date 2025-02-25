@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="/ccn0.svg">
+    <title>CCN0 / Coming Soon!</title>
+    <link rel="stylesheet" href="/ccn02.css">
+    <meta name="robots" content="noindex">
+</head>
+<body>
+    <hgroup class="top">
+        <h1><cr>CC</cr><cg>N</cg><cb>0</cb></h1>
+        <h2>An awful site filled with awful things.</h2>
+        <div>
+            <a href="/index.html">Home</a> | 
+            <a href="/things/blog/">Blog</a> | 
+            <a href="/games">'Games'</a> | 
+            <a href="/things/">Things</a>
+        </div>
+    </hgroup>
+    <hr>
+    <div class="posts">
+        <ul>
+            <!-- 
+            <li title="#">
+                <a href="#">Text</a><br>desc
+            </li>
+            -->
+            <h2>Coming Soon!</h2>
+            <li title="somethings wrong... i  can feel it" id="comingsoonitem">
+            </li>
+            <iframe src="https://ccn0.net/rad/" width="200px" height="200px" seamless id="rAdBOX" title="rAdBOX" style="border:none;margin-left: auto;margin-right: auto;" aria-hidden="true"></iframe>
+        </ul>
+        <hr>
+        <h3>MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></h3>
+    </div>
+    <script>
+        function whichsoon(param) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(param);
+        };
+        const soonContainer = document.getElementById('comingsoonitem');
+        const toBeSoon = whichsoon('p');
+
+        switch (toBeSoon) {
+            case 'qogapp':
+                soonContainer.innerHTML = "QOG.app is coming soon!";
+                soonContainer.title = "cant wait to host actual bullshit";
+                break;
+            case 'arryorsomethingsite':
+                soonContainer.innerHTML = "arryorsometh.ing is coming soon!";
+                soonContainer.title = "arry blog very soon";
+                break;
+            case 'aboutccn0':
+                soonContainer.innerHTML = "About page is coming soon!";
+                soonContainer.title = "you can see a shitty one on my blog";
+                break;
+            default:
+            soonContainer.innerHTML = "Something is coming soon!";
+        };
+    </script>
+</body>
+</html>
