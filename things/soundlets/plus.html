@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- version 1.6.3 | made by ccn0 https://github.com/ccn0 -->
+<!-- version 1.6.4 | made by ccn0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,11 +37,10 @@
             text-overflow: ellipsis;
             overflow: hidden;
             max-width: 90%;
-        }
-        
-        .boardarea a:active {
-            color: #223326;
-            background-color: #6aca6a;
+            &:active {
+                color: #223326;
+                background-color: #6aca6a;
+            }
         }
         
         p {
@@ -63,11 +62,21 @@
             transition: all 0.2s;
             border-radius: 8px 8px 0 0;
             overflow: hidden;
+            iframe {
+                border: 1px solid #f3f3f3;
+                margin: 10px 0 0 0;
+                height: 40px;
+                padding: 0;
+                width: 100%;
+            }
         }
         
         .divider {
             font-size: 150%;
             font-weight: bold;
+            display: inline-block;
+            transform: translateY(2px);
+            user-select: none;
         }
         
         .boardarea {
@@ -81,30 +90,23 @@
             color: #03060b;
             padding: 3px 6px;
             font-family: sans-serif;
+            &:active {
+                background-color: #03060b;
+                border: 2px solid #f3f3f3;
+                color: #f3f3f3;
+            }
         }
         
-        button:active {
-            background-color: #03060b;
-            border: 2px solid #f3f3f3;
-            color: #f3f3f3;
-        }
-        
-        input[type=text] {
+        input {
             background-color: #f3f3f3;
             border: 2px solid #03060b;
             color: #03060b;
             padding: 3px 6px;
             font-family: sans-serif;
             max-width: 80px;
-        }
-        
-        input[type=number] {
-            background-color: #f3f3f3;
-            border: 2px solid #03060b;
-            color: #03060b;
-            padding: 3px 6px;
-            font-family: sans-serif;
-            max-width: 60px;
+            &[type=number] {
+                max-width: 60px;
+            }
         }
         
         cr {
@@ -145,42 +147,30 @@
             transition: all 0.2s;
             border-radius: 8px;
             overflow: hidden;
-        }
-        
-        .viewbar:hover {
-            height: 25px;
-        }
-        
-        .viewbar > * {
-            display: none;
-        }
-        
-        .viewbar:hover > * {
-            display: inline-block;
-        }
-        
-        .viewbar button {
-            font-size: 70%;
-            padding: 1px 3px;
-            height: 20px;
-        }
-        
-        .viewbar input {
-            font-size: 70%;
-            margin: 0;
-            height: 10px;
-        }
-        
-        .editbar iframe {
-            border: 1px solid #f3f3f3;
-            margin: 10px 0 0 0;
-            height: 40px;
-            padding: 0;
-            width: 100%;
+            &>* {
+                display: none;
+            }
+            &:hover {
+                height: 26px;
+                >* {
+                    display: inline-block;
+                }
+            }
+            button {
+                margin: 3px 0;
+                font-size: 70%;
+                padding: 1px 3px;
+                height: 20px;
+            }
+            input {
+                font-size: 70%;
+                margin: 0;
+                height: 10px;
+            }
         }
         
         #addonSection {
-            display: none;
+            display: inline-block;
         }
         
         #importAddons {
@@ -189,33 +179,32 @@
     </style>
 </head>
 <body>
-    <h1>Soundlets+</h1>
-    <p>Create your own soundboard.</p>
+    <hgroup>
+        <h1>Soundlets+</h1>
+        <p>Create your own soundboard.</p>
+    </hgroup>
     <div class="viewbar" id="viewbar">
-        <button onclick="hideEditbar()" id="collapse">Collapse</button>
+        <button onclick="hideEditbar()" id="collapse" title="Collapse Editbar">Collapse</button>
     </div>
     <div class="editbar" id="editbar">
         <noscript>Enable JavaScript</noscript>
-        <input type="text" id="nameOfSound" placeholder="Name">
-        <input type="text" id="urlOfSound" placeholder="Audio URL">
-        <input type="number" id="speedOfSound" placeholder="Speed">
-        <button onclick="addSoundNode()">Add</button>
+        <input type="text" id="nameOfSound" placeholder="Name" title="Sound Name">
+        <input type="text" id="urlOfSound" placeholder="Audio URL" title="Audio URL">
+        <input type="number" id="speedOfSound" placeholder="Speed" min="0" max="4" step="0.5" title="Audio Speed">
+        <button onclick="addSoundNode()" title="Add Sound">Add</button>
         <span class="divider">|</span>
-        <button onclick="addDividerNode()">Add Divider</button>
-        <button onclick="addBreakNode()">Add Break</button>
+        <button onclick="addDividerNode()" title="Add Divider">Add Divider</button>
+        <button onclick="addBreakNode()" title="Add Line Break">Add Break</button>
         <span class="divider">|</span>
-        <button onclick="undoNode()">Undo</button>
-        <button onclick="clearNodes()">Clear Board</button>
+        <button onclick="undoNode()" title="Undo Last Change">Undo</button>
+        <button onclick="clearNodes()" title="Clear Board">Clear Board</button>
         <span class="divider">|</span>
-        <button onclick="copyLink()">Copy Link To Board</button>
-        <button onclick="downloadAsJson()">Download</button>
-        <button onclick="loadFromJson()">Load JSON</button>
-        <!-- <button onclick="loadFromSnbd()">Load SNBD</button> -->
-        <div id="addonSection">
-        </div>
+        <button onclick="copyLink()" title="Copy Link to Soundboard">Copy Link To Board</button>
+        <button onclick="downloadAsJson()" title="Download Soundboard">Download</button>
+        <button onclick="loadFromJson()" title="Load Soundboard's JSON File">Load JSON</button>
+        <div id="addonSection"><!--this section exists solely for developers, dont use addons you dont trust--></div>
     </div>
-    <div class="boardarea" id="boardArea">
-    </div>
+    <div class="boardarea" id="boardArea"></div>
     <span class="bottom">MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></span>
     <script>
         // everything below works so dont fuck this up
@@ -231,18 +220,13 @@
             linkElements.setAttribute('data-speed',speedos || 1);
             if (!urlos) { // if no url file
                 alert("Enter an Audio File's URL");
-                throw new Error('No Audio File');
             } else {
-                linkElements.href = `javascript: var snd = new Audio();snd.src = '${urlos}'; snd.playbackRate = ${speedos || 1}; function PlaySnd() {snd.play();}PlaySnd()`;
+                linkElements.href = `javascript: /* ${nameos || "sound"} */ var snd = new Audio();snd.src = '${urlos}'; snd.playbackRate = ${speedos || 1}; function PlaySnd() {snd.play();}PlaySnd()`;
                 const preload = new Audio(urlos);
                 preload.preload = "auto";
                 preload.load();
             }
-            if (!nameos) { // if no name
-                linkElements.textContent = "Sound";
-            } else {
-                linkElements.textContent = nameos;
-            }
+            linkElements.textContent = nameos || "Sound";
 
             linkContainers.appendChild(linkElements);
         }
@@ -298,33 +282,24 @@
         }
         
         function downloadAsJson() {
-            var jsonOutput = [];
-            var container = document.getElementById('boardArea');
+            let jsonOutput = [];
+            const container = document.getElementById('boardArea');
 
-            for (var i = 0; i < container.childNodes.length; i++) {
-                var node = container.childNodes[i];
-
+            container.childNodes.forEach(node=>{
                 if (node.nodeType === Node.ELEMENT_NODE) {
                     if (node.tagName === 'A') {
-                        var linkObject = {
+                        jsonOutput.push({
                             "name": node.textContent,
                             "url": node.getAttribute('data-sound'),
                             "speed": node.getAttribute('data-speed')
-                        };
-                        jsonOutput.push(linkObject);
+                        });
                     } else if (node.tagName === 'SPAN') {
-                        var dividerObject = {
-                            "divider": "line"
-                        };
-                        jsonOutput.push(dividerObject);
+                        jsonOutput.push({"divider": "line"});
                     } else if (node.tagName === 'BR') {
-                        var breakObject = {
-                            "divider": "break"
-                        };
-                        jsonOutput.push(breakObject);
+                        jsonOutput.push({"divider": "break"});
                     }
                 }
-            }
+            });
 
             var jsonString = JSON.stringify(jsonOutput, null, 2);
             downloadFile(jsonString, 'soundboard.json');
@@ -365,7 +340,7 @@
             jsonData.forEach(function(item) {
                 if (item.hasOwnProperty('name') && item.hasOwnProperty('url')) {
                     const linkElement = document.createElement('a');
-                    linkElement.href = `javascript: /* ${item.name} */ (function() { var snd = new Audio();snd.src = '${item.url}'; snd.playbackRate = ${item.speed || 1}; function PlaySnd() {snd.play();}PlaySnd(); })();`;
+                    linkElement.href = `javascript: /* ${item.name} */ var snd = new Audio();snd.src = '${item.url}'; snd.playbackRate = ${item.speed || 1}; function PlaySnd() {snd.play();}PlaySnd();`;
                     
                     linkElement.textContent = item.name;
                     linkElement.setAttribute('data-sound',item.url);
@@ -385,8 +360,8 @@
                 }
             });
         }
-        function getJsonFromUrl() {
-            const fragment = window.location.hash.substring(1);
+        function handleURL() {
+            let fragment = window.location.hash.substring(1);
             fragment = decodeURIComponent(fragment);
             console.log(fragment);
                 
@@ -419,7 +394,9 @@
                 .then(json => {
                     let soundboardJSON = {};
 
-                    if (url.startsWith("https://ccn0.net/") || url.startsWith("http://localhost") || url.startsWith("http://127.0.0.1")) {
+                    if (/^https:\/\/ccn0.net\//.test(url) ||
+                        /^http:\/\/localhost:\d{1,5}\//.test(url) ||
+                        /^http:\/\/127.0.0.1:\d{1,5}\//.test(url)) {
                         soundboardJSON = json;
                         generateNodesFromJson(soundboardJSON);
                     } else {
@@ -431,7 +408,7 @@
                 })
                 .catch(error => {
                     console.error("Error loading soundboard:", error);
-                    alert("Failed to fetch soundboard")
+                    alert("Failed to fetch soundboard");
                 });
         };
 
@@ -440,50 +417,30 @@
             let jsonOutput = [];
             const container = document.getElementById('boardArea');
 
-            for (let i = 0; i < container.childNodes.length; i++) {
-                const node = container.childNodes[i];
-
+            container.childNodes.forEach(node=>{
                 if (node.nodeType === Node.ELEMENT_NODE) {
                     if (node.tagName === 'A') {
-                        const script = node.getAttribute("href");
-
-                        const urlRegex = /snd\.src = '([^']+)';/;
-                        const urlMatch = script.match(urlRegex);
-                        const audioURL = urlMatch && urlMatch[1];
-
-                        const playbackRateRegex = /snd\.playbackRate = ([^;]+);/;
-                        const playbackRateMatch = script.match(playbackRateRegex);
-                        const playbackRate = playbackRateMatch && parseFloat(playbackRateMatch[1]);
-
-                        const linkObject = {
+                        jsonOutput.push({
                             "name": node.textContent,
-                            "url": audioURL,
-                            "speed": playbackRate
-                        };
-                        jsonOutput.push(linkObject);
+                            "url": node.getAttribute('data-sound'),
+                            "speed": node.getAttribute('data-speed')
+                        });
                     } else if (node.tagName === 'SPAN') {
-                        const dividerObject = {
-                            "divider": "line"
-                        };
-                        jsonOutput.push(dividerObject);
+                        jsonOutput.push({"divider": "line"});
                     } else if (node.tagName === 'BR') {
-                        const breakObject = {
-                            "divider": "break"
-                        };
-                        jsonOutput.push(breakObject);
+                        jsonOutput.push({"divider": "break"});
                     }
                 }
-            }
+            });
 
             const jsonString = JSON.stringify(jsonOutput, null, 2);
             const jsonEncoded = encodeURIComponent(jsonString)
             const linkWithJSON = window.location.origin + window.location.pathname + "#" + jsonEncoded;
-            console.log(linkWithJSON);
             copyToClipboard(linkWithJSON);
-            alert('Link copied!');
         }
         function copyToClipboard(text) {
-            navigator.clipboard.writeText(text)
+            navigator.clipboard.writeText(text);
+            alert('Copied!');
         };
         function hideEditbar() {
             document.getElementById('editbar').style = "display:none";
@@ -497,7 +454,7 @@
         };
 
         if (window.location.hash) {
-            getJsonFromUrl();
+            handleURL();
         };
         if (window.location.search) {
             const params = new URLSearchParams(window.location.search);
@@ -508,8 +465,26 @@
             if (params.has('json')) {
                 const json = JSON.parse(params.get('json'));
                 generateNodesFromJson(json);
-            }
-        }
+            };
+        };
+
+        const addonSection = document.getElementById("addonSection");
+
+        const asobserver = new MutationObserver(() => {
+            if (addonSection.hasChildNodes()) {
+                const spanElement = document.createElement('span');
+                spanElement.classList.add("divider");
+                spanElement.textContent = '|';
+
+                addonSection.insertBefore(document.createTextNode(" "), addonSection.childNodes[0]);
+                addonSection.insertBefore(spanElement, addonSection.childNodes[0]);
+                addonSection.insertBefore(document.createTextNode(" "), addonSection.childNodes[0]);
+
+                asobserver.disconnect();
+            };
+        });
+
+        asobserver.observe(document.getElementById("addonSection"), { childList: true });
     </script>
 </body>
 </html>
