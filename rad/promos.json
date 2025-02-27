@@ -1,5 +1,5 @@
 {
-    "running":["soundlets","globalclocks"],
+    "running":["soundlets","globalclocks","bluesky","pnp"],
     "promos":[
         {
             "id": "ccn0blog",
