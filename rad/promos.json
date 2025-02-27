@@ -1,12 +1,12 @@
 {
-    "running":["ccn0blog","soundlets","globalclocks"],
+    "running":["soundlets","globalclocks"],
     "promos":[
         {
             "id": "ccn0blog",
-            "img": "assets/ccn0blogposter.jpg",
+            "img": "assets/ccn0blog.png",
             "url": "https://blog.ccn0.net/",
             "alt": "The CCN0 Blog",
-            "title": "Changelogs?????",
+            "title": "blog.ccn0.net",
             "desc": "The official CCN0 Blog where I share changelogs, announcements, games, and more."
         },
         {
@@ -34,16 +34,8 @@
             "desc": "Terter is a browser extension that allows you to change what loads when you enter a URL."
         },
         {
-            "id": "ccn0tebook",
-            "img": "assets/x",
-            "url": "https://github.com/ccn0/ccn0tebook",
-            "alt": "CCN0TEBOOK v2",
-            "title": "2D Flipbook/Drawing, for free!",
-            "desc": "CCN0TEBOOK v2 features lines and points, colors, opacity, and going forward and back pages."
-        },
-        {
             "id": "pnp",
-            "img": "assets/x",
+            "img": "assets/pnp.jpg",
             "url": "https://ccn0.net/things/notepad/programmable",
             "alt": "Programmable Notepad",
             "title": "Notepad, but better.",
@@ -51,11 +43,11 @@
         },
         {
             "id": "bluesky",
-            "img": "assets/x",
+            "img": "assets/bsky.png",
             "url": "https://bsky.app/profile/ccn0.net",
             "alt": "on bluesky as @ccn0.net",
             "title": "I say shit here sometimes",
-            "desc": "My Bluesky, which replaced the Things Blog all those years ago."
+            "desc": "My Bluesky, which replaced the Things Blog from all those years ago."
         }
     ]
 }
