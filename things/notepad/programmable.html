@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- made by ccn0 | https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.png">
     <title>Programmable Notepad</title>
+    <meta property="og:title" content="Programmable Notepad">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ccn0.net/things/notepad/programmable.html">
+    <meta property="og:description" content="Programmable Notepad is the only notepad that features commands, quality of life, and runs entirely in the browser.">
     <meta name="creator" content="CCN0">
     <meta name="keywords" content="notepad,programmable notepad,program notepad,pnp,pnotepad,ccn0tepad,code notepad,notepad commands">
     <meta name="description" content="Programmable Notepad is the only notepad that features commands, quality of life, and runs entirely in the browser.">
+    <meta name="twitter:title" content="Programmable Notepad">
+    <meta name="twitter:description" content="Programmable Notepad is the only notepad that features commands, quality of life, and runs entirely in the browser.">
     <style>
         html{
             max-height: 100vh;
@@ -37,7 +44,7 @@
             min-width: 100%;
             resize: none;
             border: none;
-            outline: #fff;
+            outline: #fff inherit inherit;
             padding: 3px 2px;
             &[dark] {
                 background-color: #000;
@@ -52,7 +59,7 @@
     <script>
         const textarea = document.getElementById('textarea');
         const Notepad = {
-            version: "0.003",
+            version: "0.004",
             field: textarea,
             filename: "text.txt",
             lastInput: "",
@@ -66,6 +73,26 @@
             textarea.setAttribute('dark','');
         };
 
+        function openFile() {
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = "text/*";
+            input.addEventListener("change", (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        deleteLine(Notepad.location);
+                        const content = e.target.result;
+                        textarea.value += content;
+                    };
+                    reader.readAsText(file);
+                    Notepad.filename = file.name;
+                    refreshTitle();
+                }
+            });
+            input.click();
+        };
         function saveToFile(x) {
             const content = textarea.value;
             const blob = new Blob([content], { type: 'text/plain' });
@@ -152,6 +179,10 @@
         textarea.addEventListener('keydown', (e) => {
             Notepad.location = textarea.value.substring(0, textarea.selectionStart).split('\n').length;
 
+            if (event.ctrlKey && event.key === 'o') {
+                event.preventDefault();
+                openFile()
+            };
             if (event.ctrlKey && event.key === 's') {
                 event.preventDefault();
                 saveToFile();
@@ -210,7 +241,22 @@
                     switch (command.slice(slash.length)) {
                         case "help":
                             deleteLine(Notepad.location);
-                            helpmessage = ">help: shows this\n>replace <regex> <text>: replaces text that matches regex\n>eval <code>: run javascript and print to line\n>dark: toggle dark mode\n>wrap: toggle line wrap\n>font: specify a font for notepad\n>askbeforeleaving: toggle asking before leaving\n>open: append a file to notepad\n>web <url>: fetch and append a file to notepad\n>save: save current file\n>saveas <filename>: save current file as filename";
+                            helpmessage = `>help: shows this  
+>replace <regex> <text> [true/false]: replaces text that matches regex, if true per line  
+>eval <code>: run JavaScript and print to line  
+>js <code>: run JavaScript and print to line without new line  
+>dark [true/false]: toggle or set dark mode  
+>wrap [true/false]: toggle or set line wrap  
+>font <font-name>: specify a font for notepad  
+>color <color>: change text color  
+>background <color>: change background color  
+>askbeforeleaving [true/false]: toggle asking before leaving  
+>open: append a file to notepad  
+>web <url>: fetch and append a file to notepad  
+>save: save current file  
+>saveas <filename>: save current file as filename  
+>name <filename>: set the current file name  
+`;
                             if (typeof textarea.value === "undefined") {
                                 textarea.value = helpmessage;
                             } else {
@@ -224,10 +270,26 @@
                                 replaceLine(Notepad.location, error + "\n");
                             };
                             break;
+                        case "js":
+                            try {
+                                replaceLine(Notepad.location, eval(args.join(' ')));
+                            } catch (error) {
+                                replaceLine(Notepad.location, error);
+                            };
+                            break;
                         case "replace":
-                            let regex = new RegExp(args[0], 'g');
-                            textarea.value = textarea.value.replace(regex, args[1]);
-                            replaceLine(Notepad.location,'');
+                            if (args[3] === "true") {
+                                let pattern = args[0];
+                                let replacement = args[1];
+                                let regex = new RegExp(pattern, 'g');
+                                let updatedValue = textarea.value.replace(regex, replacement);
+                                textarea.value = updatedValue;
+                                replaceLine(Notepad.location, '');
+                            } else {
+                                let regex = new RegExp(args[0], 'g');
+                                textarea.value = textarea.value.replace(regex, args[1]);
+                                replaceLine(Notepad.location,'');
+                            }
                             break;
                         case "dark":
                             replaceLine(Notepad.location,'');
@@ -268,24 +330,7 @@
                             };
                             break;
                         case "open":
-                            const input = document.createElement("input");
-                            input.type = "file";
-                            input.accept = "text/*";
-                            input.addEventListener("change", (event) => {
-                                const file = event.target.files[0];
-                                if (file) {
-                                    const reader = new FileReader();
-                                    reader.onload = (e) => {
-                                        deleteLine(Notepad.location);
-                                        const content = e.target.result;
-                                        textarea.value += content;
-                                    };
-                                    reader.readAsText(file);
-                                    Notepad.filename = file.name;
-                                    refreshTitle();
-                                }
-                            });
-                            input.click();
+                            openFile();
                             break;
                         case "name":
                             if (argsExist) {
