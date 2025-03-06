@@ -1,5 +1,5 @@
 {
-    "running":["soundlets","globalclocks","bluesky","pnp"],
+    "running":["soundlets","globalclocks","bluesky","pnp","ccn0blog"],
     "promos":[
         {
             "id": "ccn0blog",
@@ -48,6 +48,14 @@
             "alt": "on bluesky as @ccn0.net",
             "title": "I say shit here sometimes",
             "desc": "My Bluesky, which replaced the Things Blog from all those years ago."
+        },
+        {
+            "id": "bday25",
+            "img": "assets/x",
+            "url": "https://ccn0.net/pages/birthday/2025.html",
+            "alt": "happy 5th birthday",
+            "title": "5",
+            "desc": "Announcements??? Games maybe???? More Things????"
         }
     ]
 }
