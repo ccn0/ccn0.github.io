@@ -1,5 +1,7 @@
 import os
 
+# made by ai so be careful with this thing
+
 def replace_string_in_html(root_dir, search_str, replace_str):
     for subdir, _, files in os.walk(root_dir):
         for file in files:
