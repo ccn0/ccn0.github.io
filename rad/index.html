@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v4.3 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v5 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,8 +92,13 @@
             })
         
         function displayRad() {
-            promosRunning = promosData.promos.filter(item => promosData.running.includes(item.id));
-            radToShow = promosRunning[randomInteger(0,promosData.running.length-1)];
+            const promosRunning = promosData.promos.filter(item => promosData.running.includes(item.id));
+            const radToShow = promosRunning[randomInteger(0,promosData.running.length-1)];
+
+            const newCSS = document.createElement("style");
+            newCSS.textContent = radToShow.css || "";
+            document.head.appendChild(newCSS);
+
             document.getElementById('adBox').href = radToShow.url;
             document.getElementById('adBox').title = `${radToShow.title} (Ad)`;
             document.getElementById('sphoto').src = radToShow.img;
