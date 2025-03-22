@@ -62,7 +62,7 @@
     <script>
         const textarea = document.getElementById('textarea');
         const Notepad = {
-            version: "0.005",
+            version: "0.006",
             field: textarea,
             filename: "text.txt",
             history: [""],
@@ -181,6 +181,15 @@
                 return null;
             };
         };
+        function getCursorPosition() {
+            const cursorPosition = textarea.selectionStart;
+            const text = textarea.value;
+            const lines = text.substring(0, cursorPosition).split("\n");
+            const row = lines.length;
+            const column = lines[lines.length - 1].length;
+            return [row,column];
+        };
+
         textarea.addEventListener('input', (e)=>{
             refreshTitle();
             Notepad.saved = false;
@@ -264,11 +273,13 @@
                 const cursorLine = lines[textarea.value.substring(0, textarea.selectionStart).split('\n').length - 1];
                 const [command, ...args] = cursorLine.split(' ');
                 const argsExist = (args[0] && args[0].length > 0);
-                const slash = ">";
+                const prefix = ">";
 
-                if (command?.startsWith(slash)) {
+                if (command?.startsWith(prefix)) {
                     e.preventDefault();
-                    switch (command.slice(slash.length)) {
+                    Notepad.lastEvent = "command";
+
+                    switch (command.slice(prefix.length)) {
                         case "help":
                             deleteLine(Notepad.location);
                             helpmessage = `>help: shows this  
@@ -437,7 +448,6 @@
                 };
             };
         });
-
   </script>
 </body>
 </html>
