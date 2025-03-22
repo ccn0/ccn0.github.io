@@ -34,6 +34,7 @@
             }
         }
         textarea {
+            font-size: 12px;
             text-wrap: nowrap;
             &[wrap] {
                 text-wrap: wrap;
@@ -59,13 +60,18 @@
     <script>
         const textarea = document.getElementById('textarea');
         const Notepad = {
-            version: "0.004",
+            version: "0.005",
             field: textarea,
             filename: "text.txt",
-            lastInput: "",
+            history: [""],
             location: 0,
             saved: false,
             askbeforeleaving: true,
+            lastEvent: "",
+            flags: {
+                ups: 0,
+            },
+            tab:"    "
         };
 
         const params = new URLSearchParams(window.location.search);
@@ -78,7 +84,7 @@
             input.type = "file";
             input.accept = "text/*";
             input.addEventListener("change", (event) => {
-                const file = event.target.files[0];
+                const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = (e) => {
@@ -179,24 +185,24 @@
         textarea.addEventListener('keydown', (e) => {
             Notepad.location = textarea.value.substring(0, textarea.selectionStart).split('\n').length;
 
-            if (event.ctrlKey && event.key === 'o') {
-                event.preventDefault();
+            if (e.ctrlKey && e.key === 'o') {
+                e.preventDefault();
                 openFile()
             };
-            if (event.ctrlKey && event.key === 's') {
-                event.preventDefault();
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
                 saveToFile();
             };
-            if (event.ctrlKey && event.key === 'S') {
-                event.preventDefault();
-                a = prompt('Name of file? e.g. File.txt or File.js');
+            if (e.ctrlKey && e.key === 'S') {
+                e.preventDefault();
+                const a = prompt('Name of file? e.g. File.txt or File.js');
                 saveToFile(a);
             };
-            if (event.key === 'Tab') {
-                event.preventDefault();
-                insertAtCursor("    ");
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                insertAtCursor(Notepad.tab);
             };
-            if (event.ctrlKey && event.key === 'd') {
+            if (e.ctrlKey && e.key === 'd') {
                 e.preventDefault();
                     let locationhref = new URL(window.location.href);
 
@@ -212,7 +218,7 @@
 
                     history.replaceState(null, '', locationhref.href);
             };
-            if (event.ctrlKey && event.altKey && event.key === 'w') {
+            if (e.ctrlKey && e.altKey && e.key === 'w') {
                 e.preventDefault();
                 if (textarea.getAttribute('wrap') === '') {
                     textarea.removeAttribute('wrap');
@@ -222,13 +228,25 @@
             };
             if (e.key === "ArrowUp" && e.ctrlKey) {
                 e.preventDefault();
-		        textarea.value += Notepad.lastInput;
-                textarea.selectionStart = textarea.selectionEnd = textarea.selectionStart + Notepad.lastInput.length;
+                if (Notepad.lastEvent != "backonce") {
+                    Notepad.lastEvent = "backonce";
+                    Notepad.flags.ups = 0;
+
+		            textarea.value += Notepad.history[0];
+                    textarea.selectionStart = textarea.selectionEnd = textarea.selectionStart + Notepad.history.length;
+                } else {
+                    Notepad.lastEvent = "backonce";
+                    Notepad.flags.ups = (Notepad.flags.ups) % Notepad.history.length;
+
+		            replaceLine(location-1,Notepad.history[Notepad.flags.ups]);
+                    textarea.selectionStart = textarea.selectionEnd = textarea.selectionStart + Notepad.history.length;
+                }
             };
             if (e.key === "Enter") {
-                if (getLineAtCursor() != "") {
-                    Notepad.lastInput = getLineAtCursor();
-                }
+                if (getLineAtCursor() != "" && Notepad.history[0] != getLineAtCursor()) {
+                    Notepad.history.unshift(getLineAtCursor());
+                };
+                Notepad.lastEvent = "newline";
 
                 const lines = textarea.value.split('\n');
                 const cursorLine = lines[textarea.value.substring(0, textarea.selectionStart).split('\n').length - 1];
