@@ -55,7 +55,9 @@
     </style>
 </head>
 <body>
-    <noscript>JavaScript is disabled, try <a href="light.html"><i>Notepad</i> Premium</a> made for use without JavaScript.</noscript>
+    <noscript>
+        JavaScript is disabled, try <a href="light.html"><i>Notepad</i> Premium</a> made for use without JavaScript.
+    </noscript>
     <textarea spellcheck="false" id="textarea"></textarea>
     <script>
         const textarea = document.getElementById('textarea');
@@ -70,6 +72,7 @@
             lastEvent: "",
             flags: {
                 ups: 0,
+                repWid: 0,
             },
             tab:"    "
         };
@@ -131,7 +134,7 @@
                 lines[lineNumber - 1] = newContent;
                 textarea.value = lines.join("\n");
             } else {
-                console.error("No line exists at this location.");
+                console.error("No line exists at this location: ", lineNumber);
                 textarea.value += "\n";
             };
         };
@@ -226,26 +229,35 @@
                     textarea.setAttribute('wrap','');
                 };
             };
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                insertAtCursor(Notepad.history[0]);
+            };
             if (e.key === "ArrowUp" && e.ctrlKey) {
                 e.preventDefault();
-                if (Notepad.lastEvent != "backonce") {
+
+                if (Notepad.lastEvent !== "backonce") {
                     Notepad.lastEvent = "backonce";
                     Notepad.flags.ups = 0;
 
-		            textarea.value += Notepad.history[0];
-                    textarea.selectionStart = textarea.selectionEnd = textarea.selectionStart + Notepad.history.length;
-                } else {
-                    Notepad.lastEvent = "backonce";
-                    Notepad.flags.ups = (Notepad.flags.ups) % Notepad.history.length;
+                    insertAtCursor(Notepad.history[0]);
+                    Notepad.flags.repWid = Notepad.history[0].length;
 
-		            replaceLine(location-1,Notepad.history[Notepad.flags.ups]);
-                    textarea.selectionStart = textarea.selectionEnd = textarea.selectionStart + Notepad.history.length;
+                    textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+                } else {
+                    Notepad.flags.ups = (Notepad.flags.ups + 1) % Notepad.history.length;
+
+                    replaceLine(Notepad.location, Notepad.history[Notepad.flags.ups]);
+
+                    textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
                 }
             };
+
             if (e.key === "Enter") {
-                if (getLineAtCursor() != "" && Notepad.history[0] != getLineAtCursor()) {
-                    Notepad.history.unshift(getLineAtCursor());
-                };
+                const currentLine = getLineAtCursor();
+                if (currentLine !== "" && Notepad.history[0] !== currentLine) {
+                    Notepad.history.unshift(currentLine);
+                }
                 Notepad.lastEvent = "newline";
 
                 const lines = textarea.value.split('\n');
