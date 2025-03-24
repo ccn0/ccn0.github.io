@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.2 -->
+<!-- made by ccn0 | v1.3 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +34,7 @@
                 keywordQueries: "true",
             },
         };
-        const SETTINGS =  JSON.parse(localStorage.getItem("spp_settings") || defaultData);
+        const SETTINGS =  JSON.parse(localStorage.getItem("spp_settings") || JSON.stringify(defaultData));
 
         if (SETTINGS.searchEngines.length !== 0) {
             useSearchEngines();
@@ -59,7 +59,11 @@
         };
         function redirectTo(url) {
             if (!url.startsWith("javascript:")) {
-                location = url;
+                if (!url.startsWith(location.protocol+"//"+location.host+location.pathname)) {
+                    location = url;
+                } else {
+                    changePage("YOU FAILED US!","NOT GONNA GET A REDIRECT LOOP OUT OF ME!");
+                }
             } else {
                 changePage("YOU FAILED US!","TRYING TO USE BOOKMARKLETS EH? USE PROGRAMMABLE NOTEPAD OR SOMRTHING!!");
             }

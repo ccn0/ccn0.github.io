@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.2 -->
+<!-- made by ccn0 | v1.3 -->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -298,19 +298,21 @@
             width: 32px;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
         .engButton {
             background: #b4d0a9;
             flex: 1;
             cursor: pointer;
             border: none;
+            overflow: hidden;
             &:hover {
                 background-color: #f2ffe2;
             }
             &:active {
                 background-color: #192c19;
                 color: #fff;
-                box-shadow: #192c19 0 0 0 2px;
+                box-shadow: #192c19;
                 transform: translateY(2px);
             }
         }
@@ -319,11 +321,15 @@
             flex: 1;
             flex-direction: column;
             flex-wrap: wrap;
+            &:last-child {
+                border-bottom: none;
+            }
         }
         .engInput {
             display: flex;
             flex: 1;
             border-radius: 0;
+            border:none;
         }
     </style>
 </head>
@@ -386,6 +392,7 @@
 
                                 const tbClose = document.createElement("button");
                                 tbClose.classList.add("engButton");
+                                tbClose.style.cssText = "border-right:2px solid green;";
                                 tbClose.title = "Delete Search Engine";
                                 tbClose.textContent = "X";
                                 tbClose.addEventListener("click", () => {
@@ -402,6 +409,7 @@
 
                                 const urlinput = document.createElement("input");
                                 urlinput.classList.add("engInput");
+                                urlinput.style.cssText = "border-bottom:1px solid green;";
                                 urlinput.title = "URL, %s is query";
                                 urlinput.placeholder = "URL where %s is the query";
                                 urlinput.value = engine.url;
@@ -414,6 +422,7 @@
 
                                 const symbput = document.createElement("input");
                                 symbput.classList.add("engInput");
+                                symbput.style.cssText = "border-top:1px solid green;";
                                 symbput.title = "Symbol, after @";
                                 symbput.placeholder = "use '@[what you put here] query' or nothing for default";
                                 symbput.value = engine.symbol;
