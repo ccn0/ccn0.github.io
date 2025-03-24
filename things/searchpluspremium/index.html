@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- made by ccn0 v0.00b -->
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SearchPlusPREMIUM</title>
+    <meta name="creator" content="CCN0" />
+    <meta name="description" content="A search engine thats made to be fast. Go exactly what you want to go." />
+    <link rel="search" type="application/opensearchdescription+xml" title="SearchPlusPREMIUM" href="/opensearch.xml">
+    <script>
+        const defaultData = {
+            default: "search",
+            searchEngines: [
+                {
+                    url: "https://www.google.com/search?q=%s",
+                    symbol: "g",
+                },
+                {
+                    url: "https://duckduckgo.com/?q=%s",
+                    symbol: "ddg",
+                },
+            ],
+            keywords: {},
+            pref: {
+                useKeywords: "true",
+                atSpecifiesEngine: "true",
+                keywordsOverAt: "true",
+                keywordQueries: "true",
+            },
+        };
+        if (!localStorage.getItem("spp_settings")) {
+            localStorage.setItem(
+                "spp_settings",
+                JSON.stringify(defaultData)
+            );
+        }
+        const gbal = {
+            settings: JSON.parse(
+                localStorage.getItem("spp_settings") || defaultData
+            ),
+            css: {
+                container: "border-bottom: 1px solid black;height: 80px;display: flex;",
+                toolbar: "width: 32px;display: flex;flex-direction: column;",
+                button: "background: #aaa;flex: 1;",
+                list: "display: flex;flex: 1;flex-direction: column;flex-wrap: wrap;",
+                input: "display: flex;flex: 1;",
+            },
+            save: function () {
+                localStorage.setItem("spp_settings", JSON.stringify(gbal.settings))
+            }
+        };
+    </script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .content {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .col {
+            display: flex;
+            flex: 1;
+            min-height: 100vh;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        .elem {
+            display: flex;
+            flex-direction: column;
+            background-color: #0000;
+            color: #fff;
+            width: 100%;
+            padding: 15px;
+            border-bottom: 2px #fff solid;
+        }
+
+        .c1 {
+            background-color: #021f02;
+            height: auto;
+            h1 {
+                text-align: center;
+            }
+        }
+
+        .c2 {
+            display: flex;
+            flex-direction: column;
+            background-color: #97c18b;
+            h1,
+            h2 {
+                margin-top: -2px;
+                margin-bottom: -8px;
+            }
+            div {
+                padding: 15px;
+
+                &>div {
+                    padding: 0;
+                }
+            }
+        }
+
+        .c3 {
+            background-color: #40723f;
+        }
+
+        figure {
+            border: none;
+        }
+
+        img {
+            width: 100%;
+            display: flex;
+        }
+
+        a {
+            color: rgb(35, 222, 255);
+            &:hover {
+                color: rgb(255, 208, 0);
+            }
+            &:active {
+                color: #ff30e3;
+            }
+        }
+
+        .warnbanner {
+            font-weight: bold;
+            max-width: 100%;
+            background-color: #ff0;
+            color: #000;
+            padding: 15px;
+            text-align: center;
+            &::selection {
+                background-color: #000;
+                color: #fff;
+            }
+            a {
+                color: #00f;
+
+                &:active {
+                    color: #f00;
+                }
+            }
+        }
+
+        @media (max-width: 500px) {
+            .content {
+                flex-direction: column;
+            }
+            .col {
+                min-height: auto;
+                flex: 1;
+            }
+        }
+
+        form {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            height: 32px;
+
+            input {
+                padding-left: 12px;
+                font-family: 'Roboto Mono', monospace;
+                transition: all 0.2s;
+                flex: 1;
+                border-radius: 4px;
+                border: 1px #aaa solid;
+                &[type=search] {
+                    &:hover {
+                        border-color: #444;
+                    }
+                    &:focus-within {
+                        padding-left: 32px;
+                        transform: translateY(-2px);
+                        flex: 3;
+                    }
+                }
+                &[type="submit"] {
+                    padding: 0!important;
+                    color: #fff;
+                    font-weight: bold;
+                    background-color: rgb(0, 81, 255);
+                    cursor: pointer;
+                    border: none;
+                    border-radius: 8px;
+                    &:hover,
+                    :focus-within {
+                        background-color: #187cff;
+                    }
+                    &:active {
+                        background-color: #0013c0;
+                        transform: translateY(2px);
+                    }
+                }
+            }
+        }
+
+        .container {
+            background: #fff;
+            border: 2px solid green;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 0 !important;
+            .toolbar {
+                flex: 1;
+                background-color: #aaa;
+                overflow: hidden;
+                padding: 0;
+                display: flex;
+                button {
+                    flex: 1;
+                    display: inline-block;
+                    width: 100%;
+                    background-color: #e7e7e7;
+                    cursor: pointer;
+                    height: 32px;
+                }
+            }
+
+            .list {
+                overflow-y: scroll;
+                height: 50vh;
+                padding: 0;
+            }
+        }
+
+        .engContainer {
+            border-bottom: 2px solid green;
+            height: 80px;
+            display: flex;
+        }
+        button {
+            background: #b4d0a9;
+            flex: 1;
+            cursor: pointer;
+            border: none;
+            padding: 0!important;
+            &:hover {
+                background-color: #f2ffe2;
+            }
+            &:active {
+                background-color: #192c19;
+                color: #fff;
+                box-shadow: #192c19 0 0 0 2px;
+                transform: translateY(2px);
+            }
+        }
+        .engToolbar {
+            width: 32px;
+            display: flex;
+            flex-direction: column;
+        }
+        .engButton {
+            background: #b4d0a9;
+            flex: 1;
+            cursor: pointer;
+            border: none;
+            &:hover {
+                background-color: #f2ffe2;
+            }
+            &:active {
+                background-color: #192c19;
+                color: #fff;
+                box-shadow: #192c19 0 0 0 2px;
+                transform: translateY(2px);
+            }
+        }
+        .engList {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            flex-wrap: wrap;
+        }
+        .engInput {
+            display: flex;
+            flex: 1;
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body>
+    <noscript>
+        <div class="warnbanner">
+            SearchPlusPREMIUM requires javascript to function...
+        </div>
+    </noscript>
+    <div class="content">
+        <div class="col c1">
+            <div class="elem">
+                <figure>
+                    <img src="logo.svg" alt="SearchPlusPREMIUM Logo">
+                    <figcaption>
+                        the only search engine that gets you
+                        <em>exactly</em> where you want to go
+                    </figcaption>
+                </figure>
+                <form action="search.html">
+                    <input type="search" placeholder="search here" name="q" id="q" title="Search Here" autofocus
+                        required />
+                    <input type="submit" value="TAKE ME" title="Submit" />
+                </form>
+                <div style="text-align: center; padding: 10px 0;">
+                    <a href="#">made by ccn0</a>
+                    <a href="#sssss">settings</a>
+                </div>
+            </div>
+        </div>
+        <div class="col c2" id="sssss">
+            <div style="padding: 15px;">
+                <h1>Search Settings</h1>
+            </div>
+            <div>
+                <div style="padding: 15px;">
+                    <h2>Engines</h2>
+                </div>
+                <div class="container">
+                    <div class="toolbar">
+                        <button onclick="addNew()" title="Add New Search Engine">Add New</button>
+                    </div>
+                    <div id="enginelist" class="list"></div>
+                    <script>
+                        const maincont = document.querySelector("#enginelist")
+
+                        function loadEngines() {
+                            maincont.innerHTML = "";
+
+                            let idx = 0;
+                            gbal.settings.searchEngines.forEach(engine => {
+                                const index = idx;
+
+                                const itemCont = document.createElement("div");
+                                itemCont.classList.add("engContainer");
+                                itemCont.setAttribute("data-engine", index)
+
+                                const toolsCont = document.createElement("div");
+                                toolsCont.classList.add("engToolbar");
+
+                                const tbClose = document.createElement("button");
+                                tbClose.classList.add("engButton");
+                                tbClose.title = "Delete Search Engine";
+                                tbClose.textContent = "X";
+                                tbClose.addEventListener("click", () => {
+                                    gbal.settings.searchEngines = gbal.settings.searchEngines.filter(engin => engin !== gbal.settings.searchEngines[index]);
+                                    gbal.save();
+                                    loadEngines();
+                                });
+                                toolsCont.appendChild(tbClose);
+
+                                itemCont.appendChild(toolsCont);
+
+                                const inputsCont = document.createElement("div");
+                                inputsCont.classList.add("engList")
+
+                                const urlinput = document.createElement("input");
+                                urlinput.classList.add("engInput");
+                                urlinput.title = "URL, %s is query";
+                                urlinput.placeholder = "URL where %s is the query";
+                                urlinput.value = engine.url;
+                                urlinput.addEventListener("change", (e) => {
+                                    gbal.settings.searchEngines[index].url = e.target.value;
+                                    gbal.save();
+                                });
+
+                                inputsCont.appendChild(urlinput);
+
+                                const symbput = document.createElement("input");
+                                symbput.classList.add("engInput");
+                                symbput.title = "Symbol, after @";
+                                symbput.placeholder = "use '@[what you put here] query'";
+                                symbput.value = engine.symbol;
+                                symbput.addEventListener("change", (e) => {
+                                    gbal.settings.searchEngines[index].symbol = e.target.value;
+                                    gbal.save();
+                                });
+
+                                inputsCont.appendChild(symbput);
+
+                                itemCont.appendChild(inputsCont);
+                                maincont.appendChild(itemCont)
+                                idx++
+                            });
+                        };
+
+                        function addNew() {
+                            const brandNew = {
+                                url: "url here",
+                                symbol: "symbol here"
+                            };
+
+                            gbal.settings.searchEngines.push(brandNew);
+                            loadEngines()
+                        };
+                        loadEngines();
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col c3"></div>
+    </div>
+</body>
+
+</html>
