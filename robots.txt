@@ -55,6 +55,7 @@ Disallow: /img/
 Disallow: /rad/
 Disallow: /pages/updates/
 Disallow: /blah/
+Disallow: /things/searchpluspremium/search.html
 Disallow: /settings.html
 Allow: /rad/whatisthis.html
 Allow: /pages/menuengine/

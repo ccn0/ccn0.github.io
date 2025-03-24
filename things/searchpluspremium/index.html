@@ -126,6 +126,7 @@
             code {
                 background-color: #000;
                 cursor: alias;
+                user-select: all;
             }
         }
 
@@ -231,6 +232,7 @@
             .toolbar {
                 flex: 1;
                 background-color: #aaa;
+                border-bottom: 2px green solid;
                 overflow: hidden;
                 padding: 0;
                 display: flex;
@@ -238,9 +240,18 @@
                     flex: 1;
                     display: inline-block;
                     width: 100%;
-                    background-color: #e7e7e7;
                     cursor: pointer;
                     height: 32px;
+                    background: #b4d0a9;
+                    &:hover {
+                        background-color: #f2ffe2;
+                    }
+                    &:active {
+                        background-color: #192c19;
+                        color: #fff;
+                        box-shadow: #192c19 0 0 0 2px;
+                        transform: translateY(2px);
+                    }
                 }
             }
 
@@ -424,16 +435,38 @@
         </div>
         <div class="col c3">
             <div>
+                <details>
+                    <summary>
+                        View long-winded tutorial here:
+                    </summary>
+                    You can find the search results page by searching something, then looking for it in the address bar.
+                    Enter a URL for a search engine, e.g. <code>https://www.google.com/search?q=hello</code>, and replace the query
+                    with <code>%s</code>, e.g. <code>https://www.google.com/search?q=%s</code>.
+                    This URL will replace the %s or however many you add, with your search query.
+                    Enter a symbol, e.g. <code>@g</code> so that you can place the symbol before the query
+                    to specify the search engine.<br><br>
+                    By the way, you don't have to use a %s.
+                </details>
                 <p>Basically, the whole idea is that instead of relying on your browsers search "utilities,"
                     you can go ahead and use SearchPlusPREMIUM which despite the name sounding like otherwise, is actually free.
                     You can add it by entering the URL (if %s is the query),
-                    <code style="user-select: all;">https://ccn0.net/things/searchpluspremium/search.html?q=%s</code>,
+                    <code>https://ccn0.net/things/searchpluspremium/search.html?q=%s</code>,
                     or if your using Firefox, click on the search bar while on this page and click the little icon with the green plus.
                 </p>
                 <p>If you like this search engine, be sure to give it a like. If you find a problem,
                     <a href="https://github.com/ccn0/ccn0.github.io/issues">add it as an issue on the website repo</a>.
                     Also, I love attention, so be sure to share this with your friends.
                     Anyways, I'm almost at the bridge now. Oh shit, I forgot &mdash; how am I supposed to send this shit out?
+                </p>
+                <p>
+                    SHARE EVERYWHERE!!!
+                    <a target="_blank" href="https://twitter.com/intent/tweet?text=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW%20https://ccn0.net/things/searchpluspremium/index.html">Share to Twitter</a>
+                    <a href="https://www.reddit.com/submit?url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share on Reddit</a>
+                    <a href="mailto:?subject=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW&body=Check%20this%20out%20https://ccn0.net/things/searchpluspremium/index.html" target="_blank">Share via Email</a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER%2C%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share on LinkedIn</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://ccn0.net/things/searchpluspremium/index.html" target="_blank">Share on Facebook</a>
+                    <a href="https://www.tumblr.com/share/link?url=https://ccn0.net/things/searchpluspremium/index.html&name=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share on Tumblr</a>
+                    <a href="javascript:navigator.clipboard.writeText('https://ccn0.net/things/searchpluspremium/index.html');">Copy Link</a>
                 </p>
             </div> 
         </div>
