@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1 -->
+<!-- made by ccn0 | v1.1 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +34,7 @@
                 keywordQueries: "true",
             },
         };
-        const SETTINGS =  JSON.parse(localStorage.getItem("spp_settings") || JSON.stringify(defaultData))
+        const SETTINGS =  JSON.parse(localStorage.getItem("spp_settings") || defaultData);
 
         if (SETTINGS.searchEngines.length !== 0) {
             useSearchEngines();
