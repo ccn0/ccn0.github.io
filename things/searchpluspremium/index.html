@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 v0.00b -->
+<!-- made by ccn0 | v1 -->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SearchPlusPREMIUM</title>
+    <link rel="icon" href="favicon.png">
+    <meta name="og:title" content="SearchPlusPREMIUM">
+    <meta property="og:description" content="The only search engine that brings you exactly where you wanna go.">
+    <meta property="og:url" content="https://ccn0.net/things/searchpluspremium/index.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://ccn0.net/things/searchpluspremium/spp.png">
     <meta name="creator" content="CCN0" />
-    <meta name="description" content="A search engine thats made to be fast. Go exactly what you want to go." />
+    <meta name="description" content="The only search engine that brings you exactly where you wanna go." />
     <link rel="search" type="application/opensearchdescription+xml" title="SearchPlusPREMIUM" href="/opensearch.xml">
     <script>
         const defaultData = {
@@ -14,11 +20,11 @@
             searchEngines: [
                 {
                     url: "https://www.google.com/search?q=%s",
-                    symbol: "g",
+                    symbol: "",
                 },
                 {
                     url: "https://duckduckgo.com/?q=%s",
-                    symbol: "ddg",
+                    symbol: "@ddg",
                 },
             ],
             keywords: {},
@@ -113,6 +119,14 @@
 
         .c3 {
             background-color: #40723f;
+            div {
+                padding: 15px;
+                color: #fff;
+            }
+            code {
+                background-color: #000;
+                cursor: alias;
+            }
         }
 
         figure {
@@ -313,7 +327,7 @@
                     <input type="submit" value="TAKE ME" title="Submit" />
                 </form>
                 <div style="text-align: center; padding: 10px 0;">
-                    <a href="#">made by ccn0</a>
+                    <a href="https://bsky.app/profile/ccn0.net">made by ccn0</a>
                     <a href="#sssss">settings</a>
                 </div>
             </div>
@@ -379,7 +393,7 @@
                                 const symbput = document.createElement("input");
                                 symbput.classList.add("engInput");
                                 symbput.title = "Symbol, after @";
-                                symbput.placeholder = "use '@[what you put here] query'";
+                                symbput.placeholder = "use '@[what you put here] query' or nothing for default";
                                 symbput.value = engine.symbol;
                                 symbput.addEventListener("change", (e) => {
                                     gbal.settings.searchEngines[index].symbol = e.target.value;
@@ -408,7 +422,21 @@
                 </div>
             </div>
         </div>
-        <div class="col c3"></div>
+        <div class="col c3">
+            <div>
+                <p>Basically, the whole idea is that instead of relying on your browsers search "utilities,"
+                    you can go ahead and use SearchPlusPREMIUM which despite the name sounding like otherwise, is actually free.
+                    You can add it by entering the URL (if %s is the query),
+                    <code style="user-select: all;">https://ccn0.net/things/searchpluspremium/search.html?q=%s</code>,
+                    or if your using Firefox, click on the search bar while on this page and click the little icon with the green plus.
+                </p>
+                <p>If you like this search engine, be sure to give it a like. If you find a problem,
+                    <a href="https://github.com/ccn0/ccn0.github.io/issues">add it as an issue on the website repo</a>.
+                    Also, I love attention, so be sure to share this with your friends.
+                    Anyways, I'm almost at the bridge now. Oh shit, I forgot &mdash; how am I supposed to send this shit out?
+                </p>
+            </div> 
+        </div>
     </div>
 </body>
 

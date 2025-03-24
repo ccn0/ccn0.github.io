@@ -1,66 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- made by ccn0 | v1 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SearchPlusPREMIUM</title>
+    <link rel="icon" href="favicon.png">
+    <meta name="robots" content="noindex">
     <script>
         const params = new URLSearchParams(window.location.search);
         const query = params.get("q");
+        if (query == null) {
+            location = "https://ccn0.net/things/searchpluspremium/index.html"
+        };
         
         const defaultData = {
-                "default": "search",
-                "searchEngines": [
-                    {
-                        "url": "https://www.google.com/search?q=%s",
-                        "symbol": "g"
-                    },
-                    {
-                        "url": "https://duckduckgo.com/?q=%s",
-                        "symbol": "ddg"
-                    }
-                ],
-                "keywords": {},
-                "pref": {
-                    "useKeywords": "true",
-                    "atSpecifiesEngine": "true",
-                    "keywordsOverAt": "true",
-                    "keywordQueries": "true"
-                }
-            };
+            default: "search",
+            searchEngines: [
+                {
+                    url: "https://www.google.com/search?q=%s",
+                    symbol: "",
+                },
+                {
+                    url: "https://duckduckgo.com/?q=%s",
+                    symbol: "@ddg",
+                },
+            ],
+            keywords: {},
+            pref: {
+                useKeywords: "true",
+                atSpecifiesEngine: "true",
+                keywordsOverAt: "true",
+                keywordQueries: "true",
+            },
+        };
         const SETTINGS =  JSON.parse(localStorage.getItem("spp_settings") || JSON.stringify(defaultData))
 
-        if (SETTINGS.default == "search") {
-            if (SETTINGS.searchEngines.length !== 0) {
-                useSearchEngines();
-            } else {
-                changePage("YOU FAILED US!","YOU DONT EVEN HAVE ANY SEARCH ENGINES!")
-            };
-        } else if (SETTINGS.default == "keywords") {
-            console.log("to do: keywords")
+        if (SETTINGS.searchEngines.length !== 0) {
+            useSearchEngines();
+        } else {
+            changePage("YOU FAILED US!","YOU DONT EVEN HAVE ANY SEARCH ENGINES!")
         };
         function useSearchEngines() {
-            console.log("using search engines")
-            if (query.startsWith("@") || query.startsWith(encodeURIComponent("@"))) {
-                console.log("starts with an @")
-                let [symbol, ...searchTerm] = query.split(' ');
-                symbol = query.startsWith(encodeURIComponent("@")) ? symbol.slice(encodeURIComponent("@").length): symbol.slice(1);
-                searchTerm = searchTerm.join(' ');
-                let matched = false;
-
-                for (const engine of SETTINGS.searchEngines) {
-                    if (engine.symbol == symbol) {
-                        redirectTo(engine.url.replace(/%s/g, encodeURIComponent(searchTerm)));
-                        matched = true;
-                        break;
-                    };
+            let [symbol, ...searchTerm] = query.split(' ');
+            searchTerm = searchTerm.join(' ');
+            let matched = false;
+            for (const engine of SETTINGS.searchEngines) {
+                if (engine.symbol === symbol) {
+                    redirectTo(engine.url.replace(/%s/g, encodeURIComponent(searchTerm)));
+                    matched = true;
+                    break;
                 };
-                if (!matched) {
-                    console.log("tried checking engines for symbol couldnt find one");
-                    redirectTo(SETTINGS.searchEngines[0].url.replace(/%s/g, encodeURIComponent(searchTerm)));
-                };
-            } else {
-                console.log("no symbols just searching");
+            };
+            if (!matched) {
+                console.log("no matching, defaulting");
                 redirectTo(SETTINGS.searchEngines[0].url.replace(/%s/g, encodeURIComponent(query)));
             };
         };
