@@ -79,6 +79,7 @@
             min-height: 100vh;
             flex-wrap: wrap;
             flex-direction: row;
+            width: 100%;
         }
 
         .elem {
@@ -110,7 +111,6 @@
             }
             div {
                 padding: 15px;
-
                 &>div {
                     padding: 0;
                 }
@@ -122,6 +122,8 @@
             div {
                 padding: 15px;
                 color: #fff;
+                max-width: 100%;
+                overflow: hidden;
             }
             code {
                 background-color: #000;
@@ -129,6 +131,8 @@
                 user-select: all;
             }
             details {
+                max-width: 100%;
+                width: 90%;
                 background-color: #021f02;
                 border-radius: 12px;
                 padding: 15px;
