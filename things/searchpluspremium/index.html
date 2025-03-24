@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.1 -->
+<!-- made by ccn0 | v1.2 -->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -407,7 +407,8 @@
                                 symbput.placeholder = "use '@[what you put here] query' or nothing for default";
                                 symbput.value = engine.symbol;
                                 symbput.addEventListener("change", (e) => {
-                                    gbal.settings.searchEngines[index].symbol = e.target.value;
+                                    symbput.value = symbput.value.replace(" ","_");
+                                    gbal.settings.searchEngines[index].symbol = e.target.value.replace(" ","_");
                                     gbal.save();
                                 });
 
