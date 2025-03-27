@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.4 -->
+<!-- made by ccn0 | v1.4.1 -->
 <head>
     <script>
         const params = new URLSearchParams(window.location.search);
@@ -46,19 +46,28 @@
             };
         };
         function redirectTo(url) {
-            if (params.get("dev")) {
-                return;
-            };
-            if (!url.startsWith("javascript:")) {
-                if (!url.startsWith(location.protocol+"//"+location.host+location.pathname)
-                    && !url == null) {
+            try {
+                const parsedUrl = new URL(url);
+                if (parsedUrl.protocol !== "javascript:") {
+                    const currentUrl = location.protocol + "//" + location.host + location.pathname;
+                    if (parsedUrl.href.startsWith(currentUrl)) {
+                        changePage("YOU FAILED US!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! A");
+                    } else {
+                        location.href = SETTINGS.searchEngines[0].url.replace(/%s/g, encodeURIComponent(query));
+                    }
                 } else {
-                    changePage("YOU FAILED US!","NOT GONNA GET A REDIRECT LOOP OUT OF ME!");
-                };
-            } else {
-                changePage("YOU FAILED US!","TRYING TO USE BOOKMARKLETS EH? USE PROGRAMMABLE NOTEPAD OR SOMETHING!!");
-            };
-        };
+                    changePage("YOU FAILED US!", "TRYING TO USE BOOKMARKLETS EH? USE PROGRAMMABLE NOTEPAD OR SOMETHING!!");
+                }
+            } catch(err) {
+                if (url == "") {
+                    changePage("YOU FAILED US!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! B")
+                } else {
+                    changePage("We failed you...", err)
+                    console.log(url)
+                }
+            }
+        }
+
         function changePage(header,description) {
             document.addEventListener("DOMContentLoaded", ()=>{
                 document.querySelector("h1").textContent = header;
