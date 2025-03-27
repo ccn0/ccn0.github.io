@@ -53,7 +53,8 @@
                     if (parsedUrl.href.startsWith(currentUrl)) {
                         changePage("YOU FAILED US!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! A");
                     } else {
-                        location.href = SETTINGS.searchEngines[0].url.replace(/%s/g, encodeURIComponent(query));
+                        location = url;
+                        console.log(parsedUrl.href);
                     }
                 } else {
                     changePage("YOU FAILED US!", "TRYING TO USE BOOKMARKLETS EH? USE PROGRAMMABLE NOTEPAD OR SOMETHING!!");
