@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.3 -->
+<!-- made by ccn0 | v1.4 -->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,13 +27,6 @@
                     symbol: "@ddg",
                 },
             ],
-            keywords: {},
-            pref: {
-                useKeywords: "true",
-                atSpecifiesEngine: "true",
-                keywordsOverAt: "true",
-                keywordQueries: "true",
-            },
         };
         if (!localStorage.getItem("spp_settings")) {
             localStorage.setItem(
@@ -45,19 +38,70 @@
             settings: JSON.parse(
                 localStorage.getItem("spp_settings") || defaultData
             ),
-            css: {
-                container: "border-bottom: 1px solid black;height: 80px;display: flex;",
-                toolbar: "width: 32px;display: flex;flex-direction: column;",
-                button: "background: #aaa;flex: 1;",
-                list: "display: flex;flex: 1;flex-direction: column;flex-wrap: wrap;",
-                input: "display: flex;flex: 1;",
-            },
             save: function () {
                 localStorage.setItem("spp_settings", JSON.stringify(gbal.settings))
-            }
+            },
+            thelist: [
+                {
+                    "name": "Google",
+                    "url": "https://www.google.com/search?q=%s",
+                    "nicks": [
+                        "goog", "goggle", "gog", "gle", "gle", "g"
+                    ]
+                },
+                {
+                    "name": "DuckDuckGo",
+                    "url": "https://duckduckgo.com/?q=%s",
+                    "nicks": [
+                        "duck", "ddg", "d"
+                    ]
+                },
+                {
+                    "name": "StartPage",
+                    "url": "https://www.startpage.com/do/dsearch?query=%s",
+                    "nicks": [
+                        "startpage", "sp", "sx"
+                    ]
+                },
+                {
+                    "name": "Bing",
+                    "url": "https://www.bing.com/search?q=%s",
+                    "nicks": [
+                        "bing", "bng", "b"
+                    ]
+                },
+                {
+                    "name": "Wikipedia",
+                    "url": "https://en.wikipedia.org/wiki/Special:Search?search=%s",
+                    "nicks": [
+                        "wiki", "wikipedia", "wp", "enwiki", "w"
+                    ]
+                },
+                {
+                    "name": "Yahoo",
+                    "url": "https://search.yahoo.com/search?p=%s",
+                    "nicks": [
+                        "yahoo", "y", "yah"
+                    ]
+                },
+                {
+                    "name": "Ecosia",
+                    "url": "https://www.ecosia.org/search?q=%s",
+                    "nicks": [
+                        "ecosia", "eco", "e"
+                    ]
+                }
+            ],
         };
     </script>
     <style>
+        :root {
+            --hero: #008000;
+            --muted: #97c18b;
+        }
+        html {
+            scrollbar-color:  rgb(102, 201, 102) green;
+        }
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -117,7 +161,7 @@
         }
 
         .c3 {
-            background-color: #40723f;
+            background-color: #043f04;
             div {
                 padding: 15px;
                 color: #fff;
@@ -148,6 +192,7 @@
         img {
             width: 100%;
             display: flex;
+            user-select: none   ;
         }
 
         a {
@@ -156,7 +201,7 @@
                 color: rgb(255, 208, 0);
             }
             &:active {
-                color: #ff30e3;
+                color: #ff56e8;
             }
         }
 
@@ -235,11 +280,28 @@
 
         .container {
             background: #fff;
+            border-radius: 12px;
             border: 2px solid green;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             padding: 0 !important;
+            button {
+                background: #b4d0a9;
+                flex: 1;
+                cursor: pointer;
+                border: none;
+                padding: 0!important;
+                &:hover {
+                    background-color: #f2ffe2;
+                }
+                &:active {
+                    background-color: #192c19;
+                    color: #fff;
+                    box-shadow: #192c19 0 0 0 2px;
+                    transform: translateY(2px);
+                }
+            }
             .toolbar {
                 flex: 1;
                 background-color: #aaa;
@@ -247,6 +309,10 @@
                 overflow: hidden;
                 padding: 0;
                 display: flex;
+                &>div {
+                    display: block;
+                    flex: 1;
+                }
                 button {
                     flex: 1;
                     display: inline-block;
@@ -254,6 +320,7 @@
                     cursor: pointer;
                     height: 32px;
                     background: #b4d0a9;
+                    border-right: 1px solid green;
                     &:hover {
                         background-color: #f2ffe2;
                     }
@@ -264,39 +331,31 @@
                         transform: translateY(2px);
                     }
                 }
+                input {
+                    width: 100%;
+                    height: 32px;
+                    border-radius: 0 12px 0 0;
+                    border: 2px #aaa solid;
+                    border-left: 1px solid green;
+                    &:hover {
+                        border-color: #444;
+                    }
+                }
             }
-
             .list {
                 overflow-y: scroll;
                 height: 75vh;
                 padding: 0;
                 scrollbar-width: thin;
+                scrollbar-color: green var(--muted);
             }
         }
 
         .engContainer {
+            border-right: 2px solid green;
             border-bottom: 2px solid green;
-            &:last-child {
-                /* border-bottom:none; */
-            }
             height: 80px;
             display: flex;
-        }
-        button {
-            background: #b4d0a9;
-            flex: 1;
-            cursor: pointer;
-            border: none;
-            padding: 0!important;
-            &:hover {
-                background-color: #f2ffe2;
-            }
-            &:active {
-                background-color: #192c19;
-                color: #fff;
-                box-shadow: #192c19 0 0 0 2px;
-                transform: translateY(2px);
-            }
         }
         .engToolbar {
             width: 32px;
@@ -374,7 +433,32 @@
                 </div>
                 <div class="container">
                     <div class="toolbar">
-                        <button onclick="addNew()" title="Add New Search Engine">Add New</button>
+                        <div>
+                            <button onclick="addNew()" title="Add New Search Engine">Add New</button>
+                        </div>
+                        <div>
+                            <input type="text" title="Quick Add Search Engine" placeholder="Quick Add" id="qainput">
+                            <script>
+                                const qainput = document.querySelector("#qainput");
+                                qainput.addEventListener("keydown",e=>{
+                                    if (e.key == "Enter") {
+                                        gbal.thelist.forEach((engine)=>{
+                                            if ((engine.nicks.includes(qainput.value.toLowerCase()) || 
+                                                qainput.value.toLowerCase() == engine.name.toLowerCase())) {
+                                                gbal.settings.searchEngines.push({
+                                                    "url":engine.url,
+                                                    "symbol":engine.nicks[engine.nicks.length-1]
+                                                });
+                                                console.log(engine.nicks);
+                                                gbal.save();
+                                                loadEngines();
+                                                return;
+                                            };
+                                        });
+                                    };
+                                });
+                            </script>
+                        </div>
                     </div>
                     <div id="enginelist" class="list"></div>
                     <script>

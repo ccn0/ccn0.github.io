@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.3 -->
+<!-- made by ccn0 | v1.4 -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SearchPlusPREMIUM</title>
-    <link rel="icon" href="favicon.png">
-    <meta name="robots" content="noindex">
     <script>
         const params = new URLSearchParams(window.location.search);
         const query = params.get("q");
         if (query == null) {
-            location = "https://ccn0.net/things/searchpluspremium/index.html"
+            location = location.protocol+"//"+location.host+location.pathname;
         };
         
         const defaultData = {
@@ -26,13 +21,6 @@
                     symbol: "@ddg",
                 },
             ],
-            keywords: {},
-            pref: {
-                useKeywords: "true",
-                atSpecifiesEngine: "true",
-                keywordsOverAt: "true",
-                keywordQueries: "true",
-            },
         };
         const SETTINGS =  JSON.parse(localStorage.getItem("spp_settings") || JSON.stringify(defaultData));
 
@@ -58,15 +46,18 @@
             };
         };
         function redirectTo(url) {
+            if (params.get("dev")) {
+                return;
+            };
             if (!url.startsWith("javascript:")) {
-                if (!url.startsWith(location.protocol+"//"+location.host+location.pathname)) {
-                    location = url;
+                if (!url.startsWith(location.protocol+"//"+location.host+location.pathname)
+                    && !url == null) {
                 } else {
                     changePage("YOU FAILED US!","NOT GONNA GET A REDIRECT LOOP OUT OF ME!");
-                }
+                };
             } else {
-                changePage("YOU FAILED US!","TRYING TO USE BOOKMARKLETS EH? USE PROGRAMMABLE NOTEPAD OR SOMRTHING!!");
-            }
+                changePage("YOU FAILED US!","TRYING TO USE BOOKMARKLETS EH? USE PROGRAMMABLE NOTEPAD OR SOMETHING!!");
+            };
         };
         function changePage(header,description) {
             document.addEventListener("DOMContentLoaded", ()=>{
@@ -75,10 +66,25 @@
             });
         }
     </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SearchPlusPREMIUM</title>
+    <link rel="icon" href="favicon.png">
+    <meta name="robots" content="noindex">
     <style>
         body {
             background-color: #000000;
             color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        a {
+            color: rgb(35, 222, 255);
+            &:hover {
+                color: rgb(255, 208, 0);
+            }
+            &:active {
+                color: #ff56e8;
+            }
         }
     </style>
 </head>
@@ -88,5 +94,6 @@
     </noscript>
     <h1 id="alert">TAKING YOU THERE!!!</h1>
     <p></p>
+    <a href="index.html">GO HOME</a>
 </body>
 </html>

@@ -6,6 +6,9 @@ def makeRedirect():
     html_content = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        location.href = "{url}"
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ccn0 / redirecting to {title}</title>
@@ -13,9 +16,6 @@ def makeRedirect():
 <body>
     redirecting
     <a href="{url}">not working?</a>
-    <script>
-        location.href = "{url}"
-    </script>
 </body>
 </html>'''
 

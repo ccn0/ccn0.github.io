@@ -1,5 +1,5 @@
 {
-    "running":["soundlets","globalclocks","bluesky","pnp","ccn0blog"],
+    "running":["soundlets","bluesky","ccn0blog","bday2025","spp"],
     "promos":[
         {
             "type":"square",
@@ -65,6 +65,15 @@
             "alt": "CCN0'S 5TH BIRTHDAY, ON APRIL 19TH",
             "title": "happy 5ht birthday",
             "desc": "Announcements??? Games???? Things????"
+        },
+        {
+            "type":"square",
+            "id": "spp",
+            "img": "assets/spp.png",
+            "url": "https://ccn0.net/things/searchpluspremium/index.html",
+            "alt": "SearchPlusPREMIUM",
+            "title": "the only search engine",
+            "desc": "The only search engine that takes you exactly where you want to go."
         },
         {
             "type":"square",
