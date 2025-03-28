@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.4.1 -->
+<!-- made by ccn0 | v1.4.2 -->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -394,6 +394,19 @@
             border-radius: 0;
             border:none;
         }
+        .engBtnCont {
+            overflow:hidden;display:flex;flex:1;
+            &:first-child {
+                border-bottom: 1px solid green;
+            }
+            &:not(:first-child):not(:last-child) {
+                border-top: 1px solid green;
+                border-bottom: 1px solid green;
+            }
+            &:last-child {
+                border-top: 1px solid green;
+            }
+        }
     </style>
 </head>
 <body>
@@ -433,10 +446,10 @@
                 </div>
                 <div class="container">
                     <div class="toolbar">
-                        <div>
+                        <div style="overflow: hidden;">
                             <button onclick="addNew()" title="Add New Search Engine">Add New</button>
                         </div>
-                        <div>
+                        <div style="overflow: hidden;">
                             <input type="text" title="Quick Add Search Engine" placeholder="Quick Add" id="qainput">
                             <script>
                                 const qainput = document.querySelector("#qainput");
@@ -452,6 +465,8 @@
                                                 console.log(engine.nicks);
                                                 gbal.save();
                                                 loadEngines();
+                                                const engineList = document.querySelector("#enginelist");
+                                                engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
                                                 return;
                                             };
                                         });
@@ -478,8 +493,41 @@
                                 const toolsCont = document.createElement("div");
                                 toolsCont.classList.add("engToolbar");
 
+                                const tbUp = document.createElement("button");
+                                tbUp.classList.add("engButton");
+                                tbUp.style.cssText = "border-right:2px solid green;";
+                                tbUp.title = "Move Engine Up";
+                                tbUp.textContent = "⇑";
+                                tbUp.addEventListener("click", () => {
+                                    function moveItemUp(arr, i) {
+                                        if (i <= 0) return arr;
+                                        [arr[i], arr[i - 1]] = [arr[i - 1], arr[i]];
+                                        return arr;
+                                    };
+                                    gbal.settings.searchEngines = moveItemUp(gbal.settings.searchEngines,index)
+                                    gbal.save();
+                                    loadEngines();
+                                });
+
+                                const tbDown = document.createElement("button");
+                                tbDown.classList.add("engButton");
+                                tbDown.style.cssText = "border-right:2px solid green;";
+                                tbDown.title = "Move Engine Down";
+                                tbDown.textContent = "⇓";
+                                tbDown.addEventListener("click", () => {
+                                    function moveItemDown(arr, i) {
+                                        if (i >= arr.length - 1) return arr;
+                                        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+                                        return arr;
+                                    };
+
+                                    gbal.settings.searchEngines = moveItemDown(gbal.settings.searchEngines,index)
+                                    gbal.save();
+                                    loadEngines();
+                                });
+
                                 const tbClose = document.createElement("button");
-                                tbClose.classList.add("engButton");
+                                tbClose.classList.add("engButton","impButton");
                                 tbClose.style.cssText = "border-right:2px solid green;";
                                 tbClose.title = "Delete Search Engine";
                                 tbClose.textContent = "X";
@@ -488,7 +536,20 @@
                                     gbal.save();
                                     loadEngines();
                                 });
-                                toolsCont.appendChild(tbClose);
+
+                                const tbUpCont = document.createElement("div");
+                                tbUpCont.classList.add("engBtnCont");
+                                tbUpCont.appendChild(tbUp);
+                                const tbXCont = document.createElement("div");
+                                tbXCont.classList.add("engBtnCont");
+                                tbXCont.appendChild(tbClose);
+                                const tbDoCont = document.createElement("div");
+                                tbDoCont.classList.add("engBtnCont");
+                                tbDoCont.appendChild(tbDown);
+
+                                toolsCont.appendChild(tbUpCont);
+                                toolsCont.appendChild(tbXCont);
+                                toolsCont.appendChild(tbDoCont);
 
                                 itemCont.appendChild(toolsCont);
 
@@ -524,7 +585,7 @@
 
                                 itemCont.appendChild(inputsCont);
                                 maincont.appendChild(itemCont)
-                                idx++
+                                idx++;
                             });
                         };
 
@@ -535,7 +596,9 @@
                             };
 
                             gbal.settings.searchEngines.push(brandNew);
-                            loadEngines()
+                            loadEngines();
+                            const engineList = document.querySelector("#enginelist");
+                            engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
                         };
                         loadEngines();
                     </script>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.4.1 -->
+<!-- made by ccn0 | v1.4.2 -->
 <head>
     <script>
         const params = new URLSearchParams(window.location.search);
@@ -22,7 +22,7 @@
                 },
             ],
         };
-        const SETTINGS =  JSON.parse(localStorage.getItem("spp_settings") || JSON.stringify(defaultData));
+        const SETTINGS = JSON.parse(localStorage.getItem("spp_settings") || JSON.stringify(defaultData));
 
         if (SETTINGS.searchEngines.length !== 0) {
             useSearchEngines();
