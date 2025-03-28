@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.4.2 -->
+<!-- made by ccn0 | v1.4.3 -->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,7 +14,7 @@
     <meta name="creator" content="CCN0" />
     <meta name="description" content="The only search engine that brings you exactly where you wanna go." />
     <link rel="search" type="application/opensearchdescription+xml" title="SearchPlusPREMIUM" href="/things/searchpluspremium/opensearch.xml">
-    <script>
+    <script defer="true">
         const defaultData = {
             default: "search",
             searchEngines: [
@@ -185,6 +185,15 @@
             }
         }
 
+        kbd {
+            display: inline-block;
+            background: #b4d0a9;
+            border: 1px solid green;
+            color: #000;
+            font-family: Arial, sans-serif;
+            padding: 2px;
+        }
+
         figure {
             border: none;
         }
@@ -279,7 +288,7 @@
         }
 
         .container {
-            background: #fff;
+            background: var(--muted);
             border-radius: 12px;
             border: 2px solid green;
             overflow: hidden;
@@ -304,14 +313,18 @@
             }
             .toolbar {
                 flex: 1;
-                background-color: #aaa;
-                border-bottom: 2px green solid;
+                background-color: green;
+                border-bottom: none;
                 overflow: hidden;
                 padding: 0;
                 display: flex;
                 &>div {
                     display: block;
                     flex: 1;
+                    transition: 0.2s all;
+                    &:focus-within {
+                        flex: 2;
+                    }
                 }
                 button {
                     flex: 1;
@@ -331,6 +344,9 @@
                         transform: translateY(2px);
                     }
                 }
+                &:has(input:hover) button {
+                    border-color: #444!important;
+                }
                 input {
                     width: 100%;
                     height: 32px;
@@ -348,20 +364,42 @@
                 padding: 0;
                 scrollbar-width: thin;
                 scrollbar-color: green var(--muted);
+                border-top: 2px solid green;
             }
         }
 
         .engContainer {
             border-right: 2px solid green;
-            border-bottom: 2px solid green;
+            &:not(:first-child):not(:last-child) {
+                border-top: 1px solid green;
+                border-bottom: 1px solid green;
+            }
+            &:last-child {
+                border-top: 1px solid green;
+                border-bottom: 2px solid green;
+            }
+            &:first-child {
+                border-top: none;
+                border-bottom: 1px solid green;
+            }
+            &:only-child {
+                border-top: none;
+                border-bottom: 2px solid green;
+            }
             height: 80px;
             display: flex;
+            &:hover {
+                &>.engToolbar {
+                    width: 48px;
+                }
+            }
         }
         .engToolbar {
             width: 32px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            transition: 0.2s all;
         }
         .engButton {
             background: #b4d0a9;
@@ -407,12 +445,33 @@
                 border-top: 1px solid green;
             }
         }
+
+        .moved {
+            filter: brightness(110%);
+            border-color: #ff3c00;
+            animation: moveda 2s forwards;
+            * {
+                border-color: #ff3c00;
+                animation: moveda 2s forwards;
+            }
+        }
+
+        @keyframes moveda {
+            from {
+                border-color: #ff3c00;
+                filter: brightness(110%);
+            }
+            to {
+                border-color: green;
+                filter: brightness(100%);
+            }
+        }
     </style>
 </head>
 <body>
     <noscript>
         <div class="warnbanner">
-            SearchPlusPREMIUM requires javascript to function...
+            SearchPlusPREMIUM requires javascript to function!!!!!
         </div>
     </noscript>
     <div class="content">
@@ -451,7 +510,7 @@
                         </div>
                         <div style="overflow: hidden;">
                             <input type="text" title="Quick Add Search Engine" placeholder="Quick Add" id="qainput">
-                            <script>
+                            <script defer="true">
                                 const qainput = document.querySelector("#qainput");
                                 qainput.addEventListener("keydown",e=>{
                                     if (e.key == "Enter") {
@@ -476,10 +535,10 @@
                         </div>
                     </div>
                     <div id="enginelist" class="list"></div>
-                    <script>
+                    <script defer="true">
                         const maincont = document.querySelector("#enginelist")
 
-                        function loadEngines() {
+                        function loadEngines(moved) {
                             maincont.innerHTML = "";
 
                             let idx = 0;
@@ -488,7 +547,10 @@
 
                                 const itemCont = document.createElement("div");
                                 itemCont.classList.add("engContainer");
-                                itemCont.setAttribute("data-engine", index)
+                                itemCont.setAttribute("data-engine", index);
+                                if (index == moved) {
+                                    itemCont.classList.add("moved")
+                                };
 
                                 const toolsCont = document.createElement("div");
                                 toolsCont.classList.add("engToolbar");
@@ -506,7 +568,7 @@
                                     };
                                     gbal.settings.searchEngines = moveItemUp(gbal.settings.searchEngines,index)
                                     gbal.save();
-                                    loadEngines();
+                                    loadEngines(index-1);
                                 });
 
                                 const tbDown = document.createElement("button");
@@ -523,7 +585,7 @@
 
                                     gbal.settings.searchEngines = moveItemDown(gbal.settings.searchEngines,index)
                                     gbal.save();
-                                    loadEngines();
+                                    loadEngines(index+1);
                                 });
 
                                 const tbClose = document.createElement("button");
@@ -572,8 +634,8 @@
                                 const symbput = document.createElement("input");
                                 symbput.classList.add("engInput");
                                 symbput.style.cssText = "border-top:1px solid green;";
-                                symbput.title = "Symbol, after @";
-                                symbput.placeholder = "use '@[what you put here] query' or nothing for default";
+                                symbput.title = "Symbol, specifies engine";
+                                symbput.placeholder = "Symbol, e.g '<symbol> query'";
                                 symbput.value = engine.symbol;
                                 symbput.addEventListener("change", (e) => {
                                     symbput.value = symbput.value.replace(" ","_");
@@ -591,8 +653,8 @@
 
                         function addNew() {
                             const brandNew = {
-                                url: "url here",
-                                symbol: "symbol here"
+                                url: "",
+                                symbol: ""
                             };
 
                             gbal.settings.searchEngines.push(brandNew);
@@ -608,20 +670,26 @@
         <div class="col c3">
             <div>
                 <details>
-                    <summary>
-                        View long-winded tutorial here:
+                    <summary style="font-weight: bold;">
+                        View tutorial here:
                     </summary>
-                    You can find the search results page by searching something, then looking for it in the address bar.
-                    Enter a URL for a search engine, e.g. <code>https://www.google.com/search?q=hello</code>, and replace the query
-                    with <code>%s</code>, e.g. <code>https://www.google.com/search?q=%s</code>.
-                    This URL will replace the %s or however many you add, with your search query.
-                    Enter a symbol, e.g. <code>@g</code> so that you can place the symbol before the query
-                    to specify the search engine.<br><br>
-                    By the way, you don't have to use a %s.
+                    <ul>
+                        <li>Type the name of a search engine into the Quick Add bar and hit enter.</li>
+                        <span style="font-weight: bold;">OR</span>
+                        <li>
+                            Click <kbd>Add New</kbd>
+                        </li>
+                        <li>
+                            Add a URL, with %s in the place of the query, e.g. <code>https://www.google.com/search?q=%s</code>
+                        </li>
+                        <li>
+                            Add a Symbol, which you use to specify engine, e.g. searching <code>@ddg hello world</code> will use DuckDuckGo
+                        </li>
+                    </ul>
                 </details>
-                <p>Basically, the whole idea is that instead of relying on your browsers search "utilities,"
-                    you can go ahead and use SearchPlusPREMIUM which despite the name sounding like otherwise, is actually free.
-                    You can add it by entering the URL (if %s is the query),
+                <p>Instead of relying on your browsers search "keywords,"
+                    you can instead use SearchPlusPREMIUM, which despite the name sounding like otherwise, is actually free.
+                    You can add it as a search engine by using the URL,
                     <code>https://ccn0.net/things/searchpluspremium/search.html?q=%s</code>,
                     or if your using Firefox, click on the search bar while on this page and click the little icon with the green plus.
                 </p>
@@ -634,7 +702,7 @@
                     </ul>
                 </p>
                 <p>If you like this search engine, be sure to give it a like. If you find a problem,
-                    <a href="https://github.com/ccn0/ccn0.github.io/issues">add it as an issue on the website repo</a>.
+                    <a href="https://github.com/ccn0/ccn0.github.io/issues">open an issue on the website repo</a>.
                     Also, I love attention, so be sure to share this with your friends.
                     Anyways, I'm almost at the bridge now. Oh shit, I forgot &mdash; how am I supposed to send this shit out?
                 </p>
@@ -647,6 +715,20 @@
                     <a href="https://www.facebook.com/sharer/sharer.php?u=https://ccn0.net/things/searchpluspremium/index.html" target="_blank">Share on Facebook</a>
                     <a href="https://www.tumblr.com/share/link?url=https://ccn0.net/things/searchpluspremium/index.html&name=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share on Tumblr</a>
                     <a href="javascript:navigator.clipboard.writeText('https://ccn0.net/things/searchpluspremium/index.html');">Copy Link</a>
+                </p>
+                <p>
+                    <a href="#" id="resetButton" title="Reset all settings to defaults">RESET ALL SETTINGS</a>
+                    <script defer="true">
+                        document.querySelector("#resetButton").addEventListener("click",()=>{
+                            if (confirm("Are you absolutely sure you want to reset your settings back to their defaults?")) {
+                                localStorage.setItem(
+                                    "spp_settings",
+                                    JSON.stringify(defaultData)
+                                );
+                                location.reload();
+                            };
+                        });
+                    </script>
                 </p>
             </div> 
         </div>
