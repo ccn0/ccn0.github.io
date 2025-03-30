@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v5 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v5.1 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,8 +92,8 @@
             })
         
         function displayRad() {
-            const promosRunning = promosData.promos.filter(item => promosData.running.includes(item.id));
-            const radToShow = promosRunning[randomInteger(0,promosData.running.length-1)];
+            const trulyRunning = promosData.promos.filter(item => promosData.running.includes(item.id));
+            const radToShow = trulyRunning[randomInteger(0, trulyRunning.length - 1)];
 
             const newCSS = document.createElement("style");
             newCSS.textContent = radToShow.css || "";
@@ -105,14 +105,14 @@
             document.getElementById('sphoto').alt = `${radToShow.alt} (Ad)`;
         };
         function getSite() {
-          	const approvedSites = ["ccn0.net","blog.ccn0.net","127.0.0.1"];
-          	const currentSite = window.parent.location.hostname;
-        
-          	if(!approvedSites.includes(currentSite) || typeof currentSite !== undefined) {
-                if (!approvedSites.includes(location.hostname)){
-          	  	    location.href = "https://ccn0.net/rad/notpermitted.html";
+            const approvedSites = ["ccn0.net", "blog.ccn0.net", "127.0.0.1"];
+            const currentSite = window.parent.location.hostname;
+
+            if (!approvedSites.includes(currentSite) || typeof currentSite !== undefined) {
+                if (!approvedSites.includes(location.hostname)) {
+                    location.href = "https://ccn0.net/rad/notpermitted.html";
                 }
-          	};
+            };
         };
     </script>
 </body>
