@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIKEBUTTON</title>
+    <meta name="robots" content="noindex">
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+        }
+        div {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            cursor: pointer;
+            background-color: white;
+            padding: 15px;
+            border-radius: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>👍</h1>
+    </div>
+    <script>
+        document.querySelector("h1").addEventListener("click",()=>{
+            const snd = new Audio();
+            snd.src = 'https://ccn0.net/img/audio/3/mcdonaldswhenyouaskformoresauce.mp3'; 
+            snd.playbackRate = 1; function PlaySnd() {snd.play();}PlaySnd();
+        });
+    </script>
+</body>
+</html>

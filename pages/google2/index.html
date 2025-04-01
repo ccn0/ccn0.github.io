@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- made by ccn0 | v1.4.5 -->
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google 2</title>
+    <link rel="icon" href="/pages/google2/favicong.png">
+    <meta name="og:title" content="Google 2">
+    <meta property="og:description" content="The only search engine that brings you exactly where you wanna go.">
+    <meta property="og:url" content="https://ccn0.net/pages/google2/index.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="gg2.png">
+    <meta name="creator" content="CCN0" />
+    <meta name="description" content="The only search engine that brings you exactly where you wanna go." />
+    <meta name="robots" content="noindex">
+    <script defer="true">
+        const defaultData = {
+            default: "search",
+            searchEngines: [
+                {
+                    url: "https://www.google.com/search?q=%s",
+                    symbol: "",
+                },
+                {
+                    url: "https://duckduckgo.com/?q=%s",
+                    symbol: "@ddg",
+                },
+                {
+                    url: `${location.protocol+"//"+location.hostname+(location.port ? ":"+location.port: "")+location.pathname}`,
+                    symbol: "!",
+                },
+            ],
+        };
+        if (!localStorage.getItem("spp_settings")) {
+            localStorage.setItem(
+                "spp_settings",
+                JSON.stringify(defaultData)
+            );
+        }
+        const gbal = {
+            settings: JSON.parse(
+                localStorage.getItem("spp_settings") || defaultData
+            ),
+            save: function () {
+                localStorage.setItem("spp_settings", JSON.stringify(gbal.settings))
+            },
+            thelist: [
+                {
+                    "name": "Google",
+                    "url": "https://www.google.com/search?q=%s",
+                    "nicks": [
+                        "goog", "goggle", "gog", "gle", "googl", "g"
+                    ]
+                },
+                {
+                    "name": "DuckDuckGo",
+                    "url": "https://duckduckgo.com/?q=%s",
+                    "nicks": [
+                        "duc", "duck", "ddg", "d"
+                    ]
+                },
+                {
+                    "name": "StartPage",
+                    "url": "https://www.startpage.com/do/dsearch?query=%s",
+                    "nicks": [
+                        "start", "sp", "sx"
+                    ]
+                },
+                {
+                    "name": "Bing",
+                    "url": "https://www.bing.com/search?q=%s",
+                    "nicks": [
+                        "bng", "b"
+                    ]
+                },
+                {
+                    "name": "Wikipedia",
+                    "url": "https://en.wikipedia.org/wiki/Special:Search?search=%s",
+                    "nicks": [
+                        "wiki", "wikip", "wp", "enwiki", "w"
+                    ]
+                },
+                {
+                    "name": "Mobile Wikipedia",
+                    "url": "https://en.m.wikipedia.org/wiki/Special:Search?search=%s",
+                    "nicks": [
+                        "wikipedia mobile", "mwiki", "mwikip", "mwp", "enmwiki", "mw"
+                    ]
+                },
+                {
+                    "name": "Yahoo",
+                    "url": "https://search.yahoo.com/search?p=%s",
+                    "nicks": [
+                        "ya", "y", "yah"
+                    ]
+                },
+                {
+                    "name": "Ecosia",
+                    "url": "https://www.ecosia.org/search?q=%s",
+                    "nicks": [
+                        "ecos", "eco", "e"
+                    ]
+                },
+                {
+                    "name": "YouTube",
+                    "url": "https://www.youtube.com/results?search_query=%s",
+                    "nicks": [
+                        "utube", "you tube", "ut", "yotube", "yt"
+                    ]
+                },
+                {
+                    "name": "Reddit",
+                    "url": "https://www.reddit.com/search/?q=%s",
+                    "nicks": [
+                        "red", "redd", "ut", "yotube", "r"
+                    ]
+                },
+                {
+                    "name": "Twitter",
+                    "url": "https://twitter.com/search?q=%s",
+                    "nicks": [
+                        "twiter", "tw", "x.com", "twtter", "x"
+                    ]
+                },
+                {
+                    "name": "IMDb",
+                    "url": "https://www.imdb.com/find?q=%s",
+                    "nicks": [
+                        "i"
+                    ]
+                },
+                {
+                    "name": "StackOverflow",
+                    "url": "https://www.imdb.com/find?q=%s",
+                    "nicks": [
+                        "stack overflow", "stacko", "so"
+                    ]
+                },
+                {
+                    "name": "Urban Dictionary",
+                    "url": "https://www.urbandictionary.com/define.php?term=%s",
+                    "nicks": [
+                        "urb", "udict", "ud"
+                    ]
+                },
+                {
+                    "name": "Farside",
+                    "url": "https://farside.link/%s",
+                    "nicks": [
+                        "far side", "farside.link", "fars", "frside", "fs"
+                    ]
+                },
+                {
+                    "name": "Google 2",
+                    "url": `${location.protocol+"//"+location.hostname+(location.port ? ":"+location.port: "")+location.pathname}`,
+                    "nicks": [
+                        "here", "spp", "s+p", "!"
+                    ]
+                }
+            ],
+        };
+    </script>
+    <style>
+        :root {
+            --hero: #ea4335;
+            --muted: #34a853;
+            --dark: #4285f4;
+            --alt: #fbbc05;
+            --red: #ea4335;
+        }
+        html {
+            scrollbar-color:  var(--alt) var(--dark);
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .content {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .col {
+            display: flex;
+            flex: 1;
+            min-height: 100vh;
+            flex-wrap: wrap;
+            flex-direction: row;
+            width: 100%;
+        }
+
+        .elem {
+            display: flex;
+            flex-direction: column;
+            background-color: #0000;
+            color: #fff;
+            width: 100%;
+            padding: 15px;
+        }
+
+        .c1 {
+            background-color: #00053e;
+            height: auto;
+            h1 {
+                text-align: center;
+            }
+        }
+
+        .c2 {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--muted);
+            h1,
+            h2 {
+                margin-top: -2px;
+                margin-bottom: -8px;
+            }
+            div {
+                padding: 15px;
+                &>div {
+                    padding: 0;
+                }
+            }
+        }
+
+        .c3 {
+            background-color: #3f2e04;
+            div {
+                padding: 15px;
+                color: #fff;
+                max-width: 100%;
+                overflow: hidden;
+            }
+            code {
+                background-color: #000;
+                cursor: alias;
+                user-select: all;
+            }
+            details {
+                max-width: 100%;
+                width: 90%;
+                background-color: #1f0e02;
+                border-radius: 12px;
+                padding: 15px;
+                code {
+                    border: 1px solid #fff;
+                }
+            }
+        }
+
+        kbd {
+            display: inline-block;
+            background: #b4d0a9;
+            border: 1px solid var(--hero);
+            color: #000;
+            font-family: Arial, sans-serif;
+            padding: 2px;
+        }
+
+        figure {
+            border: none;
+        }
+
+        img {
+            width: 100%;
+            display: flex;
+            user-select: none   ;
+        }
+
+        summary {
+            font-weight: bold;
+        }
+
+        details {
+            &:not(:last-child) {
+                margin-bottom: 15px;
+            }
+        }
+
+        a {
+            color: rgb(35, 222, 255);
+            &:hover {
+                color: rgb(255, 208, 0);
+            }
+            &:active {
+                color: #ff56e8;
+            }
+        }
+
+        .warnbanner {
+            font-weight: bold;
+            max-width: 100%;
+            background-color: #ff0;
+            color: #000;
+            padding: 15px;
+            text-align: center;
+            &::selection {
+                background-color: #000;
+                color: #fff;
+            }
+            a {
+                color: #00f;
+
+                &:active {
+                    color: #f00;
+                }
+            }
+        }
+
+        @media (max-width: 500px) {
+            .content {
+                flex-direction: column;
+            }
+            .col {
+                min-height: auto;
+                flex: 1;
+            }
+        }
+
+        form {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            height: 32px;
+
+            input {
+                padding-left: 12px;
+                font-family: 'Roboto Mono', monospace;
+                transition: all 0.2s;
+                flex: 1;
+                border-radius: 4px;
+                border: 1px #aaa solid;
+                &[type=search] {
+                    &:hover {
+                        border-color: #444;
+                    }
+                    &:focus-within {
+                        padding-left: 32px;
+                        transform: translateY(-2px);
+                        flex: 3;
+                    }
+                }
+                &[type="submit"] {
+                    padding: 0!important;
+                    color: #fff;
+                    font-weight: bold;
+                    background-color: rgb(0, 81, 255);
+                    cursor: pointer;
+                    border: none;
+                    border-radius: 8px;
+                    &:hover,
+                    :focus-within {
+                        background-color: #187cff;
+                    }
+                    &:active {
+                        background-color: #0013c0;
+                        transform: translateY(2px);
+                    }
+                }
+            }
+        }
+
+        .container {
+            background: var(--muted);
+            border-radius: 12px;
+            border: 2px solid var(--hero);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 0 !important;
+            button {
+                background: #4285f4;
+                flex: 1;
+                cursor: pointer;
+                border: none;
+                padding: 0!important;
+                &:hover {
+                    background-color: #e2e9ff;
+                }
+                &:active {
+                    background-color: #1d192c;
+                    color: #fff;
+                    box-shadow: #19192c 0 0 0 2px;
+                    transform: translateY(2px);
+                }
+            }
+            .toolbar {
+                flex: 1;
+                background-color: var(--hero);
+                border-bottom: none;
+                overflow: hidden;
+                padding: 0;
+                display: flex;
+                &>div {
+                    display: block;
+                    flex: 1;
+                    transition: 0.2s all;
+                    &:focus-within {
+                        flex: 2;
+                    }
+                }
+                button {
+                    flex: 1;
+                    display: inline-block;
+                    width: 100%;
+                    cursor: pointer;
+                    height: 32px;
+                    background: #4285f4;
+                    border-right: 1px solid var(--hero);
+                    &:hover {
+                        background-color: #e2e4ff;
+                    }
+                    &:active {
+                        background-color: #191b2c;
+                        color: #fff;
+                        box-shadow: #1b192c 0 0 0 2px;
+                        transform: translateY(2px);
+                    }
+                }
+                &:has(input:hover) button {
+                    border-color: #444!important;
+                }
+                input {
+                    width: 100%;
+                    height: 32px;
+                    border-radius: 0 12px 0 0;
+                    border: 2px #aaa solid;
+                    border-left: 1px solid var(--hero);
+                    &:hover {
+                        border-color: #444;
+                    }
+                }
+            }
+            .list {
+                overflow-y: scroll;
+                height: 80vh;
+                padding: 0;
+                scrollbar-width: thin;
+                scrollbar-color: var(--hero) var(--muted);
+                border-top: 2px solid var(--hero);
+            }
+        }
+
+        .engContainer {
+            border-right: 2px solid var(--hero);
+            &:not(:first-child):not(:last-child) {
+                border-top: 1px solid var(--hero);
+                border-bottom: 1px solid var(--hero);
+            }
+            &:last-child {
+                border-top: 1px solid var(--hero);
+                border-bottom: 2px solid var(--hero);
+            }
+            &:first-child {
+                border-top: none;
+                border-bottom: 1px solid var(--hero);
+            }
+            &:only-child {
+                border-top: none;
+                border-bottom: 2px solid var(--hero);
+            }
+            height: 80px;
+            display: flex;
+            &:hover {
+                &>.engToolbar {
+                    width: 48px;
+                }
+            }
+        }
+        .engToolbar {
+            width: 32px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: 0.2s all;
+        }
+        .engButton {
+            background: #4285f4;
+            flex: 1;
+            cursor: pointer;
+            border: none;
+            overflow: hidden;
+            &:hover {
+                background-color: #e6e2ff;
+            }
+            &:active {
+                background-color: #1a192c;
+                color: #fff;
+                box-shadow: #19192c;
+                transform: translateY(2px);
+            }
+        }
+        .engList {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            flex-wrap: wrap;
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+        .engInput {
+            display: flex;
+            flex: 1;
+            border-radius: 0;
+            border:none;
+        }
+        .engBtnCont {
+            overflow:hidden;display:flex;flex:1;
+            &:first-child {
+                border-bottom: 1px solid var(--hero);
+            }
+            &:not(:first-child):not(:last-child) {
+                border-top: 1px solid var(--hero);
+                border-bottom: 1px solid var(--hero);
+            }
+            &:last-child {
+                border-top: 1px solid var(--hero);
+            }
+        }
+
+        .moved {
+            filter: brightness(110%);
+            border-color: var(--red);
+            animation: moveda 2s forwards;
+            * {
+                border-color: var(--red);
+                animation: moveda 2s forwards;
+            }
+        }
+
+        @keyframes moveda {
+            from {
+                border-color: var(--red);
+                filter: brightness(110%);
+            }
+            to {
+                border-color: var(--hero);
+                filter: brightness(100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <noscript>
+        <div class="warnbanner">
+            Google 2 requires javascript to function!!!!!
+        </div>
+    </noscript>
+    <div class="content">
+        <div class="col c1" id="topcol">
+            <div class="elem">
+                <figure>
+                    <img src="google2png.png" alt="Google 2 Logo">
+                    <figcaption>
+                        The only search engine that gets you
+                        <em>google2 </em> where you want to go
+                    </figcaption>
+                </figure>
+                <form action="/things/searchpluspremium/search.html">
+                    <input type="search" placeholder="search here" name="q" id="q" title="Search Here google 2" autofocus
+                        required />
+                    <input type="submit" value="TAKE ME" title="Submit" />
+                </form>
+                <div style="text-align: center; padding: 10px 0;">
+                    <a href="https://bsky.app/profile/ccn0.net">made by ccn0</a>
+                    <a href="#settcol">settings</a>
+                </div>
+                <script>
+                    const params = new URLSearchParams(window.location.search);
+                    const query = params.get("q");
+                    if (query != null) {
+                        document.querySelector("#q").value = query;
+                    };
+                </script>
+            </div>
+        </div>
+        <div class="col c3" id="textcol">
+            <div>
+                <details>
+                    <summary>About:</summary>
+                    <p>Instead of relying on your browsers search "keywords,"
+                        you can instead use Google 2, which despite the name sounding like otherwise, is actually free.
+                        You can add it as a search engine by using the URL,
+                        <code>https://ccn0.net/things/searchpluspremium/search.html?q=%s</code>,
+                        or if your using Firefox, click on the search bar while on this page and click the little icon with the green plus.
+                    </p>
+                </details>
+                <details>
+                    <summary>
+                        Read tutorial:
+                    </summary>
+                    <ul>
+                        <li>Type the name of a search engine into the Quick Add bar and hit enter.</li>
+                        <span style="font-weight: bold;">OR</span>
+                        <li>
+                            Click <kbd>Add New</kbd>
+                        </li>
+                        <li>
+                            Add a URL, with %s in the place of the query, e.g. <code>https://www.google.com/search?q=%s</code>
+                        </li>
+                        <li>
+                            Add a Symbol, which you use to specify engine, e.g. searching <code>@ddg hello world</code> will use DuckDuckGo
+                        </li>
+                        <li>
+                            The default search engine will be the one at the top. <code>%s</code> can be used any amount of times.
+                        </li>
+                    </ul>
+                </details>
+                <p>THANK YOU TO:
+                    <ul>
+                        <li>Google for <a href="https://fonts.google.com/specimen/Open+Sans"><em>Open Sans</em></a> and Google</li>
+                        <li>Paul D. Hunt for <a href="https://fonts.google.com/specimen/Source+Code+Pro"><em>Source Code Pro</em></a></li>
+                        <li>Robert Leuschke for <a href="https://fonts.google.com/specimen/Mea+Culpa"><em>Mea Culpa</em></a></li>
+                        <li title="for now...">ALL CODE IS OWNED BY <a href="https://github.com/ccn0">CCN0</a></li>
+                    </ul>
+                </p>
+                <p>If you like google 2, be sure to give it a <a href="/pages/likebuttonreal.html">like</a>. If you find a problem,
+                    <a href="https://github.com/ccn0/ccn0.github.io/issues">open google 2 an issue google 2 on the website repo</a>.
+                    Also, I love attention, so be sure to share this with your friends.
+                    Anyways, I'm almost at the bridge now. Oh shit, I forgot &mdash; how am I supposed to send this google 2 out?
+                </p>
+                <details>
+                    <summary>
+                        More Buttons:
+                    </summary>
+                    <p>
+                        SHARE EVERYWHERE!!!
+                        <a target="_blank" href="https://twitter.com/intent/tweet?text=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20Google 2%20NOW%20https://ccn0.net/things/Google 2/index.html">Share to Twitter</a>
+                        <a href="https://www.reddit.com/submit?url=https://ccn0.net/things/Google 2/index.html&title=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20Google 2%20NOW" target="_blank">Share on Reddit</a>
+                        <a href="mailto:?subject=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20Google 2%20NOW&body=Check%20this%20out%20https://ccn0.net/things/Google 2/index.html" target="_blank">Share via Email</a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ccn0.net/things/Google 2/index.html&title=BEST%20SEARCH%20ENGINE%20EVER%2C%20USE%20Google 2%20NOW" target="_blank">Share on LinkedIn</a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://ccn0.net/things/Google 2/index.html" target="_blank">Share on Facebook</a>
+                        <a href="https://www.tumblr.com/share/link?url=https://ccn0.net/things/Google 2/index.html&name=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20Google 2%20NOW" target="_blank">Share on Tumblr</a>
+                        <a href="javascript:navigator.clipboard.writeText('https://ccn0.net/things/Google 2/index.html');">Copy Link</a>
+                    </p>
+                    <p>
+                        <a href="#" id="resetButton" title="Reset all settings to defaults">RESET ALL SETTINGS</a>
+                        <script defer="true">
+                            document.querySelector("#resetButton").addEventListener("click",()=>{
+                                location = "https://ccn0.net/things/searchpluspremium/index.html";
+                            });
+                        </script>
+                    </p>
+                </details>
+            </div> 
+        </div>
+        <div class="col c2" id="settcol">
+            <div style="padding: 15px;">
+                <h1>google 2</h1>
+            </div>
+            <div>
+                <div class="container">
+                    <div class="toolbar">
+                        <div style="overflow: hidden;">
+                            <button onclick="addNew()" title="Add New Search Engine">Add New</button>
+                        </div>
+                        <div style="overflow: hidden;">
+                            <input type="text" title="Quick Add Search Engine" placeholder="Quick Add" id="qainput">
+                            <script defer="true">
+                                const qainput = document.querySelector("#qainput");
+                                qainput.addEventListener("keydown",e=>{
+                                    if (e.key == "Enter") {
+                                        gbal.thelist.forEach((engine)=>{
+                                            if ((engine.nicks.includes(qainput.value.toLowerCase()) || 
+                                                qainput.value.toLowerCase() == engine.name.toLowerCase())) {
+                                                gbal.settings.searchEngines.push({
+                                                    "url":engine.url,
+                                                    "symbol":engine.nicks[engine.nicks.length-1]
+                                                });
+                                                console.log(engine.nicks);
+                                                gbal.save();
+                                                loadEngines();
+                                                const engineList = document.querySelector("#enginelist");
+                                                engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
+                                                return;
+                                            };
+                                        });
+                                    };
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div id="enginelist" class="list"></div>
+                    <script defer="true">
+                        const maincont = document.querySelector("#enginelist")
+
+                        function loadEngines(moved) {
+                            maincont.innerHTML = "";
+
+                            let idx = 0;
+                            gbal.settings.searchEngines.forEach(engine => {
+                                const index = idx;
+
+                                const itemCont = document.createElement("div");
+                                itemCont.classList.add("engContainer");
+                                itemCont.setAttribute("data-engine", index);
+                                if (index == moved) {
+                                    itemCont.classList.add("moved")
+                                };
+
+                                const toolsCont = document.createElement("div");
+                                toolsCont.classList.add("engToolbar");
+
+                                const tbUp = document.createElement("button");
+                                tbUp.classList.add("engButton");
+                                tbUp.style.cssText = "border-right:2px solid var(--hero);";
+                                tbUp.title = "Move Engine Up";
+                                tbUp.textContent = "⇑";
+                                tbUp.addEventListener("click", () => {
+                                    function moveItemUp(arr, i) {
+                                        if (i <= 0) return arr;
+                                        [arr[i], arr[i - 1]] = [arr[i - 1], arr[i]];
+                                        return arr;
+                                    };
+                                    gbal.settings.searchEngines = moveItemUp(gbal.settings.searchEngines,index)
+                                    gbal.save();
+                                    loadEngines(index-1);
+                                });
+
+                                const tbDown = document.createElement("button");
+                                tbDown.classList.add("engButton");
+                                tbDown.style.cssText = "border-right:2px solid var(--hero);";
+                                tbDown.title = "Move Engine Down";
+                                tbDown.textContent = "⇓";
+                                tbDown.addEventListener("click", () => {
+                                    function moveItemDown(arr, i) {
+                                        if (i >= arr.length - 1) return arr;
+                                        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+                                        return arr;
+                                    };
+
+                                    gbal.settings.searchEngines = moveItemDown(gbal.settings.searchEngines,index)
+                                    gbal.save();
+                                    loadEngines(index+1);
+                                });
+
+                                const tbClose = document.createElement("button");
+                                tbClose.classList.add("engButton","impButton");
+                                tbClose.style.cssText = "border-right:2px solid var(--hero);";
+                                tbClose.title = "Delete Search Engine";
+                                tbClose.textContent = "X";
+                                tbClose.addEventListener("click", () => {
+                                    gbal.settings.searchEngines = gbal.settings.searchEngines.filter(engin => engin !== gbal.settings.searchEngines[index]);
+                                    gbal.save();
+                                    loadEngines();
+                                });
+
+                                const tbUpCont = document.createElement("div");
+                                tbUpCont.classList.add("engBtnCont");
+                                tbUpCont.appendChild(tbUp);
+                                const tbXCont = document.createElement("div");
+                                tbXCont.classList.add("engBtnCont");
+                                tbXCont.appendChild(tbClose);
+                                const tbDoCont = document.createElement("div");
+                                tbDoCont.classList.add("engBtnCont");
+                                tbDoCont.appendChild(tbDown);
+
+                                toolsCont.appendChild(tbUpCont);
+                                toolsCont.appendChild(tbXCont);
+                                toolsCont.appendChild(tbDoCont);
+
+                                itemCont.appendChild(toolsCont);
+
+                                const inputsCont = document.createElement("div");
+                                inputsCont.classList.add("engList")
+
+                                const urlinput = document.createElement("input");
+                                urlinput.classList.add("engInput");
+                                urlinput.style.cssText = "border-bottom:1px solid var(--hero);";
+                                urlinput.title = "URL, %google 2s is google 2query";
+                                urlinput.placeholder = "URL whgoogle 2ere %s is the query";
+                                urlinput.value = engine.url;
+                                urlinput.addEventListener("change", (e) => {
+                                    gbal.settings.searchEngines[index].url = e.target.value;
+                                    gbal.save();
+                                });
+
+                                inputsCont.appendChild(urlinput);
+
+                                const symbput = document.createElement("input");
+                                symbput.classList.add("engInput");
+                                symbput.style.cssText = "border-top:1px solid var(--hero);";
+                                symbput.title = "Symbol, specifies google 2engine";
+                                symbput.placeholder = "Symbgoogle 2ol, e.g '<symbol>google 2 query'";
+                                symbput.value = engine.symbol;
+                                symbput.addEventListener("change", (e) => {
+                                    symbput.value = symbput.value.replace(" ","_");
+                                    gbal.settings.searchEngines[index].symbol = e.target.value.replace(" ","_");
+                                    gbal.save();
+                                });
+
+                                inputsCont.appendChild(symbput);
+
+                                itemCont.appendChild(inputsCont);
+                                maincont.appendChild(itemCont)
+                                idx++;
+                            });
+                        };
+
+                        function addNew() {
+                            const brandNew = {
+                                url: "",
+                                symbol: ""
+                            };
+
+                            gbal.settings.searchEngines.push(brandNew);
+                            loadEngines();
+                            const engineList = document.querySelector("#enginelist");
+                            engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
+                        };
+                        loadEngines();
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
