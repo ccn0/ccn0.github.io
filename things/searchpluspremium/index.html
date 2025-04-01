@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.4.5 -->
+<!-- made by ccn0 | v1.5 -->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,7 +16,6 @@
     <link rel="search" type="application/opensearchdescription+xml" title="SearchPlusPREMIUM" href="/things/searchpluspremium/opensearch.xml">
     <script defer="true">
         const defaultData = {
-            default: "search",
             searchEngines: [
                 {
                     url: "https://www.google.com/search?q=%s",
@@ -27,7 +26,7 @@
                     symbol: "@ddg",
                 },
                 {
-                    url: `${location.protocol+"//"+location.hostname+(location.port ? ":"+location.port: "")+location.pathname}`,
+                    url: "https://ccn0.net/things/searchpluspremium/index.html",
                     symbol: "!",
                 },
             ],
@@ -113,7 +112,7 @@
                     "name": "Reddit",
                     "url": "https://www.reddit.com/search/?q=%s",
                     "nicks": [
-                        "red", "redd", "ut", "yotube", "r"
+                        "red", "re", "redd", "ut", "redit", "r"
                     ]
                 },
                 {
@@ -164,10 +163,19 @@
     <style>
         :root {
             --hero: #008000;
-            --muted: #97c18b;
+            --muted: #699c59;
             --dark: #003200;
+            --superdark: #021f02;
             --alt: #3b7c32;
+            --btn: #b4d0a9;
+            --btnhover: #f2ffe2;
+            --btnactive: #192c19;
             --red: #ff1100;
+            --green: #0dff00;
+            --blue: #0015ff;
+            --magenta: #ff56e8;
+            --yellow: #ffd000;
+            --cyan: #23deff;
         }
         html {
             scrollbar-color:  var(--alt) var(--dark);
@@ -175,6 +183,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            background: var(--dark);
         }
 
         * {
@@ -206,7 +215,7 @@
         }
 
         .c1 {
-            background-color: #021f02;
+            background-color: var(--superdark);
             height: auto;
             h1 {
                 text-align: center;
@@ -231,7 +240,7 @@
         }
 
         .c3 {
-            background-color: #043f04;
+            background-color: var(--dark);
             div {
                 padding: 15px;
                 color: #fff;
@@ -246,7 +255,7 @@
             details {
                 max-width: 100%;
                 width: 90%;
-                background-color: #021f02;
+                background-color: var(--superdark);
                 border-radius: 12px;
                 padding: 15px;
                 code {
@@ -285,19 +294,19 @@
         }
 
         a {
-            color: rgb(35, 222, 255);
+            color: var(--cyan);
             &:hover {
-                color: rgb(255, 208, 0);
+                color: var(--yellow);
             }
             &:active {
-                color: #ff56e8;
+                color: var(--magenta);
             }
         }
 
         .warnbanner {
             font-weight: bold;
             max-width: 100%;
-            background-color: #ff0;
+            background-color: var(--yellow);
             color: #000;
             padding: 15px;
             text-align: center;
@@ -306,10 +315,10 @@
                 color: #fff;
             }
             a {
-                color: #00f;
+                color: var(--blue);
 
                 &:active {
-                    color: #f00;
+                    color: var(--red);
                 }
             }
         }
@@ -321,6 +330,9 @@
             .col {
                 min-height: auto;
                 flex: 1;
+            }
+            .c2 {
+                min-height: 100vh;
             }
         }
 
@@ -351,7 +363,7 @@
                     padding: 0!important;
                     color: #fff;
                     font-weight: bold;
-                    background-color: rgb(0, 81, 255);
+                    background-color: #0051ff;
                     cursor: pointer;
                     border: none;
                     border-radius: 8px;
@@ -376,18 +388,18 @@
             flex-direction: column;
             padding: 0 !important;
             button {
-                background: #b4d0a9;
+                background: var(--btn);
                 flex: 1;
                 cursor: pointer;
                 border: none;
                 padding: 0!important;
                 &:hover {
-                    background-color: #f2ffe2;
+                    background-color: var(--btnhover);
                 }
                 &:active {
-                    background-color: #192c19;
+                    background-color: var(--btnactive);
                     color: #fff;
-                    box-shadow: #192c19 0 0 0 2px;
+                    box-shadow: var(--btnactive) 0 0 0 2px;
                     transform: translateY(2px);
                 }
             }
@@ -412,15 +424,15 @@
                     width: 100%;
                     cursor: pointer;
                     height: 32px;
-                    background: #b4d0a9;
+                    background: var(--btn);
                     border-right: 1px solid var(--hero);
                     &:hover {
-                        background-color: #f2ffe2;
+                        background-color: var(--btnhover);
                     }
                     &:active {
-                        background-color: #192c19;
+                        background-color: var(--btnactive);
                         color: #fff;
-                        box-shadow: #192c19 0 0 0 2px;
+                        box-shadow: var(--btnactive) 0 0 0 2px;
                         transform: translateY(2px);
                     }
                 }
@@ -610,8 +622,9 @@
                             Add a Symbol, which you use to specify engine, e.g. searching <code>@ddg hello world</code> will use DuckDuckGo
                         </li>
                         <li>
-                            The default search engine will be the one at the top. <code>%s</code> can be used any amount of times.
+                            The default search engine will be the one at the top. Variables can be used any amount of times.
                         </li>
+                        <a href="#detailsvar">More Variables</a>
                     </ul>
                 </details>
                 <p>THANK YOU TO:
@@ -627,6 +640,50 @@
                     Also, I love attention, so be sure to share this with your friends.
                     Anyways, I'm almost at the bridge now. Oh shit, I forgot &mdash; how am I supposed to send this shit out?
                 </p>
+                <details id="detailsvar">
+                    <summary>Variables</summary>
+                    <ul>
+                        <li>
+                            <code>%s</code>: Your search query with URI encoding
+                        </li>
+                        <li>
+                            <code>%u</code>: Your unencoded search query
+                        </li>
+                        <li>
+                            <code>%p</code>: Your engine's symbol
+                        </li>
+                        <li>
+                            <code>%yr</code>: Last two digits of the current year
+                        </li>
+                        <li>
+                            <code>%year</code>: Full current year
+                        </li>
+                        <li>
+                            <code>%mo</code>: Current month (zero-padded)
+                        </li>
+                        <li>
+                            <code>%dy</code>: Current day of the month (zero-padded)
+                        </li>
+                        <li>
+                            <code>%hr</code>: Current hour (zero-padded, 24-hour format)
+                        </li>
+                        <li>
+                            <code>%min</code>: Current minute (zero-padded)
+                        </li>
+                        <li>
+                            <code>%ms</code>: Current millisecond (zero-padded, three digits)
+                        </li>
+                        <li>
+                            <code>%dow</code>: Day of the week
+                        </li>
+                        <li>
+                            <code>%dwn</code>: Day of the week as number (1 = Monday)
+                        </li>
+                        <li>
+                            <code>%ts</code>: Timestamp
+                        </li>
+                    </ul>
+                </details>
                 <details>
                     <summary>
                         More Buttons:

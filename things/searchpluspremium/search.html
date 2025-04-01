@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.4.5 -->
+<!-- made by ccn0 | v1.5 -->
 <head>
     <script>
         const params = new URLSearchParams(window.location.search);
@@ -10,7 +10,6 @@
         };
         
         const defaultData = {
-            default: "search",
             searchEngines: [
                 {
                     url: "https://www.google.com/search?q=%s",
@@ -21,7 +20,7 @@
                     symbol: "@ddg",
                 },
                 {
-                    url: `${location.protocol+"//"+location.hostname+(location.port ? ":"+location.port: "")+location.pathname}`,
+                    url: "https://ccn0.net/things/searchpluspremium/index.html",
                     symbol: "!",
                 },
             ],
@@ -36,10 +35,30 @@
         function useSearchEngines() {
             let [symbol, ...searchTerm] = query.split(' ');
             searchTerm = searchTerm.join(' ');
+            function queryParse(string) {
+                let newString = string;
+                const now = new Date();
+
+                newString = newString.replace(/%s/g, encodeURIComponent(searchTerm));
+                newString = newString.replace(/%u/g, searchTerm);
+                newString = newString.replace(/%p/g, symbol);
+                newString = newString.replace(/%yr/g, String(now.getFullYear()).slice(2));
+                newString = newString.replace(/%year/g, now.getFullYear());
+                newString = newString.replace(/%mo/g, String(now.getMonth() + 1).padStart(2, '0'));
+                newString = newString.replace(/%dy/g, String(now.getDate()).padStart(2, '0'));
+                newString = newString.replace(/%hr/g, String(now.getHours()).padStart(2, '0'));
+                newString = newString.replace(/%min/g, String(now.getMinutes()).padStart(2, '0'));
+                newString = newString.replace(/%ms/g, String(now.getMilliseconds()).padStart(3, '0'));
+                newString = newString.replace(/%dow/g, now.toLocaleDateString('en-US', { weekday: 'long' }));
+                newString = newString.replace(/%dwn/g, now.getDay());
+                newString = newString.replace(/%ts/g, now.getTime());
+
+                return newString;
+            };
             let matched = false;
             for (const engine of SETTINGS.searchEngines) {
                 if (engine.symbol === symbol) {
-                    redirectTo(engine.url.replace(/%s/g, encodeURIComponent(searchTerm)));
+                    redirectTo(queryParse(engine.url));
                     matched = true;
                     break;
                 };
