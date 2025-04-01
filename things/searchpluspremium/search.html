@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.4.4 -->
+<!-- made by ccn0 | v1.4.5 -->
 <head>
     <script>
         const params = new URLSearchParams(window.location.search);
@@ -19,6 +19,10 @@
                 {
                     url: "https://duckduckgo.com/?q=%s",
                     symbol: "@ddg",
+                },
+                {
+                    url: `${location.protocol+"//"+location.hostname+(location.port ? ":"+location.port: "")+location.pathname}`,
+                    symbol: "!",
                 },
             ],
         };
