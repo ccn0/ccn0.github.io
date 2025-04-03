@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5 -->
+<!-- made by ccn0 | v1.5.1 -->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -49,7 +49,7 @@
                     "name": "Google",
                     "url": "https://www.google.com/search?q=%s",
                     "nicks": [
-                        "goog", "goggle", "gog", "gle", "googl", "g"
+                        "goo", "goog", "goggle", "gog", "gle", "googl", "g"
                     ]
                 },
                 {
@@ -117,7 +117,7 @@
                 },
                 {
                     "name": "Twitter",
-                    "url": "https://twitter.com/search?q=%s",
+                    "url": "https://x.com/search?q=%s",
                     "nicks": [
                         "twiter", "tw", "x.com", "twtter", "x"
                     ]
@@ -145,7 +145,7 @@
                 },
                 {
                     "name": "Farside",
-                    "url": "https://farside.link/%s",
+                    "url": "https://farside.link/%u",
                     "nicks": [
                         "far side", "farside.link", "fars", "frside", "fs"
                     ]
@@ -163,13 +163,14 @@
     <style>
         :root {
             --hero: #008000;
-            --muted: #74c45a;
             --dark: #003200;
+            --muted: #034e03;
             --superdark: #021f02;
             --alt: #3b7c32;
             --btn: #97d180;
             --btnhover: #e2ffbe;
             --btnactive: #102e10;
+            --input: #f3f3f3;
             --red: #ff1100;
             --green: #0dff00;
             --blue: #0015ff;
@@ -230,6 +231,8 @@
             h2 {
                 margin-top: -2px;
                 margin-bottom: -8px;
+                color: #fff;
+                text-align: center;
             }
             div {
                 padding: 15px;
@@ -323,18 +326,6 @@
             }
         }
 
-        @media (max-width: 500px) {
-            .content {
-                flex-direction: column;
-            }
-            .col {
-                min-height: auto;
-                flex: 1;
-            }
-            .c2 {
-                min-height: 100vh;
-            }
-        }
 
         form {
             display: flex;
@@ -343,6 +334,7 @@
             height: 32px;
 
             input {
+                background-color: var(--input);
                 padding-left: 12px;
                 font-family: 'Roboto Mono', monospace;
                 transition: all 0.2s;
@@ -357,6 +349,7 @@
                         padding-left: 32px;
                         transform: translateY(-2px);
                         flex: 3;
+                        background-color: #fff;
                     }
                 }
                 &[type="submit"] {
@@ -380,7 +373,7 @@
         }
 
         .container {
-            background: var(--muted);
+            background: var(--alt);
             border-radius: 12px;
             border: 2px solid var(--hero);
             overflow: hidden;
@@ -440,13 +433,18 @@
                     border-color: #444!important;
                 }
                 input {
+                    transition: background-color 0.2s;
                     width: 100%;
                     height: 32px;
                     border-radius: 0 12px 0 0;
                     border: 2px #aaa solid;
                     border-left: 1px solid var(--hero);
+                    background-color: var(--input);
                     &:hover {
                         border-color: #444;
+                    }
+                    &:focus-within {
+                        background-color: #fff;
                     }
                 }
             }
@@ -455,7 +453,7 @@
                 height: 80vh;
                 padding: 0;
                 scrollbar-width: thin;
-                scrollbar-color: var(--hero) var(--muted);
+                scrollbar-color: var(--hero) var(--dark);
                 border-top: 2px solid var(--hero);
             }
         }
@@ -519,10 +517,15 @@
             }
         }
         .engInput {
+            transition: 0.2s all;
             display: flex;
             flex: 1;
             border-radius: 0;
             border:none;
+            background-color: var(--input);
+            &:focus-within {
+                background-color: #fff;
+            }
         }
         .engBtnCont {
             overflow:hidden;display:flex;flex:1;
@@ -556,6 +559,24 @@
             to {
                 border-color: var(--hero);
                 filter: brightness(100%);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .content {
+                flex-direction: column;
+            }
+            .col {
+                min-height: auto;
+                flex: 1;
+            }
+            .c2 {
+                min-height: 100vh;
+            }
+            .engContainer:has(input:focus-within) {
+                &>.engToolbar {
+                    width: 48px;
+                }
             }
         }
     </style>
@@ -738,7 +759,6 @@
                                                     "url":engine.url,
                                                     "symbol":engine.nicks[engine.nicks.length-1]
                                                 });
-                                                console.log(engine.nicks);
                                                 gbal.save();
                                                 loadEngines();
                                                 const engineList = document.querySelector("#enginelist");
