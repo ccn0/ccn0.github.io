@@ -1,19 +1,19 @@
 /*
 
-made by CCN0 v1.03
+made by CCN0 v1.03.1
 this is a screamer, so click cancel when it pops up if you dont want to partake, ever.
 
 */
 (function() {
     if (localStorage.getItem('spooky') === "true") {
         const spookyList = [
-            ["https://media1.tenor.com/m/So59sDcNM4wAAAAC/fnaf-chica.gif","https://ccn0.github.io/img/audio/plus/fnaf4jumpscare.mp3"],
-            ["https://media1.tenor.com/m/ZO1_WS7f-4YAAAAC/fnaf-freddy.gif","https://ccn0.github.io/img/audio/plus/fnaf1jumpscare.mp3"],
-            ["https://media.tenor.com/aHR1ThFfmE4AAAAi/fnaf.gif","https://ccn0.github.io/img/audio/plus/fnaf2jumpscare.mp3"],
-            ["https://media.tenor.com/E_HSK33-xokAAAAi/fnaf-bunny.gif","https://ccn0.github.io/img/audio/plus/fnaf3jumpscare.mp3"],
-            ["https://ccn0.github.io/img/spooky/smilegirl.png","https://ccn0.github.io/img/audio/plus/funandlaughing.mp3"],
-            ["https://ccn0.github.io/img/spooky/spookyhillman.gif","https://ccn0.github.io/img/audio/plus/cardrivinghills.mp3"],
-            ["https://ccn0.github.io/img/spooky/niceman24kbfile.png","https://ccn0.github.io/img/audio/plus/southparkbestofcousinelvin.mp3"],
+            ["https://media1.tenor.com/m/So59sDcNM4wAAAAC/fnaf-chica.gif","https://ccn0.net/img/audio/plus/fnaf4jumpscare.mp3"],
+            ["https://media1.tenor.com/m/ZO1_WS7f-4YAAAAC/fnaf-freddy.gif","https://ccn0.net/img/audio/plus/fnaf1jumpscare.mp3"],
+            ["https://media.tenor.com/aHR1ThFfmE4AAAAi/fnaf.gif","https://ccn0.net/img/audio/plus/fnaf2jumpscare.mp3"],
+            ["https://media.tenor.com/E_HSK33-xokAAAAi/fnaf-bunny.gif","https://ccn0.net/img/audio/plus/fnaf3jumpscare.mp3"],
+            ["https://ccn0.net/img/spooky/smilegirl.png","https://ccn0.net/img/audio/plus/funandlaughing.mp3"],
+            ["https://ccn0.net/img/spooky/spookyhillman.gif","https://ccn0.net/img/audio/plus/cardrivinghills.mp3"],
+            ["https://ccn0.net/img/spooky/niceman24kbfile.png","https://ccn0.net/img/audio/plus/southparkbestofcousinelvin.mp3"],
         ];
         const chosenScare = spookyList[Math.floor(spookyList.length * Math.random())];
     

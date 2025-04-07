@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.png">
     <title>Programmable Notepad</title>
+    <link rel="canonical" href="https://ccn0.net/things/notepad/programmable.html">
     <meta property="og:title" content="Programmable Notepad">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ccn0.net/things/notepad/programmable.html">
@@ -56,13 +57,13 @@
 </head>
 <body>
     <noscript>
-        JavaScript is disabled, try <a href="light.html"><i>Notepad</i> Premium</a> made for use without JavaScript.
+        JavaScript is disabled, try <a href="light.html"><i>Notepad</i> Premium</a>, made for use without JavaScript.
     </noscript>
     <textarea spellcheck="false" id="textarea"></textarea>
     <script>
         const textarea = document.getElementById('textarea');
         const Notepad = {
-            version: "0.006",
+            version: "0.007",
             field: textarea,
             filename: "text.txt",
             history: [""],
@@ -86,7 +87,7 @@
             const input = document.createElement("input");
             input.type = "file";
             input.accept = "text/*";
-            input.addEventListener("change", (event) => {
+            input.addEventListener("change", (e) => {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
@@ -180,6 +181,9 @@
             } else {
                 return null;
             };
+        };
+        function getLength() {
+            return textarea.split("\n").length
         };
         function getCursorPosition() {
             const cursorPosition = textarea.selectionStart;
