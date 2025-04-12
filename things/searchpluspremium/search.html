@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.1 -->
+<!-- made by ccn0 | v1.5.2 -->
 <head>
     <script>
         const params = new URLSearchParams(window.location.search);
@@ -65,7 +65,7 @@
             };
             if (!matched) {
                 console.log("no matching, defaulting");
-                redirectTo(SETTINGS.searchEngines[0].url.replace(/%s/g, encodeURIComponent(query)));
+                redirectTo(queryParse(SETTINGS.searchEngines[0].url));
             };
         };
         function redirectTo(url) {
