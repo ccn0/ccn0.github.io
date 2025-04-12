@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.2 -->
+<!-- made by ccn0 | v1.5.3 -->
 <head>
     <script>
         const params = new URLSearchParams(window.location.search);
@@ -35,7 +35,7 @@
         function useSearchEngines() {
             let [symbol, ...searchTerm] = query.split(' ');
             searchTerm = searchTerm.join(' ');
-            function queryParse(string) {
+            function queryParse(string, defaulting) {
                 let newString = string;
                 const now = new Date();
 
@@ -65,7 +65,7 @@
             };
             if (!matched) {
                 console.log("no matching, defaulting");
-                redirectTo(queryParse(SETTINGS.searchEngines[0].url));
+                redirectTo(SETTINGS.searchEngines[0].url.replace(/%s/g, encodeURIComponent(query)));
             };
         };
         function redirectTo(url) {
