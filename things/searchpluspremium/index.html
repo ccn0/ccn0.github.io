@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.3 -->
+<!-- made by ccn0 | v1.5.4 -->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -373,7 +373,7 @@
         }
 
         .container {
-            background: var(--alt);
+            background: var(--dark);
             border-radius: 12px;
             border: 2px solid var(--hero);
             overflow: hidden;
@@ -449,7 +449,7 @@
                 }
             }
             .list {
-                overflow-y: scroll;
+                overflow-y: auto;
                 height: 80vh;
                 padding: 0;
                 scrollbar-width: thin;
@@ -634,7 +634,7 @@
                         <li>Type the name of a search engine into the Quick Add bar and hit enter.</li>
                         <span style="font-weight: bold;">OR</span>
                         <li>
-                            Click <kbd>Add New</kbd>
+                            Click <span style="border: 2px solid green; color: #000; background-color: var(--btn); padding: 2px;">Add New</span>
                         </li>
                         <li>
                             Add a URL, with %s in the place of the query, e.g. <code>https://www.google.com/search?q=%s</code>
@@ -760,7 +760,7 @@
                                                     "symbol":engine.nicks[engine.nicks.length-1]
                                                 });
                                                 gbal.save();
-                                                loadEngines();
+                                                loadEngines({moved: gbal.settings.searchEngines.length-1});
                                                 const engineList = document.querySelector("#enginelist");
                                                 engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
                                                 return;
@@ -775,17 +775,18 @@
                     <script defer="true">
                         const maincont = document.querySelector("#enginelist")
 
-                        function loadEngines(moved) {
+                        function loadEngines(dat = {}) {
                             maincont.innerHTML = "";
 
                             let idx = 0;
                             gbal.settings.searchEngines.forEach(engine => {
                                 const index = idx;
+                                dat = dat;
 
                                 const itemCont = document.createElement("div");
                                 itemCont.classList.add("engContainer");
                                 itemCont.setAttribute("data-engine", index);
-                                if (index == moved) {
+                                if (index == dat.moved) {
                                     itemCont.classList.add("moved")
                                 };
 
@@ -805,7 +806,7 @@
                                     };
                                     gbal.settings.searchEngines = moveItemUp(gbal.settings.searchEngines,index)
                                     gbal.save();
-                                    loadEngines(index-1);
+                                    loadEngines({moved:index-1});
                                 });
 
                                 const tbDown = document.createElement("button");
@@ -822,7 +823,7 @@
 
                                     gbal.settings.searchEngines = moveItemDown(gbal.settings.searchEngines,index)
                                     gbal.save();
-                                    loadEngines(index+1);
+                                    loadEngines({moved:index+1});
                                 });
 
                                 const tbClose = document.createElement("button");
@@ -886,6 +887,17 @@
                                 maincont.appendChild(itemCont)
                                 idx++;
                             });
+                            
+                            const newCont = document.createElement("div");
+                            newCont.classList.add("engContainer");
+                            newCont.style.cssText = "margin-bottom:2px;";
+
+                            const newBtn = document.createElement("button");
+                            newBtn.textContent = "Add New";
+                            newBtn.addEventListener("click",addNew);
+                            
+                            newCont.appendChild(newBtn);
+                            maincont.appendChild(newCont);
                         };
 
                         function addNew() {
@@ -895,7 +907,7 @@
                             };
 
                             gbal.settings.searchEngines.push(brandNew);
-                            loadEngines();
+                            loadEngines({moved: gbal.settings.searchEngines.length-1});
                             const engineList = document.querySelector("#enginelist");
                             engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
                         };
