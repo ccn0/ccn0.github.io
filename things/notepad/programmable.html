@@ -63,7 +63,7 @@
     <script>
         const textarea = document.getElementById('textarea');
         const Notepad = {
-            version: "0.008",
+            version: "0.009",
             field: textarea,
             filename: "text.txt",
             history: [""],
@@ -208,24 +208,20 @@
             dark:(inf)=>{
                 replaceLine(Notepad.cursorPosition[0],'');
                 let locationhref = new URL(window.location.href);
-                if (!inf.argsExist) {
-                    if (textarea.hasAttribute('dark')) {
-                        textarea.removeAttribute('dark');
-                        locationhref.searchParams.delete('dark');
+                if (inf.argsExist) {
+                    if (inf.args.join(" ") == "true") {
+                        textarea.setAttribute('dark','');
+                        document.body.setAttribute('dark','');
+                        locationhref.searchParams.set('dark','');
                     } else {
-                        textarea.setAttribute('dark', '');
-                        locationhref.searchParams.set('dark', '');
+                        textarea.removeAttribute('dark');
+                        document.body.removeAttribute('dark');
+                        locationhref.searchParams.delete('dark');
                     };
+                    history.replaceState(null, '', locationhref.href);
                 } else {
-                    if (inf.args.join(' ') == "true") {
-                        textarea.setAttribute('dark', '');
-                        locationhref.searchParams.set('dark', '');
-                    } else {
-                        textarea.removeAttribute('dark');
-                        locationhref.searchParams.delete('dark');
-                    };
+                    toggleDark();
                 };
-                history.replaceState(null, '', locationhref.href);
             },
             wrap:(inf)=>{
                 replaceLine(Notepad.cursorPosition[0],'');
@@ -466,6 +462,26 @@
             textarea.selectionStart = textarea.selectionEnd = pos + lines[lineIndex].length;
         };
 
+        function toggleDark() {
+            let locationhref = new URL(window.location.href);
+            if (textarea.hasAttribute('dark')) {
+                textarea.removeAttribute('dark');
+                document.body.removeAttribute('dark');
+                locationhref.searchParams.delete('dark');
+            } else {
+                textarea.setAttribute('dark', '');
+                document.body.setAttribute('dark', '');
+                locationhref.searchParams.set('dark', '');
+            };
+            history.replaceState(null, '', locationhref.href);
+        };
+        function toggleWrap() {
+            if (textarea.getAttribute('wrap') === '') {
+                textarea.removeAttribute('wrap');
+            } else {
+                textarea.setAttribute('wrap','');
+            };
+        };
 
         textarea.addEventListener('click',()=>{
             Notepad.cursorPosition = getCursorPosition();
@@ -500,27 +516,11 @@
             };
             if (e.ctrlKey && e.key === 'd') {
                 e.preventDefault();
-                    let locationhref = new URL(window.location.href);
-
-                    if (textarea.hasAttribute('dark')) {
-                        textarea.removeAttribute('dark');
-                        document.body.removeAttribute('dark');
-                        locationhref.searchParams.delete('dark');
-                    } else {
-                        textarea.setAttribute('dark', '');
-                        document.body.setAttribute('dark', '');
-                        locationhref.searchParams.set('dark', '');
-                    };
-
-                    history.replaceState(null, '', locationhref.href);
+                toggleDark();
             };
             if (e.ctrlKey && e.altKey && e.key === 'w') {
                 e.preventDefault();
-                if (textarea.getAttribute('wrap') === '') {
-                    textarea.removeAttribute('wrap');
-                } else {
-                    textarea.setAttribute('wrap','');
-                };
+                toggleWrap();
             };
             if (e.ctrlKey && e.key === 'k') {
                 e.preventDefault();
