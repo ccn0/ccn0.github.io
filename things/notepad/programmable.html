@@ -63,7 +63,7 @@
     <script>
         const textarea = document.getElementById('textarea');
         const Notepad = {
-            version: "0.009",
+            version: "0.010",
             field: textarea,
             filename: "text.txt",
             history: [""],
@@ -78,6 +78,8 @@
             smartIndent: true,
             prefix: ">",
             tab:"    ",
+            nativeCommands: {
+            },
             inf: {
                 args:[],
             },
@@ -119,8 +121,8 @@
                     "text": "change background color"
                 },
                 "askbeforeleaving": {
-                    "args": "[true/false]",
-                    "text": "toggle asking before leaving"
+                    "args": "[boolean?]",
+                    "text": "toggle or set asking before leaving"
                 },
                 "open": {
                     "text": "append a file to notepad"
@@ -130,7 +132,7 @@
                     "text": "fetch and append a file to notepad"
                 },
                 "save": {
-                    "text": "save current file"
+                    "text": "save current file as current filename"
                 },
                 "saveas": {
                     "args": "<filename>",
@@ -144,9 +146,13 @@
                     "args": "<amount?>",
                     "text": "get last line entered or go back amount"
                 },
+                ">": {
+                    "args": "<amount?>",
+                    "text": "get last line entered or go back amount, synonym of >repeat"
+                },
                 "fontsize": {
-                    "args": "<size>",
-                    "text": "changes the fontsize of the page"
+                    "args": "<size?>",
+                    "text": "change the fontsize of the page"
                 },
                 "clear": {
                     "text": "erase the notepad of everything, and not reversible"
@@ -332,8 +338,9 @@
             default:(inf)=>{
                 insertAtCursor("\n");
                 console.warn('Malformed command was entered, proceeding new line.');
-            }
+            },
         };
+        COMMANDS[">"] = COMMANDS.repeat;
 
         const params = new URLSearchParams(window.location.search);
         if (params.has('dark')) {
