@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.4 -->
+<!-- made by ccn0 | v1.5.5 -->
 <head>
+    <title>SearchPlusPREMIUM</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="canonical" href="https://ccn0.net/things/searchpluspremium/search">
+    <link rel="search" type="application/opensearchdescription+xml" title="SearchPlusPREMIUM" href="/things/searchpluspremium/opensearch.xml">
     <script>
         const params = new URLSearchParams(window.location.search);
         const query = params.get("q");
         if (query == null) {
-            location = location.protocol+"//"+location.host+location.pathname;
+            location = location.protocol+"//"+location.host+"/things/searchpluspremium/";
         };
         
         const defaultData = {
@@ -86,7 +90,7 @@
                 if (url == "") {
                     changePage("YOU FAILED US!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! B")
                 } else {
-                    changePage("We failed you...", err)
+                    changePage("Bad things have happened!", err)
                     console.log(url)
                 }
             }
@@ -99,11 +103,9 @@
             });
         }
     </script>
+    <meta name="robots" content="noindex">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SearchPlusPREMIUM</title>
-    <link rel="icon" href="favicon.png">
-    <meta name="robots" content="noindex">
     <style>
         body {
             background-color: #000000;
@@ -111,9 +113,9 @@
             font-family: Arial, sans-serif;
         }
         a {
-            color: rgb(35, 222, 255);
+            color: #23deff;
             &:hover {
-                color: rgb(255, 208, 0);
+                color: #ffd000;
             }
             &:active {
                 color: #ff56e8;
