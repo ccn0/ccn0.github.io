@@ -63,7 +63,7 @@
     <script>
         const textarea = document.getElementById('textarea');
         const Notepad = {
-            version: "0.010",
+            version: "0.011",
             field: textarea,
             filename: "text.txt",
             history: [""],
@@ -446,13 +446,10 @@
                 return null;
             };
         };
-        function getLength() {
-            return textarea.split("\n").length
-        };
         function getLines() {
             return textarea.value.split("\n");
         };
-        function getCursorPosition() {
+        function updateCursorPosition() {
             const location = textarea.selectionStart;
             const text = textarea.value;
             const lines = text.substring(0, location).split("\n");
@@ -491,18 +488,18 @@
         };
 
         textarea.addEventListener('click',()=>{
-            Notepad.cursorPosition = getCursorPosition();
+            Notepad.cursorPosition = updateCursorPosition();
         });
         textarea.addEventListener('select',()=>{
-            Notepad.cursorPosition = getCursorPosition();
+            Notepad.cursorPosition = updateCursorPosition();
         });
         textarea.addEventListener('input', (e)=>{
-            Notepad.cursorPosition = getCursorPosition();
+            Notepad.cursorPosition = updateCursorPosition();
             refreshTitle();
             Notepad.saved = false;
         });
         textarea.addEventListener('keydown', (e) => {
-            Notepad.cursorPosition = getCursorPosition();
+            Notepad.cursorPosition = updateCursorPosition();
 
             if (e.ctrlKey && e.key === 'o') {
                 e.preventDefault();
