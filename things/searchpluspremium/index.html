@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.5 -->
+<!-- made by ccn0 | v1.5.6 -->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -876,8 +876,8 @@
                                 symbput.placeholder = "Symbol, e.g '<symbol> query'";
                                 symbput.value = engine.symbol;
                                 symbput.addEventListener("change", (e) => {
-                                    symbput.value = symbput.value.replace(" ","_");
-                                    gbal.settings.searchEngines[index].symbol = e.target.value.replace(" ","_");
+                                    symbput.value = symbput.value.replace(/\s/g,"_");
+                                    gbal.settings.searchEngines[index].symbol = e.target.value.replace(/\s/g,"_");
                                     gbal.save();
                                 });
 
