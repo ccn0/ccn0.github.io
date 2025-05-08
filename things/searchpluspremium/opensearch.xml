@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+<OpenSearchDescription
+    xmlns="http://a9.com/-/spec/opensearch/1.1/"
+    xmlns:moz="http://www.mozilla.org/2006/browser/search/">
     <ShortName>SearchPlusPREMIUM</ShortName>
     <Description>The only search engine that takes you exactly where you wanna go.</Description>
     <InputEncoding>UTF-8</InputEncoding>
     <Url type="text/html" template="https://ccn0.net/things/searchpluspremium/search.html?q={searchTerms}"/>
+    <Image height="64" width="64" type="image/png">https://ccn0.net/things/searchpluspremium/favicon.png</Image>
+    <Url
+        type="application/opensearchdescription+xml"
+        rel="self"
+        template="https://ccn0.net/things/searchpluspremium/opensearch.xml" />
 </OpenSearchDescription>
