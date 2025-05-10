@@ -23,34 +23,43 @@
             height: 100vh;
             margin: 0;
             padding: 0;
-            overflow: hidden;
         }
         body {
             margin: 0;
-            overflow: -moz-hidden-unscrollable;
-            overflow: hidden;
+            overflow: auto;
             background-color: #fff;
-            &[dark] {
+            min-height: 100vh;
+            cursor: text;
+            &:has(textarea[dark]) {
                 background-color: #000;
             }
         }
         textarea {
+            display: inline-block;
+            width: auto;
+            height: auto;
+            min-width: 100%;
+            min-height: calc(100vh-1px);
+            white-space: pre;
             font-size: 12px;
             text-wrap: nowrap;
+            overflow: hidden;
             &[wrap] {
                 text-wrap: wrap;
+                width: 100%!important;
             }
             font-family: monospace;
             margin: -1px 0 -1px 0;
-            min-height: calc(100vh + 1px);
-            min-width: 100%;
             resize: none;
             border: none;
             outline: #fff inherit inherit;
-            padding: 3px 2px;
+            padding: 0;
             &[dark] {
                 background-color: #000;
                 color: #fff;
+            }
+            &:focus {
+                outline: none;
             }
         }
     </style>
@@ -63,8 +72,8 @@
     <script>
         const textarea = document.getElementById('textarea');
         const NP = {
-            version: "0.012",
-            field: textarea,
+            version: "0.013",
+            X: textarea,
             filename: "text.txt",
             history: [""],
             cursorPosition: [0,0],
@@ -80,6 +89,12 @@
             tab:"    ",
             nativeCommands: {
             },
+            updateXHeight: ()=>{
+                textarea.style.height = "auto";
+                textarea.style.height = `${textarea.scrollHeight}px`;
+                textarea.style.width = "auto";
+                textarea.style.width = `${textarea.scrollWidth}px`;
+            },
             inf: {
                 args:[],
             },
@@ -89,8 +104,8 @@
                     "text": "shows this or gives info on what a command does"
                 },
                 "replace": {
-                    "args": "<regex> <text> [boolean]",
-                    "text": "replaces text that matches regex, if true per line"
+                    "args": "<regex> <text> <line-number?>",
+                    "text": "replaces text that matches regex, if line number, only for that line"
                 },
                 "eval": {
                     "args": "<code>",
@@ -110,15 +125,15 @@
                 },
                 "font": {
                     "args": "<font-name?>",
-                    "text": "specify a font for notepad"
+                    "text": "specify or reset font"
                 },
                 "color": {
                     "args": "<color?>",
-                    "text": "change text color"
+                    "text": "specify or reset text color"
                 },
                 "background": {
                     "args": "<color?>",
-                    "text": "change background color"
+                    "text": "specify or reset background color"
                 },
                 "askbeforeleaving": {
                     "args": "[boolean?]",
@@ -199,18 +214,13 @@
                 };
             },
             replace:(inf)=>{
-                if (inf.args[3] === "true") {
-                    let pattern = inf.args[0];
-                    let replacement = inf.args[1];
-                    let regex = new RegExp(pattern, 'g');
-                    let updatedValue = textarea.value.replace(regex, replacement);
-                    textarea.value = updatedValue;
-                    replaceLine(NP.cursorPosition[0], '');
+                let regex = new RegExp(inf.args[0], 'g');
+                replaceLine(NP.cursorPosition[0],'');
+                if (inf.args[2]) {
+                    replaceLine(inf.args[2], getLine(inf.args[2]).replace(regex, inf.args[1]));
                 } else {
-                    let regex = new RegExp(inf.args[0], 'g');
                     textarea.value = textarea.value.replace(regex, inf.args[1]);
-                    replaceLine(NP.cursorPosition[0],'');
-                }
+                };
             },
             dark:(inf)=>{
                 replaceLine(NP.cursorPosition[0],'');
@@ -303,9 +313,11 @@
                         .then(text => {
                             deleteLine(NP.cursorPosition[0]);
                             textarea.value += text;
+                            NP.updateXHeight();
                         })
                         .catch(error => {
                             textarea.value += error;
+                            NP.updateXHeight();
                         });
                 };},
             askbeforeleaving:(inf)=>{
@@ -317,6 +329,7 @@
                 };
             },
             repeat: (inf) => {
+                NP.history.shift();
                 let tohistory = inf.args[0] || 1;
                 if (tohistory > 0) {
                     tohistory = tohistory % NP.history.length;
@@ -347,6 +360,7 @@
         if (params.has('dark')) {
             textarea.setAttribute('dark','');
         };
+        NP.updateXHeight();
 
         function openFile() {
             const input = document.createElement("input");
@@ -386,14 +400,6 @@
         function refreshTitle() {
             document.title = `${!NP.saved && NP.askbeforeleaving ? "*":""}${NP.filename} - Programmable Notepad`;
         };
-        window.addEventListener('beforeunload', function(e) {
-            const textareaValue = textarea.value.trim();
-            if (!NP.saved && !NP.askbeforeleaving) {
-                e.preventDefault();
-                e.returnValue = '';
-                return 'Are you sure you want to leave without saving?';
-            };
-        });
         function replaceLine(lineNumber, newContent) {
             const ogLoc = NP.cursorPosition;
             const lines = getLines();
@@ -465,18 +471,33 @@
             };
         };
 
+        window.addEventListener('beforeunload', (e)=>{
+            if (!NP.saved && NP.askbeforeleaving) {
+                e.preventDefault();
+                e.returnValue = true;
+                return 'Are you sure you want to leave without saving?';
+            };
+        });
+        document.body.addEventListener('click',()=>{
+            textarea.focus();
+            NP.updateXHeight();
+        });
         textarea.addEventListener('click',()=>{
+            NP.updateXHeight();
             NP.cursorPosition = updateCursorPosition();
         });
         textarea.addEventListener('select',()=>{
+            NP.updateXHeight();
             NP.cursorPosition = updateCursorPosition();
         });
         textarea.addEventListener('input', (e)=>{
+            NP.updateXHeight();
             NP.cursorPosition = updateCursorPosition();
             refreshTitle();
             NP.saved = false;
         });
         textarea.addEventListener('keydown', (e) => {
+            NP.updateXHeight();
             NP.cursorPosition = updateCursorPosition();
 
             if (e.ctrlKey && e.key === 'o') {
@@ -558,7 +579,6 @@
                 const [command, ...args] = cursorLine.split(' ');
                 const argsExist = (args[0] && args[0].length > 0);
 
-
                 if (command?.startsWith(NP.prefix)) {
                     e.preventDefault();
                     NP.lastEvent = "command";
@@ -570,6 +590,7 @@
                     };
 
                     (COMMANDS[command.slice(NP.prefix.length)] ?? COMMANDS.default)(NP.inf);
+                    NP.updateXHeight();
                 };
             };
         });
