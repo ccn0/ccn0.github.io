@@ -72,7 +72,7 @@
     <script>
         const textarea = document.getElementById('textarea');
         const NP = {
-            version: "0.013",
+            version: "0.014",
             X: textarea,
             filename: "text.txt",
             history: [""],
@@ -89,11 +89,16 @@
             tab:"    ",
             nativeCommands: {
             },
-            updateXHeight: ()=>{
+            updateXHeight: () => {
+                const scrollTop = window.scrollY;
+                const scrollLeft = window.scrollX;
+
                 textarea.style.height = "auto";
                 textarea.style.height = `${textarea.scrollHeight}px`;
                 textarea.style.width = "auto";
                 textarea.style.width = `${textarea.scrollWidth}px`;
+
+                window.scrollTo(scrollLeft, scrollTop);
             },
             inf: {
                 args:[],
@@ -479,8 +484,10 @@
             };
         });
         document.body.addEventListener('click',()=>{
-            textarea.focus();
-            NP.updateXHeight();
+            if (document.activeElement != textarea) {
+                event.preventDefault();
+                textarea.focus();
+            };
         });
         textarea.addEventListener('click',()=>{
             NP.updateXHeight();
@@ -497,7 +504,6 @@
             NP.saved = false;
         });
         textarea.addEventListener('keydown', (e) => {
-            NP.updateXHeight();
             NP.cursorPosition = updateCursorPosition();
 
             if (e.ctrlKey && e.key === 'o') {
