@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.7 -->
+<!-- made by ccn0 | v1.5.8 -->
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SearchPlusPREMIUM</title>
     <link rel="icon" href="favicon.png">
     <meta name="og:title" content="SearchPlusPREMIUM">
@@ -12,15 +12,15 @@
     <link rel="canonical" href="https://ccn0.net/things/searchpluspremium/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://ccn0.net/things/searchpluspremium/spp.png">
-    <meta name="creator" content="CCN0" />
-    <meta name="description" content="The only search engine that brings you exactly where you wanna go." />
+    <meta name="creator" content="CCN0">
+    <meta name="description" content="The only search engine that brings you exactly where you wanna go.">
     <link rel="search" type="application/opensearchdescription+xml" title="SearchPlusPREMIUM" href="/things/searchpluspremium/opensearch.xml">
     <script defer="true">
         const defaultData = {
             searchEngines: [
                 {
                     url: "https://www.google.com/search?q=%s",
-                    symbol: "",
+                    symbol: "@g",
                 },
                 {
                     url: "https://duckduckgo.com/?q=%s",
@@ -82,13 +82,6 @@
                     ]
                 },
                 {
-                    "name": "Mobile Wikipedia",
-                    "url": "https://en.m.wikipedia.org/wiki/Special:Search?search=%s",
-                    "nicks": [
-                        "wikipedia mobile", "mwiki", "mwikip", "mwp", "enmwiki", "mw"
-                    ]
-                },
-                {
                     "name": "Yahoo",
                     "url": "https://search.yahoo.com/search?p=%s",
                     "nicks": [
@@ -141,7 +134,7 @@
                     "name": "Urban Dictionary",
                     "url": "https://www.urbandictionary.com/define.php?term=%s",
                     "nicks": [
-                        "urb", "udict", "ud"
+                        "udef", "urb", "udict", "ud"
                     ]
                 },
                 {
@@ -149,6 +142,41 @@
                     "url": "https://farside.link/%u",
                     "nicks": [
                         "far side", "farside.link", "fars", "frside", "fs"
+                    ]
+                },
+                {
+                    "name": "Genius",
+                    "url": "https://genius.com/search?q=%s",
+                    "nicks": [
+                        "geniis", "genus", "geni", "ge", "gen"
+                    ]
+                },
+                {
+                    "name": "ChatGPT",
+                    "url": "https://chatgpt.com/?q=%s",
+                    "nicks": [
+                        "chatgpt.com", "chat.openai.com", "chat", "gpt"
+                    ]
+                },
+                {
+                    "name": "Pinterest",
+                    "url": "https://www.pinterest.com/search/pins/?q=%s",
+                    "nicks": [
+                        "pni", "pintrest", "pin", "p"
+                    ]
+                },
+                {
+                    "name": "Tumblr",
+                    "url": "https://www.tumblr.com/search/%s",
+                    "nicks": [
+                        "the one with the bitchy ceo", "tumbl", "tum"
+                    ]
+                },
+                {
+                    "name": "GitHub",
+                    "url": "https://github.com/search?q=express+middleware",
+                    "nicks": [
+                        "not gitlab", "git hub", "gith", "gh"
                     ]
                 },
                 {
@@ -598,9 +626,9 @@
                     </figcaption>
                 </figure>
                 <form action="search.html">
-                    <input type="search" placeholder="search here" name="q" id="q" title="Search Here" autofocus
-                        required />
-                    <input type="submit" value="TAKE ME" title="Submit" />
+                    <input type="search" placeholder="search here" name="q" id="q" title="Search Here" autofocus aria-label="Search Query here"
+                        required>
+                    <input type="submit" value="TAKE ME" title="Submit" aria-label="Submit query and go">
                 </form>
                 <div style="text-align: center; padding: 10px 0;">
                     <a href="https://bsky.app/profile/ccn0.net">made by ccn0</a>
@@ -651,12 +679,12 @@
                 <p>THANK YOU TO:
                     <ul>
                         <li title="Search">Google for <a href="https://fonts.google.com/specimen/Open+Sans"><em>Open Sans</em></a></li>
-                        <li title="PLUS">Paul D. Hunt for <a href="https://fonts.google.com/specimen/Source+Sans+3"><em>Source Sans 3</em></a></li>
+                        <li title="PLUS">Paul D. Hunt for <a href="https://fonts.google.com/specimen/Source+Sans+3"><em title="when did they rename source sans pro???">Source Sans 3</em></a></li>
                         <li title="premium">Robert Leuschke for <a href="https://fonts.google.com/specimen/Mea+Culpa"><em>Mea Culpa</em></a></li>
                         <li title="for now...">ALL CODE IS OWNED BY <a href="https://github.com/ccn0">CCN0</a>, ALL RIGHTS RESERVED</li>
                     </ul>
                 </p>
-                <p>If you like this search engine, be sure to give it a like. If you find a problem,
+                <p>If you like this search engine, be sure to give it a like. If you find a problem, or want me to add an engine to Quick Add,
                     <a href="https://github.com/ccn0/ccn0.github.io/issues">open an issue on the website repo</a>.
                     Also, I love attention, so be sure to share this with your friends.
                     Anyways, I'm almost at the bridge now. Oh shit, I forgot &mdash; how am I supposed to send this shit out?

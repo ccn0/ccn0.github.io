@@ -81,8 +81,8 @@
                 <div style='text-align: center;'>
                     <h1 style="margin:5px"><span style="font-family: monospace;">CCN0</span> Portal</h1>
                     <p id="splashtext"><noscript>Javascript is disabled!</noscript></p>
-                    <input type='text' id='urlInput' placeholder="Enter URL with https://">
-                    <button onclick='goURL()'>Go</button>
+                    <input type='text' id='urlInput' placeholder="Enter URL with https://" aria-label="Enter URL">
+                    <button onclick='goURL()' aria-label="Submit Query">Go</button>
                     <script>
                         function goURL() {
                             location.href = document.getElementById('urlInput').value;
@@ -92,7 +92,7 @@
                                 goURL();
                             };
                         });
-                        const splashes = ["Welcome to the portal!","Welcome!","We have a new look!","Kiosk World!","Yahoo is nothing!","Enter a URL Below!","Javascript is Enabled!","You need to wake up!","Some of these are blocked!","GitHub for the methods!","You are braindead!","HTTPS:// Then where you wanna go!","Eaglercraft coming soon!","Permanent Run 3!","Hope they don't patch this!","Who's reading this shit!","Brought to you by See See No!","Exclamation!","Also try Skiovox!","Remember the Collegeboard method!","Viva la Revolution!","I do!","How tall are you!","Fuck off!","I know someone's reading this!","Cry me a river!","I'm on Bing!","Polaris is bullshit!","RIP Skool!","RIP POP SMOKE!","People also asked!","Try anuraOS!","Where the Chromebooks at!","This is reality!","You are dreaming!","Don't trust people!","Javascript Sucks!","You suck!","Fuck You!","CCN0!","Who is this guy anyway!","You aren't cute!","Childish!","Not the game!","I'm so hungry!","Look outside!","Open Source!","Columns!","Whatever you want it to be!","Pretty mid!","Whatever happened to proxies!","Grammar!","Gambling!","Robots!","What time is it!","I'm thirsty!","Calculators!","Fuck 2!","A!","Who knows!","Cats!","Nothing is here!"]
+                        const splashes = ["Welcome to the portal!","Welcome!","Kiosk World!","Yahoo sucks!","Enter a URL Below!","Javascript is Enabled!","You are braindead!","Type https:// first, then where you wanna go!","Eaglercraft coming NEVER!","Semi-permanent Run 3!","Hope they don't patch this!","Who's reading this shit!","Brought to you by See See No!","Exclamation!","I do!","Fuck off!","I know someone's reading this!","Cry me a river!","I'm on Bing!","Polaris is bullshit!","People also asked!","Try anuraOS!","Where the Chromebooks at!","This is reality!","You are dreaming!","Don't trust people!","Javascript Sucks!","You suck!","Fuck You!","CCN0!","Who is this guy anyway!","Childish!","Fuck The Game!","Open Source!","Columns!","Whatever you want it to be!","Pretty mid!","Whatever happened to proxies!","What time is it!","Calculators!","Who knows!","Cats!","Nothing is here!","I'm on Google!","I'm on that other search engine!","Fuck Nintendo!","Fuck Google!","Fuck Samsung!","I'm still mad!","I'm very busy","I hate all of you!","Made by CCN0!"];
                         document.getElementById('splashtext').textContent = splashes[Math.floor(Math.random() * splashes.length)];
                     </script>
                 </div>

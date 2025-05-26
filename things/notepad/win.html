@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.png">
+    <link rel="canonical" href="https://ccn0.net/things/notepad/win">
     <title>Notepad</title>
     <meta name="description" content="CCN0's Notepad with keyboard shortcuts, dark mode, saving, and more.">
     <style>
@@ -42,7 +43,7 @@
 </head>
 <body>
     <noscript>JavaScript is disabled, try <a href="light.html"><i>Notepad</i> Premium</a> made for use without JavaScript.</noscript>
-    <textarea spellcheck="false" id="textarea"></textarea>
+    <textarea spellcheck="false" id="textarea" aria-label="Notepad"></textarea>
     <script>
         const params = new URLSearchParams(window.location.search);
         if (params.has('dark')) {
