@@ -5,7 +5,7 @@ a github pages website where i do some wacky things. and yes, the homepage is a 
 ## highlights
 
 - [CCN0 Things](https://ccn0.net/things/) `/things/`
-  - things i made that aren't good enough to be featured (still interesting though.)
+  - things i made, basically everything i make
 - [CCN0 Wiki](https://ccn0.net/info/) `/info/`
   - info on basically every thing ive made for the most part
 - [Soundlets Plus](https://ccn0.net/things/soundlets/plus) `/things/soundlets/plus`
