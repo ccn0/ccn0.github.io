@@ -1,5 +1,5 @@
 {
-    "running":["soundlets","bluesky","ccn0blog","bday2025","spp"],
+    "running":["soundlets","bluesky","ccn0blog","spp","soundlets2025"],
     "promos":[
         {
             "type":"square",
@@ -41,7 +41,7 @@
             "type":"square",
             "css":"#sphoto{image-rendering:crisp-edges;}",
             "id": "pnp",
-            "img": "assets/pnp.jpg",
+            "img": "assets/pnpad2025.png",
             "url": "https://ccn0.net/things/notepad/programmable",
             "alt": "Programmable Notepad",
             "title": "Notepad, but better.",
@@ -58,18 +58,18 @@
             "desc": "My Bluesky, which replaced the Things Blog from all those years ago."
         },
         {
-            "type":"square",
-            "id": "bday25",
-            "img": "assets/bday2025.png",
-            "url": "https://ccn0.net/pages/birthday/2025.html",
-            "alt": "CCN0'S 5TH BIRTHDAY, ON APRIL 19TH",
-            "title": "happy 5ht birthday",
-            "desc": "Announcements??? Games???? Things????"
+            "type":"stretch",
+            "id": "soundlets2025",
+            "img": "assets/soundlets2025.png",
+            "url": "https://ccn0.net/things/soundlets/plus",
+            "alt": "Soundlets Plus!",
+            "title": "Make your own soundboard!",
+            "desc": "i wanna make a soundboard"
         },
         {
-            "type":"square",
+            "type":"stretch",
             "id": "spp",
-            "img": "assets/spp.png",
+            "img": "assets/spp2025.png",
             "url": "https://ccn0.net/things/searchpluspremium/index.html",
             "alt": "SearchPlusPREMIUM",
             "title": "the only search engine",
@@ -82,23 +82,16 @@
             "url": "#"
         },
         {
-            "type":"rect43",
-            "id": "test",
-            "img": "assets/x",
-            "url": "#"
-        },
-        {
             "type":"banner",
             "id": "test",
             "img": "assets/x",
             "url": "#"
         },
         {
-            "type":"fullsc",
+            "type":"stretch",
             "id": "test",
             "img": "assets/x",
-            "url": "#",
-            "desc": "desc"
+            "url": "#"
         }
     ]
 }
