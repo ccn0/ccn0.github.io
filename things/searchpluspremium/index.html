@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.9 -->
+<!-- made by ccn0 | v1.5.10 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -447,6 +447,9 @@
                         flex: 2;
                     }
                 }
+                &.topborder {
+                    border-top: 2px solid var(--hero);
+                }
                 button {
                     flex: 1;
                     display: inline-block;
@@ -463,6 +466,9 @@
                         color: #fff;
                         box-shadow: var(--btnactive) 0 0 0 2px;
                         transform: translateY(2px);
+                    }
+                    &:last-child {
+                        border-left: 1px solid var(--hero);
                     }
                 }
                 &:has(input:hover) button {
@@ -808,146 +814,223 @@
                         </div>
                     </div>
                     <div id="enginelist" class="list"></div>
+                    <div class="toolbar topborder">
+                        <div style="overflow: hidden;">
+                            <button onclick="importDialog()" title="Add New Search Engine">Import</button>
+                        </div>
+                        <div style="overflow: hidden;">
+                            <button onclick="exportDialog()" title="Add New Search Engine">Export</button>
+                        </div>
+                    </div>
                     <script defer="true">
-                        const maincont = document.querySelector("#enginelist")
+    const maincont = document.querySelector("#enginelist")
 
-                        function loadEngines(dat = {}) {
-                            maincont.innerHTML = "";
+    function loadEngines(dat = {}) {
+        maincont.innerHTML = "";
 
-                            let idx = 0;
-                            gbal.settings.searchEngines.forEach(engine => {
-                                const index = idx;
-                                dat = dat;
+        let idx = 0;
+        gbal.settings.searchEngines.forEach(engine => {
+            const index = idx;
+            dat = dat;
 
-                                const itemCont = document.createElement("div");
-                                itemCont.classList.add("engContainer");
-                                itemCont.setAttribute("data-engine", index);
-                                if (index == dat.moved) {
-                                    itemCont.classList.add("moved")
-                                };
+            const itemCont = document.createElement("div");
+            itemCont.classList.add("engContainer");
+            itemCont.setAttribute("data-engine", index);
+            if (index == dat.moved) {
+                itemCont.classList.add("moved")
+            };
 
-                                const toolsCont = document.createElement("div");
-                                toolsCont.classList.add("engToolbar");
+            const toolsCont = document.createElement("div");
+            toolsCont.classList.add("engToolbar");
 
-                                const tbUp = document.createElement("button");
-                                tbUp.classList.add("engButton");
-                                tbUp.style.cssText = "border-right:2px solid var(--hero);";
-                                tbUp.title = "Move Engine Up";
-                                tbUp.textContent = "⇑";
-                                tbUp.addEventListener("click", () => {
-                                    function moveItemUp(arr, i) {
-                                        if (i <= 0) return arr;
-                                        [arr[i], arr[i - 1]] = [arr[i - 1], arr[i]];
-                                        return arr;
-                                    };
-                                    gbal.settings.searchEngines = moveItemUp(gbal.settings.searchEngines,index)
-                                    gbal.save();
-                                    loadEngines({moved:index-1});
-                                });
+            const tbUp = document.createElement("button");
+            tbUp.classList.add("engButton");
+            tbUp.style.cssText = "border-right:2px solid var(--hero);";
+            tbUp.title = "Move Engine Up";
+            tbUp.textContent = "⇑";
+            tbUp.addEventListener("click", () => {
+                function moveItemUp(arr, i) {
+                    if (i <= 0) return arr;
+                    [arr[i], arr[i - 1]] = [arr[i - 1], arr[i]];
+                    return arr;
+                };
+                gbal.settings.searchEngines = moveItemUp(gbal.settings.searchEngines,index)
+                gbal.save();
+                loadEngines({moved:index-1});
+            });
 
-                                const tbDown = document.createElement("button");
-                                tbDown.classList.add("engButton");
-                                tbDown.style.cssText = "border-right:2px solid var(--hero);";
-                                tbDown.title = "Move Engine Down";
-                                tbDown.textContent = "⇓";
-                                tbDown.addEventListener("click", () => {
-                                    function moveItemDown(arr, i) {
-                                        if (i >= arr.length - 1) return arr;
-                                        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
-                                        return arr;
-                                    };
+            const tbDown = document.createElement("button");
+            tbDown.classList.add("engButton");
+            tbDown.style.cssText = "border-right:2px solid var(--hero);";
+            tbDown.title = "Move Engine Down";
+            tbDown.textContent = "⇓";
+            tbDown.addEventListener("click", () => {
+                function moveItemDown(arr, i) {
+                    if (i >= arr.length - 1) return arr;
+                    [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+                    return arr;
+                };
 
-                                    gbal.settings.searchEngines = moveItemDown(gbal.settings.searchEngines,index)
-                                    gbal.save();
-                                    loadEngines({moved:index+1});
-                                });
+                gbal.settings.searchEngines = moveItemDown(gbal.settings.searchEngines,index)
+                gbal.save();
+                loadEngines({moved:index+1});
+            });
 
-                                const tbClose = document.createElement("button");
-                                tbClose.classList.add("engButton","impButton");
-                                tbClose.style.cssText = "border-right:2px solid var(--hero);";
-                                tbClose.title = "Delete Search Engine";
-                                tbClose.textContent = "X";
-                                tbClose.addEventListener("click", () => {
-                                    gbal.settings.searchEngines = gbal.settings.searchEngines.filter(engin => engin !== gbal.settings.searchEngines[index]);
-                                    gbal.save();
-                                    loadEngines();
-                                });
+            const tbClose = document.createElement("button");
+            tbClose.classList.add("engButton","impButton");
+            tbClose.style.cssText = "border-right:2px solid var(--hero);";
+            tbClose.title = "Delete Search Engine";
+            tbClose.textContent = "X";
+            tbClose.addEventListener("click", () => {
+                gbal.settings.searchEngines = gbal.settings.searchEngines.filter(engin => engin !== gbal.settings.searchEngines[index]);
+                gbal.save();
+                loadEngines();
+            });
 
-                                const tbUpCont = document.createElement("div");
-                                tbUpCont.classList.add("engBtnCont");
-                                tbUpCont.appendChild(tbUp);
-                                const tbXCont = document.createElement("div");
-                                tbXCont.classList.add("engBtnCont");
-                                tbXCont.appendChild(tbClose);
-                                const tbDoCont = document.createElement("div");
-                                tbDoCont.classList.add("engBtnCont");
-                                tbDoCont.appendChild(tbDown);
+            const tbUpCont = document.createElement("div");
+            tbUpCont.classList.add("engBtnCont");
+            tbUpCont.appendChild(tbUp);
+            const tbXCont = document.createElement("div");
+            tbXCont.classList.add("engBtnCont");
+            tbXCont.appendChild(tbClose);
+            const tbDoCont = document.createElement("div");
+            tbDoCont.classList.add("engBtnCont");
+            tbDoCont.appendChild(tbDown);
 
-                                toolsCont.appendChild(tbUpCont);
-                                toolsCont.appendChild(tbXCont);
-                                toolsCont.appendChild(tbDoCont);
+            toolsCont.appendChild(tbUpCont);
+            toolsCont.appendChild(tbXCont);
+            toolsCont.appendChild(tbDoCont);
 
-                                itemCont.appendChild(toolsCont);
+            itemCont.appendChild(toolsCont);
 
-                                const inputsCont = document.createElement("div");
-                                inputsCont.classList.add("engList")
+            const inputsCont = document.createElement("div");
+            inputsCont.classList.add("engList")
 
-                                const urlinput = document.createElement("input");
-                                urlinput.classList.add("engInput");
-                                urlinput.style.cssText = "border-bottom:1px solid var(--hero);";
-                                urlinput.title = "URL, %s is query";
-                                urlinput.placeholder = "URL where %s is the query";
-                                urlinput.value = engine.url;
-                                urlinput.addEventListener("change", (e) => {
-                                    gbal.settings.searchEngines[index].url = e.target.value;
-                                    gbal.save();
-                                });
+            const urlinput = document.createElement("input");
+            urlinput.classList.add("engInput");
+            urlinput.style.cssText = "border-bottom:1px solid var(--hero);";
+            urlinput.title = "URL, %s is query";
+            urlinput.placeholder = "URL where %s is the query";
+            urlinput.value = engine.url;
+            urlinput.addEventListener("change", (e) => {
+                gbal.settings.searchEngines[index].url = e.target.value;
+                gbal.save();
+            });
 
-                                inputsCont.appendChild(urlinput);
+            inputsCont.appendChild(urlinput);
 
-                                const symbput = document.createElement("input");
-                                symbput.classList.add("engInput");
-                                symbput.style.cssText = "border-top:1px solid var(--hero);";
-                                symbput.title = "Symbol, specifies engine";
-                                symbput.placeholder = "Symbol, e.g '<symbol> query'";
-                                symbput.value = engine.symbol;
-                                symbput.addEventListener("change", (e) => {
-                                    symbput.value = symbput.value.replace(/\s/g,"_");
-                                    gbal.settings.searchEngines[index].symbol = e.target.value.replace(/\s/g,"_");
-                                    gbal.save();
-                                });
+            const symbput = document.createElement("input");
+            symbput.classList.add("engInput");
+            symbput.style.cssText = "border-top:1px solid var(--hero);";
+            symbput.title = "Symbol, specifies engine";
+            symbput.placeholder = "Symbol, e.g '<symbol> query'";
+            symbput.value = engine.symbol;
+            symbput.addEventListener("change", (e) => {
+                symbput.value = symbput.value.replace(/\s/g,"_");
+                gbal.settings.searchEngines[index].symbol = e.target.value.replace(/\s/g,"_");
+                gbal.save();
+            });
 
-                                inputsCont.appendChild(symbput);
+            inputsCont.appendChild(symbput);
 
-                                itemCont.appendChild(inputsCont);
-                                maincont.appendChild(itemCont)
-                                idx++;
-                            });
-                            
-                            const newCont = document.createElement("div");
-                            newCont.classList.add("engContainer");
-                            newCont.style.cssText = "margin-bottom:2px;";
+            itemCont.appendChild(inputsCont);
+            maincont.appendChild(itemCont)
+            idx++;
+        });
+        
+        const newCont = document.createElement("div");
+        newCont.classList.add("engContainer");
+        newCont.style.cssText = "margin-bottom:2px;";
 
-                            const newBtn = document.createElement("button");
-                            newBtn.textContent = "Add New";
-                            newBtn.addEventListener("click",addNew);
-                            
-                            newCont.appendChild(newBtn);
-                            maincont.appendChild(newCont);
-                        };
+        const newBtn = document.createElement("button");
+        newBtn.textContent = "Add New";
+        newBtn.addEventListener("click",addNew);
+        
+        newCont.appendChild(newBtn);
+        maincont.appendChild(newCont);
+    };
 
-                        function addNew() {
-                            const brandNew = {
-                                url: "",
-                                symbol: ""
-                            };
+    function addNew() {
+        const brandNew = {
+            url: "",
+            symbol: ""
+        };
 
-                            gbal.settings.searchEngines.push(brandNew);
-                            loadEngines({moved: gbal.settings.searchEngines.length-1});
-                            const engineList = document.querySelector("#enginelist");
-                            engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
-                        };
-                        loadEngines();
+        gbal.settings.searchEngines.push(brandNew);
+        loadEngines({moved: gbal.settings.searchEngines.length-1});
+        const engineList = document.querySelector("#enginelist");
+        engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
+    };
+    loadEngines();
+
+    function importDialog() {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'application/json';
+
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        gbal.settings.searchEngines.push(...JSON.parse(e.target.result).searchEngines);
+                        loadEngines({moved: gbal.settings.searchEngines.length-1});
+                        const engineList = document.querySelector("#enginelist");
+                        engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
+                        gbal.save();
+                    } catch (error) {
+                        alert("This is not valid JSON.");
+                        console.error(error);
+                    };
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        fileInput.click();
+    }
+
+    function exportDialog() {
+        var blob = new Blob([localStorage.spp_settings], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = "myEngines.spp.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function urlImport() {
+        const url = params.get("import");
+        if (!confirm(`Do you want to import engines from "${url}"?`)) return;
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(json => {
+                try {
+                    gbal.settings.searchEngines.push(...json.searchEngines);
+                    loadEngines({moved: gbal.settings.searchEngines.length-1});
+                    const engineList = document.querySelector("#enginelist");
+                    engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
+                    gbal.save();
+                } catch (error) {
+                    alert("This is not valid JSON.");
+                    console.error(error);
+                };
+                history.replaceState(1, null, window.location.href.replace(/\??&?import=\w*\.json/g, ''));
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Failed to fetch engine list");
+            });
+    }
+    if (params.get("import")) {
+        urlImport();
+    }
                     </script>
                 </div>
             </div>
