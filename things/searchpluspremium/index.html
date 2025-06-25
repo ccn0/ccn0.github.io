@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.15 -->
+<!-- made by ccn0 | v1.5.16 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +18,7 @@
     <link rel="search" type="application/opensearchdescription+xml" title="SearchPlusPREMIUM" href="/things/searchpluspremium/opensearch.xml">
     <script defer="true">
         const defaultData = {
+            autofocusNew: false,
             searchEngines: [
                 {
                     url: "https://www.google.com/search?q=%s",
@@ -764,16 +765,16 @@
                     </summary>
                     <p>
                         SHARE EVERYWHERE!!!
-                        <a target="_blank" href="https://twitter.com/intent/tweet?text=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW%20https://ccn0.net/things/searchpluspremium/index.html">Share to Twitter</a>
-                        <a href="https://www.reddit.com/submit?url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share on Reddit</a>
-                        <a href="mailto:?subject=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW&body=Check%20this%20out%20https://ccn0.net/things/searchpluspremium/index.html" target="_blank">Share via Email</a>
-                        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER%2C%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share on LinkedIn</a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://ccn0.net/things/searchpluspremium/index.html" target="_blank">Share on Facebook</a>
-                        <a href="https://www.tumblr.com/share/link?url=https://ccn0.net/things/searchpluspremium/index.html&name=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share on Tumblr</a>
-                        <a href="javascript:navigator.clipboard.writeText('https://ccn0.net/things/searchpluspremium/index.html');">Copy Link</a>
+                        <a target="_blank" href="https://twitter.com/intent/tweet?text=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW%20https://ccn0.net/things/searchpluspremium/index.html">Share&nbsp;to&nbsp;Twitter</a>
+                        <a href="https://www.reddit.com/submit?url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;Reddit</a>
+                        <a href="mailto:?subject=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW&body=Check%20this%20out%20https://ccn0.net/things/searchpluspremium/index.html" target="_blank">Share&nbsp;via&nbsp;Email</a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER%2C%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;LinkedIn</a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://ccn0.net/things/searchpluspremium/index.html" target="_blank">Share&nbsp;on&nbsp;Facebook</a>
+                        <a href="https://www.tumblr.com/share/link?url=https://ccn0.net/things/searchpluspremium/index.html&name=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;Tumblr</a>
+                        <a href="javascript:navigator.clipboard.writeText('https://ccn0.net/things/searchpluspremium/index.html');">Copy&nbsp;Link</a>
                     </p>
                     <p>
-                        <a href="#" id="resetButton" title="Reset all settings to defaults">RESET ALL SETTINGS</a>
+                        <a href="#" id="resetButton" title="Reset all settings to defaults">RESET&nbsp;ALL&nbsp;SETTINGS</a>
                         <script defer="true">
                             document.querySelector("#resetButton").addEventListener("click",()=>{
                                 if (confirm("Are you absolutely sure you want to reset your settings back to their defaults?")) {
@@ -962,9 +963,9 @@
 
             itemCont.appendChild(inputsCont);
             maincont.appendChild(itemCont);
-            // if (index == dat.moved) {
-            //     urlinput.focus();
-            // };
+            if (index == dat.moved && gbal.settings.autofocusNew) {
+                urlinput.focus();
+            };
             idx++;
         });
         
