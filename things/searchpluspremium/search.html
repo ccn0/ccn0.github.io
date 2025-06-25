@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.11 -->
+<!-- made by ccn0 | v1.5.12 -->
 <head>
     <title>SearchPlusPREMIUM</title>
     <link rel="icon" href="favicon.png">
@@ -34,7 +34,7 @@
         if (SETTINGS.searchEngines.length !== 0) {
             useSearchEngines();
         } else {
-            changePage("YOU FAILED US!","YOU DONT EVEN HAVE ANY SEARCH ENGINES!")
+            changePage("NO SEARCH ENGINES!","YOU DONT EVEN HAVE ANY SEARCH ENGINES! ADD SOME OR USE THE QUICK ADD BAR")
         };
         function useSearchEngines() {
             let [symbol, ...searchTerm] = query.split(' ');
@@ -78,19 +78,19 @@
                 if (parsedUrl.protocol !== "javascript:") {
                     const currentUrl = location.protocol + "//" + location.host + location.pathname;
                     if (parsedUrl.href.startsWith(currentUrl)) {
-                        changePage("YOU FAILED US!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! A");
+                        changePage("ERROR ERROR!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! A");
                     } else {
                         location = url;
                         console.log(parsedUrl.href);
                     }
                 } else {
-                    changePage("YOU FAILED US!", "TRYING TO USE BOOKMARKLETS EH? USE PROGRAMMABLE NOTEPAD OR SOMETHING!!");
+                    changePage("ERROR ERROR!", "TRYING TO USE BOOKMARKLETS EH? USE PROGRAMMABLE NOTEPAD OR SOMETHING!!");
                 }
             } catch(err) {
                 if (url == "") {
-                    changePage("YOU FAILED US!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! B")
+                    changePage("ERROR ERROR!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! B")
                 } else {
-                    changePage("Bad things have happened!", err)
+                    changePage("ERROR ERROR!", err)
                     console.log(url)
                 }
             }
@@ -123,7 +123,7 @@
         }
     </style>
 </head>
-<body style="background-color: #000000;">
+<body>
     <noscript>
         SearchPlusPREMIUM only works with javascript, thats kinda the whole thing....
     </noscript>

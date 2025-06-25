@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.11 -->
+<!-- made by ccn0 | v1.5.12 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -170,7 +170,7 @@
                     "name": "Tumblr",
                     "url": "https://www.tumblr.com/search/%s",
                     "nicks": [
-                        "the one with the bitchy ceo", "tumbl", "tum"
+                        "tumbl", "tum"
                     ]
                 },
                 {
@@ -264,6 +264,8 @@
             display: flex;
             flex-direction: column;
             background-color: var(--muted);
+            min-height: 100vh;
+            max-height: 100vh;
             h1,
             h2 {
                 margin-top: -2px;
@@ -334,7 +336,7 @@
 
         a {
             color: var(--cyan);
-            &:hover {
+            &:hover,&:focus-within {
                 color: var(--yellow);
             }
             &:active {
@@ -362,13 +364,11 @@
             }
         }
 
-
         form {
             display: flex;
             gap: 8px;
             width: 100%;
             height: 32px;
-
             input {
                 background-color: var(--input);
                 padding-left: 12px;
@@ -378,7 +378,7 @@
                 border-radius: 4px;
                 border: 1px #aaa solid;
                 &[type=search] {
-                    &:hover {
+                    &:hover,&:focus-within {
                         border-color: #444;
                     }
                     &:focus-within {
@@ -408,6 +408,10 @@
             }
         }
 
+        .containercontaineryupyup {
+            flex: 1;
+        }
+
         .container {
             background: var(--dark);
             border-radius: 12px;
@@ -422,7 +426,7 @@
                 cursor: pointer;
                 border: none;
                 padding: 0!important;
-                &:hover {
+                &:hover,&:focus-within {
                     background-color: var(--btnhover);
                 }
                 &:active {
@@ -458,7 +462,7 @@
                     height: 32px;
                     background: var(--btn);
                     border-right: 1px solid var(--hero);
-                    &:hover {
+                    &:hover,&:focus-within {
                         background-color: var(--btnhover);
                     }
                     &:active {
@@ -492,11 +496,11 @@
             }
             .list {
                 overflow-y: auto;
-                height: calc(80vh - 34px);
+                height: calc(82vh - 34px);
                 padding: 0;
                 scrollbar-width: thin;
                 scrollbar-color: var(--hero) var(--dark);
-                border-top: 2px solid var(--hero);
+                border-bottom: 2px solid var(--hero);
             }
         }
 
@@ -592,6 +596,20 @@
                 animation: moveda 2s forwards;
             }
         }
+        .oh {
+            overflow: hidden;
+        }
+        .qab {
+            background-color: var(--input);
+            flex: 1;
+            border: 2px #aaa solid;
+            &:hover,&:focus-within {
+                border-color: #444;
+            }
+            &:focus-within {
+                background-color: #fff;
+            }
+        }
 
         @keyframes moveda {
             from {
@@ -648,13 +666,6 @@
                     <a href="https://bsky.app/profile/ccn0.net">made by ccn0</a>
                     <a href="#settcol">settings</a>
                 </div>
-                <script>
-                    const params = new URLSearchParams(window.location.search);
-                    const query = params.get("q");
-                    if (query != null) {
-                        document.querySelector("#q").value = query;
-                    };
-                </script>
             </div>
         </div>
         <div class="col c3" id="textcol">
@@ -782,48 +793,60 @@
             <div style="padding: 15px;">
                 <h1>Settings</h1>
             </div>
-            <div>
+            <div class="containercontaineryupyup">
                 <div class="container">
-                    <div class="toolbar">
-                        <div style="overflow: hidden;">
+                    <div id="enginelist" class="list" role="list"></div>
+                    <div class="toolbar" role="toolbar">
+                        <div class="oh">
                             <button onclick="addNew()" title="Add New Search Engine">Add New</button>
                         </div>
-                        <div style="overflow: hidden;">
-                            <input type="text" title="Quick Add Search Engine" placeholder="Quick Add" id="qainput">
-                            <script defer="true">
-                                const qainput = document.querySelector("#qainput");
-                                qainput.addEventListener("keydown",e=>{
-                                    if (e.key == "Enter") {
-                                        gbal.thelist.forEach((engine)=>{
-                                            if ((engine.nicks.includes(qainput.value.toLowerCase()) || 
-                                                qainput.value.toLowerCase() == engine.name.toLowerCase())) {
-                                                gbal.settings.searchEngines.push({
-                                                    "url":engine.url,
-                                                    "symbol":engine.nicks[engine.nicks.length-1]
-                                                });
-                                                gbal.save();
-                                                loadEngines({moved: gbal.settings.searchEngines.length-1});
-                                                const engineList = document.querySelector("#enginelist");
-                                                engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
-                                                return;
-                                            };
-                                        });
-                                    };
-                                });
-                            </script>
+                        <div class="oh">
+                            <input type="text" aria-label="Quick Add Bar" title="Quick Add Search Engine" placeholder="Quick Add" id="qainput">
                         </div>
                     </div>
-                    <div id="enginelist" class="list"></div>
-                    <div class="toolbar topborder">
-                        <div style="overflow: hidden;">
-                            <button onclick="importDialog()" title="Add New Search Engine">Import</button>
+                    <div class="toolbar topborder" role="toolbar">
+                        <div class="oh">
+                            <button onclick="importDialog()" title="Import Search Engines from JSON">Import...</button>
                         </div>
-                        <div style="overflow: hidden;">
-                            <button onclick="exportDialog()" title="Add New Search Engine">Export</button>
+                        <div class="oh">
+                            <button onclick="exportDialog()" title="Export Search Engines as JSON">Export...</button>
                         </div>
                     </div>
-                    <script defer="true">
-    const maincont = document.querySelector("#enginelist")
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const query = params.get("q");
+        if (query != null) {
+            document.querySelector("#q").value = query;
+        };
+    </script>
+    <script defer="true">
+    function QA(e,qainput) {
+        if (e.key == "Enter") {
+            gbal.thelist.forEach((engine)=>{
+                if ((engine.nicks.includes(qainput.value.toLowerCase()) || 
+                    qainput.value.toLowerCase() == engine.name.toLowerCase())) {
+                    gbal.settings.searchEngines.push({
+                        "url":engine.url,
+                        "symbol":engine.nicks[engine.nicks.length-1]
+                    });
+                    gbal.save();
+                    loadEngines({moved: gbal.settings.searchEngines.length-1});
+                    const engineList = document.querySelector("#enginelist");
+                    engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
+                    return;
+                };
+            });
+        };
+    };
+    const qainputtop = document.querySelector("#qainput");
+    qainputtop.addEventListener("keydown",e=>QA(e,qainputtop));
+    </script>
+    <script defer="true">
+    const maincont = document.querySelector("#enginelist");
 
     function loadEngines(dat = {}) {
         maincont.innerHTML = "";
@@ -834,10 +857,11 @@
             dat = dat;
 
             const itemCont = document.createElement("div");
+            itemCont.role = "listitem";
             itemCont.classList.add("engContainer");
             itemCont.setAttribute("data-engine", index);
             if (index == dat.moved) {
-                itemCont.classList.add("moved")
+                itemCont.classList.add("moved");
             };
 
             const toolsCont = document.createElement("div");
@@ -847,6 +871,7 @@
             tbUp.classList.add("engButton");
             tbUp.style.cssText = "border-right:2px solid var(--hero);";
             tbUp.title = "Move Engine Up";
+            tbUp.ariaLabel = "Move engine up";
             tbUp.textContent = "⇑";
             tbUp.addEventListener("click", () => {
                 function moveItemUp(arr, i) {
@@ -863,6 +888,7 @@
             tbDown.classList.add("engButton");
             tbDown.style.cssText = "border-right:2px solid var(--hero);";
             tbDown.title = "Move Engine Down";
+            tbDown.ariaLabel = "Move engine down";
             tbDown.textContent = "⇓";
             tbDown.addEventListener("click", () => {
                 function moveItemDown(arr, i) {
@@ -876,12 +902,13 @@
                 loadEngines({moved:index+1});
             });
 
-            const tbClose = document.createElement("button");
-            tbClose.classList.add("engButton","impButton");
-            tbClose.style.cssText = "border-right:2px solid var(--hero);";
-            tbClose.title = "Delete Search Engine";
-            tbClose.textContent = "X";
-            tbClose.addEventListener("click", () => {
+            const tbDelete = document.createElement("button");
+            tbDelete.classList.add("engButton","impButton");
+            tbDelete.style.cssText = "border-right:2px solid var(--hero);";
+            tbDelete.title = "Delete Search Engine";
+            tbDelete.ariaLabel = "Delete search engine";
+            tbDelete.textContent = "X";
+            tbDelete.addEventListener("click", () => {
                 gbal.settings.searchEngines = gbal.settings.searchEngines.filter(engin => engin !== gbal.settings.searchEngines[index]);
                 gbal.save();
                 loadEngines();
@@ -892,7 +919,7 @@
             tbUpCont.appendChild(tbUp);
             const tbXCont = document.createElement("div");
             tbXCont.classList.add("engBtnCont");
-            tbXCont.appendChild(tbClose);
+            tbXCont.appendChild(tbDelete);
             const tbDoCont = document.createElement("div");
             tbDoCont.classList.add("engBtnCont");
             tbDoCont.appendChild(tbDown);
@@ -934,28 +961,48 @@
             inputsCont.appendChild(symbput);
 
             itemCont.appendChild(inputsCont);
-            maincont.appendChild(itemCont)
+            maincont.appendChild(itemCont);
+            // if (index == dat.moved) {
+            //     urlinput.focus();
+            // };
             idx++;
         });
         
         const newCont = document.createElement("div");
         newCont.classList.add("engContainer");
-        newCont.style.cssText = "margin-bottom:2px;";
+        newCont.style.cssText = "height:40px;";
 
         const newBtn = document.createElement("button");
+        newBtn.title = "Add New Search Engine";
         newBtn.textContent = "Add New";
         newBtn.addEventListener("click",addNew);
         
         newCont.appendChild(newBtn);
-        maincont.appendChild(newCont);
+        
+        const qabCont = document.createElement("div");
+        qabCont.classList.add("engContainer");
+        qabCont.style.cssText = "height:40px;border-width:1px;";
+
+        const qabInput = document.createElement("input");
+        qabInput.ariaLabel = "Quick Add Bar";
+        qabInput.title = "Quick Add Search Engine";
+        qabInput.placeholder = "Quick Add";
+        qabInput.classList.add("qab");
+        qabInput.addEventListener("keydown",e=>QA(e,qabInput));
+        
+        qabCont.appendChild(qabInput);
+
+        if (gbal.settings.searchEngines.length == 600) {
+            maincont.appendChild(newCont);
+            maincont.appendChild(qabCont);
+        };
     };
 
     function addNew() {
         const brandNew = {
-            url: "",
+            url: "https://",
             symbol: ""
         };
-
         gbal.settings.searchEngines.push(brandNew);
         loadEngines({moved: gbal.settings.searchEngines.length-1});
         const engineList = document.querySelector("#enginelist");
@@ -985,7 +1032,7 @@
                     };
                 };
                 reader.readAsText(file);
-            }
+            };
         });
 
         fileInput.click();
@@ -1002,7 +1049,7 @@
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-    }
+    };
 
     function urlImport() {
         const url = params.get("import");
@@ -1027,15 +1074,15 @@
                 console.error(error);
                 alert("Failed to fetch engine list");
             });
-    }
+    };
     if (params.get("import")) {
         urlImport();
-    }
-                    </script>
-                </div>
-            </div>
-        </div>
-    </div>
+    };
+
+    if (location.hostname == "127.0.0.1") {
+        document.querySelector("figure>img").style.cssText = "filter:sepia(1) saturate(100);";
+    };
+    </script>
 </body>
 
 </html>
