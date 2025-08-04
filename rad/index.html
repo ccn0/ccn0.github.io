@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v5.2 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v5.3 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,18 +110,21 @@
             })
         
         function displayRad() {
-            const trulyRunning = promosData.promos.filter(item => promosData.running.includes(item.id));
-            const radToShow = trulyRunning[randomInteger(0, trulyRunning.length - 1)];
+            const pickedRad = promosData.running[randomInteger(0, promosData.running.length - 1)];
+            const radToShow = promosData.promos[pickedRad];
 
             const newCSS = document.createElement("style");
             newCSS.textContent = radToShow.css || "";
             document.head.appendChild(newCSS);
 
-            document.getElementById('adBox').href = radToShow.url;
-            document.getElementById('adBox').title = `${radToShow.title} (Ad)`;
-            document.getElementById('sphoto').src = radToShow.img;
-            document.getElementById('sphoto').alt = `${radToShow.alt} (Ad)`;
-            document.getElementById('sphoto').setAttribute("data-type",radToShow.type);
+            const adbox = document.getElementById('adBox');
+            const sphoto = document.getElementById('sphoto');
+
+            adbox.href = radToShow.url || "#failure";
+            adbox.title = `${radToShow.title} (Ad)` || "rAdBOX (Ad)";
+            sphoto.src = radToShow.img;
+            sphoto.alt = `${radToShow.alt} (Ad)` || `${adbox.href} (Ad)`;
+            sphoto.setAttribute("data-type",radToShow.type);
         };
         function getSite() {
             const approvedSites = ["ccn0.net", "blog.ccn0.net", "127.0.0.1"];

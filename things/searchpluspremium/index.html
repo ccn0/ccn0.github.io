@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.16 -->
+<!-- made by ccn0 | v1.5.17 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SearchPlusPREMIUM</title>
     <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
     <meta name="theme-color" content="#008000" data-react-helmet="true">
     <meta name="og:title" content="SearchPlusPREMIUM">
     <meta property="og:description" content="The only search engine that brings you exactly where you wanna go.">
@@ -198,449 +199,6 @@
             ],
         };
     </script>
-    <style>
-        :root {
-            --hero: #008000;
-            --dark: #003200;
-            --muted: #034e03;
-            --superdark: #021f02;
-            --alt: #3b7c32;
-            --btn: #97d180;
-            --btnhover: #e2ffbe;
-            --btnactive: #102e10;
-            --input: #f3f3f3;
-            --red: #ff1100;
-            --green: #0dff00;
-            --blue: #0015ff;
-            --magenta: #ff56e8;
-            --yellow: #ffd000;
-            --cyan: #23deff;
-        }
-        html {
-            scrollbar-color:  var(--alt) var(--dark);
-        }
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: var(--dark);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        .content {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-        }
-
-        .col {
-            display: flex;
-            flex: 1;
-            min-height: 100vh;
-            flex-wrap: wrap;
-            flex-direction: row;
-            width: 100%;
-        }
-
-        .elem {
-            display: flex;
-            flex-direction: column;
-            background-color: #0000;
-            color: #fff;
-            width: 100%;
-            padding: 15px;
-        }
-
-        .c1 {
-            background-color: var(--superdark);
-            height: auto;
-            h1 {
-                text-align: center;
-            }
-        }
-
-        .c2 {
-            display: flex;
-            flex-direction: column;
-            background-color: var(--muted);
-            min-height: 100vh;
-            max-height: 100vh;
-            h1,
-            h2 {
-                margin-top: -2px;
-                margin-bottom: -8px;
-                color: #fff;
-                text-align: center;
-            }
-            div {
-                padding: 15px;
-                &>div {
-                    padding: 0;
-                }
-            }
-        }
-
-        .c3 {
-            background-color: var(--dark);
-            div {
-                padding: 15px;
-                color: #fff;
-                max-width: 100%;
-                overflow: hidden;
-            }
-            code {
-                background-color: #000;
-                cursor: alias;
-                user-select: all;
-            }
-            details {
-                max-width: 100%;
-                background-color: var(--superdark);
-                border-radius: 12px;
-                padding: 15px;
-                code {
-                    border: 1px solid #fff;
-                }
-            }
-        }
-
-        kbd {
-            display: inline-block;
-            background: #b4d0a9;
-            border: 1px solid var(--hero);
-            color: #000;
-            font-family: Arial, sans-serif;
-            padding: 2px;
-        }
-
-        figure {
-            border: none;
-        }
-
-        img {
-            width: 100%;
-            display: flex;
-            user-select: none   ;
-        }
-
-        summary {
-            font-weight: bold;
-        }
-
-        details {
-            &:not(:last-child) {
-                margin-bottom: 15px;
-            }
-        }
-
-        a {
-            color: var(--cyan);
-            &:hover,&:focus-within {
-                color: var(--yellow);
-            }
-            &:active {
-                color: var(--magenta);
-            }
-        }
-
-        .warnbanner {
-            font-weight: bold;
-            max-width: 100%;
-            background-color: var(--yellow);
-            color: #000;
-            padding: 15px;
-            text-align: center;
-            &::selection {
-                background-color: #000;
-                color: #fff;
-            }
-            a {
-                color: var(--blue);
-
-                &:active {
-                    color: var(--red);
-                }
-            }
-        }
-
-        form {
-            display: flex;
-            gap: 8px;
-            width: 100%;
-            height: 32px;
-            input {
-                background-color: var(--input);
-                padding-left: 12px;
-                font-family: 'Roboto Mono', monospace;
-                transition: all 0.2s;
-                flex: 1;
-                border-radius: 4px;
-                border: 1px #aaa solid;
-                &[type=search] {
-                    &:hover,&:focus-within {
-                        border-color: #444;
-                    }
-                    &:focus-within {
-                        padding-left: 32px;
-                        transform: translateY(-2px);
-                        flex: 3;
-                        background-color: #fff;
-                    }
-                }
-                &[type="submit"] {
-                    padding: 0!important;
-                    color: #fff;
-                    font-weight: bold;
-                    background-color: #0051ff;
-                    cursor: pointer;
-                    border: none;
-                    border-radius: 8px;
-                    &:hover,
-                    :focus-within {
-                        background-color: #187cff;
-                    }
-                    &:active {
-                        background-color: #0013c0;
-                        transform: translateY(2px);
-                    }
-                }
-            }
-        }
-
-        .containercontaineryupyup {
-            flex: 1;
-        }
-
-        .container {
-            background: var(--dark);
-            border-radius: 12px;
-            border: 2px solid var(--hero);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            padding: 0 !important;
-            button {
-                background: var(--btn);
-                flex: 1;
-                cursor: pointer;
-                border: none;
-                padding: 0!important;
-                &:hover,&:focus-within {
-                    background-color: var(--btnhover);
-                }
-                &:active {
-                    background-color: var(--btnactive);
-                    color: #fff;
-                    box-shadow: var(--btnactive) 0 0 0 2px;
-                    transform: translateY(2px);
-                }
-            }
-            .toolbar {
-                flex: 1;
-                background-color: var(--hero);
-                border-bottom: none;
-                overflow: hidden;
-                padding: 0;
-                display: flex;
-                &>div {
-                    display: block;
-                    flex: 1;
-                    transition: 0.2s all;
-                    &:focus-within {
-                        flex: 2;
-                    }
-                }
-                &.topborder {
-                    border-top: 2px solid var(--hero);
-                }
-                button {
-                    flex: 1;
-                    display: inline-block;
-                    width: 100%;
-                    cursor: pointer;
-                    height: 32px;
-                    background: var(--btn);
-                    border-right: 1px solid var(--hero);
-                    &:hover,&:focus-within {
-                        background-color: var(--btnhover);
-                    }
-                    &:active {
-                        background-color: var(--btnactive);
-                        color: #fff;
-                        box-shadow: var(--btnactive) 0 0 0 2px;
-                        transform: translateY(2px);
-                    }
-                    &:last-child {
-                        border-left: 1px solid var(--hero);
-                    }
-                }
-                &:has(input:hover) button {
-                    border-color: #444!important;
-                }
-                input {
-                    transition: background-color 0.2s;
-                    width: 100%;
-                    height: 32px;
-                    border-radius: 0 0 0 0;
-                    border: 2px #aaa solid;
-                    border-left: 1px solid var(--hero);
-                    background-color: var(--input);
-                    &:hover {
-                        border-color: #444;
-                    }
-                    &:focus-within {
-                        background-color: #fff;
-                    }
-                }
-            }
-            .list {
-                overflow-y: auto;
-                height: calc(80vh - 34px);
-                padding: 0;
-                scrollbar-width: thin;
-                scrollbar-color: var(--hero) var(--dark);
-                border-bottom: 2px solid var(--hero);
-            }
-        }
-
-        .engContainer {
-            border-right: 2px solid var(--hero);
-            &:not(:first-child):not(:last-child) {
-                border-top: 1px solid var(--hero);
-                border-bottom: 1px solid var(--hero);
-            }
-            &:last-child {
-                border-top: 1px solid var(--hero);
-                border-bottom: 2px solid var(--hero);
-            }
-            &:first-child {
-                border-top: none;
-                border-bottom: 1px solid var(--hero);
-            }
-            &:only-child {
-                border-top: none;
-                border-bottom: 2px solid var(--hero);
-            }
-            height: 80px;
-            display: flex;
-            &:hover {
-                &>.engToolbar {
-                    width: 48px;
-                }
-            }
-        }
-        .engToolbar {
-            width: 32px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transition: 0.2s all;
-        }
-        .engButton {
-            background: #b4d0a9;
-            flex: 1;
-            cursor: pointer;
-            border: none;
-            overflow: hidden;
-            &:hover {
-                background-color: #f2ffe2;
-            }
-            &:active {
-                background-color: #192c19;
-                color: #fff;
-                box-shadow: #192c19;
-                transform: translateY(2px);
-            }
-        }
-        .engList {
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-            flex-wrap: wrap;
-            &:last-child {
-                border-bottom: none;
-            }
-        }
-        .engInput {
-            transition: 0.2s all;
-            display: flex;
-            flex: 1;
-            border-radius: 0;
-            border:none;
-            background-color: var(--input);
-            &:focus-within {
-                background-color: #fff;
-            }
-        }
-        .engBtnCont {
-            overflow:hidden;display:flex;flex:1;
-            &:first-child {
-                border-bottom: 1px solid var(--hero);
-            }
-            &:not(:first-child):not(:last-child) {
-                border-top: 1px solid var(--hero);
-                border-bottom: 1px solid var(--hero);
-            }
-            &:last-child {
-                border-top: 1px solid var(--hero);
-            }
-        }
-
-        .moved {
-            filter: brightness(110%);
-            border-color: var(--red);
-            animation: moveda 2s forwards;
-            * {
-                border-color: var(--red);
-                animation: moveda 2s forwards;
-            }
-        }
-        .oh {
-            overflow: hidden;
-        }
-        .qab {
-            background-color: var(--input);
-            flex: 1;
-            border: 2px #aaa solid;
-            &:hover,&:focus-within {
-                border-color: #444;
-            }
-            &:focus-within {
-                background-color: #fff;
-            }
-        }
-
-        @keyframes moveda {
-            from {
-                border-color: var(--red);
-                filter: brightness(110%);
-            }
-            to {
-                border-color: var(--hero);
-                filter: brightness(100%);
-            }
-        }
-
-        @media (max-width: 500px) {
-            .content {
-                flex-direction: column;
-            }
-            .col {
-                min-height: auto;
-                flex: 1;
-            }
-            .c2 {
-                min-height: 100vh;
-            }
-            .engContainer:has(input:focus-within) {
-                &>.engToolbar {
-                    width: 48px;
-                }
-            }
-        }
-    </style>
 </head>
 <body>
     <noscript>
@@ -659,9 +217,14 @@
                     </figcaption>
                 </figure>
                 <form action="search.html">
-                    <input type="search" placeholder="search here" name="q" id="q" title="Search Here" autofocus aria-label="Search Query here"
-                        required>
-                    <input type="submit" value="TAKE ME" title="Submit" aria-label="Submit query and go">
+                    <input type="search"
+                    placeholder="search here"
+                    name="q" id="q"
+                    title="Search Here"
+                    aria-label="Search Query here"
+                    autofocus
+                    required>
+                    <input type="submit" value="TAKE ME" title="Submit query" aria-label="Submit query and go">
                 </form>
                 <div style="text-align: center; padding: 10px 0;">
                     <a href="https://bsky.app/profile/ccn0.net">made by ccn0</a>
@@ -674,10 +237,10 @@
                 <details>
                     <summary>About:</summary>
                     <p>Instead of relying on your browsers search "keywords,"
-                        you can instead use SearchPlusPREMIUM, which despite the name sounding like otherwise, is actually free.
-                        You can add it as a search engine by using the URL,
-                        <code>https://ccn0.net/things/searchpluspremium/search.html?q=%s</code>,
-                        or if your using Firefox, click on the search bar while on this page and click the little icon with the green plus.
+you can instead use SearchPlusPREMIUM, which despite the name sounding like otherwise, is actually free.
+You can add it as a search engine by using the URL,
+<code>https://ccn0.net/things/searchpluspremium/search.html?q=%s</code>,
+or if your using Firefox, click on the search bar while on this page and click the little icon with the green plus.
                     </p>
                 </details>
                 <details>
@@ -1001,7 +564,7 @@
 
     function addNew() {
         const brandNew = {
-            url: "https://",
+            url: "",
             symbol: ""
         };
         gbal.settings.searchEngines.push(brandNew);
@@ -1053,7 +616,7 @@
     };
 
     function urlImport() {
-        const url = params.get("import");
+        const url = params.get("importExternal");
         if (!confirm(`Do you want to import engines from "${url}"?`)) return;
         
         fetch(url)
@@ -1076,7 +639,7 @@
                 alert("Failed to fetch engine list");
             });
     };
-    if (params.get("import")) {
+    if (params.get("importExternal")) {
         urlImport();
     };
 

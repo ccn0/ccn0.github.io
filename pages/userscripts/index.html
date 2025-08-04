@@ -1,15 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>
-        location.href = "https://github.com/ccn0/userscripts"
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ccn0 / redirecting to Userscripts</title>
+    <title>CCN0's Userscripts</title>
+    <style>
+    body {
+        background-color: #000;
+        color: #fff;
+        margin: 0;
+        font-family: 'Source Code Pro', 'Roboto Mono', monospace;
+    }
+    a {
+        text-decoration:none;
+        color:#0ff;
+        &:hover {
+            color:#ff0;
+            text-decoration: underline;
+        }
+        &:active {
+            color:#f0f;
+        }
+    }
+    .topnav {
+        height: 24px;
+        background-color: #000;
+        display: flex;
+        a {
+            flex: 1;
+            align-content: center;
+            text-align: center;
+        }
+    }
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+    }
+    .itembox {
+        flex: 1 1 50%;
+        min-width: 50%;
+        box-sizing: border-box;
+        max-width: 100%;
+        border: 2px solid #fff;
+        padding:16px;
+        h2 {
+            margin-left:32px;
+        }
+        .links {
+            margin-left: 64px;
+            display: block;
+            a {
+                margin-right: 8px;
+            }
+        }
+    }
+
+    @media (max-width: 500px) {
+        .itembox {
+            flex: 1 0 100%;
+        }
+    }
+    </style>
 </head>
 <body>
-    redirecting
-    <a href="https://github.com/ccn0/userscripts">not working?</a>
+    <div class="topnav">
+        <a href="https://ccn0.net" title="back to my website">CCN0.net</a>
+        <a href="https://greasyfork.org/en/users/1425599-ccn0" title="ccn0's greasyfork page">Greasyfork</a>
+        <a href="https://bsky.app/profile/ccn0.net" title="ccn0's bluesky">bluesky</a>
+    </div>
+    <div class="content">
+        <noscript>Wanna know why this page is dynamic? Because you need JavaScript enabled.</noscript>
+    </div>
+    <script>
+        const USEMPOR = {
+            getUSVersion: async function(url) {
+                const response = await fetch(url);
+                const text = await response.text();
+                const versionMatch = text.match(/@version\s+([^\s]+)/);
+                return versionMatch ? versionMatch[1] : null;
+            },
+            userscripts:[
+                {
+                    name:"YouTube Helper",
+                    links:{
+                        source:"https://github.com/ccn0/userscripts/",
+                        greasyfork:"https://greasyfork.org/en/scripts/524370-youtube-helper",
+                        githubraw:"https://raw.githubusercontent.com/ccn0/userscripts/main/scripts/youtubehelper.user.js",
+                    },
+                    description:{
+                        html:"A bunch of quality of life changes to YouTube.<ul><li>Makes player have sharp corners</li><li>Removes the Thanks, Voice search, and Join buttons</li><li>Removes the referral token in links</li><li>Redirects from shorts player to normal player</li><li>Sharing a video doesn't have the token</li><li>Removes the Shorts and Playables shelves</li><li>Removes hashtags at the top of description</li><li>Hides infocards section</li><li>Makes notification badge white on red</li><li>Hides the amount of unread notifications in tab title</li><li>Hides Mixes from recommended</li></ul>"
+                    }
+                },
+                {
+                    name:"Max Max",
+                    links:{
+                        source:"https://github.com/ccn0/userscripts/",
+                        greasyfork:"https://greasyfork.org/en/scripts/524371-max-max",
+                        githubraw:"https://raw.githubusercontent.com/ccn0/userscripts/main/scripts/maxmax.user.js",
+                    },
+                    description:{
+                        html:"Quality of life changes in HBO Max <ul> <li>Removes gradients</li> <li>Automatically skips intro</li> <li>Makes GUI more transparent</li> <li>Moves player UI a little bit</li> </ul>"
+                    }
+                },
+                {
+                    name:"No Round Corners",
+                    links:{
+                        source:"https://github.com/ccn0/userscripts/",
+                        greasyfork:"https://greasyfork.org/en/scripts/524369-no-round-corners",
+                        githubraw:"https://raw.githubusercontent.com/ccn0/userscripts/main/scripts/noroundcorners.user.js",
+                    },
+                    description:{
+                        html:"No round corners, ever. Styles elements to remove any rounded corners"
+                    }
+                },
+                {
+                    name:"Mail.com Helper",
+                    links:{
+                        source:"https://github.com/ccn0/userscripts/",
+                        greasyfork:"https://greasyfork.org/en/scripts/524368-mail-com-helper",
+                        githubraw:"https://raw.githubusercontent.com/ccn0/userscripts/main/scripts/mailcomhelper.user.js",
+                    },
+                    description:{
+                        html:"Quality of Life changes to Mail.com"
+                    }
+                },
+                {
+                    name:"Spookify",
+                    links:{
+                        source:"https://github.com/ccn0/userscripts/",
+                        greasyfork:"https://greasyfork.org/en/scripts/524367-spookify",
+                        githubraw:"https://raw.githubusercontent.com/ccn0/userscripts/main/scripts/spookify.user.js",
+                    },
+                    description:{
+                        html:"Replaces one random link with a screamer"
+                    }
+                },
+                {
+                    name:"Alt Text",
+                    links:{
+                        source:"https://github.com/ccn0/userscripts/",
+                        githubraw:"https://raw.githubusercontent.com/ccn0/userscripts/main/scripts/alttext.user.js"
+                    },
+                    description:{
+                        html:"Hold Alt + Right Click on an image to see its alt text"
+                    }
+                }
+            ]
+        }
+        function loadBoxes() {
+            const container = document.querySelector(".content");
+
+            function createItemBox(usdata = {
+                name: "",
+                urls: {},
+                description: {
+                    html:""
+                }
+            }) {
+                // const itemCont = document.createElement("div");
+                // itemCont.classList.add("itemcont");
+                const itemBox = document.createElement("div");
+                itemBox.classList.add("itembox");
+
+                const nameH2 = document.createElement("h2");
+                USEMPOR.getUSVersion(usdata.links.githubraw).then(version =>{
+                    nameH2.textContent = `${usdata.name} v${version}`;
+                });
+
+                itemBox.appendChild(nameH2);
+
+                const linksCont = document.createElement("div");
+                linksCont.classList.add("links");
+
+                function createLink(data = {
+                    url: "#",
+                    text: "words"
+                }) {
+                    const link = document.createElement("a");
+                    link.href = data.url;
+                    link.textContent = data.text;
+                    return link;
+                };
+
+                if (usdata.links.source) linksCont.appendChild(createLink({url:usdata.links.source,text:"View Source"}));
+                if (usdata.links.greasyfork) linksCont.appendChild(createLink({url:usdata.links.greasyfork,text:"Greasy Fork"}));
+                if (usdata.links.githubraw) linksCont.appendChild(createLink({url:usdata.links.githubraw,text:"Install"}));
+
+                itemBox.appendChild(linksCont);
+
+                const description = document.createElement("p");
+                description.innerHTML = usdata.description.html;
+                itemBox.appendChild(description);
+
+                // itemCont.appendChild(itemBox);
+
+                return itemBox;
+            };
+            
+            container.innerHTML = "";
+            USEMPOR.userscripts.forEach(Us=>{
+                container.appendChild(createItemBox(Us));
+            })
+        };
+
+        loadBoxes();
+    </script> 
 </body>
 </html>
