@@ -36,6 +36,7 @@
         display: flex;
         flex-wrap: wrap;
         align-items: stretch;
+        border: 2px solid #fff;
     }
     .itembox {
         flex: 1 1 50%;
@@ -44,6 +45,15 @@
         max-width: 100%;
         border: 2px solid #fff;
         padding:16px;
+        img {
+            display: inline;
+            image-rendering: pixelated;
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.1em;
+            transform: scale(2);
+            margin-right: 32px;
+        }
         h2 {
             margin-left:32px;
         }
@@ -74,11 +84,17 @@
     </div>
     <script>
         const USEMPOR = {
-            getUSVersion: async function(url) {
+            getUSMetadata: async function(url) {
                 const response = await fetch(url);
                 const text = await response.text();
-                const versionMatch = text.match(/@version\s+([^\s]+)/);
-                return versionMatch ? versionMatch[1] : null;
+                const metadata = {
+                    name: text.match(/@name\s+([^\s]+)/)[1] || null,
+                    namespace: text.match(/@namespace\s+([^\s]+)/)[1] || null,
+                    version: text.match(/@version\s+([^\s]+)/)[1] || null,
+                    description: text.match(/@description\s+([^\s]+)/)[1] || null,
+                    icon: text.match(/@icon\s+([^\s]+)/)[1] || null,
+                }
+                return metadata;
             },
             userscripts:[
                 {
@@ -164,8 +180,8 @@
                 itemBox.classList.add("itembox");
 
                 const nameH2 = document.createElement("h2");
-                USEMPOR.getUSVersion(usdata.links.githubraw).then(version =>{
-                    nameH2.textContent = `${usdata.name} v${version}`;
+                USEMPOR.getUSMetadata(usdata.links.githubraw).then(meta =>{
+                    nameH2.innerHTML = `<img src="${meta.icon}">${usdata.name} v${meta.version}`;
                 });
 
                 itemBox.appendChild(nameH2);
