@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.5.17 -->
+<!-- made by ccn0 | v1.6 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,7 @@
     <link rel="search" type="application/opensearchdescription+xml" title="SearchPlusPREMIUM" href="/things/searchpluspremium/opensearch.xml">
     <script defer="true">
         const defaultData = {
+            darkTheme: false,
             autofocusNew: false,
             searchEngines: [
                 {
@@ -35,18 +36,19 @@
                 },
             ],
         };
-        if (!localStorage.getItem("spp_settings")) {
-            localStorage.setItem(
-                "spp_settings",
-                JSON.stringify(defaultData)
-            );
-        }
+        let settings = JSON.parse(localStorage.getItem("spp_settings")) || {};
+        for (const key in defaultData) {
+            if (!(key in settings)) {
+                settings[key] = defaultData[key];
+            };
+        };
+        localStorage.setItem("spp_settings", JSON.stringify(settings));
         const gbal = {
             settings: JSON.parse(
                 localStorage.getItem("spp_settings") || defaultData
             ),
             save: function () {
-                localStorage.setItem("spp_settings", JSON.stringify(gbal.settings))
+                localStorage.setItem("spp_settings", JSON.stringify(gbal.settings));
             },
             thelist: [
                 {
@@ -199,8 +201,36 @@
             ],
         };
     </script>
+    <script deref="true">
+        gbal.ui = {
+            checkbox: (params = {
+                id: "unk",
+                label: "Label",
+                title: "",
+                value: false,
+            })=>{
+                const uiCont = document.createElement("div");
+                uiCont.classList.add("uicont");
+
+                const label = document.createElement("label");
+                label.textContent = params.label;
+                label.title = params.title;
+                label.htmlFor = params.id;
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = params.value;
+                checkbox.id = params.id;
+                if (params.changeevent) checkbox.addEventListener("change",params.changeevent)
+
+                uiCont.appendChild(label);
+                uiCont.appendChild(checkbox);
+                return [uiCont,checkbox];
+            }
+        }
+    </script>
 </head>
-<body>
+<body data-darktheme="false">
     <noscript>
         <div class="warnbanner">
             SearchPlusPREMIUM requires javascript to function!!!!!
@@ -322,9 +352,9 @@ or if your using Firefox, click on the search bar while on this page and click t
                         </li>
                     </ul>
                 </details>
-                <details>
+                <details id="extrasDetails">
                     <summary>
-                        More Buttons:
+                        Extra Settings and More:
                     </summary>
                     <p>
                         SHARE EVERYWHERE!!!
@@ -338,7 +368,37 @@ or if your using Firefox, click on the search bar while on this page and click t
                     </p>
                     <p>
                         <a href="#" id="resetButton" title="Reset all settings to defaults">RESET&nbsp;ALL&nbsp;SETTINGS</a>
+                        <div id="livesettings"></div>
                         <script defer="true">
+                            const extraContainer = document.querySelector("#extrasDetails");
+                            const setCont = document.querySelector("#livesettings");
+                            extraContainer.addEventListener('toggle',(e)=>{
+                                setCont.innerHTML = "";
+                                if (e.target.open == true) {
+                                    setCont.appendChild(gbal.ui.checkbox({
+                                        label:"Dark Theme",
+                                        title:"Toggle dark mode",
+                                        id:"darktheme",
+                                        value:gbal.settings.darkTheme,
+                                        changeevent:(e)=>{
+                                            gbal.settings.darkTheme = e.target.checked;
+                                            gbal.save();
+                                            document.body.setAttribute("data-darktheme",gbal.settings.darkTheme);
+                                        }
+                                    })[0]);
+                                    setCont.appendChild(gbal.ui.checkbox({
+                                        label:"Autofocus New Engines",
+                                        title:"Autofocus URL Input for new engines",
+                                        id:"autofocusnew",
+                                        value:gbal.settings.autofocusNew,
+                                        changeevent:(e)=>{
+                                            gbal.settings.autofocusNew = e.target.checked;
+                                            gbal.save();
+                                        }
+                                    })[0]);
+                                };
+                            });
+
                             document.querySelector("#resetButton").addEventListener("click",()=>{
                                 if (confirm("Are you absolutely sure you want to reset your settings back to their defaults?")) {
                                     localStorage.setItem(
@@ -355,7 +415,7 @@ or if your using Firefox, click on the search bar while on this page and click t
         </div>
         <div class="col c2" id="settcol">
             <div style="padding: 15px;">
-                <h1>Settings</h1>
+                <h1>Engines</h1>
             </div>
             <div class="containercontaineryupyup">
                 <div class="container">
@@ -646,6 +706,7 @@ or if your using Firefox, click on the search bar while on this page and click t
     if (location.hostname == "127.0.0.1") {
         document.querySelector("figure>img").style.cssText = "filter:sepia(1) saturate(100);";
     };
+    document.body.setAttribute("data-darktheme",gbal.settings.darkTheme);
     </script>
 </body>
 
