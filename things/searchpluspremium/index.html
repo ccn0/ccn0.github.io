@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6 -->
+<!-- made by ccn0 | v1.6.2 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,19 +8,35 @@
     <link rel="icon" href="favicon.png">
     <link rel="stylesheet" href="style.css">
     <meta name="theme-color" content="#008000" data-react-helmet="true">
+    <link rel="canonical" href="https://ccn0.net/things/searchpluspremium/">
     <meta name="og:title" content="SearchPlusPREMIUM">
     <meta property="og:description" content="The only search engine that brings you exactly where you wanna go.">
     <meta property="og:url" content="https://ccn0.net/things/searchpluspremium/index.html">
-    <link rel="canonical" href="https://ccn0.net/things/searchpluspremium/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://ccn0.net/things/searchpluspremium/spp.png">
     <meta name="creator" content="CCN0">
     <meta name="description" content="The only search engine that brings you exactly where you wanna go.">
     <link rel="search" type="application/opensearchdescription+xml" title="SearchPlusPREMIUM" href="/things/searchpluspremium/opensearch.xml">
     <script defer="true">
+        function randomInteger(min, max) {
+            const rmin = min;
+            const rmax = max;
+            const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
+            return targetNumber;
+        };
+        function seed(leng = 0) {
+            let digits = "";
+            const HX = [0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f"]
+            for (let i = 0; i < leng; i++) {
+                digits += String(HX[randomInteger(0,HX.length-1)]);
+            };
+            return digits;
+        };
         const defaultData = {
             darkTheme: false,
             autofocusNew: false,
+            useEnginesParamAllowed: true,
+            magicword: seed(10),
             searchEngines: [
                 {
                     url: "https://www.google.com/search?q=%s",
@@ -225,8 +241,32 @@
 
                 uiCont.appendChild(label);
                 uiCont.appendChild(checkbox);
-                return [uiCont,checkbox];
-            }
+                return uiCont;
+            },
+            iText: (params = {
+                id: "unk",
+                label: "Label",
+                title: "",
+                value: "",
+            })=>{
+                const uiCont = document.createElement("div");
+                uiCont.classList.add("uicont");
+
+                const label = document.createElement("label");
+                label.textContent = params.label;
+                label.title = params.title;
+                label.htmlFor = params.id;
+
+                const input = document.createElement("input");
+                input.type = "text";
+                input.value = params.value;
+                input.id = params.id;
+                if (params.changeevent) input.addEventListener("change",params.changeevent)
+
+                uiCont.appendChild(label);
+                uiCont.appendChild(input);
+                return uiCont;
+            },
         }
     </script>
 </head>
@@ -258,7 +298,7 @@
                 </form>
                 <div style="text-align: center; padding: 10px 0;">
                     <a href="https://bsky.app/profile/ccn0.net">made by ccn0</a>
-                    <a href="#settcol">settings</a>
+                    <a href="#settcol">engines</a>
                 </div>
             </div>
         </div>
@@ -271,6 +311,15 @@ you can instead use SearchPlusPREMIUM, which despite the name sounding like othe
 You can add it as a search engine by using the URL,
 <code>https://ccn0.net/things/searchpluspremium/search.html?q=%s</code>,
 or if your using Firefox, click on the search bar while on this page and click the little icon with the green plus.
+                    </p>
+                    <p>
+                        SHARE EVERYWHERE!!!
+                        <a target="_blank" href="https://twitter.com/intent/tweet?text=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW%20https://ccn0.net/things/searchpluspremium/index.html">Share&nbsp;to&nbsp;Twitter</a>
+                        <a href="https://www.reddit.com/submit?url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;Reddit</a>
+                        <a href="mailto:?subject=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW&body=Check%20this%20out%20https://ccn0.net/things/searchpluspremium/index.html" target="_blank">Share&nbsp;via&nbsp;Email</a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER%2C%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;LinkedIn</a>
+                        <a href="https://www.tumblr.com/share/link?url=https://ccn0.net/things/searchpluspremium/index.html&name=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;Tumblr</a>
+                        <a href="javascript:navigator.clipboard.writeText('https://ccn0.net/things/searchpluspremium/index.html');">Copy&nbsp;Link</a>
                     </p>
                 </details>
                 <details>
@@ -294,6 +343,75 @@ or if your using Firefox, click on the search bar while on this page and click t
                         </li>
                         <a href="#detailsvar" onclick="document.querySelector('#detailsvar').open = true">More Variables</a>
                     </ul>
+                </details>
+                <details id="extrasDetails">
+                    <summary>
+                        Settings:
+                    </summary>
+                    <p>
+                        <a href="#" id="resetButton" title="Reset all settings to defaults">RESET&nbsp;ALL&nbsp;SETTINGS</a>
+                        <div id="livesettings"></div>
+                        <script defer="true">
+                            const extraContainer = document.querySelector("#extrasDetails");
+                            const setCont = document.querySelector("#livesettings");
+                            extraContainer.addEventListener('toggle',(e)=>{
+                                setCont.innerHTML = "";
+                                if (e.target.open == true) {
+                                    setCont.appendChild(gbal.ui.checkbox({
+                                        label:"Dark Theme",
+                                        title:"Toggle dark mode",
+                                        id:"darktheme",
+                                        value:gbal.settings.darkTheme,
+                                        changeevent:(e)=>{
+                                            gbal.settings.darkTheme = e.target.checked;
+                                            gbal.save();
+                                            document.body.setAttribute("data-darktheme",gbal.settings.darkTheme);
+                                        }
+                                    }));
+                                    setCont.appendChild(gbal.ui.checkbox({
+                                        label:"Autofocus New Engines",
+                                        title:"Autofocus URL Input for new engines",
+                                        id:"autofocusnew",
+                                        value:gbal.settings.autofocusNew,
+                                        changeevent:(e)=>{
+                                            gbal.settings.autofocusNew = e.target.checked;
+                                            gbal.save();
+                                        }
+                                    }));
+                                    setCont.appendChild(gbal.ui.checkbox({
+                                        label:"useEngines Parameter Enabled",
+                                        title:"useEngines parameter to use external engines without adding them",
+                                        id:"useenginesparamallowed",
+                                        value:gbal.settings.useEnginesParamAllowed,
+                                        changeevent:(e)=>{
+                                            gbal.settings.useEnginesParamAllowed = e.target.checked;
+                                            gbal.save();
+                                        }
+                                    }));
+                                    setCont.appendChild(gbal.ui.iText({
+                                        label:"Magic Word",
+                                        title:"Set Magic Word to verify useEngines parameter",
+                                        id:"magicword",
+                                        value:gbal.settings.magicword,
+                                        changeevent:(e)=>{
+                                            gbal.settings.magicword = e.target.value;
+                                            gbal.save();
+                                        }
+                                    }));
+                                };
+                            });
+
+                            document.querySelector("#resetButton").addEventListener("click",()=>{
+                                if (confirm("Are you absolutely sure you want to reset your settings back to their defaults?")) {
+                                    localStorage.setItem(
+                                        "spp_settings",
+                                        JSON.stringify(defaultData)
+                                    );
+                                    location.reload();
+                                };
+                            });
+                        </script>
+                    </p>
                 </details>
                 <p>THANK YOU TO:
                     <ul>
@@ -351,65 +469,6 @@ or if your using Firefox, click on the search bar while on this page and click t
                             <code>%ts</code>: Timestamp
                         </li>
                     </ul>
-                </details>
-                <details id="extrasDetails">
-                    <summary>
-                        Extra Settings and More:
-                    </summary>
-                    <p>
-                        SHARE EVERYWHERE!!!
-                        <a target="_blank" href="https://twitter.com/intent/tweet?text=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW%20https://ccn0.net/things/searchpluspremium/index.html">Share&nbsp;to&nbsp;Twitter</a>
-                        <a href="https://www.reddit.com/submit?url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;Reddit</a>
-                        <a href="mailto:?subject=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW&body=Check%20this%20out%20https://ccn0.net/things/searchpluspremium/index.html" target="_blank">Share&nbsp;via&nbsp;Email</a>
-                        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER%2C%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;LinkedIn</a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://ccn0.net/things/searchpluspremium/index.html" target="_blank">Share&nbsp;on&nbsp;Facebook</a>
-                        <a href="https://www.tumblr.com/share/link?url=https://ccn0.net/things/searchpluspremium/index.html&name=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;Tumblr</a>
-                        <a href="javascript:navigator.clipboard.writeText('https://ccn0.net/things/searchpluspremium/index.html');">Copy&nbsp;Link</a>
-                    </p>
-                    <p>
-                        <a href="#" id="resetButton" title="Reset all settings to defaults">RESET&nbsp;ALL&nbsp;SETTINGS</a>
-                        <div id="livesettings"></div>
-                        <script defer="true">
-                            const extraContainer = document.querySelector("#extrasDetails");
-                            const setCont = document.querySelector("#livesettings");
-                            extraContainer.addEventListener('toggle',(e)=>{
-                                setCont.innerHTML = "";
-                                if (e.target.open == true) {
-                                    setCont.appendChild(gbal.ui.checkbox({
-                                        label:"Dark Theme",
-                                        title:"Toggle dark mode",
-                                        id:"darktheme",
-                                        value:gbal.settings.darkTheme,
-                                        changeevent:(e)=>{
-                                            gbal.settings.darkTheme = e.target.checked;
-                                            gbal.save();
-                                            document.body.setAttribute("data-darktheme",gbal.settings.darkTheme);
-                                        }
-                                    })[0]);
-                                    setCont.appendChild(gbal.ui.checkbox({
-                                        label:"Autofocus New Engines",
-                                        title:"Autofocus URL Input for new engines",
-                                        id:"autofocusnew",
-                                        value:gbal.settings.autofocusNew,
-                                        changeevent:(e)=>{
-                                            gbal.settings.autofocusNew = e.target.checked;
-                                            gbal.save();
-                                        }
-                                    })[0]);
-                                };
-                            });
-
-                            document.querySelector("#resetButton").addEventListener("click",()=>{
-                                if (confirm("Are you absolutely sure you want to reset your settings back to their defaults?")) {
-                                    localStorage.setItem(
-                                        "spp_settings",
-                                        JSON.stringify(defaultData)
-                                    );
-                                    location.reload();
-                                };
-                            });
-                        </script>
-                    </p>
                 </details>
             </div> 
         </div>
@@ -558,6 +617,8 @@ or if your using Firefox, click on the search bar while on this page and click t
             inputsCont.classList.add("engList")
 
             const urlinput = document.createElement("input");
+            const symbput = document.createElement("input");
+
             urlinput.classList.add("engInput");
             urlinput.style.cssText = "border-bottom:1px solid var(--hero);";
             urlinput.title = "URL, %s is query";
@@ -567,26 +628,40 @@ or if your using Firefox, click on the search bar while on this page and click t
                 gbal.settings.searchEngines[index].url = e.target.value;
                 gbal.save();
             });
+            urlinput.addEventListener("keydown",(e)=>{
+                if (e.key == "Enter") {
+                    e.preventDefault();
+                    symbput.focus();
+                };
+            });
 
-            inputsCont.appendChild(urlinput);
-
-            const symbput = document.createElement("input");
             symbput.classList.add("engInput");
             symbput.style.cssText = "border-top:1px solid var(--hero);";
             symbput.title = "Symbol, specifies engine";
             symbput.placeholder = "Symbol, e.g '<symbol> query'";
             symbput.value = engine.symbol;
+            if (symbput.value.length == 0 && urlinput.value.length > 0) {
+                symbput.classList.add("wrong");
+            } else {
+                symbput.classList.remove("wrong");
+            };
             symbput.addEventListener("change", (e) => {
+                if (symbput.value.length == 0 && urlinput.value.length > 0) {
+                    symbput.classList.add("wrong");
+                } else {
+                    symbput.classList.remove("wrong");
+                };
                 symbput.value = symbput.value.replace(/\s/g,"_");
                 gbal.settings.searchEngines[index].symbol = e.target.value.replace(/\s/g,"_");
                 gbal.save();
             });
 
+            inputsCont.appendChild(urlinput);
             inputsCont.appendChild(symbput);
 
             itemCont.appendChild(inputsCont);
             maincont.appendChild(itemCont);
-            if (index == dat.moved && gbal.settings.autofocusNew) {
+            if (index == dat.moved && gbal.settings.autofocusNew && dat.brandNew) {
                 urlinput.focus();
             };
             idx++;
@@ -628,7 +703,7 @@ or if your using Firefox, click on the search bar while on this page and click t
             symbol: ""
         };
         gbal.settings.searchEngines.push(brandNew);
-        loadEngines({moved: gbal.settings.searchEngines.length-1});
+        loadEngines({moved: gbal.settings.searchEngines.length-1, brandNew: true});
         const engineList = document.querySelector("#enginelist");
         engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
     };
@@ -663,7 +738,11 @@ or if your using Firefox, click on the search bar while on this page and click t
     }
 
     function exportDialog() {
-        var blob = new Blob([localStorage.spp_settings], { type: 'application/json' });
+        const toSave = {
+            searchEngines: gbal.settings.searchEngines
+        };
+
+        var blob = new Blob([JSON.stringify(toSave)], { type: 'application/json' });
         var url = URL.createObjectURL(blob);
 
         var a = document.createElement('a');

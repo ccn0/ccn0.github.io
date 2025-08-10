@@ -62,6 +62,7 @@ body {
     flex-wrap: wrap;
     flex-direction: row;
     width: 100%;
+    transition: background-color 0.1s;
 }
 
 .elem {
@@ -199,7 +200,7 @@ form {
         flex: 1;
         border-radius: 4px;
         border: 1px #aaa solid;
-        &[type=search] {
+        &[type="search"] {
             min-height: 32px;
             &:hover,&:focus-within {
                 border-color: #444;
@@ -387,15 +388,19 @@ form {
     }
 }
 .engInput {
-    transition: 0.2s all;
+    transition: 0.1s all;
     display: flex;
     flex: 1;
     border-radius: 0;
     border:none;
     background-color: var(--input);
     &:focus-within {
-        background-color: #fff;
+        filter: brightness(1.25);
     }
+}
+.wrong {
+    background-color: var(--red);
+    color: #fff;
 }
 .engBtnCont {
     overflow:hidden;display:flex;flex:1;
@@ -438,7 +443,7 @@ form {
 
 #livesettings {
     border-radius: var(--brdrrds);
-    background-color: var(--alt);
+    background-color: var(--dark);
     padding: 0;
 }
 .uicont {
@@ -448,20 +453,35 @@ form {
 	align-items: center;
 	min-height: 32px;
     label {
+        user-select: none;
         flex: 1;
         height: 100%;
         margin-left: 16px;
+        min-height: 32px;
+        align-content: center;
     }
     input[type="checkbox"] {
         flex: 0;
         height: 32px;
         min-width: 32px;
         cursor: pointer;
+        border-radius: 0 0 0 0;
     }
     input[type="text"] {
         flex: 1;
         height: 28px;
         min-width: 32px;
+        transition: background-color 0.2s;
+        width: 100%;
+        border-radius: 0 0 0 0;
+        border: 2px #aaa solid;
+        background-color: var(--input);
+        &:hover {
+            border-color: #444;
+        }
+        &:focus-within {
+            background-color: #fff;
+        }
     }
 }
 

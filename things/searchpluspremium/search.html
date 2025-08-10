@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6 -->
+<!-- made by ccn0 | v1.6.2 -->
 <head>
     <title>SearchPlusPREMIUM</title>
     <link rel="icon" href="favicon.png">
@@ -16,6 +16,7 @@
         const defaultData = {
             autofocusNew: false,
             darkTheme: false,
+            useEnginesParamAllowed: false,
             searchEngines: [
                 {
                     url: "https://www.google.com/search?q=%s",
@@ -34,14 +35,57 @@
         const SETTINGS = JSON.parse(localStorage.getItem("spp_settings") || JSON.stringify(defaultData));
 
         if (SETTINGS.searchEngines.length !== 0) {
-            useSearchEngines();
+            if (params.get("useEngines") && SETTINGS.useEnginesParamAllowed) {
+                function urlImport() {
+                    const url = params.get("useEngines");
+                    try {
+                        const parsed = new URL(url, location.href);
+                        if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return;
+                    } catch {
+                        console.log("useEngines is NOT a real url");
+                        return;
+                    }
+                    if (params.get("magicword") !== SETTINGS.magicword) {
+                        if (!confirm(`Do you want to use external engines from ${url}?`)) {
+                            console.log("user denied access to external engines");
+                            changePage("CANCELLED!","YOU CANCELLED USE OF EXTERNAL ENGINES");
+                            return;
+                        } else {
+                            console.log("user allowed access to external engines")
+                        };
+                    } else {
+                        console.log("user allowed external engines with magic word");
+                    };
+                    
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(json => {
+                            try {
+                                SETTINGS.searchEngines.push(...json.searchEngines);
+                                useSearchEngines();
+                            } catch (error) {
+                                changePage("ERROR ERROR!","NOT VALID JSON, EXTERNAL ENGINES FAULT");
+                                console.error(error);
+                            };
+                        })
+                        .catch(error => {
+                            changePage("ERROR ERROR!","FAILED TO FETCH LIST");
+                            console.error(error);
+                        });
+                };
+                urlImport();
+            } else {
+                useSearchEngines();
+            }
         } else {
-            changePage("NO SEARCH ENGINES!","YOU DONT EVEN HAVE ANY SEARCH ENGINES! ADD SOME OR USE THE QUICK ADD BAR")
+            changePage("NO SEARCH ENGINES!","YOU DONT EVEN HAVE ANY SEARCH ENGINES! ADD SOME OR USE THE QUICK ADD BAR");
         };
         function useSearchEngines() {
             let [symbol, ...searchTerm] = query.split(' ');
             searchTerm = searchTerm.join(' ');
-            function queryParse(string, defaulting) {
+            function queryParse(string, foundEngine) {
+                if (!foundEngine) searchTerm = query;
+
                 let newString = string;
                 const now = new Date();
 
@@ -64,17 +108,23 @@
             let matched = false;
             for (const engine of SETTINGS.searchEngines) {
                 if (engine.symbol === symbol) {
-                    redirectTo(queryParse(engine.url));
                     matched = true;
+                    redirectTo(queryParse(engine.url, matched));
                     break;
                 };
             };
             if (!matched) {
                 console.log("no matching, defaulting");
-                redirectTo(SETTINGS.searchEngines[0].url.replace(/%s/g, encodeURIComponent(query)));
+                redirectTo(queryParse(SETTINGS.searchEngines[0].url, matched));
             };
         };
         function redirectTo(url) {
+            console.log("attempting redirect to "+url)
+            if (params.get("plsdont") == SETTINGS.magicword) {
+                console.log("user cancelling redirection");
+                changePage("CANCELLED!","IM NOT GONNA REDIRECT ON ACCOUNT OF YOU ASKING NICELY");
+                return;
+            };
             try {
                 const parsedUrl = new URL(url);
                 if (parsedUrl.protocol !== "javascript:") {

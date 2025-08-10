@@ -1,0 +1,12 @@
+{
+    "searchEngines": [
+        {
+            "url": "https://ccn0.net/%s",
+            "symbol": "@ccn0"
+        },
+        {
+            "url": "https://ccn0.net/things/portal",
+            "symbol": "ccnp"
+        }
+    ]
+}
