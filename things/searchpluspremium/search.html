@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6.3 -->
+<!-- made by ccn0 | v1.6.4 -->
 <head>
     <title>SearchPlusPREMIUM</title>
     <link rel="icon" href="favicon.png">
@@ -120,7 +120,7 @@
         };
         function redirectTo(url) {
             console.log("attempting redirect to "+url)
-            if (params.get("plsdont") == SETTINGS.magicword) {
+            if (params.get("plsdont") == SETTINGS.magicword && !!SETTINGS.magicword) {
                 console.log("user cancelling redirection");
                 changePage("CANCELLED!","IM NOT GONNA REDIRECT ON ACCOUNT OF YOU ASKING NICELY");
                 return;
