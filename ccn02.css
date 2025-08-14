@@ -172,6 +172,19 @@ li {
     margin: 5px auto;
 }
 
+/* wiki land */
+
+[data-wiki="1"] {
+    li {
+        max-width: 750px;
+        ul,ol {
+            li {
+                border:none;
+            }
+        }
+    }
+}
+
 /* eventual banner land */
 
 #ccn0banner,.warnbanner {
