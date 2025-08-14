@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6.2 -->
+<!-- made by ccn0 | v1.6.3 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -223,6 +223,7 @@
                 id: "unk",
                 label: "Label",
                 title: "",
+                boxtitle: "",
                 value: false,
             })=>{
                 const uiCont = document.createElement("div");
@@ -236,6 +237,7 @@
                 const checkbox = document.createElement("input");
                 checkbox.type = "checkbox";
                 checkbox.checked = params.value;
+                checkbox.title = params.boxtitle;
                 checkbox.id = params.id;
                 if (params.changeevent) checkbox.addEventListener("change",params.changeevent)
 
@@ -360,6 +362,7 @@ or if your using Firefox, click on the search bar while on this page and click t
                                     setCont.appendChild(gbal.ui.checkbox({
                                         label:"Dark Theme",
                                         title:"Toggle dark mode",
+                                        boxtitle:"Dark mode",
                                         id:"darktheme",
                                         value:gbal.settings.darkTheme,
                                         changeevent:(e)=>{
@@ -371,6 +374,7 @@ or if your using Firefox, click on the search bar while on this page and click t
                                     setCont.appendChild(gbal.ui.checkbox({
                                         label:"Autofocus New Engines",
                                         title:"Autofocus URL Input for new engines",
+                                        boxtitle:"Autofocus New Engines",
                                         id:"autofocusnew",
                                         value:gbal.settings.autofocusNew,
                                         changeevent:(e)=>{
@@ -381,6 +385,7 @@ or if your using Firefox, click on the search bar while on this page and click t
                                     setCont.appendChild(gbal.ui.checkbox({
                                         label:"useEngines Parameter Enabled",
                                         title:"useEngines parameter to use external engines without adding them",
+                                        boxtitle:"useEngines Parameter Enabled",
                                         id:"useenginesparamallowed",
                                         value:gbal.settings.useEnginesParamAllowed,
                                         changeevent:(e)=>{
@@ -478,16 +483,16 @@ or if your using Firefox, click on the search bar while on this page and click t
             </div>
             <div class="containercontaineryupyup">
                 <div class="container">
-                    <div id="enginelist" class="list" role="list"></div>
-                    <div class="toolbar" role="toolbar">
+                    <div id="enginelist" class="list" role="list" aria-label="Engine List"></div>
+                    <div class="toolbar" role="toolbar" aria-label="Adding Engines Toolbar">
                         <div class="oh">
                             <button onclick="addNew()" title="Add New Search Engine">Add New</button>
                         </div>
                         <div class="oh">
-                            <input type="text" aria-label="Quick Add Bar" title="Quick Add Search Engine" placeholder="Quick Add" id="qainput">
+                            <input type="text" aria-label="Quick Add Search Engines" title="Quick Add Search Engine" placeholder="Quick Add" id="qainput">
                         </div>
                     </div>
-                    <div class="toolbar topborder" role="toolbar">
+                    <div class="toolbar topborder" role="toolbar" aria-label="Import/Export Engines Toolbar">
                         <div class="oh">
                             <button onclick="importDialog()" title="Import Search Engines from JSON">Import...</button>
                         </div>
