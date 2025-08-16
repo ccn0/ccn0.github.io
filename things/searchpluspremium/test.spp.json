@@ -1,4 +1,9 @@
 {
+    "meta":{
+        "name":"CCN0 TEST LIST",
+        "namespace":"ccn0",
+        "versionint":0
+    },
     "searchEngines": [
         {
             "url": "https://ccn0.net/%s",

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6.5 -->
+<!-- made by ccn0 | v1.6.6 -->
 <head style="background-color:#000000">
     <title>SearchPlusPREMIUM</title>
     <link rel="icon" href="favicon.png">
@@ -55,11 +55,16 @@
                     const url = params.get("useEngines");
                     try {
                         const parsed = new URL(url, location.href);
-                        if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return;
-                    } catch {
-                        console.log("useEngines is NOT a real url");
+                        if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+                            changePage("ERROR ERROR!", "NOT A URL NOT EVEN TRYING");
+                            console.log("useEngines is NOT a real url");
+                            return;
+                        };
+                    } catch (err) {
+                        changePage("ERROR ERROR!", "FAILED TO EVEN ATTEMPT SETTING UP URL");
+                        console.error(err);
                         return;
-                    }
+                    };
                     if (params.get("magicword") !== SETTINGS.magicword) {
                         if (!confirm(`Do you want to use external engines from ${url}?`)) {
                             console.log("user denied access to external engines");
@@ -91,7 +96,7 @@
                 urlImport();
             } else {
                 useSearchEngines();
-            }
+            };
         } else {
             changePage("NO SEARCH ENGINES!","YOU DONT EVEN HAVE ANY SEARCH ENGINES! ADD SOME OR USE THE QUICK ADD BAR");
         };
@@ -167,12 +172,18 @@
             }
         }
 
-        function changePage(header,description) {
-            document.addEventListener("DOMContentLoaded", ()=>{
+        function changePage(header, description) {
+            function updateIt() {
                 document.querySelector("h1").textContent = header;
                 document.querySelector("p").textContent = description;
-            });
-        }
+            };
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", updateIt);
+            } else {
+                updateIt();
+            };
+        };
     </script>
     <meta name="robots" content="noindex">
     <meta charset="UTF-8">
