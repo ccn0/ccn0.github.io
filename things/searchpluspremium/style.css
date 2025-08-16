@@ -15,6 +15,7 @@
     --yellow: #ffd000;
     --cyan: #23deff;
     --brdrrds: 12px;
+    --engContHeight: 80px;
 }
 html {
     scrollbar-color:  var(--alt) var(--dark);
@@ -23,26 +24,6 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: var(--dark);
-}
-[data-darktheme="true"] {
-    --input: #262626;
-	--hero: #008000;
-	--dark: #000;
-	--muted: #011701;
-	--superdark: #001400;
-	--alt: #0b3905;
-	--btn: #134400;
-	--btnhover: #59a200;
-	--btnactive: #102e10;
-    button {
-        color: #fff!important;
-    }
-    input {
-        color: #fff;
-        &:focus-within {
-            background-color: #000!important;
-        }
-    }
 }
 
 * {
@@ -347,7 +328,7 @@ form {
         border-top: none;
         border-bottom: 2px solid var(--hero);
     }
-    height: 80px;
+    height: var(--engContHeight);
     display: flex;
     &:hover {
         &>.engToolbar {
@@ -456,7 +437,7 @@ form {
         user-select: none;
         flex: 1;
         height: 100%;
-        margin-left: 16px;
+        margin-left: 12px;
         min-height: 32px;
         align-content: center;
     }
@@ -481,6 +462,33 @@ form {
         }
         &:focus-within {
             background-color: #fff;
+        }
+    }
+}
+.fakebutton {
+    border: 2px solid green;
+    color: #000;
+    background-color: var(--btn);
+    padding: 2px;
+}
+
+[data-darktheme="true"] {
+    --input: #262626;
+	--hero: #008000;
+	--dark: #000;
+	--muted: #011701;
+	--superdark: #001400;
+	--alt: #0b3905;
+	--btn: #134400;
+	--btnhover: #59a200;
+	--btnactive: #102e10;
+    button,.fakebutton {
+        color: #fff!important;
+    }
+    input {
+        color: #fff;
+        &:focus-within {
+            background-color: #000!important;
         }
     }
 }
