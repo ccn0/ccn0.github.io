@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6.6 -->
+<!-- made by ccn0 | v1.6.7 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -370,7 +370,7 @@ or if your using Firefox, click on the search bar while on this page and click t
                                         changeevent:(e)=>{
                                             gbal.settings.darkTheme = e.target.checked;
                                             gbal.save();
-                                            document.body.setAttribute("data-darktheme",gbal.settings.darkTheme);
+                                            document.body.dataset.darktheme = gbal.settings.darkTheme;
                                         }
                                     }));
                                     setCont.appendChild(gbal.ui.checkbox({
@@ -550,7 +550,7 @@ or if your using Firefox, click on the search bar while on this page and click t
             const itemCont = document.createElement("div");
             itemCont.role = "listitem";
             itemCont.classList.add("engContainer");
-            itemCont.setAttribute("data-engine", index);
+            itemCont.dataset.engine = index;
             if (index == dat.moved) {
                 itemCont.classList.add("moved");
             };
@@ -787,13 +787,15 @@ or if your using Firefox, click on the search bar while on this page and click t
             });
     };
     if (params.get("importExternal")) {
-        urlImport();
+        document.addEventListener("DOMContentLoaded", ()=>{
+            urlImport();
+        });
     };
 
     if (location.hostname == "127.0.0.1") {
         document.querySelector("figure>img").style.cssText = "filter:sepia(1) saturate(100);";
     };
-    document.body.setAttribute("data-darktheme",gbal.settings.darkTheme);
+    document.body.dataset.darktheme = gbal.settings.darkTheme;
     </script>
 </body>
 

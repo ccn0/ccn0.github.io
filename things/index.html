@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCN0 Things</title>
+    <title>CCN0.net / Things</title>
+    <link rel="stylesheet" href="/3cl.css">
+    <meta name="ccn0:pagetype" content="3cl-v1B">
     <link rel="canonical" href="https://ccn0.net/things">
     <meta name="og:title" content="CCN0 Things">
     <meta property="og:description" content="CCN0's collection of tools, apps, and experiments. They might be useful, they might be fun.">
@@ -12,92 +13,185 @@
     <meta property="og:type" content="website">
     <meta name="author" content="CCN0">
     <meta name="description" content="All of the things I have made. they might be useful, they might be fun.">
-    <link rel="stylesheet" href="/ccn02.css">
     <meta name="theme-color" content="#ff0000" data-react-helmet="true">
     <link rel="icon" type="image/png" href="https://ccn0.net/img/ccn0logo.png">
 </head>
 <body>
     <noscript>
-        <div class="warnbanner">
-            JAVASCRIPT IS REQUIRED FOR MOST THINGS
-        </div>
+        <div class="warnbanner">JAVASCRIPT IS REQUIRED FOR MOST THINGS</div>
     </noscript>
-    <hgroup class="top">
-        <h1>Things</h1>
-        <h2>All of the 'things' I have made. they might be useful, they might be fun.</h2>
-        <div>
-            <a href="/h">Home</a> | 
-            <a href="/things/blog/">Blog</a> | 
-            <a href="/games">'Games'</a> | 
-            <b>Things</b>
+    <div class="main" id="top">
+        <div class="col">
+            <hgroup>
+                <h1>Things</h1>
+                <p>All of the 'things' I have made. They might be useful, they might be fun.</p>
+                <div class="topnav">
+                    <a href="/">Home</a> |
+                    <b>Things</b> |
+                    <a href="/games/">Games</a> |
+                    <a href="/info/">Wiki</a>
+                </div>
+            </hgroup>
+            <div class="section">
+                <h2 id="recent">RECENT</h2>
+                <ul>
+                    <li>
+                        <div class="words">
+                            <a href="https://ccn0.net/things/searchpluspremium/"><h3>SearchPlusPREMIUM</h3></a>
+                            <p>FIXED misc bugs blah</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </hgroup>
-    <hr>
-    <div class="posts">
-        <ul>
-            <!-- 
-            <li title="#">
-                <a href="#">Text</a><br>desc
-            </li>
-            -->
-            <h2>All of 'em</h2>
-            <li title="credits further deep">
-                <a href="/pages/bookmark">Bookmarklet Collection</a><br>every single bookmarklet ive collected&sol;found
-            </li>
-            <li title="best search engines 2025 for privacyt">
-                <a href="/things/searchpluspremium/index.html">SearchPlusPREMIUM</a><br>keyword search engine
-            </li>
-            <li title="this took so fucking long why do i still do this">
-                <a href="/things/soundlets/plus">Soundlets+</a><br>create your own soundboard, literally.
-                <a href="/things/soundlets/plus.html?url=https://ccn0.net/img/ccn0audiosoundboard.json">quickstart</a>
-            </li>
-            <li title="Time since 2000 is so hard to calculate!">
-                <a href="/things/globalclocks/#create">GlobalClocks</a><br>check out the time difference between a date and share it with the world
-            </li>
-            <li title="Love reading!">
-                <a href="/things/wikinoise/">Wikinoise</a><br>soundboard that looks suspiciously like the mobile wikipedia.
-            </li>
-            <li title="LMAO!! (obsolete)">
-                <a href="/things/hahas/bookmark">Funny Hahas (B)</a><br>soundboard with bookmarklets.
-            </li>
-            <li title="makes it look.... okay?">
-                <a href="/things/presentable.css">Presentable.css</a><br>stylesheet to make your website to look okay.
-            </li>
-            <li title="so fucking many">
-                <a href="/things/notepad/select">Select a <i>Notepad</i></a><br>find a notepad thats right for you
-            </li>
-            <li title="notes but fast">
-                <a href="/things/notepad"><i>Notepad</i></a><br>a notepad that loads instantly, and can be used offline.
-            </li>
-            <li title="notes but win">
-		<a href="/things/notepad/win"><i>Notepad</i> Win</a><br>notepad but with some features and trying to look like windows notepad
-            </li>
-            <li title="notes but programmable (beta)">
-                <a href="/things/notepad/programmable.html">Programmable <i>Notepad</i> Beta</a><br>notepad with programs n shit!!! in beta so dont trust anyone
-            </li>
-            <li title="basically lightweigth notepad no bullshit">
-                <a href="/things/notepad/light"><i>Notepad</i> Premium</a><br>almost the notepad included with windows.
-            </li>
-            <li title="github.com/linktype">
-                <a href="https://github.com/linktype">LinkType</a><br>css files to create a link page.
-            </li>
-            <li title="SUBSCRIBE OR I WILL EAT YOUR ORGANS ON CAMERA!!!">
-                <a href="/things/subscribe">Subscribe Buttons</a><br>sub buttons for all occasions.
-            </li>
-            <li title="LMAO!! (Clever) (obsolete)">
-                <a href="/things/hahas/clever">Funny Hahas (C)</a><br>soundboard that looks like clever.
-            </li>
-            <li title="LMAO!! (itslearning) (obsolete)">
-                <a href="/things/hahas/itslearning">Funny Hahas (I)</a><br>soundboard that looks like itslearning.
-            </li>
-            <li title="omg i found crosh and it borke my chrome book"><!-- this will be killed very soon -->
-                <a href="/things/croshf">croshf</a><br>something that looks close to crosh, but isn't.
-            </li>
-        </ul>
-        <hr>
-        <h3>MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a>,
-            Specific credits in the Things, 
-            Assume All Rights Reserved unless otherwise stated</h3>
+        <div class="col">
+            <div class="section">
+                <h2 id="featured">FEATURED</h2>
+                <ul>
+                    <li>
+                        <div class="photo">
+                            <img src="https://ccn0.net/things/searchpluspremium/logo.png" alt="SearchPlusPREMIUM Logo" draggable="false">
+                        </div>
+                        <div class="words" title="its like a search engine but multiple at once yada yada">
+                            <a href="#">
+                                <h3>SearchPlusPREMIUM</h3>
+                            </a>
+                            <p>The only search engine that takes you exactly where you want to go</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="programs and commands">
+                            <a href="https://ccn0.net/things/notepad/select"><h3>Programmable <i>Notepad</i> Beta</h3></a>
+                            <p>highly extensible notepad with commands and keybinds</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="very fun">
+                            <a href="https://ccn0.net/things/soundlets/plus"><h3>Soundlets+</h3></a>
+                            <p>Create your own soundboard.</p>
+                            <a href="https://ccn0.net/things/soundlets/plus.html?url=https://ccn0.net/img/ccn0audiosoundboard.json">quickstart here</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="no javascript">
+                            <a href="https://ccn0.net/things/notepad/light"><h3><i>Notepad</i> Premium</h3></a>
+                            <p>lightweight notepad without javascript</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col">
+            <div class="section">
+                <h2 id="all">All</h2>
+                <ul>
+                    <li>
+                        <div class="words" title="credits further deep">
+                            <a href="https://ccn0.net/pages/bookmark"><h3>Bookmarklet Collection</h3></a>
+                            <p>Some of the bookmarklets I've collected</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="search plus premium is like a search engine but multiple at once and">
+                            <a href="https://ccn0.net/things/searchpluspremium/"><h3>SearchPlusPREMIUM</h3></a>
+                            <p>the only search engine that gets you <em>exactly</em> where you want to go</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="i agree past me, why did i do this?">
+                            <a href="https://ccn0.net/things/soundlets/plus"><h3>Soundlets+</h3></a>
+                            <p>Create your own soundboard.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="so fucking many">
+                            <a href="https://ccn0.net/things/notepad/select"><h3>Select a <i>Notepad</i></h3></a>
+                            <p>Find which <i>Notepad</i> is right for you</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="notes but fast">
+                            <a href="https://ccn0.net/things/notepad/"><h3><i>Notepad</i></h3></a>
+                            <p>a notepad that loads instantly, and can be used offline.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="notes but win">
+                            <a href="https://ccn0.net/things/notepad/win"><h3><i>Notepad</i> Win</h3></a>
+                            <p>notepad but with some features and trying to look like windows notepad</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="basically lightweigth notepad no bullshit">
+                            <a href="https://ccn0.net/things/notepad/light"><h3><i>Notepad</i> Premium</h3></a>
+                            <p>lightweight notepad without javascript</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="notes but programmable (beta)">
+                            <a href="https://ccn0.net/things/notepad/select"><h3>Programmable <i>Notepad</i> Beta</h3></a>
+                            <p>highly extensible notepad with commands and keybinds</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="Time since 2000 is so hard to calculate!">
+                            <a href="https://ccn0.net/things/globalclocks/#create"><h3>GlobalClocks</h3></a>
+                            <p>See how long it'll be or how long its been since a specific time and date</p>
+                        </div>
+                    </li>
+                    <h4>Obsolete/Deprecated</h4>
+                    <li>
+                        <div class="words" title="Love reading!">
+                            <a href="https://ccn0.net/things/wikinoise/"><h3>Wikinoise</h3></a>
+                            <p>soundboard that looks suspiciously like the mobile wikipedia.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="makes it look.... okay?">
+                            <a href="https://ccn0.net/things/presentable.css"><h3>Presentable.css</h3></a>
+                            <p>stylesheet to make your website to look okay.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words">
+                            <a href="https://ccn0.net/things/hahas/bookmark"><h3>Funny Hahas (B)</h3></a>
+                            <p>soundboard that has bookmarklets.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="SUBSCRIBE OR I WILL OR ELSE ON CAMERA!!!">
+                            <a href="https://ccn0.net/things/hahas/clever"><h3>Funny Hahas (C)</h3></a>
+                            <p>soundboard that looks like clever.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="LMAO!! (Clever) (obsolete)">
+                            <a href="https://ccn0.net/things/hahas/clever"><h3>Funny Hahas (I)</h3></a>
+                            <p>soundboard that looks like itslearning.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="LMAO!! (itslearning) (obsolete)">
+                            <a href="https://ccn0.net/things/subscribe"><h3>Subscribe Buttons</h3></a>
+                            <p>sub buttons for all occasions.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="it actually looks nothing like crosh at all">
+                            <a href="https://ccn0.net/things/croshf"><h3>croshf</h3></a>
+                            <p>something that looks close to crosh, but isn't.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <iframe src="https://ccn0.net/rad/"
+                        width="200px" height="200px"
+                        id="rAdBOX" title="rAdBOX"
+                        style="border:none;margin-left: auto;margin-right: auto;"
+                        aria-label="rAdBOX"></iframe>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </body>
 </html>
