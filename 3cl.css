@@ -1,5 +1,5 @@
 /* 3CL | currently in very early beta, in testing, MADE BY CCN0 https://github.com/ccn0 
-* v1B03
+* v1B04
 */
 
 :root {
@@ -105,6 +105,9 @@ hgroup {
     overflow-y: auto;
     flex: 1;
     scrollbar-width: thin;
+    &:not(:last-child) {
+        border-bottom: var(--sectionborder);
+    }
     h2 {
         position: sticky;
         top: 0;
