@@ -1,5 +1,5 @@
 /* 3CL | currently in very early beta, in testing, MADE BY CCN0 https://github.com/ccn0 
-* v1B
+* v1B03
 */
 
 :root {
@@ -84,6 +84,8 @@ hgroup {
     text-align: center;
     flex: 0;
     border-bottom: var(--dashedborder);
+    padding: 16px;
+    padding-top: 0;
     p {
         margin: 0;
     }
@@ -145,6 +147,9 @@ hgroup {
             h3,p,q {
                 margin:6px;
             }
+            p.big {
+                font-weight: bold;
+            }
         }
     }
 }
@@ -174,5 +179,6 @@ hgroup {
     .col {
         min-height: auto;
         flex: 1;
+        border-right: none!important;
     }
 }

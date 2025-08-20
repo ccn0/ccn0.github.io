@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCN0.net</title>
+    <link rel="stylesheet" href="/3cl.css">
+    <meta name="ccn0:pagetype" content="3cl-v1">
     <link rel="icon" type="image/png" href="https://ccn0.net/img/ccn0logo.png">
-    <title>CCN0</title>
     <link rel="canonical" href="https://ccn0.net">
     <meta name="og:title" content="CCN0.net">
     <meta property="og:description" content="Official website of CCN0's things, projects, games, and more.">
@@ -14,64 +15,147 @@
     <meta name="author" content="CCN0">
     <meta name="description" content="The official website for all of CCN0's projects, things, and other stuff.">
     <meta name="keywords" content="ccn0,ccn0 website,ccno,ccno website,ccn0 things,ccn0 website,ccn0 net,ccn0net,ccno net,ccn0.net">
-    <link rel="stylesheet" href="/ccn02.css">
     <meta name="theme-color" content="#ff0000" data-react-helmet="true">
 </head>
 <body>
-    <hgroup class="top">
-        <h1><cr>CC</cr><cg>N</cg><cb>0</cb></h1>
-        <h2>An awful site filled with awful things.</h2>
-        <div>
-            <a href="/info">Wiki</a> | 
-            <a href="/things/blog/">Blog</a> | 
-            <a href="/games">'Games'</a> | 
-            <a href="/things/">Things</a>
+    <div class="main" id="top">
+        <div class="col">
+            <hgroup>
+                <h1><cr>CC</cr><cg>N</cg><cb>0</cb></h1>
+                <p>An awful site filled with awful things.</p>
+                <div class="topnav">
+                    <a href="/info/">Wiki</a> |
+                    <a href="/things">Things</a> |
+                    <a href="/games/">Games</a> |
+                    <a href="https://blog.ccn0.net">Blog</a>
+                </div>
+            </hgroup>
+            <div class="section">
+                <h2 id="recent">RECENT</h2>
+                <ul>
+                    <li>
+                        <div class="pfp">
+                            <img src="https://ccn0.net/img/ccn0.png" alt="CCN0 Profile Picture" id="bskypfp" draggable="false">
+                        </div>
+                        <div class="words" title="head to my busky">
+                            <p class="big">LATEST BSKY</p>
+                            <p>
+                                <q id="skeetquote">...</q><br>
+                                <a href="https://bsky.app/profile/ccn0.net"><time datetime="" id="skeetbirth"></time></a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="head to my blog">
+                            <p class="big">LATEST BLOG POST</p>
+                            <p>
+                                <a id="blogposttitle" href="https://blog.ccn0.net/">...</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="from ugly to ugly to eh">
+                            <a href="https://blog.ccn0.net/2025/08/3cl-and-redesigning-ccn0net-second-time.html" title="3 columns???? layout???? css?????"><p>3CL</p></a>
+                            <p>Redesigning my website for the second time</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="yup yup and fuck elon too">
+                            <a href="https://bsky.app/profile/ccn0.net"><p>Official Bluesky</p></a>
+                            <p>Switched to Bluesky instead of Mastodon.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </hgroup>
-    <hr>
-    <div class="posts">
-        <ul>
-            <!-- 
-            <li title="#">
-                <a href="#">Text</a><br>desc
-            </li>
-            -->
-            <h2>Featured</h2>
-            <li title="best search engines 2025 for privacyt">
-                <a href="/things/searchpluspremium/index.html">SearchPlusPREMIUM</a><br>keyword search engine
-            </li>
-            <li title="someone found the exploit and leaked so just find that guy">
-                <a href="https://ccn0.net/things/portal">CCN0 Portal</a><br>links to everywhere
-            </li>
-            <li title="ding Plus for YouTube and other useful scripts">
-                <a href="/pages/userscripts">Userscripts</a><br>All userscripts I have made for public use
-            </li>
-            <h2>Recent</h2>
-            <li title="not twitter">
-                <a href="https://bsky.app/profile/ccn0.net">Official Bluesky</a><br>CCN0 is now on Bluesky (@ccn0.net) and abandoning Mastodon.
-            </li>
-            <h2>Coming Soon</h2>
-            <li title="notebook for notebook for notebook">
-                <b>CCN0TEBOOK v2</b><br>note books and flip books program/engine
-            </li>
-            <li title="shkreen saver">
-                <b>Screensaver</b><br>saves your screen everytime
-            </li>
-            <li title="be sure to smash that like button">
-                <b>LIKEBUTTON</b><br>like buttn
-            </li>
-            <li title="new projects??? from awfulearth??">
-                <b>Untitled Game</b><br>game that might actually come out at a reasonable time
-            </li>
-            <li title="shhh (yes its real) (whats development hell?)">
-                <b>Titled Game</b><br>still working on this game
-            </li>
-            <iframe src="https://ccn0.net/rad/" width="200px" height="200px" seamless id="rAdBOX" title="rAdBOX" style="border:none;margin-left: auto;margin-right: auto;" aria-hidden="true"></iframe>
-        </ul>
-        <footer>
-            <hr>
-            <h3>MADE BY <a href="https://github.com/ccn0"><cr>CC</cr><cg>N</cg><cb>0</cb></a></h3>
-        </footer>
+        <div class="col">
+            <div class="section">
+                <h2 id="featured">FEATURED</h2>
+                <ul>
+                    <li>
+                        <div class="photo">
+                            <img src="https://ccn0.net/things/searchpluspremium/logo.png" alt="SearchPlusPREMIUM Logo" draggable="false">
+                        </div>
+                        <div class="words" title="its like a search engine but multiple at once yada yada">
+                            <a href="/things/searchpluspremium/">
+                                <p>SearchPlusPREMIUM</p>
+                            </a>
+                            <p>The only search engine that takes you exactly where you want to go</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="yall remember yahoo?">
+                            <a href="/things/portal/"><p>CCN0 Portal</p></a>
+                            <p>links to everywhere</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="youtube helper and mail.com helper are the useful ones">
+                            <a href="/pages/userscripts/"><p>CCN0's Userscripts</p></a>
+                            <p>All of the usersrcipts i've made</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col">
+            <div class="section">
+                <h2 id="comingsoon">COMING SOON</h2>
+                <ul>
+                    <li>
+                        <div class="words" title="lines and points and its like a 2d path">
+                            <p class="big">CCN0TEBOOK v2</p>
+                            <p>series of points</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="words" title="saves your screen everytime">
+                            <p class="big">Screensaver</p>
+                            <p>series of screens</p>
+                        </div>
+                    </li>
+                    <li>
+                        <iframe src="https://ccn0.net/rad/"
+                        width="200px" height="200px"
+                        id="rAdBOX" title="rAdBOX"
+                        style="border:none;margin-left: auto;margin-right: auto;"
+                        aria-label="rAdBOX"></iframe>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
+    <script>
+    async function getLastestSkeet() {
+        fetch("https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=ccn0.net&limit=1&filter=posts_and_author_threads")
+            .then(response => response.json())
+            .then(resp => {
+                try {
+                    const skeet = resp.feed[0];
+                    const bskypfp = document.querySelector("#bskypfp");
+                    const skeetquote = document.querySelector("#skeetquote");
+                    const skeetbirth = document.querySelector("#skeetbirth");
+                    bskypfp.src = skeet.post.author.avatar;
+                    skeetquote.textContent = skeet.post.record.text;
+                    skeetbirth.textContent = skeet.post.record.createdAt.split("T")[0];
+                    skeetbirth.setAttribute("datetime",skeet.post.record.createdAt);
+                } catch (err) {
+                    console.error(err);
+                };
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+    getLastestSkeet();
+    </script>
+    <script>
+    function getLatestBlog(posts){
+        const bloglink = document.querySelector("#blogposttitle");
+        bloglink.textContent = posts.feed.entry[0].title["$t"];
+        bloglink.href = posts.feed.entry[0].link[4].href;
+    };
+    </script>
+    <script src='https://ccn0guy.blogspot.com/feeds/posts/summary?alt=json&max-results=1&callback=getLatestBlog'></script>
 </body>
 </html>
