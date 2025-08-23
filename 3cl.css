@@ -1,5 +1,8 @@
-/* 3CL | currently in very early beta, in testing, MADE BY CCN0 https://github.com/ccn0 
-* v1B05
+/*
+3CL | currently being rolled out very slowly
+MADE BY CCN0 https://github.com/ccn0
+
+v1B06
 */
 
 :root {
@@ -20,7 +23,7 @@
 
 body {
     margin: 0;
-    font-family: Consolas, monospace;
+    font-family: 'Consolas', monospace;
     background: var(--black);
     color: var(--mainText);
 }
@@ -183,5 +186,8 @@ hgroup {
         min-height: auto;
         flex: 1;
         border-right: none!important;
+    }
+    .section {
+        border-bottom: var(--sectionborder);
     }
 }
