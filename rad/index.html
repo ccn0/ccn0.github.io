@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v5.3 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v5.4 of rAdBOX. MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,8 +62,9 @@
             }
         }
         .jsdisabled {
-            background-color: #ff0;
-            color: #000;
+            align-content: center;
+            background-color: #0000;
+            color: #fff;
             position: fixed;
             top: 0;
             left: 0;
@@ -92,50 +93,50 @@
         <a href="" id="adBox" title="" target="_top">
             <img src="" id="sphoto">
         </a>
-        <a href="whatisthis.html" class="floating" target="_top">Ad</a>
+        <a href="whatisthis.html" class="floating" target="_top" aria-label="More Information">Ad</a>
     </div>
     <script>
-        function randomInteger(min, max) {
-            const rmin = min;
-            const rmax = max;
-            const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
-            return targetNumber;
-        }
-        let promosData = {};
-        fetch("promos.json")
-            .then(response => response.json())
-            .then(json => {
-                promosData = json;
-                displayRad();
-            })
-        
-        function displayRad() {
-            const pickedRad = promosData.running[randomInteger(0, promosData.running.length - 1)];
-            const radToShow = promosData.promos[pickedRad];
+    function randomInteger(min, max) {
+        const rmin = min;
+        const rmax = max;
+        const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
+        return targetNumber;
+    }
+    let promosData = {};
+    fetch("promos.json")
+        .then(response => response.json())
+        .then(json => {
+            promosData = json;
+            displayRad();
+        })
+    
+    function displayRad() {
+        const pickedRad = promosData.running[randomInteger(0, promosData.running.length - 1)];
+        const radToShow = promosData.promos[pickedRad];
 
-            const newCSS = document.createElement("style");
-            newCSS.textContent = radToShow.css || "";
-            document.head.appendChild(newCSS);
+        const newCSS = document.createElement("style");
+        newCSS.textContent = radToShow.css || "";
+        document.head.appendChild(newCSS);
 
-            const adbox = document.getElementById('adBox');
-            const sphoto = document.getElementById('sphoto');
+        const adbox = document.getElementById('adBox');
+        const sphoto = document.getElementById('sphoto');
 
-            adbox.href = radToShow.url || "#failure";
-            adbox.title = `${radToShow.title} (Ad)` || "rAdBOX (Ad)";
-            sphoto.src = radToShow.img;
-            sphoto.alt = `${radToShow.alt} (Ad)` || `${adbox.href} (Ad)`;
-            sphoto.setAttribute("data-type",radToShow.type);
-        };
-        function getSite() {
-            const approvedSites = ["ccn0.net", "blog.ccn0.net", "127.0.0.1"];
-            const currentSite = window.parent.location.hostname;
+        adbox.href = radToShow.url || "#failure";
+        adbox.title = `${radToShow.title} (Ad)` || "rAdBOX (Ad)";
+        sphoto.src = radToShow.img;
+        sphoto.alt = `${radToShow.alt} (Ad)` || `${adbox.href} (Ad)`;
+        sphoto.setAttribute("data-type",radToShow.type);
+    };
+    function getSite() {
+        const approvedSites = ["ccn0.net", "blog.ccn0.net", "www.arryorsometh.ing", "127.0.0.1"];
+        const currentSite = window.parent.location.hostname;
 
-            if (!approvedSites.includes(currentSite) || typeof currentSite !== undefined) {
-                if (!approvedSites.includes(location.hostname)) {
-                    location.href = "https://ccn0.net/rad/notpermitted.html";
-                }
+        if (!approvedSites.includes(currentSite) || typeof currentSite !== undefined) {
+            if (!approvedSites.includes(location.hostname)) {
+                location.href = "https://ccn0.net/rad/notpermitted.html";
             };
         };
+    };
     </script>
 </body>
 </html>

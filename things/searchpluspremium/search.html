@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6.8 -->
+<!-- made by ccn0 | v1.6.9 -->
 <head>
     <title>SearchPlusPREMIUM</title>
     <link rel="icon" href="favicon.png">
@@ -23,167 +23,182 @@
         }
     </style>
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const query = params.get("q");
-        if (query == null) {
-            location = "index.html";
-        };
-        const defaultData = {
-            autofocusNew: false,
-            darkTheme: false,
-            useEnginesParamAllowed: false,
-            searchEngines: [
-                {
-                    url: "https://www.google.com/search?q=%s",
-                    symbol: "@g",
-                },
-                {
-                    url: "https://duckduckgo.com/?q=%s",
-                    symbol: "@ddg",
-                },
-                {
-                    url: "https://ccn0.net/things/searchpluspremium/index.html",
-                    symbol: "!",
-                },
-            ],
-        };
-        const SETTINGS = JSON.parse(localStorage.getItem("spp_settings") || JSON.stringify(defaultData));
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get("q");
+    if (query == null) {
+        location = "index.html";
+    };
+    const defaultData = {
+        autofocusNew: false,
+        darkTheme: false,
+        useEnginesParamAllowed: false,
+        searchEngines: [
+            {
+                url: "https://www.google.com/search?q=%s",
+                symbol: "@g",
+            },
+            {
+                url: "https://duckduckgo.com/?q=%s",
+                symbol: "@ddg",
+            },
+            {
+                url: "https://ccn0.net/things/searchpluspremium/index.html",
+                symbol: "!",
+            },
+        ],
+    };
+    const SETTINGS = JSON.parse(localStorage.getItem("spp_settings") || JSON.stringify(defaultData));
 
-        if (SETTINGS.searchEngines.length !== 0) {
-            if (params.get("useEngines") && SETTINGS.useEnginesParamAllowed) {
-                function urlImport() {
-                    const url = params.get("useEngines");
-                    try {
-                        const parsed = new URL(url, location.href);
-                        if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
-                            changePage("ERROR ERROR!", "NOT A URL NOT EVEN TRYING");
-                            console.log("useEngines is NOT a real url");
-                            return;
-                        };
-                    } catch (err) {
-                        changePage("ERROR ERROR!", "FAILED TO EVEN ATTEMPT SETTING UP URL");
-                        console.error(err);
+    if (SETTINGS.searchEngines.length !== 0) {
+        if (params.get("useEngines") && SETTINGS.useEnginesParamAllowed) {
+            function urlImport() {
+                const url = params.get("useEngines");
+                try {
+                    const parsed = new URL(url, location.href);
+                    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+                        changePage("ERROR ERROR!", "NOT A URL NOT EVEN TRYING");
+                        console.log("useEngines is NOT a real url");
                         return;
                     };
-                    if (params.get("magicword") !== SETTINGS.magicword) {
-                        if (!confirm(`Do you want to use external engines from ${url}?`)) {
-                            console.log("user denied access to external engines");
-                            changePage("CANCELLED!","YOU CANCELLED USE OF EXTERNAL ENGINES");
-                            return;
-                        } else {
-                            console.log("user allowed access to external engines");
-                        };
-                    } else {
-                        console.log("user allowed external engines with magic word");
-                    };
-
-                    fetch(url)
-                        .then(response => response.json())
-                        .then(json => {
-                            try {
-                                SETTINGS.searchEngines.push(...json.searchEngines);
-                                useSearchEngines();
-                            } catch (error) {
-                                changePage("ERROR ERROR!","NOT VALID JSON, EXTERNAL ENGINES FAULT");
-                                console.error(error);
-                            };
-                        })
-                        .catch(error => {
-                            changePage("ERROR ERROR!","FAILED TO FETCH LIST");
-                            console.error(error);
-                        });
-                };
-                urlImport();
-            } else {
-                useSearchEngines();
-            };
-        } else {
-            changePage("NO SEARCH ENGINES!","YOU DONT EVEN HAVE ANY SEARCH ENGINES! ADD SOME OR USE THE QUICK ADD BAR");
-        };
-        function useSearchEngines() {
-            let [symbol, ...searchTerm] = query.split(' ');
-            searchTerm = searchTerm.join(' ');
-            function queryParse(string, foundEngine) {
-                if (!foundEngine) searchTerm = query;
-
-                let newString = string;
-                const now = new Date();
-
-                newString = newString.replace(/%s/g, encodeURIComponent(searchTerm));
-                newString = newString.replace(/%u/g, searchTerm);
-                newString = newString.replace(/%p/g, symbol);
-                newString = newString.replace(/%yr/g, String(now.getFullYear()).slice(2));
-                newString = newString.replace(/%year/g, now.getFullYear());
-                newString = newString.replace(/%mo/g, String(now.getMonth() + 1).padStart(2, '0'));
-                newString = newString.replace(/%dy/g, String(now.getDate()).padStart(2, '0'));
-                newString = newString.replace(/%hr/g, String(now.getHours()).padStart(2, '0'));
-                newString = newString.replace(/%min/g, String(now.getMinutes()).padStart(2, '0'));
-                newString = newString.replace(/%ms/g, String(now.getMilliseconds()).padStart(3, '0'));
-                newString = newString.replace(/%dow/g, now.toLocaleDateString('en-US', { weekday: 'long' }));
-                newString = newString.replace(/%dwn/g, now.getDay());
-                newString = newString.replace(/%ts/g, now.getTime());
-
-                return newString;
-            };
-            let matched = false;
-            for (const engine of SETTINGS.searchEngines) {
-                if (engine.symbol === symbol) {
-                    matched = true;
-                    redirectTo(queryParse(engine.url, matched));
-                    break;
-                };
-            };
-            if (!matched) {
-                console.log("no matching, defaulting");
-                redirectTo(queryParse(SETTINGS.searchEngines[0].url, matched));
-            };
-        };
-        function redirectTo(url) {
-            console.log("attempting redirect to "+url);
-            if (params.get("plsdont") == SETTINGS.magicword && !!SETTINGS.magicword) {
-                console.log("user cancelling redirection with magic word");
-                changePage("CANCELLED!","IM NOT GONNA REDIRECT ON ACCOUNT OF YOU ASKING NICELY");
-                return;
-            };
-            try {
-                const parsedUrl = new URL(url);
-                if (parsedUrl.protocol !== "javascript:") {
-                    const currentUrl = location.protocol + "//" + location.host + location.pathname;
-                    if (parsedUrl.href.startsWith(currentUrl)) {
-                        console.log("refuse redirect loop attempt type A");
-                        changePage("ERROR ERROR!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! A");
-                    } else {
-                        location = url;
-                        console.log(parsedUrl.href);
-                    }
-                } else {
-                    console.log("refuse javascript uri attempt");
-                    changePage("ERROR ERROR!", "TRYING TO USE BOOKMARKLETS EH? USE PROGRAMMABLE NOTEPAD OR SOMETHING!!");
-                }
-            } catch(err) {
-                if (url == "") {
-                    console.log("refuse redirect loop attempt type B");
-                    changePage("ERROR ERROR!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! B");
-                } else {
-                    changePage("ERROR ERROR!", err);
-                    console.warn(url);
+                } catch (err) {
+                    changePage("ERROR ERROR!", "FAILED TO EVEN ATTEMPT SETTING UP URL");
                     console.error(err);
+                    return;
+                };
+                if (params.get("magicword") !== SETTINGS.magicword) {
+                    if (!confirm(`Do you want to use external engines from ${url}?`)) {
+                        console.log("user denied access to external engines");
+                        changePage("CANCELLED!","YOU CANCELLED USE OF EXTERNAL ENGINES");
+                        return;
+                    } else {
+                        console.log("user allowed access to external engines");
+                    };
+                } else {
+                    console.log("user allowed external engines with magic word");
+                };
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(json => {
+                        try {
+                            SETTINGS.searchEngines.push(...json.searchEngines);
+                            useSearchEngines();
+                        } catch (error) {
+                            changePage("ERROR ERROR!","NOT VALID JSON, EXTERNAL ENGINES FAULT");
+                            console.error(error);
+                        };
+                    })
+                    .catch(error => {
+                        changePage("ERROR ERROR!","FAILED TO FETCH LIST");
+                        console.error(error);
+                    });
+            };
+            urlImport();
+        } else {
+            useSearchEngines();
+        };
+    } else {
+        changePage("NO SEARCH ENGINES!","YOU DONT EVEN HAVE ANY SEARCH ENGINES! ADD SOME OR USE THE QUICK ADD BAR");
+    };
+    function useSearchEngines() {
+        let [symbol, ...searchTerm] = query.split(' ');
+        searchTerm = searchTerm.join(' ');
+        function queryParse(string, foundEngine) {
+            if (!foundEngine) searchTerm = query;
+
+            let newString = string;
+            const now = new Date();
+
+            newString = newString.replace(/%s/g, encodeURIComponent(searchTerm));
+            newString = newString.replace(/%u/g, searchTerm);
+            newString = newString.replace(/%p/g, symbol);
+            newString = newString.replace(/%yr/g, String(now.getFullYear()).slice(2));
+            newString = newString.replace(/%year/g, now.getFullYear());
+            newString = newString.replace(/%mo/g, String(now.getMonth() + 1).padStart(2, '0'));
+            newString = newString.replace(/%dy/g, String(now.getDate()).padStart(2, '0'));
+            newString = newString.replace(/%hr/g, String(now.getHours()).padStart(2, '0'));
+            newString = newString.replace(/%min/g, String(now.getMinutes()).padStart(2, '0'));
+            newString = newString.replace(/%ms/g, String(now.getMilliseconds()).padStart(3, '0'));
+            newString = newString.replace(/%dow/g, now.toLocaleDateString('en-US', { weekday: 'long' }));
+            newString = newString.replace(/%dwn/g, now.getDay());
+            newString = newString.replace(/%ts/g, now.getTime());
+
+            return newString;
+        };
+        let matched = false;
+        for (const engine of SETTINGS.searchEngines) {
+            if (engine.symbol === symbol) {
+                matched = true;
+                redirectTo(queryParse(engine.url, matched));
+                break;
+            };
+        };
+        if (!matched) {
+            console.log("no matching, defaulting");
+            redirectTo(queryParse(SETTINGS.searchEngines[0].url, matched));
+        };
+    };
+    function redirectTo(url) {
+        console.log("attempting redirect to "+url);
+        if (params.get("plsdont") == SETTINGS.magicword && !!SETTINGS.magicword) {
+            console.log("user cancelling redirection with magic word");
+            changePage("CANCELLED!","IM NOT GONNA REDIRECT ON ACCOUNT OF YOU ASKING NICELY");
+            return;
+        };
+        try {
+            const parsedUrl = new URL(url);
+            if (parsedUrl.protocol !== "javascript:") {
+                if (parsedUrl.protocol == "file:") {
+                    function sanitizeHTML(str) {
+                        const temp = document.createElement('div');
+                        temp.textContent = str;
+                        return temp.innerHTML;
+                    };
+                    changePage("ERROR ERROR!", `File links must be accessed manually.<br>URL is <code style="user-select:all;">${sanitizeHTML(url)}</code>`, {html:true});
+                    return;
+                };
+                const currentUrl = location.protocol + "//" + location.host + location.pathname;
+                if (parsedUrl.href.startsWith(currentUrl)) {
+                    console.log("refuse redirect loop attempt type A");
+                    changePage("ERROR ERROR!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! A");
+                } else {
+                    location = url;
+                    console.log(parsedUrl.href);
                 }
+            } else {
+                console.log("refuse javascript uri attempt");
+                changePage("ERROR ERROR!", "TRYING TO USE BOOKMARKLETS EH? USE PROGRAMMABLE NOTEPAD OR SOMETHING!!");
+            };
+        } catch(err) {
+            if (url == "") {
+                console.log("refuse redirect loop attempt type B");
+                changePage("ERROR ERROR!", "NOT GONNA GET A REDIRECT LOOP OUT OF ME! B");
+            } else {
+                changePage("ERROR ERROR!", err);
+                console.warn(url);
+                console.error(err);
             }
         }
+    }
 
-        function changePage(header, description) {
-            function updateIt() {
-                document.querySelector("h1").textContent = header;
+    function changePage(header, description, params = {
+            html:false,
+        }) {
+        function updateIt() {
+            document.querySelector("h1").textContent = header;
+            if (params.html) {
+                document.querySelector("p").innerHTML = description;
+            } else {
                 document.querySelector("p").textContent = description;
             };
-
-            if (document.readyState === "loading") {
-                document.addEventListener("DOMContentLoaded", updateIt);
-            } else {
-                updateIt();
-            };
         };
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", updateIt);
+        } else {
+            updateIt();
+        };
+    };
     </script>
     <meta name="robots" content="noindex">
     <meta charset="UTF-8">
