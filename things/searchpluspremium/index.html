@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6.9 -->
+<!-- made by ccn0 | v1.6.10 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,267 +18,267 @@
     <meta name="description" content="The only search engine that brings you exactly where you wanna go.">
     <link rel="search" type="application/opensearchdescription+xml" title="SearchPlusPREMIUM" href="/things/searchpluspremium/opensearch.xml">
     <script defer="true">
-        function randomInteger(min, max) {
-            const rmin = min;
-            const rmax = max;
-            const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
-            return targetNumber;
+    function randomInteger(min, max) {
+        const rmin = min;
+        const rmax = max;
+        const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
+        return targetNumber;
+    };
+    function seed(leng = 0) {
+        let digits = "";
+        const HX = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
+        for (let i = 0; i < leng; i++) {
+            digits += String(HX[randomInteger(0,HX.length-1)]);
         };
-        function seed(leng = 0) {
-            let digits = "";
-            const HX = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
-            for (let i = 0; i < leng; i++) {
-                digits += String(HX[randomInteger(0,HX.length-1)]);
-            };
-            return digits;
-        };
-        const defaultData = {
-            darkTheme: false,
-            autofocusNew: false,
-            useEnginesParamAllowed: true,
-            magicword: seed(16),
-            searchEngines: [
-                {
-                    url: "https://www.google.com/search?q=%s",
-                    symbol: "@g",
-                },
-                {
-                    url: "https://duckduckgo.com/?q=%s",
-                    symbol: "@ddg",
-                },
-                {
-                    url: "https://ccn0.net/things/searchpluspremium/index.html",
-                    symbol: "!",
-                },
-            ],
-        };
-        let settings = JSON.parse(localStorage.getItem("spp_settings")) || {};
-        for (const key in defaultData) {
-            if (!(key in settings)) {
-                settings[key] = defaultData[key];
-            };
-        };
-        localStorage.setItem("spp_settings", JSON.stringify(settings));
-        const gbal = {
-            settings: JSON.parse(
-                localStorage.getItem("spp_settings") || defaultData
-            ),
-            save: function () {
-                localStorage.setItem("spp_settings", JSON.stringify(gbal.settings));
+        return digits;
+    };
+    const defaultData = {
+        darkTheme: false,
+        autofocusNew: false,
+        useEnginesParamAllowed: true,
+        magicword: seed(16),
+        searchEngines: [
+            {
+                url: "https://www.google.com/search?q=%s",
+                symbol: "@g",
             },
-            thelist: [
-                {
-                    "name": "Google",
-                    "url": "https://www.google.com/search?q=%s",
-                    "nicks": [
-                        "google.com", "israel is committing a genocide in gaza", "goo", "goog", "goggle", "gog", "gle", "googl", "g"
-                    ]
-                },
-                {
-                    "name": "DuckDuckGo",
-                    "url": "https://duckduckgo.com/?q=%s",
-                    "nicks": [
-                        "duckduckgo.com", "duc", "duck", "ddg", "d"
-                    ]
-                },
-                {
-                    "name": "StartPage",
-                    "url": "https://www.startpage.com/do/dsearch?query=%s",
-                    "nicks": [
-                        "startpage.com", "start", "sp", "sx"
-                    ]
-                },
-                {
-                    "name": "Bing",
-                    "url": "https://www.bing.com/search?q=%s",
-                    "nicks": [
-                        "bing.com", "bng", "b"
-                    ]
-                },
-                {
-                    "name": "Wikipedia",
-                    "url": "https://en.wikipedia.org/wiki/Special:Search?search=%s",
-                    "nicks": [
-                        "wikipedia.org", "english wikipedia", "wikipedia (en)", "wiki", "wikip", "wp", "enwiki", "w"
-                    ]
-                },
-                {
-                    "name": "Yahoo",
-                    "url": "https://search.yahoo.com/search?p=%s",
-                    "nicks": [
-                        "yahoo.com", "ya", "y", "yah"
-                    ]
-                },
-                {
-                    "name": "Ecosia",
-                    "url": "https://www.ecosia.org/search?q=%s",
-                    "nicks": [
-                        "ecosia.org", "ecos", "eco", "e"
-                    ]
-                },
-                {
-                    "name": "YouTube",
-                    "url": "https://www.youtube.com/results?search_query=%s",
-                    "nicks": [
-                        "youtube.com", "utube", "you tube", "ut", "yotube", "yt"
-                    ]
-                },
-                {
-                    "name": "Reddit",
-                    "url": "https://www.reddit.com/search/?q=%s",
-                    "nicks": [
-                        "reddit.com", "red", "re", "redd", "ut", "redit", "r"
-                    ]
-                },
-                {
-                    "name": "Twitter",
-                    "url": "https://x.com/search?q=%s",
-                    "nicks": [
-                        "twitter.com", "shell company", "botland", "twiter", "tw", "x.com", "twtter", "x"
-                    ]
-                },
-                {
-                    "name": "IMDb",
-                    "url": "https://www.imdb.com/find?q=%s",
-                    "nicks": [
-                        "imdb.com", "i"
-                    ]
-                },
-                {
-                    "name": "StackOverflow",
-                    "url": "https://stackoverflow.com/search?q=%s",
-                    "nicks": [
-                        "stackoverflow.com", "stack overflow", "stacko", "so"
-                    ]
-                },
-                {
-                    "name": "Urban Dictionary",
-                    "url": "https://www.urbandictionary.com/define.php?term=%s",
-                    "nicks": [
-                        "urbandictionary.com", "udef", "urb", "udict", "ud"
-                    ]
-                },
-                {
-                    "name": "Farside",
-                    "url": "https://farside.link/%u",
-                    "nicks": [
-                        "far side", "farside.link", "fars", "frside", "fs"
-                    ]
-                },
-                {
-                    "name": "Genius",
-                    "url": "https://genius.com/search?q=%s",
-                    "nicks": [
-                        "genius.com", "geniis", "genus", "geni", "ge", "gen"
-                    ]
-                },
-                {
-                    "name": "ChatGPT",
-                    "url": "https://chatgpt.com/?q=%s",
-                    "nicks": [
-                        "water waster", "chatgpt.com", "chat.openai.com", "chat", "gpt"
-                    ]
-                },
-                {
-                    "name": "Pinterest",
-                    "url": "https://www.pinterest.com/search/pins/?q=%s",
-                    "nicks": [
-                        "pinterest.com", "pni", "pintrest", "pin", "p"
-                    ]
-                },
-                {
-                    "name": "Tumblr",
-                    "url": "https://www.tumblr.com/search/%s",
-                    "nicks": [
-                        "tumblr.com", "tumbl", "tum"
-                    ]
-                },
-                {
-                    "name": "GitHub",
-                    "url": "https://github.com/search?q=%s",
-                    "nicks": [
-                        "github.com", "not gitlab", "git hub", "gith", "gh"
-                    ]
-                },
-                {
-                    "name": "MDN Web Docs",
-                    "url": "https://developer.mozilla.org/en-US/search?q=%s",
-                    "nicks": [
-                        "developer.mozilla.org", "mozilla web docs", "mdn docs", "ndn", "mdm", "mdn"
-                    ]
-                },
-                {
-                    "name": "SearchPlusPREMIUM",
-                    "url": `${location.protocol+"//"+location.hostname+(location.port ? ":"+location.port: "")+location.pathname}`,
-                    "nicks": [
-                        "this", "here", "spp", "s+p", "!"
-                    ]
-                },
-                {
-                    "name": "Go To",
-                    "url": "%u",
-                    "nicks": [
-                        "url", "goto"
-                    ]
-                }
-            ],
+            {
+                url: "https://duckduckgo.com/?q=%s",
+                symbol: "@ddg",
+            },
+            {
+                url: "https://ccn0.net/things/searchpluspremium/index.html",
+                symbol: "!",
+            },
+        ],
+    };
+    let settings = JSON.parse(localStorage.getItem("spp_settings")) || {};
+    for (const key in defaultData) {
+        if (!(key in settings)) {
+            settings[key] = defaultData[key];
         };
+    };
+    localStorage.setItem("spp_settings", JSON.stringify(settings));
+    const gbal = {
+        settings: JSON.parse(
+            localStorage.getItem("spp_settings") || defaultData
+        ),
+        save: function () {
+            localStorage.setItem("spp_settings", JSON.stringify(gbal.settings));
+        },
+        thelist: [
+            {
+                "name": "Google",
+                "url": "https://www.google.com/search?q=%s",
+                "nicks": [
+                    "google.com", "israel is committing a genocide in gaza", "goo", "goog", "goggle", "gog", "gle", "googl", "g"
+                ]
+            },
+            {
+                "name": "DuckDuckGo",
+                "url": "https://duckduckgo.com/?q=%s",
+                "nicks": [
+                    "duckduckgo.com", "duc", "duck", "ddg", "d"
+                ]
+            },
+            {
+                "name": "StartPage",
+                "url": "https://www.startpage.com/do/dsearch?query=%s",
+                "nicks": [
+                    "startpage.com", "start", "sp", "sx"
+                ]
+            },
+            {
+                "name": "Bing",
+                "url": "https://www.bing.com/search?q=%s",
+                "nicks": [
+                    "bing.com", "bng", "b"
+                ]
+            },
+            {
+                "name": "Wikipedia",
+                "url": "https://en.wikipedia.org/wiki/Special:Search?search=%s",
+                "nicks": [
+                    "wikipedia.org", "english wikipedia", "wikipedia (en)", "wiki", "wikip", "wp", "enwiki", "w"
+                ]
+            },
+            {
+                "name": "Yahoo",
+                "url": "https://search.yahoo.com/search?p=%s",
+                "nicks": [
+                    "yahoo.com", "ya", "y", "yah"
+                ]
+            },
+            {
+                "name": "Ecosia",
+                "url": "https://www.ecosia.org/search?q=%s",
+                "nicks": [
+                    "ecosia.org", "ecos", "eco", "e"
+                ]
+            },
+            {
+                "name": "YouTube",
+                "url": "https://www.youtube.com/results?search_query=%s",
+                "nicks": [
+                    "youtube.com", "utube", "you tube", "ut", "yotube", "yt"
+                ]
+            },
+            {
+                "name": "Reddit",
+                "url": "https://www.reddit.com/search/?q=%s",
+                "nicks": [
+                    "reddit.com", "red", "re", "redd", "ut", "redit", "r"
+                ]
+            },
+            {
+                "name": "Twitter",
+                "url": "https://x.com/search?q=%s",
+                "nicks": [
+                    "twitter.com", "shell company", "botland", "twiter", "tw", "x.com", "twtter", "x"
+                ]
+            },
+            {
+                "name": "IMDb",
+                "url": "https://www.imdb.com/find?q=%s",
+                "nicks": [
+                    "imdb.com", "i"
+                ]
+            },
+            {
+                "name": "StackOverflow",
+                "url": "https://stackoverflow.com/search?q=%s",
+                "nicks": [
+                    "stackoverflow.com", "stack overflow", "stacko", "so"
+                ]
+            },
+            {
+                "name": "Urban Dictionary",
+                "url": "https://www.urbandictionary.com/define.php?term=%s",
+                "nicks": [
+                    "urbandictionary.com", "udef", "urb", "udict", "ud"
+                ]
+            },
+            {
+                "name": "Farside",
+                "url": "https://farside.link/%u",
+                "nicks": [
+                    "far side", "farside.link", "fars", "frside", "fs"
+                ]
+            },
+            {
+                "name": "Genius",
+                "url": "https://genius.com/search?q=%s",
+                "nicks": [
+                    "genius.com", "geniis", "genus", "geni", "ge", "gen"
+                ]
+            },
+            {
+                "name": "ChatGPT",
+                "url": "https://chatgpt.com/?q=%s",
+                "nicks": [
+                    "water waster", "chatgpt.com", "chat.openai.com", "chat", "gpt"
+                ]
+            },
+            {
+                "name": "Pinterest",
+                "url": "https://www.pinterest.com/search/pins/?q=%s",
+                "nicks": [
+                    "pinterest.com", "pni", "pintrest", "pin", "p"
+                ]
+            },
+            {
+                "name": "Tumblr",
+                "url": "https://www.tumblr.com/search/%s",
+                "nicks": [
+                    "tumblr.com", "tumbl", "tum"
+                ]
+            },
+            {
+                "name": "GitHub",
+                "url": "https://github.com/search?q=%s",
+                "nicks": [
+                    "github.com", "not gitlab", "git hub", "gith", "gh"
+                ]
+            },
+            {
+                "name": "MDN Web Docs",
+                "url": "https://developer.mozilla.org/en-US/search?q=%s",
+                "nicks": [
+                    "developer.mozilla.org", "mozilla web docs", "mdn docs", "ndn", "mdm", "mdn"
+                ]
+            },
+            {
+                "name": "SearchPlusPREMIUM",
+                "url": `${location.protocol+"//"+location.hostname+(location.port ? ":"+location.port: "")+location.pathname}`,
+                "nicks": [
+                    "this", "here", "spp", "s+p", "!"
+                ]
+            },
+            {
+                "name": "Go To",
+                "url": "%u",
+                "nicks": [
+                    "url", "goto"
+                ]
+            }
+        ],
+    };
     </script>
     <script deref="true">
-        gbal.ui = {
-            checkbox: (params = {
-                id: "unk",
-                label: "Label",
-                title: "",
-                boxtitle: "",
-                value: false,
-            })=>{
-                const uiCont = document.createElement("div");
-                uiCont.classList.add("uicont");
+    gbal.ui = {
+        checkbox: (params = {
+            id: "unk",
+            label: "Label",
+            title: "",
+            boxtitle: "",
+            value: false,
+        })=>{
+            const uiCont = document.createElement("div");
+            uiCont.classList.add("uicont");
 
-                const label = document.createElement("label");
-                label.textContent = params.label;
-                label.title = params.title;
-                label.htmlFor = params.id;
+            const label = document.createElement("label");
+            label.textContent = params.label;
+            label.title = params.title;
+            label.htmlFor = params.id;
 
-                const checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.checked = params.value;
-                checkbox.title = params.boxtitle;
-                checkbox.id = params.id;
-                if (params.changeevent) checkbox.addEventListener("change",params.changeevent)
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = params.value;
+            checkbox.title = params.boxtitle;
+            checkbox.id = params.id;
+            if (params.changeevent) checkbox.addEventListener("change",params.changeevent)
 
-                uiCont.appendChild(label);
-                uiCont.appendChild(checkbox);
-                return uiCont;
-            },
-            iText: (params = {
-                id: "unk",
-                label: "Label",
-                title: "",
-                boxtitle: "",
-                value: "",
-            })=>{
-                const uiCont = document.createElement("div");
-                uiCont.classList.add("uicont");
+            uiCont.appendChild(label);
+            uiCont.appendChild(checkbox);
+            return uiCont;
+        },
+        iText: (params = {
+            id: "unk",
+            label: "Label",
+            title: "",
+            boxtitle: "",
+            value: "",
+        })=>{
+            const uiCont = document.createElement("div");
+            uiCont.classList.add("uicont");
 
-                const label = document.createElement("label");
-                label.textContent = params.label;
-                label.title = params.title;
-                label.htmlFor = params.id;
+            const label = document.createElement("label");
+            label.textContent = params.label;
+            label.title = params.title;
+            label.htmlFor = params.id;
 
-                const input = document.createElement("input");
-                input.type = "text";
-                input.title = params.boxtitle;
-                input.value = params.value;
-                input.id = params.id;
-                if (params.changeevent) input.addEventListener("change",params.changeevent)
+            const input = document.createElement("input");
+            input.type = "text";
+            input.title = params.boxtitle;
+            input.value = params.value;
+            input.id = params.id;
+            if (params.changeevent) input.addEventListener("change",params.changeevent)
 
-                uiCont.appendChild(label);
-                uiCont.appendChild(input);
-                return uiCont;
-            },
-        }
+            uiCont.appendChild(label);
+            uiCont.appendChild(input);
+            return uiCont;
+        },
+    };
     </script>
 </head>
 <body data-darktheme="false">
@@ -310,6 +310,7 @@
                 <div style="text-align: center; padding: 10px 0;">
                     <a href="https://bsky.app/profile/ccn0.net">made by ccn0</a>
                     <a href="#settcol">engines</a>
+                    <a href="#settcol" class="skipnav">skip to engines</a>
                 </div>
             </div>
         </div>
@@ -363,68 +364,68 @@ or if your using Firefox, click on the search bar while on this page and click t
                         <a href="#" id="resetButton" title="Reset all settings to defaults">RESET&nbsp;ALL&nbsp;SETTINGS</a>
                         <div id="livesettings"></div>
                         <script defer="true">
-                            const extraContainer = document.querySelector("#extrasDetails");
-                            const setCont = document.querySelector("#livesettings");
-                            extraContainer.addEventListener('toggle',(e)=>{
-                                setCont.innerHTML = "";
-                                if (e.target.open == true) {
-                                    setCont.appendChild(gbal.ui.checkbox({
-                                        label:"Dark Theme",
-                                        title:"Toggle dark mode",
-                                        boxtitle:"Dark mode",
-                                        id:"darktheme",
-                                        value:gbal.settings.darkTheme,
-                                        changeevent:(e)=>{
-                                            gbal.settings.darkTheme = e.target.checked;
-                                            gbal.save();
-                                            document.body.dataset.darktheme = gbal.settings.darkTheme;
-                                        }
-                                    }));
-                                    setCont.appendChild(gbal.ui.checkbox({
-                                        label:"Autofocus New Engines",
-                                        title:"Autofocus URL Input for new engines",
-                                        boxtitle:"Autofocus New Engines",
-                                        id:"autofocusnew",
-                                        value:gbal.settings.autofocusNew,
-                                        changeevent:(e)=>{
-                                            gbal.settings.autofocusNew = e.target.checked;
-                                            gbal.save();
-                                        }
-                                    }));
-                                    setCont.appendChild(gbal.ui.checkbox({
-                                        label:"useEngines Parameter Enabled",
-                                        title:"useEngines parameter to use external engines without adding them",
-                                        boxtitle:"useEngines Parameter Enabled",
-                                        id:"useenginesparamallowed",
-                                        value:gbal.settings.useEnginesParamAllowed,
-                                        changeevent:(e)=>{
-                                            gbal.settings.useEnginesParamAllowed = e.target.checked;
-                                            gbal.save();
-                                        }
-                                    }));
-                                    setCont.appendChild(gbal.ui.iText({
-                                        label:"Magic Word",
-                                        title:"Set Magic Word to verify useEngines parameter",
-                                        boxtitle:"Magic Word",
-                                        id:"magicword",
-                                        value:gbal.settings.magicword,
-                                        changeevent:(e)=>{
-                                            gbal.settings.magicword = e.target.value;
-                                            gbal.save();
-                                        }
-                                    }));
-                                };
-                            });
+    const extraContainer = document.querySelector("#extrasDetails");
+    const setCont = document.querySelector("#livesettings");
+    extraContainer.addEventListener('toggle',(e)=>{
+        setCont.innerHTML = "";
+        if (e.target.open == true) {
+            setCont.appendChild(gbal.ui.checkbox({
+                label:"Dark Theme",
+                title:"Toggle dark mode",
+                boxtitle:"Dark mode",
+                id:"darktheme",
+                value:gbal.settings.darkTheme,
+                changeevent:(e)=>{
+                    gbal.settings.darkTheme = e.target.checked;
+                    gbal.save();
+                    document.body.dataset.darktheme = gbal.settings.darkTheme;
+                }
+            }));
+            setCont.appendChild(gbal.ui.checkbox({
+                label:"Autofocus New Engines",
+                title:"Autofocus URL Input for new engines",
+                boxtitle:"Autofocus New Engines",
+                id:"autofocusnew",
+                value:gbal.settings.autofocusNew,
+                changeevent:(e)=>{
+                    gbal.settings.autofocusNew = e.target.checked;
+                    gbal.save();
+                }
+            }));
+            setCont.appendChild(gbal.ui.checkbox({
+                label:"useEngines Parameter Enabled",
+                title:"useEngines parameter to use external engines without adding them",
+                boxtitle:"useEngines Parameter Enabled",
+                id:"useenginesparamallowed",
+                value:gbal.settings.useEnginesParamAllowed,
+                changeevent:(e)=>{
+                    gbal.settings.useEnginesParamAllowed = e.target.checked;
+                    gbal.save();
+                }
+            }));
+            setCont.appendChild(gbal.ui.iText({
+                label:"Magic Word",
+                title:"Set Magic Word to verify useEngines parameter",
+                boxtitle:"Magic Word",
+                id:"magicword",
+                value:gbal.settings.magicword,
+                changeevent:(e)=>{
+                    gbal.settings.magicword = e.target.value;
+                    gbal.save();
+                }
+            }));
+        };
+    });
 
-                            document.querySelector("#resetButton").addEventListener("click",()=>{
-                                if (confirm("Are you absolutely sure you want to reset your settings back to their defaults?")) {
-                                    localStorage.setItem(
-                                        "spp_settings",
-                                        JSON.stringify(defaultData)
-                                    );
-                                    location.reload();
-                                };
-                            });
+    document.querySelector("#resetButton").addEventListener("click",()=>{
+        if (confirm("Are you absolutely sure you want to reset your settings back to their defaults?")) {
+            localStorage.setItem(
+                "spp_settings",
+                JSON.stringify(defaultData)
+            );
+            location.reload();
+        };
+    });
                         </script>
                     </p>
                 </details>
@@ -438,8 +439,6 @@ or if your using Firefox, click on the search bar while on this page and click t
                 </p>
                 <p>If you like this search engine, be sure to give it a like. If you find a problem, or want me to add an engine to Quick Add,
                     <a href="https://github.com/ccn0/ccn0.github.io/issues">open an issue on the website repo</a>.
-                    Also, I love attention, so be sure to share this with your friends.
-                    Anyways, I'm almost at the bridge now. Oh shit, I forgot &mdash; how am I supposed to send this shit out?
                 </p>
                 <details id="detailsvar">
                     <summary>Variables</summary>
@@ -798,6 +797,16 @@ or if your using Firefox, click on the search bar while on this page and click t
             urlImport();
         });
     };
+
+    document.querySelector(".skipnav").addEventListener("click",(e)=>{
+        document.querySelector("#enginelist").focus();
+    });
+    document.addEventListener("keydown",(e)=>{
+        if (e.key == "N" && e.ctrlKey) {
+            e.preventDefault();
+            addNew();
+        };
+    });
 
     if (location.hostname == "127.0.0.1") {
         document.querySelector("figure>img").style.cssText = "filter:sepia(1) saturate(100);";

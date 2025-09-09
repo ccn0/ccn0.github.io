@@ -493,6 +493,15 @@ form {
     }
 }
 
+.skipnav {
+    position: absolute;
+    top: -9999px;
+    &:focus-within {
+        top: auto;
+        transform: translate(-120%,32px);
+    }
+}
+
 @keyframes moveda {
     from {
         border-color: var(--red);
