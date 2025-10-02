@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v7.2.1 ccn0 net change | MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v7.2.2 time in tab title finally | MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,6 +43,7 @@
 
     <script>
         const isEmbed = new URLSearchParams(window.location.search).get('embed') == '1';
+        const meta = {};
         console.log(isEmbed)
         
         if (isEmbed) {
@@ -82,7 +83,8 @@
             console.log(jsonData);
             date1 = new Date(jsonData.date);
             document.getElementById('title').textContent = jsonData.title
-            document.getElementById('tabTitle').textContent = `GlobalClocks: ${jsonData.title}`;
+            meta.title = jsonData.title;
+            document.title = `GlobalClocks: ${jsonData.title}`;
             document.getElementById('description').textContent = jsonData.description;
         } catch (error) {
             console.error("Error parsing JSON:", error);
@@ -125,6 +127,7 @@
                     timeDiff = `${days == 1 ? '': String(days + " days or ")}${hours}:${formattedMinutes}:${formattedSeconds}`;
                     fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
                 }
+                document.title = `GlobalClocks: ${meta.title}; ${(hours)-1}:${formattedMinutes}:${formattedSeconds}`
             }
         
             document.getElementById('timeSince').textContent = timeDiff;
