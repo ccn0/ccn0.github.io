@@ -141,6 +141,8 @@ hgroup {
                 flex-direction: column;
                 border-right: var(--dashedborder);
                 padding: 4px;
+                height: min-content;
+                align-self: center;
                 img {
                     max-width: 100%;
                     width: auto;
