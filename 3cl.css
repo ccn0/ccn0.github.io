@@ -1,8 +1,7 @@
 /*
-3CL | currently being rolled out very slowly
-MADE BY CCN0 https://github.com/ccn0
-
-v1B06
+    3CL / 3 COLUMN LAYOUT / made for CCN0.net
+    MADE BY CCN0 / https://github.com/ccn0
+    v1B07
 */
 
 :root {
@@ -139,6 +138,7 @@ hgroup {
                 width: auto;
                 align-items: center;
                 display: flex;
+                flex-direction: column;
                 border-right: var(--dashedborder);
                 padding: 4px;
                 img {
@@ -151,7 +151,11 @@ hgroup {
                 flex: 1;
             }
             h3,p,q {
-                margin:6px;
+                margin: 6px;
+                height: auto;
+            }
+            q {
+                display: inline-block;
             }
             p.big {
                 font-weight: bold;

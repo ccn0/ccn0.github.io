@@ -36,12 +36,13 @@
                     <li>
                         <div class="pfp">
                             <img src="https://ccn0.net/img/ccn0.png" alt="CCN0 Profile Picture" id="bskypfp" draggable="false">
+                            <a href="https://bsky.app/profile/ccn0.net">@ccn0.net</a>
                         </div>
                         <div class="words" title="head to my busky">
                             <p class="big">LATEST BSKY</p>
                             <p>
                                 <q id="skeetquote">...</q><br>
-                                <a href="https://bsky.app/profile/ccn0.net"><time datetime="" id="skeetbirth"></time></a>
+                                <a id="linkToSkeet"><time datetime="" id="skeetbirth"></time></a>
                             </p>
                         </div>
                     </li>
@@ -134,9 +135,11 @@
                     const skeet = resp.feed[0];
                     const bskypfp = document.querySelector("#bskypfp");
                     const skeetquote = document.querySelector("#skeetquote");
+                    const skeetlink = document.querySelector("#linkToSkeet");
                     const skeetbirth = document.querySelector("#skeetbirth");
                     bskypfp.src = skeet.post.author.avatar;
                     skeetquote.textContent = skeet.post.record.text;
+                    skeetlink.href = `https://bsky.app/profile/ccn0.net/post/${skeet.post.uri.split("/")[4]}`;
                     skeetbirth.textContent = skeet.post.record.createdAt.split("T")[0];
                     skeetbirth.setAttribute("datetime",skeet.post.record.createdAt);
                 } catch (err) {
