@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- v7.2.2 time in tab title finally | MADE BY CCN0 https://github.com/ccn0 -->
+<!-- v7.2.3 tab title is now correct for both countdowns and ups & fullscreen | MADE BY CCN0 https://github.com/ccn0 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,105 +36,132 @@
         <h1 id="timeSince"></h1>
         <p id="extraLong"></p>
         <div class="fixed" id="fixed">
-            <a href="https://ccn0.net/things/globalclocks">GlobalClocks</a> - 
-            <a href="javascript:navigator.clipboard.writeText(window.location.href.replace(/\?embed=1/, ''))">Copy Link</a>
+            <a href="https://ccn0.net/things/globalclocks">GlobalClocks</a> -
+            <a href="javascript:navigator.clipboard.writeText(window.location.href.replace(/\?embed=1/, ''))">Copy
+                Link</a>
         </div>
     </div>
-
     <script>
-        const isEmbed = new URLSearchParams(window.location.search).get('embed') == '1';
-        const meta = {};
-        console.log(isEmbed)
-        
+    const isEmbed = new URLSearchParams(window.location.search).get('embed') == '1';
+    const meta = {};
+    const timeSinceHeader = document.getElementById('timeSince');
+    let fullscreened = false;
+
+    console.log(isEmbed)
+    if (isEmbed) {
+        document.body.setAttribute("data-embed", "yes");
+    };
+
+    const theJson = decodeURIComponent(window.location.hash.slice(1));
+    if (theJson === "create") {
+        document.getElementById('createbox').style.display = "block";
+    };
+
+    function createLink() {
+        const inputTime = document.getElementById('inputTime').value
+        if (!inputTime) {
+            var date = `${document.getElementById('inputDate').value}`;
+        } else {
+            var date = `${document.getElementById('inputDate').value}T${document.getElementById('inputTime').value}`;
+        }
+        var title = document.getElementById('inputTitle').value;
+        var mixed = `{"date":"${date}","title":"${title}"}`;
+        var encodedMix = encodeURIComponent(mixed)
+        var cleanURL = window.location.href.split('#')[0];
+        const embedCheckbox = document.getElementById('embedCheck');
+        if (embedCheckbox.checked) {
+            cleanURL += '?embed=1';
+        }
+        var finalURL = `${cleanURL}#${encodedMix}`;
+        console.log(mixed);
+        console.log(finalURL);
+        if (!embedCheckbox.checked) {
+            navigator.clipboard.writeText(finalURL)
+        } else {
+            navigator.clipboard.writeText(`<iframe width="400" height="100" src="${finalURL}" title="GlobalClocks:${title}" frameborder="0"></iframe>`, "embed")
+        };
+        alert("Copied to clipboard");
+    };
+
+    let date1 = 0;
+    try {
+        const jsonData = JSON.parse(theJson);
+        console.log(jsonData);
+        date1 = new Date(jsonData.date);
+        document.getElementById('title').textContent = jsonData.title
+        meta.title = jsonData.title;
+        document.title = `GlobalClocks: ${jsonData.title}`;
+        document.getElementById('description').textContent = jsonData.description;
+    } catch (error) {
+        console.error("Error parsing JSON:", error);
+    }
+    function updateTimeDifference() {
+        const date2 = new Date();
+        const timeDifference = date2 - date1;
+        const isCountdown = timeDifference < 0;
+
+        const days = Math.abs(Math.floor(timeDifference / (1000 * 60 * 60 * 24)));
+        const hours = Math.abs(Math.floor(timeDifference / (1000 * 60 * 60)));
+        const minutes = Math.abs(Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)));
+        const seconds = Math.abs(Math.floor((timeDifference % (1000 * 60)) / 1000));
+
+        let formattedMinutes
+
+        if (!isCountdown) {
+            formattedMinutes = String(minutes).length < 2 ? `0${minutes}` : minutes; // days since
+        } else {
+            formattedMinutes = String(minutes).length < 2 ? `0${minutes - 1}` : minutes - 1; // countdown
+        }
+
+        const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+        let timeDiff, fullDiff;
+
         if (isEmbed) {
-            document.getElementById('fixed').style.display = "block";
-            const embedstyles = document.createElement('style');
-            embedstyles.textContent = "h1 {font-size: 10vw;}h2,p {font-size: 3vw;}"
-            document.head.appendChild(embedstyles)
-        }
-        const theJson = decodeURIComponent(window.location.hash.slice(1));
-        if (theJson === "create") {
-            document.getElementById('createbox').style.display = "block";
-        }
-        function createLink() {
-            const inputTime = document.getElementById('inputTime').value
-            if (!inputTime) {
-                var date = `${document.getElementById('inputDate').value}`;
-            } else {
-                var date = `${document.getElementById('inputDate').value}T${document.getElementById('inputTime').value}`;
+            if (isCountdown) { // COUNTDOWN RIGHT HERE THIS IS THE COUNTDOWN
+                timeDiff = `${(hours) - 1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
+                fullDiff = `Upcoming in ${days - 1} days, ${Math.abs((hours - 1) - ((days - 1) * 24))} hours, ${minutes - 1} minutes, and ${seconds} seconds.`;
+            } else { // COUNT UP
+                timeDiff = `${hours}:${formattedMinutes}:${formattedSeconds}`;
+                fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
             }
-            var title = document.getElementById('inputTitle').value;
-            var mixed = `{"date":"${date}","title":"${title}"}`;
-            var encodedMix = encodeURIComponent(mixed)
-            var cleanURL = window.location.href.split('#')[0];
-            const embedCheckbox = document.getElementById('embedCheck');
-            if (embedCheckbox.checked) {
-                cleanURL += '?embed=1';
+        } else {
+            if (isCountdown) { // COUNTDOWN
+                timeDiff = `${days == 1 ? '' : String(days + " days or ")}${(hours) - 1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
+                fullDiff = `Upcoming in ${days == 1 ? '' : String(days - 1 + " days, ")}${Math.abs((hours - 1) - ((days - 1) * 24))} hours, ${minutes - 1} minutes, and ${seconds} seconds.`;
+                document.title = `GlobalClocks: ${meta.title ? meta.title + "; " : ""}${(hours) - 1}:${formattedMinutes}:${formattedSeconds}`
+            } else { // COUNT UP
+                timeDiff = `${days == 1 ? '' : String(days + " days or ")}${hours}:${formattedMinutes}:${formattedSeconds}`;
+                fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
+                document.title = `GlobalClocks: ${meta.title ? meta.title + "; " : ""}${(hours)}:${formattedMinutes}:${formattedSeconds}`
             }
-            var finalURL = `${cleanURL}#${encodedMix}`;
-            console.log(mixed);
-            console.log(finalURL);
-            if (!embedCheckbox.checked){navigator.clipboard.writeText(finalURL)}
-            else{navigator.clipboard.writeText(`<iframe width="400" height="100" src="${finalURL}" title="GlobalClocks:${title}" frameborder="0"></iframe>`,"embed")};
         }
-        let date1 = 0;
+
+        timeSinceHeader.textContent = timeDiff;
+        document.getElementById('extraLong').textContent = fullDiff;
+    };
+    updateTimeDifference()
+    setInterval(updateTimeDifference, 900);
+
+    timeSinceHeader.addEventListener("click",()=>{
+        if (!fullscreened) {
+            document.body.requestFullscreen();
+            timeSinceHeader.style.cursor = "zoom-out";
+            fullscreened = true;
+        } else {
+            document.exitFullscreen()
+            timeSinceHeader.style.cursor = "zoom-in";
+            fullscreened = false;
+        };
+    });
+    const requestWakeLock = async () => {
         try {
-            const jsonData = JSON.parse(theJson);
-            console.log(jsonData);
-            date1 = new Date(jsonData.date);
-            document.getElementById('title').textContent = jsonData.title
-            meta.title = jsonData.title;
-            document.title = `GlobalClocks: ${jsonData.title}`;
-            document.getElementById('description').textContent = jsonData.description;
-        } catch (error) {
-            console.error("Error parsing JSON:", error);
+            const wakeLock = await navigator.wakeLock.request("screen");
+        } catch (err) {
+            console.error(err);
         }
-        function updateTimeDifference() {
-            const date2 = new Date();
-            const timeDifference = date2 - date1;
-            const isCountdown = timeDifference < 0;
-
-            const days = Math.abs(Math.floor(timeDifference / (1000 * 60 * 60 * 24)));
-            const hours = Math.abs(Math.floor(timeDifference / (1000 * 60 * 60)));
-            const minutes = Math.abs(Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)));
-            const seconds = Math.abs(Math.floor((timeDifference % (1000 * 60)) / 1000));
-
-            let formattedMinutes
-
-            if (!isCountdown) {
-                formattedMinutes = String(minutes).length < 2 ? `0${minutes}` : minutes; // days since
-            } else {
-                formattedMinutes = String(minutes).length < 2 ? `0${minutes-1}` : minutes-1; // countdown
-            }
-
-            const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-
-            let timeDiff, fullDiff;
-
-            if (isEmbed) {
-                if (isCountdown) { // COUNTDOWN RIGHT HERE THIS IS THE COUNTDOWN
-                    timeDiff = `${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
-                    fullDiff = `Upcoming in ${days-1} days, ${Math.abs((hours-1) - ((days-1) * 24))} hours, ${minutes-1} minutes, and ${seconds} seconds.`;
-                } else { // COUNT UP
-                    timeDiff = `${hours}:${formattedMinutes}:${formattedSeconds}`;
-                    fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
-                }
-            } else {
-                if (isCountdown) { // COUNTDOWN
-                    timeDiff = `${days == 1 ? '': String(days + " days or ")}${(hours)-1}:${formattedMinutes}:${formattedSeconds}`;// TODO formatted minutes -1
-                    fullDiff = `Upcoming in ${days == 1 ? '': String(days-1 + " days, ")}${Math.abs((hours-1) - ((days-1) * 24))} hours, ${minutes-1} minutes, and ${seconds} seconds.`;
-                } else { // COUNT UP
-                    timeDiff = `${days == 1 ? '': String(days + " days or ")}${hours}:${formattedMinutes}:${formattedSeconds}`;
-                    fullDiff = `It has since been ${days} days, ${hours - (days * 24)} hours, ${minutes} minutes, and ${seconds} seconds.`;
-                }
-                document.title = `GlobalClocks: ${meta.title}; ${(hours)-1}:${formattedMinutes}:${formattedSeconds}`
-            }
-        
-            document.getElementById('timeSince').textContent = timeDiff;
-            document.getElementById('extraLong').textContent = fullDiff;
-        }
-        updateTimeDifference()
-        setInterval(updateTimeDifference, 900);
+    };
+    requestWakeLock();
     </script>
 </body>
 </html>

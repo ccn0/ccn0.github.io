@@ -63,3 +63,21 @@ button {
 .fixed a:hover {
     color: #fff;
 }
+#timeSince {
+    cursor: zoom-in;
+}
+#extraLong {
+    cursor: none;
+}
+
+body[data-embed="yes"] {
+    h1 {
+        font-size: 10vw;
+    }
+    h2,p {
+        font-size: 3vw;
+    }
+    #fixed {
+        display: block;
+    }
+}
