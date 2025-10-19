@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6.11 -->
+<!-- made by ccn0 | v1.6.12 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -392,20 +392,14 @@
             <div>
                 <details>
                     <summary>About:</summary>
-                    <p>Instead of relying on your browsers search "keywords,"
-you can instead use SearchPlusPREMIUM, which despite the name sounding like otherwise, is actually free.
-You can add it as a search engine by using the URL,
+                    <p>Instead of relying on your browsers search "keywords" or using "@" to specify,
+you can instead use SearchPlusPREMIUM, which is actually free.
+Despite technological advancements over the past few decades,
+some <span title="Firefox...">modern browsers</span> and most mobile browsers have yet to catch up,
+and its just embarrassing. You can add any search engine and even websites that aren't search engines!
+You can set SearchPlusPREMIUM as your search engine by using the URL (where %s is the query),
 <code>https://ccn0.net/things/searchpluspremium/search.html?q=%s</code>,
-or if your using Firefox, click on the search bar while on this page and click the little icon with the green plus.
-                    </p>
-                    <p>
-                        SHARE EVERYWHERE!!!
-                        <a target="_blank" href="https://twitter.com/intent/tweet?text=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW%20https://ccn0.net/things/searchpluspremium/index.html">Share&nbsp;to&nbsp;Twitter</a>
-                        <a href="https://www.reddit.com/submit?url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;Reddit</a>
-                        <a href="mailto:?subject=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW&body=Check%20this%20out%20https://ccn0.net/things/searchpluspremium/index.html" target="_blank">Share&nbsp;via&nbsp;Email</a>
-                        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ccn0.net/things/searchpluspremium/index.html&title=BEST%20SEARCH%20ENGINE%20EVER%2C%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;LinkedIn</a>
-                        <a href="https://www.tumblr.com/share/link?url=https://ccn0.net/things/searchpluspremium/index.html&name=BEST%20SEARCH%20ENGINE%20EVER,%20USE%20SearchPlusPREMIUM%20NOW" target="_blank">Share&nbsp;on&nbsp;Tumblr</a>
-                        <a href="javascript:navigator.clipboard.writeText('https://ccn0.net/things/searchpluspremium/index.html');">Copy&nbsp;Link</a>
+or if your using Firefox, click on the search bar while on this page and click the little icon with the green plus (+).
                     </p>
                 </details>
                 <details>
@@ -824,6 +818,10 @@ or if your using Firefox, click on the search bar while on this page and click t
             let importModal;
             const resultObj = JSON.parse(result);
             const toSave = {...resultObj}
+            if (Object.keys(resultObj).length == 0) {
+                alert("This is an empty JSON file.");
+                return;
+            };
 
             const settingsTable = document.createElement("table");
             settingsTable.id = "importsettings";
@@ -924,7 +922,8 @@ or if your using Firefox, click on the search bar while on this page and click t
             settingsTable.appendChild(stableBody);
 
             // ENGINES TABLE BELOW!!!
-            const toSaveEngines = [...resultObj.searchEngines];
+            const toSaveEngines = [];
+            if (resultObj.searchEngines?.length > 0) toSaveEngines.push(...resultObj.searchEngines);
             delete toSave.searchEngines;
 
             const enginesTable = document.createElement("table");
@@ -971,7 +970,7 @@ or if your using Firefox, click on the search bar while on this page and click t
 
             const etableBody = document.createElement("tbody");
 
-            resultObj.searchEngines.forEach((engine, index) => {
+            resultObj.searchEngines?.forEach((engine, index) => {
                 const tr = document.createElement("tr");
                 const toggleEngine = document.createElement("input");
                 toggleEngine.type = "checkbox";
@@ -1004,10 +1003,16 @@ or if your using Firefox, click on the search bar while on this page and click t
 
             enginesTable.appendChild(etableBody);
 
+            const txtarr = [];
+            const buffObj = {...resultObj};
+            delete buffObj.searchEngines;
+            if (Object.keys(buffObj).length > 0) txtarr.push(settingsTable);
+            if (resultObj.searchEngines?.length > 0) txtarr.push(enginesTable);
+
             importModal = gbal.ui.modal({
                 id:"import1",
                 title:"Choose Settings to Import",
-                txt: [settingsTable,enginesTable],
+                txt: txtarr,
                 headActions:[
                     {
                         text:"Close",
@@ -1031,8 +1036,8 @@ or if your using Firefox, click on the search bar while on this page and click t
                 ]
             });
             document.body.appendChild(importModal);
+            importModal.querySelector("button").focus();
             function finallyImport(toSave) {
-                console.log(toSave);
                 Object.keys(toSave).forEach(key=>{
                     if (key !== "searchEngines") {
                         gbal.settings[key] = toSave[key]
@@ -1236,11 +1241,14 @@ or if your using Firefox, click on the search bar while on this page and click t
             });
 
             enginesTable.appendChild(etableBody);
+            
+            const txtarr = [settingsTable];
+            if (gbal.settings.searchEngines?.length > 0) txtarr.push(enginesTable);
 
             exportModal = gbal.ui.modal({
                 id:"export1",
                 title:"Choose Settings to Export",
-                txt: [settingsTable, enginesTable],
+                txt: txtarr,
                 headActions:[
                     {
                         text:"Close",
@@ -1259,34 +1267,34 @@ or if your using Firefox, click on the search bar while on this page and click t
                     {
                         text:"Export",
                         title:"Export these Settings as JSON file",
-                        action: ()=>{finallyExport("myEngines.spp.json")}
+                        action: ()=>{finallyExport(toSave,toSaveEngines)}
                     },
                 ]
             });
             document.body.appendChild(exportModal);
-            function finallyExport(filename) {
-                if (toSaveEngines.length > 0) {
-                    toSave.searchEngines = [];
-                    const filteredEngines = toSaveEngines.filter(e => e);
+            exportModal.querySelector("button").focus();
+            function finallyExport(toSaveSet, toSaveEng) {
+                if (toSaveEng.length > 0) {
+                    toSaveSet.searchEngines = [];
+                    const filteredEngines = toSaveEng.filter(e => e);
                     if (filteredEngines.length > 0) {
-                        toSave.searchEngines.push(...filteredEngines);
+                        toSaveSet.searchEngines.push(...filteredEngines);
                     } else {
-                        delete toSave.searchEngines;
+                        delete toSaveSet.searchEngines;
                     }
                     console.log(filteredEngines)
                 };
-                var blob = new Blob([JSON.stringify(toSave)], { type: 'application/json' });
+                var blob = new Blob([JSON.stringify(toSaveSet)], { type: 'application/json' });
                 var url = URL.createObjectURL(blob);
 
                 var a = document.createElement('a');
                 a.href = url;
-                a.download = filename;
+                a.download = "myEngines.spp.json";
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                console.log(toSave)
-                // exportModal.remove();
+                console.log(toSaveSet);
             };
         };
     };
