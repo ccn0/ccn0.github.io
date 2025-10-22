@@ -573,6 +573,9 @@ form {
                         }
                     }
                 }
+                td:nth-child(3) {
+                    text-align: left;
+                }
                 tr {
                     border: 2px solid var(--hero);
                     &:hover {
@@ -611,6 +614,7 @@ form {
     }
     &:active {
         background-color: var(--btnactive);
+        transform: translateY(2px);
     }
 }
 

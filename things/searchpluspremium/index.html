@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6.12 -->
+<!-- made by ccn0 | v1.6.13 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +34,7 @@
     };
     const defaultData = {
         darkTheme: false,
-        autofocusNew: false,
+        autofocusNew: true,
         useEnginesParamAllowed: true,
         magicword: seed(16),
         searchEngines: [
@@ -351,6 +351,50 @@
             modalCont.appendChild(modMain);
 
             return modalCont;
+        },
+        txtModal: (params = {
+            id: "unkmod",
+            title: "Modal",
+            text: "",
+            headActions: [],
+            mainActions: []
+        })=>{
+            let alertCont;
+            let mixParams = {...params};
+            if (params.headActions) {
+                mixParams.headActions = [...params.headActions];
+            } else {
+                mixParams.headActions = [];
+            };
+            if (params.mainActions) {
+                mixParams.mainActions = [...params.mainActions];
+            } else {
+                mixParams.mainActions = [];
+            };
+
+            const words = document.createElement("p");
+            words.appendChild(document.createTextNode(params.text));
+
+            mixParams.headActions.unshift({
+                text:"Close",
+                title: "Close Modal",
+                classes:["closebtn"],
+                action: ()=>{alertCont.remove()},
+            });
+
+            mixParams.txt = [words];
+
+            alertCont = gbal.ui.modal(mixParams);
+            return alertCont;
+        },
+        confirm: (params = {
+            id: "unkmod",
+            title: "Modal",
+            text: "",
+            headActions: [],
+            mainActions: []
+        }) => {
+            
         }
     };
     </script>
@@ -461,7 +505,7 @@ or if your using Firefox, click on the search bar while on this page and click t
                 }
             }));
             setCont.appendChild(gbal.ui.checkbox({
-                label:"useEngines Parameter Enabled",
+                label:"?useEngines Parameter Enabled",
                 title:"useEngines parameter to use external engines without adding them",
                 boxtitle:"useEngines Parameter Enabled",
                 id:"useenginesparamallowed",
@@ -502,7 +546,7 @@ or if your using Firefox, click on the search bar while on this page and click t
                         <li title="Search">Google for <a href="https://fonts.google.com/specimen/Open+Sans"><em>Open Sans</em></a></li>
                         <li title="PLUS">Paul D. Hunt for <a href="https://fonts.google.com/specimen/Source+Sans+3"><em title="when did they rename source sans pro???">Source Sans 3</em></a></li>
                         <li title="premium">Robert Leuschke for <a href="https://fonts.google.com/specimen/Mea+Culpa"><em>Mea Culpa</em></a></li>
-                        <li title="for now...">ALL CODE IS OWNED BY <a href="https://github.com/ccn0">CCN0</a>, ALL RIGHTS RESERVED</li>
+                        <li title="If you host your own, pls call it something else">Source code by <a href="https://github.com/ccn0">CCN0</a>, under GPLv3 (source code).</li>
                     </ul>
                 </p>
                 <p>If you like this search engine, be sure to give it a like. If you find a problem, or want me to add an engine to Quick Add,
@@ -813,251 +857,251 @@ or if your using Firefox, click on the search bar while on this page and click t
         });
 
         fileInput.click();
-        
-        function importDialogX(result) {
-            let importModal;
-            const resultObj = JSON.parse(result);
-            const toSave = {...resultObj}
-            if (Object.keys(resultObj).length == 0) {
-                alert("This is an empty JSON file.");
-                return;
-            };
+    };
+    function importDialogX(result) {
+        let importModal;
+        const resultObj = JSON.parse(result);
+        const toSave = {...resultObj}
+        if (Object.keys(resultObj).length == 0) {
+            alert("This is an empty JSON file.");
+            return;
+        };
 
-            const settingsTable = document.createElement("table");
-            settingsTable.id = "importsettings";
-            const scaption = document.createElement("caption");
-            scaption.textContent = "Settings";
-            const stableHead = document.createElement("thead");
-            const stheadTr = document.createElement("tr");
+        const settingsTable = document.createElement("table");
+        settingsTable.id = "importsettings";
+        const scaption = document.createElement("caption");
+        scaption.textContent = "Settings";
+        settingsTable.appendChild(scaption);
+        const stableHead = document.createElement("thead");
+        const stheadTr = document.createElement("tr");
 
-            function screateTH(elems) {
-                const th = document.createElement("th");
-                th.scope = "col";
-                th.appendChild(elems);
-                stheadTr.appendChild(th);
-                return th;
-            };
+        function screateTH(elems) {
+            const th = document.createElement("th");
+            th.scope = "col";
+            th.appendChild(elems);
+            stheadTr.appendChild(th);
+            return th;
+        };
 
-            const stoggleAll = document.createElement("input");
-            stoggleAll.type = "checkbox";
-            stoggleAll.checked = true;
-            stoggleAll.title = "Toggle All Settings";
-            stoggleAll.addEventListener("change", e => {
-                const checked = e.target.checked;
-                const checkboxes = stableBody.querySelectorAll("#importsettings tbody tr td input[type='checkbox']");
+        const stoggleAll = document.createElement("input");
+        stoggleAll.type = "checkbox";
+        stoggleAll.checked = true;
+        stoggleAll.title = "Toggle All Settings";
+        stoggleAll.addEventListener("change", e => {
+            const checked = e.target.checked;
+            const checkboxes = stableBody.querySelectorAll("#importsettings tbody tr td input[type='checkbox']");
 
-                checkboxes.forEach(box => {
-                    box.checked = checked;
-                    const key = box.dataset.key;
-                    if (checked) {
-                        toSave[key] = resultObj[key];
-                    } else {
-                        delete toSave[key];
-                    }
-                });
-
-                console.log(toSave);
-            });
-            screateTH(stoggleAll);
-            screateTH(document.createTextNode("Setting"));
-            screateTH(document.createTextNode("Value"));
-
-            stableHead.appendChild(stheadTr);
-            settingsTable.appendChild(stableHead);
-
-            const stableBody = document.createElement("tbody");
-            Object.keys(resultObj).forEach(key=>{
-                const dispName = litDefData[key] || `${key} (invalid setting)`;
-                let dispVal = resultObj[key];
-                let checked = !dispName.includes("invalid setting");
-                if (typeof dispVal == "string") dispVal = `"${dispVal}"`;
-                if (typeof dispVal == "number") dispVal = `${dispVal}`;
-                if (typeof dispVal == "boolean") dispVal = `${dispVal}`;
-                if (typeof dispVal == "array") dispVal = `[${dispVal}]`;
-                if (key == "searchEngines") {
-                    return;
+            checkboxes.forEach(box => {
+                box.checked = checked;
+                const key = box.dataset.key;
+                if (checked) {
+                    toSave[key] = resultObj[key];
                 } else {
-                    screateRow(key, dispName, dispVal, checked);
+                    delete toSave[key];
+                }
+            });
+        });
+        screateTH(stoggleAll);
+        screateTH(document.createTextNode("Setting"));
+        screateTH(document.createTextNode("Value"));
+
+        stableHead.appendChild(stheadTr);
+        settingsTable.appendChild(stableHead);
+
+        const stableBody = document.createElement("tbody");
+        Object.keys(resultObj).forEach(key=>{
+            const dispName = litDefData[key] || `${key} (invalid setting)`;
+            let dispVal = resultObj[key];
+            let checked = !dispName.includes("invalid setting");
+            if (typeof dispVal == "string") dispVal = `"${dispVal}"`;
+            if (typeof dispVal == "number") dispVal = `${dispVal}`;
+            if (typeof dispVal == "boolean") dispVal = `${dispVal}`;
+            if (typeof dispVal == "array") dispVal = `[${dispVal}]`;
+            if (key == "searchEngines") {
+                return;
+            } else {
+                screateRow(key, dispName, dispVal, checked);
+            };
+        });
+
+        function screateRow(ogKey, name, val, checked) {
+            const tr = document.createElement("tr");
+            const toggleSetting = document.createElement("input");
+            toggleSetting.type = "checkbox";
+            toggleSetting.checked = checked ?? true;
+            toggleSetting.dataset.key = ogKey;
+            toggleSetting.title = `Toggle ${name}`;
+            if (toggleSetting.checked) {
+                toSave[ogKey] = resultObj[ogKey];
+            } else {
+                delete toSave[ogKey];
+            };
+
+            toggleSetting.addEventListener("change", e => {
+                if (e.target.checked) {
+                    toSave[ogKey] = resultObj[ogKey];
+                } else {
+                    delete toSave[ogKey];
+                };
+                if (toSave == resultObj) {
+                    stoggleAll.checked = true;
+                } else {
+                    stoggleAll.checked = false;
                 };
             });
 
-            function screateRow(ogKey, name, val, checked) {
-                const tr = document.createElement("tr");
-                const toggleSetting = document.createElement("input");
-                toggleSetting.type = "checkbox";
-                toggleSetting.checked = checked ?? true;
-                toggleSetting.dataset.key = ogKey;
-                toggleSetting.title = `Toggle ${name}`;
+            createTD(toggleSetting);
+            createTD(document.createTextNode(name));
+            if (typeof val == "string") createTD(document.createTextNode(val));
+            if (typeof val == "object") createTD(document.createTextNode(JSON.stringify(val)));
 
-                toggleSetting.addEventListener("change", e => {
-                    if (e.target.checked) {
-                        toSave[ogKey] = resultObj[ogKey];
-                    } else {
-                        delete toSave[ogKey];
-                    };
-                    if (toSave == resultObj) {
-                        stoggleAll.checked = true;
-                    } else {
-                        stoggleAll.checked = false;
-                    };
-                    console.log(toSave);
-                });
-
-                createTD(toggleSetting);
-                createTD(document.createTextNode(name));
-                if (typeof val == "string") createTD(document.createTextNode(val));
-                if (typeof val == "object") createTD(val);
-
-                function createTD(elem) {
-                    const td = document.createElement("td");
-                    td.appendChild(elem);
-                    tr.appendChild(td);
-                    return td;
-                }
-
-                stableBody.appendChild(tr);
-                return toggleSetting;
-            };
-
-            settingsTable.appendChild(stableBody);
-
-            // ENGINES TABLE BELOW!!!
-            const toSaveEngines = [];
-            if (resultObj.searchEngines?.length > 0) toSaveEngines.push(...resultObj.searchEngines);
-            delete toSave.searchEngines;
-
-            const enginesTable = document.createElement("table");
-            enginesTable.id = "importengines";
-            const ecaption = document.createElement("caption");
-            ecaption.textContent = "Engines";
-            enginesTable.appendChild(ecaption);
-
-            const etableHead = document.createElement("thead");
-            const etheadTr = document.createElement("tr");
-
-            function ecreateTH(elems) {
-                const th = document.createElement("th");
-                th.scope = "col";
-                th.appendChild(elems);
-                etheadTr.appendChild(th);
-                return th;
+            function createTD(elem) {
+                const td = document.createElement("td");
+                td.appendChild(elem);
+                tr.appendChild(td);
+                return td;
             }
 
-            const etoggleAll = document.createElement("input");
-            etoggleAll.type = "checkbox";
-            etoggleAll.checked = true;
-            etoggleAll.title = "Toggle All Engines";
-            etoggleAll.addEventListener("change", e => {
-                const checked = e.target.checked;
-                const checkboxes = etableBody.querySelectorAll("input[type='checkbox']");
-                checkboxes.forEach(box => {
-                    box.checked = checked;
-                    const index = parseInt(box.dataset.index);
-                    if (checked) {
-                        toSaveEngines[index] = resultObj.searchEngines[index];
-                    } else {
-                        delete toSaveEngines[index];
-                    }
-                });
-                console.log(toSaveEngines);
-            });
-            ecreateTH(etoggleAll);
-            ecreateTH(document.createTextNode("Symbol"));
-            ecreateTH(document.createTextNode("URL"));
-
-            etableHead.appendChild(etheadTr);
-            enginesTable.appendChild(etableHead);
-
-            const etableBody = document.createElement("tbody");
-
-            resultObj.searchEngines?.forEach((engine, index) => {
-                const tr = document.createElement("tr");
-                const toggleEngine = document.createElement("input");
-                toggleEngine.type = "checkbox";
-                toggleEngine.checked = true;
-                toggleEngine.dataset.index = index;
-                toggleEngine.title = `Toggle ${engine.symbol}`;
-
-                toggleEngine.addEventListener("change", e => {
-                    const i = parseInt(e.target.dataset.index);
-                    if (e.target.checked) {
-                        toSaveEngines[i] = resultObj.searchEngines[i];
-                    } else {
-                        delete toSaveEngines[i];
-                    }
-                    console.log(toSaveEngines);
-                });
-
-                function ecreateTD(elem) {
-                    const td = document.createElement("td");
-                    td.appendChild(elem);
-                    tr.appendChild(td);
-                    return td;
-                }
-
-                ecreateTD(toggleEngine);
-                ecreateTD(document.createTextNode(engine.symbol));
-                ecreateTD(document.createTextNode(engine.url));
-                etableBody.appendChild(tr);
-            });
-
-            enginesTable.appendChild(etableBody);
-
-            const txtarr = [];
-            const buffObj = {...resultObj};
-            delete buffObj.searchEngines;
-            if (Object.keys(buffObj).length > 0) txtarr.push(settingsTable);
-            if (resultObj.searchEngines?.length > 0) txtarr.push(enginesTable);
-
-            importModal = gbal.ui.modal({
-                id:"import1",
-                title:"Choose Settings to Import",
-                txt: txtarr,
-                headActions:[
-                    {
-                        text:"Close",
-                        title:"Close Import Wizard",
-                        classes:["closebtn"],
-                        action: ()=>{importModal.remove()}
-                    }
-                ],
-                mainActions:[
-                    {
-                        text:"Cancel",
-                        title:"Cancel Import",
-                        classes:["closebtn"],
-                        action: ()=>{importModal.remove()}
-                    },
-                    {
-                        text:"Import",
-                        title:"Import these Settings",
-                        action: ()=>{finallyImport(toSave)}
-                    },
-                ]
-            });
-            document.body.appendChild(importModal);
-            importModal.querySelector("button").focus();
-            function finallyImport(toSave) {
-                Object.keys(toSave).forEach(key=>{
-                    if (key !== "searchEngines") {
-                        gbal.settings[key] = toSave[key]
-                    };
-                });
-                if (toSaveEngines.length > 0) {
-                    const filteredEngines = toSaveEngines.filter(e => e);
-                    gbal.settings.searchEngines.push(...filteredEngines);
-                    console.log(filteredEngines)
-                };
-                gbal.save();
-                importModal.remove();
-                location.reload();
-            };
+            stableBody.appendChild(tr);
+            return toggleSetting;
         };
+
+        settingsTable.appendChild(stableBody);
+
+        // ENGINES TABLE BELOW!!!
+        const toSaveEngines = [];
+        if (resultObj.searchEngines?.length > 0) toSaveEngines.push(...resultObj.searchEngines);
+        delete toSave.searchEngines;
+
+        const enginesTable = document.createElement("table");
+        enginesTable.id = "importengines";
+        const ecaption = document.createElement("caption");
+        ecaption.textContent = "Engines";
+        enginesTable.appendChild(ecaption);
+
+        const etableHead = document.createElement("thead");
+        const etheadTr = document.createElement("tr");
+
+        function ecreateTH(elems) {
+            const th = document.createElement("th");
+            th.scope = "col";
+            th.appendChild(elems);
+            etheadTr.appendChild(th);
+            return th;
+        };
+
+        const etoggleAll = document.createElement("input");
+        etoggleAll.type = "checkbox";
+        etoggleAll.checked = true;
+        etoggleAll.title = "Toggle All Engines";
+        etoggleAll.addEventListener("change", e => {
+            const checked = e.target.checked;
+            const checkboxes = etableBody.querySelectorAll("input[type='checkbox']");
+            checkboxes.forEach(box => {
+                box.checked = checked;
+                const index = parseInt(box.dataset.index);
+                if (checked) {
+                    toSaveEngines[index] = resultObj.searchEngines[index];
+                } else {
+                    delete toSaveEngines[index];
+                }
+            });
+        });
+        ecreateTH(etoggleAll);
+        ecreateTH(document.createTextNode("Symbol"));
+        ecreateTH(document.createTextNode("URL"));
+
+        etableHead.appendChild(etheadTr);
+        enginesTable.appendChild(etableHead);
+
+        const etableBody = document.createElement("tbody");
+
+        resultObj.searchEngines?.forEach((engine, index) => {
+            const tr = document.createElement("tr");
+            const toggleEngine = document.createElement("input");
+            toggleEngine.type = "checkbox";
+            toggleEngine.checked = true;
+            toggleEngine.dataset.index = index;
+            toggleEngine.title = `Toggle ${engine.symbol}`;
+
+            toggleEngine.addEventListener("change", e => {
+                const i = parseInt(e.target.dataset.index);
+                if (e.target.checked) {
+                    toSaveEngines[i] = resultObj.searchEngines[i];
+                } else {
+                    delete toSaveEngines[i];
+                }
+            });
+
+            function ecreateTD(elem) {
+                const td = document.createElement("td");
+                td.appendChild(elem);
+                tr.appendChild(td);
+                return td;
+            }
+
+            ecreateTD(toggleEngine);
+            ecreateTD(document.createTextNode(engine.symbol));
+            ecreateTD(document.createTextNode(engine.url));
+            etableBody.appendChild(tr);
+        });
+
+        enginesTable.appendChild(etableBody);
+
+        const txtarr = [];
+        const buffObj = {...resultObj};
+        delete buffObj.searchEngines;
+        if (Object.keys(buffObj).length > 0) txtarr.push(settingsTable);
+        if (resultObj.searchEngines?.length > 0) txtarr.push(enginesTable);
+
+        importModal = gbal.ui.modal({
+            id:"import1",
+            title:"Choose Settings to Import",
+            txt: txtarr,
+            headActions:[
+                {
+                    text:"Close",
+                    title:"Close Import Wizard",
+                    classes:["closebtn"],
+                    action: ()=>{importModal.remove()}
+                }
+            ],
+            mainActions:[
+                {
+                    text:"Cancel",
+                    title:"Cancel Import",
+                    classes:["closebtn"],
+                    action: ()=>{importModal.remove()}
+                },
+                {
+                    text:"Import",
+                    title:"Import these Settings",
+                    action: ()=>{
+                        importModal.remove();
+                        finallyImport(toSave, toSaveEngines);
+                    }
+                },
+            ]
+        });
+        document.body.appendChild(importModal);
+        importModal.querySelector("button").focus();
+    };
+    function finallyImport(toSaveSet, toSaveEng) {
+        Object.keys(toSaveSet).forEach(key=>{
+            if (key !== "searchEngines") {
+                gbal.settings[key] = toSaveSet[key]
+            };
+        });
+        if (toSaveEng.length > 0) {
+            const filteredEngines = toSaveEng.filter(e => e);
+            gbal.settings.searchEngines.push(...filteredEngines);
+        };
+        gbal.save();
+        location.reload();
     };
 
     function exportDialog() {
         const toSave = {...gbal.settings};
-        console.log(toSave);
         exportDialogX();
         function exportDialogX() {
             let exportModal;
@@ -1095,8 +1139,6 @@ or if your using Firefox, click on the search bar while on this page and click t
                         delete toSave[key];
                     }
                 });
-
-                console.log(toSave);
             });
             screateTH(stoggleAll);
             screateTH(document.createTextNode("Setting"));
@@ -1140,7 +1182,6 @@ or if your using Firefox, click on the search bar while on this page and click t
                     } else {
                         stoggleAll.checked = false;
                     };
-                    console.log(toSave);
                 });
 
                 createTD(toggleSetting);
@@ -1198,7 +1239,6 @@ or if your using Firefox, click on the search bar while on this page and click t
                         delete toSaveEngines[index];
                     }
                 });
-                console.log(toSaveEngines);
             });
             ecreateTH(etoggleAll);
             ecreateTH(document.createTextNode("Symbol"));
@@ -1223,8 +1263,7 @@ or if your using Firefox, click on the search bar while on this page and click t
                         toSaveEngines[i] = gbal.settings.searchEngines[i];
                     } else {
                         delete toSaveEngines[i];
-                    }
-                    console.log(toSaveEngines);
+                    };
                 });
 
                 function ecreateTD(elem) {
@@ -1273,30 +1312,28 @@ or if your using Firefox, click on the search bar while on this page and click t
             });
             document.body.appendChild(exportModal);
             exportModal.querySelector("button").focus();
-            function finallyExport(toSaveSet, toSaveEng) {
-                if (toSaveEng.length > 0) {
-                    toSaveSet.searchEngines = [];
-                    const filteredEngines = toSaveEng.filter(e => e);
-                    if (filteredEngines.length > 0) {
-                        toSaveSet.searchEngines.push(...filteredEngines);
-                    } else {
-                        delete toSaveSet.searchEngines;
-                    }
-                    console.log(filteredEngines)
-                };
-                var blob = new Blob([JSON.stringify(toSaveSet)], { type: 'application/json' });
-                var url = URL.createObjectURL(blob);
-
-                var a = document.createElement('a');
-                a.href = url;
-                a.download = "myEngines.spp.json";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                console.log(toSaveSet);
+        };
+    };
+    function finallyExport(toSaveSet, toSaveEng) {
+        if (toSaveEng.length > 0) {
+            toSaveSet.searchEngines = [];
+            const filteredEngines = toSaveEng.filter(e => e);
+            if (filteredEngines.length > 0) {
+                toSaveSet.searchEngines.push(...filteredEngines);
+            } else {
+                delete toSaveSet.searchEngines;
             };
         };
+        var blob = new Blob([JSON.stringify(toSaveSet)], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = "myEngines.spp.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     };
 
     function urlImport() {
@@ -1304,19 +1341,15 @@ or if your using Firefox, click on the search bar while on this page and click t
         if (!confirm(`Do you want to import engines from "${url}"?`)) return;
 
         fetch(url)
-            .then(response => response.json())
+            .then(response => response.text())
             .then(json => {
                 try {
-                    gbal.settings.searchEngines.push(...json.searchEngines);
-                    loadEngines({moved: gbal.settings.searchEngines.length-1});
-                    const engineList = document.querySelector("#enginelist");
-                    engineList.scrollTo({ top: engineList.scrollHeight, behavior: "smooth" });
-                    gbal.save();
+                    history.replaceState(1, null, window.location.href.replace(/\??&?importExternal=.*?\.json/g, ''));
+                    importDialogX(json);
                 } catch (error) {
                     alert("This is not valid JSON.");
                     console.error(error);
                 };
-                history.replaceState(1, null, window.location.href.replace(/\??&?import=\w*\.json/g, ''));
             })
             .catch(error => {
                 console.error(error);
@@ -1333,7 +1366,7 @@ or if your using Firefox, click on the search bar while on this page and click t
         document.querySelector("#enginelist").focus();
     });
     document.addEventListener("keydown",(e)=>{
-        if (e.key == "N" && e.ctrlKey) {
+        if (e.key == "n" && e.altKey) {
             e.preventDefault();
             addNew();
         };
