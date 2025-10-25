@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6.15 -->
+<!-- made by ccn0 | v1.6.16 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -357,6 +357,7 @@
             id: "unkmod",
             title: "Modal",
             text: "",
+            noHead: false,
             headActions: [],
             mainActions: []
         })=>{
@@ -449,14 +450,33 @@
                 if (params.noHead && params.noCancel) modal.querySelector("button").focus();
             });
         },
-        alert: (text = "Alert") => {
-            return gbal.ui.confirm({
-                id: "unkalert",
-                text:text || "Alert",
-                noHead:true,
-                noCancel:true,
-                confirmBtn:{text:"OK",title:"Ok"}
+        alert: (text = "Alert", params = {
+            id: "unkalert",
+            confirmBtn: {
+                text: "OK",
+                title: "Close Dialog"
+            }
+        }) => {
+            const words = document.createElement("p");
+            words.textContent = text || "";
+            const mainActions = [];
+            const alertModal = gbal.ui.modal({
+                noHead: true,
+                id: params.id || "unkalert",
+                txt: [words],
+                mainActions: [
+                    {
+                        text: params.confirmBtn?.text || "OK",
+                        title: params.confirmBtn?.title || "Close Dialog",
+                        action: () => {
+                            alertModal.remove();
+                        }
+                    }
+                ]
             });
+            document.body.appendChild(alertModal);
+            alertModal.querySelector("button").focus();
+            return alertModal;
         }
     };
     </script>
@@ -956,7 +976,7 @@ or if your using Firefox, click on the search bar while on this page and click t
         const settingsTable = document.createElement("table");
         settingsTable.id = params.id;
         const scaption = document.createElement("caption");
-        scaption.textContent = params.caption;
+        scaption.textContent = params.caption || "Metadata";
         settingsTable.appendChild(scaption);
         const stableHead = document.createElement("thead");
         const stheadTr = document.createElement("tr");
@@ -997,20 +1017,22 @@ or if your using Firefox, click on the search bar while on this page and click t
         if (!params.options) params.options = ["name","namespace","description","version","homepage"];
 
         const stableBody = document.createElement("tbody");
-        Object.keys(params.toSaveMeta).forEach(key=>{
-            const dispName = litDefData[key] || `${key} (INVALID SETTING)`;
-            let dispVal = params.toSaveMeta[key];
-            let checked = !dispName.includes("INVALID SETTING");
-            if (typeof dispVal == "string") dispVal = `${dispVal}`;
-            if (typeof dispVal == "number") dispVal = `${dispVal}`;
-            if (typeof dispVal == "boolean") dispVal = `${dispVal}`;
-            if (typeof dispVal == "array") dispVal = `[${dispVal}]`;
-            if (!params.options.includes(key)) {
-                return;
-            } else {
-                screateRow(key, dispName, dispVal, checked);
-            };
-        });
+        if (params.toSaveMeta) {
+            Object.keys(params.toSaveMeta).forEach(key=>{
+                const dispName = litDefData[key] || `${key} (INVALID SETTING)`;
+                let dispVal = params.toSaveMeta[key];
+                let checked = !dispName.includes("INVALID SETTING");
+                if (typeof dispVal == "string") dispVal = `${dispVal}`;
+                if (typeof dispVal == "number") dispVal = `${dispVal}`;
+                if (typeof dispVal == "boolean") dispVal = `${dispVal}`;
+                if (typeof dispVal == "array") dispVal = `[${dispVal}]`;
+                if (!params.options.includes(key)) {
+                    return;
+                } else {
+                    screateRow(key, dispName, dispVal, checked);
+                };
+            });
+        }
 
         function checkAllWhat() {
             return (Object.keys(toSave).length == (Object.keys(params.toSaveMeta).length))
