@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6.14 -->
+<!-- made by ccn0 | v1.6.15 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -289,6 +289,7 @@
             id: "unkmod",
             title: "Modal",
             txt: [],
+            noHead: false,
             headActions: [],
             mainActions: []
         })=>{
@@ -323,7 +324,7 @@
             };
             if (params.headActions?.length > 0) params.headActions.forEach(btn=>createModBtn(btn));
 
-            modalCont.appendChild(modheader);
+            if (!params.noHead) modalCont.appendChild(modheader);
 
             const modMain = document.createElement("div");
             modMain.classList.add("modmain");
@@ -390,17 +391,21 @@
         confirm: (params = { 
             id: "unkmod", 
             title: "Confirm", 
-            text: "", 
+            text: "",
+            noHead: false,
+            noCancel: false,
+            confirmBtn: {
+                text:"Confirm",
+                title:"Confirm this Action",
+            },
             headActions: [], 
             mainActions: [] 
         }) => {
-
-        return new Promise((resolve) => {
-            const words = document.createElement("p");
-            words.textContent = params.text || "";
-
-            const mainActions = [
-                {
+            return new Promise((resolve) => {
+                const words = document.createElement("p");
+                words.textContent = params.text || "";
+                const mainActions = [];
+                if (!params.noCancel) mainActions.push({
                     text: "Cancel",
                     title: "Cancel this Action",
                     classes: ["closebtn"],
@@ -408,40 +413,51 @@
                         modal.remove();
                         resolve(false);
                     }
-                },
-                {
-                    text: "Confirm",
-                    title: "Confirm this Action",
-                    action: () => {
-                        modal.remove();
-                        resolve(true);
+                });
+                mainActions.push(
+                    {
+                        text: params.confirmBtn?.text || "Confirm",
+                        title: params.confirmBtn?.title || "Confirm this Action",
+                        action: () => {
+                            modal.remove();
+                            resolve(true);
+                        }
                     }
-                },
-            ];
+                );
 
-            const headActions = [
-                {
-                    text: "Close",
-                    title: "Close Modal",
-                    classes: ["closebtn"],
-                    action: () => {
-                        modal.remove();
-                        resolve(undefined);
-                    }
-                },
-                ...(params.headActions || [])
-            ];
-
-            const modal = gbal.ui.modal({
-                id: params.id || "unkmod",
-                title: params.title || "Confirm",
-                txt: [words],
-                headActions: headActions,
-                mainActions: mainActions
+                const headActions = [
+                    {
+                        text: "Close",
+                        title: "Close Modal",
+                        classes: ["closebtn"],
+                        action: () => {
+                            modal.remove();
+                            resolve(undefined);
+                        }
+                    },
+                    ...(params.headActions || [])
+                ];
+                const modal = gbal.ui.modal({
+                    id: params.id || "unkmod",
+                    title: params.title || "Confirm",
+                    txt: [words],
+                    noHead: params.noHead,
+                    headActions: headActions,
+                    mainActions: mainActions
+                });
+                document.body.appendChild(modal);
+                if (params.noHead && params.noCancel) modal.querySelector("button").focus();
             });
-
-            document.body.appendChild(modal);
-        });},
+        },
+        alert: (text = "Alert") => {
+            return gbal.ui.confirm({
+                id: "unkalert",
+                text:text || "Alert",
+                noHead:true,
+                noCancel:true,
+                confirmBtn:{text:"OK",title:"Ok"}
+            });
+        }
     };
     </script>
 </head>
@@ -529,7 +545,7 @@ or if your using Firefox, click on the search bar while on this page and click t
         if (e.target.open == true) {
             setCont.appendChild(gbal.ui.checkbox({
                 label:"Dark Theme",
-                title:"Toggle dark mode",
+                title:"Toggle Dark Mode",
                 boxtitle:"Dark mode",
                 id:"darktheme",
                 value:gbal.settings.darkTheme,
@@ -660,10 +676,10 @@ or if your using Firefox, click on the search bar while on this page and click t
                     <div id="enginelist" class="list" role="list" aria-label="Engine List"></div>
                     <div class="toolbar" role="toolbar" aria-label="Adding Engines Toolbar">
                         <div class="oh">
-                            <button onclick="addNew()" title="Add New Search Engine">Add New</button>
+                            <button onclick="addNew()" title="Add New Search Engine (Alt+N)">Add New</button>
                         </div>
                         <div class="oh">
-                            <input class="lbgreen" type="text" aria-label="Quick Add Search Engines" title="Quick Add Search Engine" placeholder="Quick Add" id="qainput">
+                            <input class="lbgreen" type="text" aria-label="Quick Add Search Engines" title="Quick Add Search Engine (Ctrl+Q)" placeholder="Quick Add" id="qainput">
                         </div>
                     </div>
                     <div class="toolbar topborder" role="toolbar" aria-label="Search Tools">
@@ -673,10 +689,10 @@ or if your using Firefox, click on the search bar while on this page and click t
                     </div>
                     <div class="toolbar topborder" role="toolbar" aria-label="Import/Export Engines Toolbar">
                         <div class="oh">
-                            <button onclick="importDialog()" title="Import Search Engines from JSON">Import...</button>
+                            <button onclick="importDialog()" title="Import Search Engines from JSON (Ctrl+O)">Import...</button>
                         </div>
                         <div class="oh">
-                            <button onclick="exportDialog()" title="Export Search Engines as JSON">Export...</button>
+                            <button onclick="exportDialog()" title="Export Search Engines as JSON (Ctrl+S)">Export...</button>
                         </div>
                     </div>
                 </div>
@@ -711,8 +727,7 @@ or if your using Firefox, click on the search bar while on this page and click t
     };
     const qainputtop = document.querySelector("#qainput");
     qainputtop.addEventListener("keydown",e=>QA(e,qainputtop));
-    const searchEBar = document.querySelector("#searchEnginesBar");
-    searchEBar.addEventListener("input",(e)=>{
+    function SE(e,searchEBar) {
         document.querySelectorAll(`[data-engine] input.highlighted`).forEach(el => {
             el.classList.remove("highlighted");
         });
@@ -732,9 +747,11 @@ or if your using Firefox, click on the search bar while on this page and click t
         });
         const firstHighlight = document.querySelector('input.highlighted');
         if (firstHighlight) {
-            firstHighlight.scrollIntoView({behavior: "smooth"});
+            firstHighlight.scrollIntoView({behavior:"smooth"});
         };
-    });
+    };
+    const searchEBar = document.querySelector("#searchEnginesBar");
+    searchEBar.addEventListener("input",(e)=>SE(e,searchEBar));
     </script>
     <script defer="true">
     const maincont = document.querySelector("#enginelist");
@@ -912,6 +929,140 @@ or if your using Firefox, click on the search bar while on this page and click t
     };
     loadEngines();
 
+    function metaTable(params = {
+        options: ["name","namespace","description","version","homepage"],
+        toSave: {},
+        readOnly: false,
+        toSaveMeta: {
+            "name":"Name",
+            "namespace":"Namespace",
+            "description":"Description",
+            "version":"Version",
+            "homepage":"Home Page",
+        },
+        id: "metasettings",
+        caption: "Metadata",
+        filename: "",
+    }) {
+        const toSave = {...params.toSaveMeta};
+        const litDefData = {
+            "name":"Name",
+            "namespace":"Namespace",
+            "description":"Description",
+            "version":"Version",
+            "homepage":"Home Page",
+        };
+
+        const settingsTable = document.createElement("table");
+        settingsTable.id = params.id;
+        const scaption = document.createElement("caption");
+        scaption.textContent = params.caption;
+        settingsTable.appendChild(scaption);
+        const stableHead = document.createElement("thead");
+        const stheadTr = document.createElement("tr");
+
+        function screateTH(elems) {
+            const th = document.createElement("th");
+            th.scope = "col";
+            th.appendChild(elems);
+            stheadTr.appendChild(th);
+            return th;
+        };
+
+        const stoggleAll = document.createElement("input");
+        stoggleAll.type = "checkbox";
+        stoggleAll.checked = true;
+        stoggleAll.title = "Toggle All Metadata";
+        stoggleAll.addEventListener("change", e => {
+            const checked = e.target.checked;
+            const checkboxes = stableBody.querySelectorAll(`#${params.id} tbody tr td input[type='checkbox']`);
+
+            checkboxes.forEach(box => {
+                box.checked = checked;
+                const key = box.dataset.key;
+                if (checked) {
+                    toSave[key] = params.toSaveMeta[key];
+                } else {
+                    delete toSave[key];
+                };
+            });
+        });
+        if (!params.readOnly) screateTH(stoggleAll);
+        screateTH(document.createTextNode("Key"));
+        screateTH(document.createTextNode("Value"));
+
+        stableHead.appendChild(stheadTr);
+        settingsTable.appendChild(stableHead);
+
+        if (!params.options) params.options = ["name","namespace","description","version","homepage"];
+
+        const stableBody = document.createElement("tbody");
+        Object.keys(params.toSaveMeta).forEach(key=>{
+            const dispName = litDefData[key] || `${key} (INVALID SETTING)`;
+            let dispVal = params.toSaveMeta[key];
+            let checked = !dispName.includes("INVALID SETTING");
+            if (typeof dispVal == "string") dispVal = `${dispVal}`;
+            if (typeof dispVal == "number") dispVal = `${dispVal}`;
+            if (typeof dispVal == "boolean") dispVal = `${dispVal}`;
+            if (typeof dispVal == "array") dispVal = `[${dispVal}]`;
+            if (!params.options.includes(key)) {
+                return;
+            } else {
+                screateRow(key, dispName, dispVal, checked);
+            };
+        });
+
+        function checkAllWhat() {
+            return (Object.keys(toSave).length == (Object.keys(params.toSaveMeta).length))
+        };
+
+        function screateRow(ogKey, name, val, checked, disabled = false) {
+            const tr = document.createElement("tr");
+            const toggleSetting = document.createElement("input");
+            toggleSetting.type = "checkbox";
+            toggleSetting.checked = checked ?? true;
+            if (disabled) toggleSetting.disabled = true;
+            toggleSetting.dataset.key = ogKey;
+            toggleSetting.title = `Toggle Metadata ${name}`;
+            if (toggleSetting.checked) {
+                toSave[ogKey] = params.toSaveMeta[ogKey];
+            } else {
+                delete toSave[ogKey];
+            };
+
+            toggleSetting.addEventListener("change", e => {
+                if (e.target.checked) {
+                    toSave[ogKey] = params.toSaveMeta[ogKey];
+                } else {
+                    delete toSave[ogKey];
+                };
+                stoggleAll.checked = checkAllWhat();
+            });
+
+            if (!params.readOnly) createTD(toggleSetting);
+            createTD(document.createTextNode(name));
+            if (typeof val == "string") createTD(document.createTextNode(val));
+            if (typeof val == "object") createTD(document.createTextNode(JSON.stringify(val)));
+
+            function createTD(elem) {
+                const td = document.createElement("td");
+                td.appendChild(elem);
+                tr.appendChild(td);
+                return td;
+            }
+
+            stableBody.appendChild(tr);
+            return toggleSetting;
+        };
+
+        settingsTable.appendChild(stableBody);
+        if (params.readOnly) {
+            return settingsTable;
+        } else {
+            return [settingsTable, toSave];
+        };
+    };
+
     function importDialog() {
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
@@ -925,7 +1076,7 @@ or if your using Firefox, click on the search bar while on this page and click t
                     try {
                         importDialogX(e.target.result);
                     } catch (error) {
-                        alert("This is not valid JSON.");
+                        gbal.ui.alert("This is not valid JSON.");
                         console.error(error);
                     };
                 };
@@ -940,7 +1091,7 @@ or if your using Firefox, click on the search bar while on this page and click t
         const resultObj = JSON.parse(result);
         const toSave = {...resultObj}
         if (Object.keys(resultObj).length == 0) {
-            alert("This is an empty JSON file.");
+            gbal.ui.alert("This is an empty JSON file.");
             return;
         };
 
@@ -1004,6 +1155,7 @@ or if your using Firefox, click on the search bar while on this page and click t
         function checkAllWhat() {
             let objMaybeSE = {...resultObj};
             delete objMaybeSE.searchEngines;
+            delete objMaybeSE.meta;
             return (Object.keys(toSave).length == (Object.keys(objMaybeSE).length))
         };
 
@@ -1014,7 +1166,7 @@ or if your using Firefox, click on the search bar while on this page and click t
             toggleSetting.checked = checked ?? true;
             if (disabled) toggleSetting.disabled = true;
             toggleSetting.dataset.key = ogKey;
-            toggleSetting.title = `Toggle ${name}`;
+            toggleSetting.title = `Toggle Setting ${name}`;
             if (toggleSetting.checked) {
                 toSave[ogKey] = resultObj[ogKey];
             } else {
@@ -1132,9 +1284,21 @@ or if your using Firefox, click on the search bar while on this page and click t
 
         enginesTable.appendChild(etableBody);
 
+        const metadataTable = metaTable({toSaveMeta:resultObj.meta,readOnly:true});
+
         const txtarr = [];
         const buffObj = {...resultObj};
         delete buffObj.searchEngines;
+        delete buffObj.meta;
+        if ((()=>{
+            const obj = {...resultObj.meta};
+            for (const key in obj) {
+                if (!["name","namespace","version","homepage","description"].includes(key)) {
+                    delete obj[key];
+                }
+            };
+            return Object.keys(obj).length > 0;
+        })()) txtarr.push(metadataTable);
         if (Object.keys(buffObj).length > 0) txtarr.push(settingsTable);
         if (resultObj.searchEngines?.length > 0) txtarr.push(enginesTable);
 
@@ -1260,7 +1424,7 @@ or if your using Firefox, click on the search bar while on this page and click t
             toggleSetting.type = "checkbox";
             toggleSetting.checked = checked ?? true;
             toggleSetting.dataset.key = ogKey;
-            toggleSetting.title = `Toggle Engine ${name}`;
+            toggleSetting.title = `Toggle Setting ${name}`;
 
             toggleSetting.addEventListener("change", e => {
                 if (e.target.checked) {
@@ -1372,7 +1536,7 @@ or if your using Firefox, click on the search bar while on this page and click t
         });
 
         enginesTable.appendChild(etableBody);
-        
+
         const txtarr = [settingsTable];
         if (gbal.settings.searchEngines?.length > 0) txtarr.push(enginesTable);
 
@@ -1416,7 +1580,7 @@ or if your using Firefox, click on the search bar while on this page and click t
             };
         };
         if (JSON.stringify(toSaveSet) == "{}") {
-            alert("Exported file is empty. Try adding a setting or engine to export.");
+            gbal.ui.alert("Exported file is empty. Try adding a setting or engine to export.");
             return;
         };
         var blob = new Blob([JSON.stringify(toSaveSet)], { type: 'application/json' });
@@ -1446,13 +1610,13 @@ or if your using Firefox, click on the search bar while on this page and click t
                                 history.replaceState(1, null, window.location.href.replace(/\??&?importExternal=.*?\.json/g, ''));
                                 importDialogX(json);
                             } catch (error) {
-                                alert("This is not valid JSON.");
+                                gbal.ui.alert("This is not valid JSON.");
                                 console.error(error);
                             };
                         })
                         .catch(error => {
                             console.error(error);
-                            alert("Failed to fetch engine list");
+                            gbal.ui.alert("Failed to fetch engine list");
                         });
                 };
             }
@@ -1463,16 +1627,29 @@ or if your using Firefox, click on the search bar while on this page and click t
             urlImport();
         });
     };
-
-    document.querySelector(".skipnav").addEventListener("click",(e)=>{
-        document.querySelector("#enginelist").focus();
-    });
-    document.addEventListener("keydown",(e)=>{
+    function keyBinds(e = new KeyboardEvent()) {
         if (e.key == "n" && e.altKey) {
             e.preventDefault();
             addNew();
         };
+        if (e.key == "q" && e.ctrlKey) {
+            e.preventDefault();
+            qainputtop.focus();
+        };
+        if (e.key == "s" && e.ctrlKey) {
+            e.preventDefault();
+            exportDialog();
+        };
+        if (e.key == "o" && e.ctrlKey) {
+            e.preventDefault();
+            importDialog();
+        };
+    };
+
+    document.querySelector(".skipnav").addEventListener("click",(e)=>{
+        document.querySelector("#enginelist").focus();
     });
+    document.addEventListener("keydown",(e)=>keyBinds(e));
 
     if (location.hostname == "127.0.0.1") {
         document.querySelector("figure>img").style.cssText = "filter:sepia(1) saturate(100);";

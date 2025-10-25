@@ -2,7 +2,9 @@
     "meta":{
         "name":"CCN0 TEST LIST",
         "namespace":"ccn0",
-        "versionint":0
+        "description":"The only test file officially sanctioned by search plus and premium.",
+        "version":"0",
+        "homepage":"https://ccn0.net"
     },
     "searchEngines": [
         {
