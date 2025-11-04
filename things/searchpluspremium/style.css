@@ -254,7 +254,7 @@ form {
             flex: 1;
             transition: 0.2s all;
             &:focus-within {
-                flex: 2;
+                flex: 1.5;
             }
         }
         &.topborder {
@@ -633,6 +633,20 @@ thead {
     &:focus-within {
         top: auto;
         transform: translate(-120%,32px);
+        position: unset;
+    }
+}
+
+.searchtools .oh:has(button) {
+    flex: 0.1;
+    &:active,&:focus-within {
+        flex: 0.2;
+    }
+}
+.searchtools .oh:has(input) {
+    flex: 1;
+    &:active,&:focus-within {
+        flex: 1.25;
     }
 }
 

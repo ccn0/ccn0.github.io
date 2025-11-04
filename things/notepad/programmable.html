@@ -66,7 +66,7 @@
             }
         }
         input#modal {
-            border: 1px solid #000;
+            border: 2px solid #000;
             background: #fff;
             color: #000;
             position: fixed;
@@ -87,9 +87,11 @@
     <script>
         const textarea = document.getElementById('textarea');
         const NP = {
-            version: "0.016",
+            version: "0.017",
+            progName: "Programmable Notepad",
             X: textarea,
             filename: "text.txt",
+            filetype: "text/plain",
             history: [""],
             cursorPosition: [0,0],
             saved: false,
@@ -99,11 +101,35 @@
                 ups: 0,
                 repWid: 0,
             },
-            smartIndent: true,
+            smartIndent: false,
             prefix: ">",
             tab:"    ",
-            nativeCommands: {
-            },
+            nativeCommands: [
+                "help",
+                "?",
+                "eval",
+                "js",
+                "replace",
+                "dark",
+                "wrap",
+                "spellcheck",
+                "open",
+                "name",
+                "filename",
+                "filetype",
+                "color",
+                "background",
+                "font",
+                "fontsize",
+                "saveas",
+                "save",
+                "web",
+                "askbeforeleaving",
+                "repeat",
+                "clear",
+                "default",
+                ">",
+            ],
             updateXHeight: () => {
                 const scrollTop = window.scrollY;
                 const scrollLeft = window.scrollX;
@@ -117,47 +143,20 @@
             },
             inf: {
                 args:[],
+                fromModal: false,
             },
             help: {
                 "help": {
                     "args": "<command?>",
                     "text": "shows this or gives info on what a command does"
                 },
+                "?": {
+                    "args": "<command?>",
+                    "text": "shows this or gives info on what a command does, synonym of help"
+                },
                 "replace": {
                     "args": "<regex> <text> <line-number?>",
                     "text": "replaces text that matches regex, if line number, only for that line"
-                },
-                "eval": {
-                    "args": "<code>",
-                    "text": "run JavaScript and print to line"
-                },
-                "js": {
-                    "args": "<code>",
-                    "text": "run JavaScript and print to line without new line"
-                },
-                "dark": {
-                    "args": "[boolean?]",
-                    "text": "toggle or set dark mode"
-                },
-                "wrap": {
-                    "args": "[boolean?]",
-                    "text": "toggle or set line wrap"
-                },
-                "font": {
-                    "args": "<font-name?>",
-                    "text": "specify or reset font"
-                },
-                "color": {
-                    "args": "<color?>",
-                    "text": "specify or reset text color"
-                },
-                "background": {
-                    "args": "<color?>",
-                    "text": "specify or reset background color"
-                },
-                "askbeforeleaving": {
-                    "args": "[boolean?]",
-                    "text": "toggle or set asking before leaving"
                 },
                 "open": {
                     "text": "append a file to notepad"
@@ -173,9 +172,28 @@
                     "args": "<filename>",
                     "text": "save current file as filename"
                 },
-                "name": {
+                "filename": {
                     "args": "<filename>",
                     "text": "set the current file name"
+                },
+                "name": {
+                    "args": "<filename>",
+                    "text": "set the current file name, synonym of filename"
+                },
+                "filetype": {
+                    "args": "<mime type>",
+                    "text": "set the files mime type (you might wanna rename file without extension)"
+                },
+                "clear": {
+                    "text": "erase the notepad of everything, and not reversible"
+                },
+                "eval": {
+                    "args": "<code>",
+                    "text": "run JavaScript and print to line"
+                },
+                "js": {
+                    "args": "<code>",
+                    "text": "run JavaScript and print to line without new line"
                 },
                 "repeat": {
                     "args": "<amount?>",
@@ -185,32 +203,61 @@
                     "args": "<amount?>",
                     "text": "get last line entered or go back amount, synonym of >repeat"
                 },
+                "spellcheck": {
+                    "args": "[boolean?]",
+                    "text": "toggle or set spellcheck (only works on some browsers)"
+                },
+                "askbeforeleaving": {
+                    "args": "[boolean?]",
+                    "text": "toggle or set asking before leaving"
+                },
+                "dark": {
+                    "args": "[boolean?]",
+                    "text": "toggle or set dark mode"
+                },
+                "wrap": {
+                    "args": "[boolean?]",
+                    "text": "toggle or set line wrap"
+                },
+                "color": {
+                    "args": "<color?>",
+                    "text": "specify or reset text color"
+                },
+                "background": {
+                    "args": "<color?>",
+                    "text": "specify or reset background color"
+                },
+                "font": {
+                    "args": "<font-name?>",
+                    "text": "specify or reset font"
+                },
                 "fontsize": {
                     "args": "<size?>",
                     "text": "change the fontsize of the page"
                 },
-                "clear": {
-                    "text": "erase the notepad of everything, and not reversible"
-                }
             }
         };
         const Notepad = NP;
         const COMMANDS = {
             help:(inf)=>{
-                replaceLine(NP.cursorPosition[0],"");
+                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],"");
                 let helpmessage = "";
+                function makeMsg(key,i) {
+                    if (!NP.nativeCommands.includes(key)) helpmessage += "(NON-NATIVE) ";
+                    helpmessage += `${key}${NP.help[key].args ? " "+NP.help[key].args+":": ":"} ${NP.help[key].text}`;
+                    if (i != Object.keys(NP.help).length-1) helpmessage += "\n";
+                };
                 if (NP.help[inf.args]) {
                     if (inf.args && inf.args.join(" ").length > 0) {
-                        helpmessage = `${inf.args}${NP.help[inf.args].args ? (" "+NP.help[inf.args].args+":"): ":"} ${NP.help[inf.args].text}\n`;
+                        makeMsg(inf.args.join(" "),0);
                     } else {
-                        helpmessage += `invalid command: ${inf.args.join(" ")}`;
-                        Object.entries(NP.help).forEach(([key, value]) => {
-                            helpmessage += `${key}${NP.help[key].args ? " "+NP.help[key].args+":": ":"} ${NP.help[key].text}\n`;
+                        Object.keys(NP.help).forEach((key, i) => {
+                            makeMsg(key,i);
                         });
                     };
                 } else {
-                    Object.entries(NP.help).forEach(([key, value]) => {
-                        helpmessage += `${key}${NP.help[key].args ? " "+NP.help[key].args+":": ":"} ${NP.help[key].text}\n`;
+                    Object.keys(NP.help).forEach((key, i) => {
+                        makeMsg(key,i);
                     });
                 };
                 if (typeof textarea.value === "undefined") {
@@ -218,6 +265,7 @@
                 } else {
                     replaceLine(NP.cursorPosition[0],helpmessage);
                 };
+                moveCursorTo(NP.cursorPosition[0],0);
             },
             eval:(inf)=>{
                 try {
@@ -227,7 +275,7 @@
                 };
             },
             js:(inf)=>{
-                replaceLine(NP.cursorPosition[0],"");
+                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],"");
                 try {
                     replaceLine(NP.cursorPosition[0], eval(inf.args.join(' ') || ""));
                 } catch (error) {
@@ -246,7 +294,8 @@
                     });
                     textarea.value = buff.join("\n");
                 } else {
-                    textarea.value = textarea.value.replace(regex, inf.args[1]);
+                    let comb = inf.args.slice(1).join(" ");
+                    textarea.value = textarea.value.replace(regex, comb);
                 };
             },
             dark:(inf)=>{
@@ -280,23 +329,39 @@
                 };
                 NP.updateXHeight();
             },
+            spellcheck:(inf)=>{
+                replaceLine(NP.cursorPosition[0],'');
+                if (inf.argsExist) {
+                    if (inf.args.join(" ") == "true") {
+                        textarea.spellcheck = true;
+                    } else {
+                        textarea.removeAttribute('spellcheck');
+                    };
+                } else {
+                    if (textarea.getAttribute("spellcheck")) {
+                        textarea.removeAttribute('spellcheck');
+                    } else {
+                        textarea.spellcheck = true;
+                    };
+                };
+            },
             open:(inf)=>{
                 openFile();
             },
-            name:(inf)=>{
+            filename:(inf)=>{
                 if (inf.argsExist) {
                     NP.filename = inf.args.join(" ");
                 } else {
                     NP.filename = "text.txt";
                 };
                 refreshTitle();
-                replaceLine(NP.cursorPosition[0],'');
+                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
             },
-            font:(inf)=>{
+            filetype:(inf)=>{
                 if (inf.argsExist) {
-                    textarea.style.fontFamily = inf.args.join(" ");
+                    NP.filetype = inf.args.join(" ");
                 } else {
-                    textarea.style.fontFamily = "monospace";
+                    NP.filetype = "text/plain";
                 };
                 if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
             },
@@ -316,6 +381,14 @@
                 };
                 if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
             },
+            font:(inf)=>{
+                if (inf.argsExist) {
+                    textarea.style.fontFamily = inf.args.join(" ");
+                } else {
+                    textarea.style.fontFamily = "monospace";
+                };
+                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
+            },
             fontsize:(inf)=>{
                 if (inf.argsExist) {
                     textarea.style.fontSize = inf.args.join(" ");
@@ -325,11 +398,11 @@
                 if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
             },
             saveas:(inf)=>{
-                deleteLine(NP.cursorPosition[0]);
+                if (!inf.fromModal) deleteLine(NP.cursorPosition[0]);
                 saveToFile(inf.args.join(" "));
             },
             save:(inf)=>{
-                deleteLine(NP.cursorPosition[0]);
+                if (!inf.fromModal) deleteLine(NP.cursorPosition[0]);
                 saveToFile();
             },
             web:(inf)=>{
@@ -343,14 +416,12 @@
                             return response.text();
                         })
                         .then(text => {
-                            deleteLine(NP.cursorPosition[0]);
-                            textarea.value += text;
-                            NP.updateXHeight();
+                            replaceLine(NP.cursorPosition[0],text);
                         })
                         .catch(error => {
-                            textarea.value += error;
-                            NP.updateXHeight();
+                            insertAtCursor(error);
                         });
+                    NP.updateXHeight();
                 };},
             askbeforeleaving:(inf)=>{
                 deleteLine(NP.cursorPosition[0]);
@@ -364,27 +435,84 @@
                 NP.history.shift();
                 let tohistory = inf.args[0] || 1;
                 if (tohistory > 0) {
-                    tohistory = tohistory % NP.history.length;
+                    tohistory = tohistory-1 % NP.history.length;
                 } else {
-                    tohistory = (NP.history.length - Math.abs(tohistory + 1)) % NP.history.length;
+                    tohistory = (NP.history.length - Math.abs(tohistory)) % NP.history.length;
                 };
                 replaceLine(NP.cursorPosition[0], NP.history[tohistory]);
             },
             clear:(inf)=>{
-                textarea.value = ""
+                textarea.value = "";
             },
             default:(inf)=>{
+                if (inf.fromModal) return;
                 insertAtCursor("\n");
                 console.warn('Malformed command was entered, proceeding new line.');
             },
         };
         COMMANDS[">"] = COMMANDS.repeat;
+        COMMANDS["name"] = COMMANDS.filename;
+        COMMANDS["?"] = COMMANDS.help;
 
         const params = new URLSearchParams(window.location.search);
         if (params.has('dark')) {
             textarea.setAttribute('dark','');
         };
         NP.updateXHeight();
+
+        function randomInteger(min = 0, max = 9) {
+            const rmin = min;
+            const rmax = max;
+            const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
+            return targetNumber;
+        };
+        function seed(leng = 0) {
+            let digits = "";
+            const HX = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
+            for (let i = 0; i < leng; i++) {
+                digits += String(HX[randomInteger(0,HX.length-1)]);
+            };
+            return digits;
+        };
+
+        function openFile() {
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = "text/*";
+            input.addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const content = e.target.result;
+                        replaceLine(NP.cursorPosition[0],content);
+                    };
+                    reader.readAsText(file);
+                    NP.filename = file.name;
+                    NP.filetype = file.type;
+                    refreshTitle();
+                }
+            });
+            input.click();
+        };
+        function saveToFile(x) {
+            const content = textarea.value;
+            const blob = new Blob([content], { type: NP.filetype });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            if (x) {
+                a.download = x;
+            } else {
+                a.download = NP.filename;
+            };
+            a.click();
+            a.remove();
+            NP.saved = true;
+            refreshTitle();
+        };
+        function refreshTitle() {
+            document.title = `${!NP.saved && NP.askbeforeleaving ? "*":""}${NP.filename} - ${NP.progName || ""}`;
+        };
 
         function moveCursorTo(row, col) {
             const lines = getLines();
@@ -399,45 +527,6 @@
             NP.X.setSelectionRange(pos, pos);
             NP.X.focus();
         };
-
-        function openFile() {
-            const input = document.createElement("input");
-            input.type = "file";
-            input.accept = "text/*";
-            input.addEventListener("change", (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        deleteLine(NP.cursorPosition[0]);
-                        const content = e.target.result;
-                        textarea.value += content;
-                    };
-                    reader.readAsText(file);
-                    NP.filename = file.name;
-                    refreshTitle();
-                }
-            });
-            input.click();
-        };
-        function saveToFile(x) {
-            const content = textarea.value;
-            const blob = new Blob([content], { type: 'text/plain' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            if (x) {
-                a.download = x;
-            } else {
-                a.download = NP.filename;
-            };
-            a.click();
-            a.remove();
-            NP.saved = true;
-            refreshTitle();
-        };
-        function refreshTitle() {
-            document.title = `${!NP.saved && NP.askbeforeleaving ? "*":""}${NP.filename} - Programmable Notepad`;
-        };
         function replaceLine(lineNumber, newContent) {
             const ogLoc = NP.cursorPosition;
             const lines = getLines();
@@ -445,7 +534,7 @@
                 lines[lineNumber - 1] = newContent;
                 textarea.value = lines.join("\n");
             } else {
-                console.error("No line exists at this location: ", lineNumber);
+                console.error(`No line exists at this location: ${lineNumber}`);
                 textarea.value += "\n";
             };
             moveCursorTo(ogLoc[0], ogLoc[1]+1);
@@ -464,7 +553,7 @@
             const end = textarea.selectionEnd;
             textarea.value = textarea.value.substring(0, start) + text + textarea.value.substring(end);
             textarea.selectionStart = textarea.selectionEnd = start + text.length;
-        }
+        };
         function getLineAtCursor() {
             return getLine(NP.cursorPosition[0]);
         };
@@ -509,6 +598,38 @@
                 textarea.setAttribute('wrap','');
             };
         };
+        
+        function createModal(params = { placeholder: "modal", onSubmit: () => {} }) {
+            const ogLoc = NP.cursorPosition;
+            const modal = document.createElement("input");
+            modal.id = "modal";
+            modal.type = "text";
+            modal.placeholder = params.placeholder;
+            modal.style.borderColor = window.getComputedStyle(NP.X)["color"];
+            modal.style.background = window.getComputedStyle(NP.X)["background"];
+            modal.style.color = window.getComputedStyle(NP.X)["color"];
+            modal.style.fontFamily = window.getComputedStyle(NP.X)["font-family"];
+
+            modal.addEventListener("keydown", (e) => {
+                if (e.key == "Escape") {
+                    modal.remove();
+                    NP.X.focus();
+                };
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const value = modal.value;
+                    params.onSubmit(value);
+
+                    modal.remove();
+                    moveCursorTo(ogLoc[0], ogLoc[1]);
+                };
+            });
+
+            document.body.appendChild(modal);
+            modal.focus();
+        };
 
         window.addEventListener('beforeunload', (e)=>{
             if (!NP.saved && NP.askbeforeleaving) {
@@ -544,8 +665,10 @@
             };
             if (e.ctrlKey && e.key === 'S') {
                 e.preventDefault();
-                const a = prompt('Name of file? e.g. File.txt or File.js');
-                saveToFile(a);
+                createModal({
+                    placeholder:"name of file? e.g. File.txt or File.js",
+                    onSubmit: saveToFile
+                });
             };
             if (e.key === 'Tab' && !e.shiftKey) {
                 e.preventDefault();
@@ -602,26 +725,12 @@
                 };
             };
             if (e.key == ">" && e.ctrlKey) {
-                if (document.querySelector("#modal")) {
-                    document.querySelector("#modal").focus();
-                    return;
-                };
-                const ogLoc = NP.cursorPosition;
-                const modal = document.createElement("input");
-                modal.id = "modal";
-                modal.type = "text";
-                modal.placeholder = "enter a command (no prefix)";
-                modal.style.borderColor = window.getComputedStyle(NP.X)["color"];
-                modal.style.background = window.getComputedStyle(NP.X)["background"];
-                modal.style.color = window.getComputedStyle(NP.X)["color"];
-                modal.style.fontFamily = window.getComputedStyle(NP.X)["font-family"];
-                modal.addEventListener("keydown",(e)=>{
-                    if (e.key == "Enter") {
-                        const cursorLine = modal.value;
-                        const [command, ...args] = cursorLine.split(' ');
-                        const argsExist = (args[0] && args[0].length > 0);
+                if (!document.querySelector("#modal")) {
+                    function runCommand(value) {
+                        const [command, ...args] = value.split(' ');
+                        const argsExist = args.length > 0 && args[0].length > 0;
 
-                        NP.lastEvent = "modalcommand:"+command;
+                        NP.lastEvent = "modalcommand:" + command;
 
                         NP.inf = {
                             args: args,
@@ -631,12 +740,11 @@
                         };
 
                         (COMMANDS[command] ?? COMMANDS.default)(NP.inf);
-                        modal.remove();
-                        moveCursorTo(ogLoc[0], ogLoc[1]+1);
                     };
-                });
-                document.body.appendChild(modal);
-                modal.focus();
+
+                    createModal({ placeholder: "enter a command without prefix (e.g. help, ?, color red)", onSubmit: runCommand });
+                };
+                document.querySelector("#modal").focus();
             };
 
             if (e.key === "Enter") {

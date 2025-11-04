@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- made by ccn0 | v1.6.16 -->
+<!-- made by ccn0 | v1.6.17 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -290,6 +290,7 @@
             title: "Modal",
             txt: [],
             noHead: false,
+            noEsc: false,
             headActions: [],
             mainActions: []
         })=>{
@@ -350,6 +351,19 @@
 
             modMain.appendChild(mainActionCont);
             modalCont.appendChild(modMain);
+
+            if (!params.noEsc) {
+                modalCont.addEventListener("keydown",(e)=>{
+                    if (e.key == "Escape") {
+                        modalCont.remove()
+                    };
+                });
+                modMain.addEventListener("keydown",(e)=>{
+                    if (e.key == "Escape") {
+                        modalCont.remove()
+                    };
+                });
+            };
 
             return modalCont;
         },
@@ -477,7 +491,29 @@
             document.body.appendChild(alertModal);
             alertModal.querySelector("button").focus();
             return alertModal;
-        }
+        },
+        table: (params = {
+            id: "unktable",
+            caption: "Table",
+        })=>{
+            const tableCont = document.createElement("table");
+            tableCont.id = params.id;
+            const scaption = document.createElement("caption");
+            scaption.textContent = params.caption || "Metadata";
+            tableCont.appendChild(scaption);
+            
+            const etableHead = document.createElement("thead");
+            const etheadTr = document.createElement("tr");
+
+            return [tableCont,etableHead,etheadTr];
+        },
+    };
+    function createTH(elems,thead) {
+        const th = document.createElement("th");
+        th.scope = "col";
+        th.appendChild(elems);
+        thead.appendChild(th);
+        return th;
     };
     </script>
 </head>
@@ -510,7 +546,8 @@
                 <div style="text-align: center; padding: 10px 0;">
                     <a href="https://bsky.app/profile/ccn0.net">made by ccn0</a>
                     <a href="#settcol">engines</a>
-                    <a href="#settcol" class="skipnav">skip to engines</a>
+                    <a href="#settcol" class="skipnav" id="skip2engines">skip to engines</a>
+                    <a href="#settcol" class="skipnav" id="skip2enginetools">skip to engine list tools</a>
                 </div>
             </div>
         </div>
@@ -694,7 +731,7 @@ or if your using Firefox, click on the search bar while on this page and click t
             <div class="containercontaineryupyup">
                 <div class="container">
                     <div id="enginelist" class="list" role="list" aria-label="Engine List"></div>
-                    <div class="toolbar" role="toolbar" aria-label="Adding Engines Toolbar">
+                    <div class="toolbar enginestools" role="toolbar" aria-label="Adding Engines Toolbar">
                         <div class="oh">
                             <button onclick="addNew()" title="Add New Search Engine (Alt+N)">Add New</button>
                         </div>
@@ -702,12 +739,21 @@ or if your using Firefox, click on the search bar while on this page and click t
                             <input class="lbgreen" type="text" aria-label="Quick Add Search Engines" title="Quick Add Search Engine (Ctrl+Q)" placeholder="Quick Add" id="qainput">
                         </div>
                     </div>
-                    <div class="toolbar topborder" role="toolbar" aria-label="Search Tools">
+                    <div class="toolbar topborder searchtools" role="toolbar" aria-label="Search Tools">
                         <div class="oh">
                             <input type="text" placeholder="Search Engine List" id="searchEnginesBar">
                         </div>
+                        <!--<div class="oh">
+                            <button title="Previous Item">&lt;</button>
+                        </div>
+                        <div class="oh">
+                            <button title="Next Item">&gt;</button>
+                        </div>
+                        <div class="oh">
+                            <button title="Clear Search">X</button>
+                        </div>-->
                     </div>
-                    <div class="toolbar topborder" role="toolbar" aria-label="Import/Export Engines Toolbar">
+                    <div class="toolbar topborder datatools" role="toolbar" aria-label="Import/Export Engines Toolbar">
                         <div class="oh">
                             <button onclick="importDialog()" title="Import Search Engines from JSON (Ctrl+O)">Import...</button>
                         </div>
@@ -973,21 +1019,10 @@ or if your using Firefox, click on the search bar while on this page and click t
             "homepage":"Home Page",
         };
 
-        const settingsTable = document.createElement("table");
-        settingsTable.id = params.id;
-        const scaption = document.createElement("caption");
-        scaption.textContent = params.caption || "Metadata";
-        settingsTable.appendChild(scaption);
-        const stableHead = document.createElement("thead");
-        const stheadTr = document.createElement("tr");
-
-        function screateTH(elems) {
-            const th = document.createElement("th");
-            th.scope = "col";
-            th.appendChild(elems);
-            stheadTr.appendChild(th);
-            return th;
-        };
+        const [settingsTable,stableHead,stheadTr] = gbal.ui.table({
+            id: params.id,
+            caption: params.caption || "Metadata",
+        });
 
         const stoggleAll = document.createElement("input");
         stoggleAll.type = "checkbox";
@@ -1007,9 +1042,9 @@ or if your using Firefox, click on the search bar while on this page and click t
                 };
             });
         });
-        if (!params.readOnly) screateTH(stoggleAll);
-        screateTH(document.createTextNode("Key"));
-        screateTH(document.createTextNode("Value"));
+        if (!params.readOnly) createTH(stoggleAll, stheadTr);
+        createTH(document.createTextNode("Key"), stheadTr);
+        createTH(document.createTextNode("Value"), stheadTr);
 
         stableHead.appendChild(stheadTr);
         settingsTable.appendChild(stableHead);
@@ -1117,21 +1152,10 @@ or if your using Firefox, click on the search bar while on this page and click t
             return;
         };
 
-        const settingsTable = document.createElement("table");
-        settingsTable.id = "importsettings";
-        const scaption = document.createElement("caption");
-        scaption.textContent = "Settings";
-        settingsTable.appendChild(scaption);
-        const stableHead = document.createElement("thead");
-        const stheadTr = document.createElement("tr");
-
-        function screateTH(elems) {
-            const th = document.createElement("th");
-            th.scope = "col";
-            th.appendChild(elems);
-            stheadTr.appendChild(th);
-            return th;
-        };
+        const [settingsTable,stableHead,stheadTr] = gbal.ui.table({
+            id: "importsettings",
+            caption: "Settings",
+        });
 
         const stoggleAll = document.createElement("input");
         stoggleAll.type = "checkbox";
@@ -1151,9 +1175,9 @@ or if your using Firefox, click on the search bar while on this page and click t
                 }
             });
         });
-        screateTH(stoggleAll);
-        screateTH(document.createTextNode("Setting"));
-        screateTH(document.createTextNode("Value"));
+        createTH(stoggleAll, stheadTr);
+        createTH(document.createTextNode("Setting"), stheadTr);
+        createTH(document.createTextNode("Value"), stheadTr);
 
         stableHead.appendChild(stheadTr);
         settingsTable.appendChild(stableHead);
@@ -1227,22 +1251,10 @@ or if your using Firefox, click on the search bar while on this page and click t
         if (resultObj.searchEngines?.length > 0) toSaveEngines.push(...resultObj.searchEngines);
         delete toSave.searchEngines;
 
-        const enginesTable = document.createElement("table");
-        enginesTable.id = "importengines";
-        const ecaption = document.createElement("caption");
-        ecaption.textContent = "Engines";
-        enginesTable.appendChild(ecaption);
-
-        const etableHead = document.createElement("thead");
-        const etheadTr = document.createElement("tr");
-
-        function ecreateTH(elems) {
-            const th = document.createElement("th");
-            th.scope = "col";
-            th.appendChild(elems);
-            etheadTr.appendChild(th);
-            return th;
-        };
+        const [enginesTable,etableHead,etheadTr] = gbal.ui.table({
+            id: "importengines",
+            caption: "Engines",
+        });
 
         const etoggleAll = document.createElement("input");
         etoggleAll.type = "checkbox";
@@ -1261,9 +1273,9 @@ or if your using Firefox, click on the search bar while on this page and click t
                 }
             });
         });
-        ecreateTH(etoggleAll);
-        ecreateTH(document.createTextNode("Symbol"));
-        ecreateTH(document.createTextNode("URL"));
+        createTH(etoggleAll,etheadTr);
+        createTH(document.createTextNode("Symbol"),etheadTr);
+        createTH(document.createTextNode("URL"),etheadTr);
 
         etableHead.appendChild(etheadTr);
         enginesTable.appendChild(etableHead);
@@ -1383,21 +1395,10 @@ or if your using Firefox, click on the search bar while on this page and click t
     function exportDialogX(toSave) {
         let exportModal;
 
-        const settingsTable = document.createElement("table");
-        settingsTable.id = "exportsettings";
-        const scaption = document.createElement("caption");
-        scaption.textContent = "Settings";
-        settingsTable.appendChild(scaption);
-        const stableHead = document.createElement("thead");
-        const stheadTr = document.createElement("tr");
-
-        function screateTH(elems) {
-            const th = document.createElement("th");
-            th.scope = "col";
-            th.appendChild(elems);
-            stheadTr.appendChild(th);
-            return th;
-        };
+        const [settingsTable,stableHead,stheadTr] = gbal.ui.table({
+            id: "exportsettings",
+            caption: "Settings",
+        });
 
         const stoggleAll = document.createElement("input");
         stoggleAll.type = "checkbox";
@@ -1417,9 +1418,9 @@ or if your using Firefox, click on the search bar while on this page and click t
                 }
             });
         });
-        screateTH(stoggleAll);
-        screateTH(document.createTextNode("Setting"));
-        screateTH(document.createTextNode("Value"));
+        createTH(stoggleAll,stheadTr);
+        createTH(document.createTextNode("Setting"),stheadTr);
+        createTH(document.createTextNode("Value"),stheadTr);
 
         stableHead.appendChild(stheadTr);
         settingsTable.appendChild(stableHead);
@@ -1488,14 +1489,6 @@ or if your using Firefox, click on the search bar while on this page and click t
         const etableHead = document.createElement("thead");
         const etheadTr = document.createElement("tr");
 
-        function ecreateTH(elems) {
-            const th = document.createElement("th");
-            th.scope = "col";
-            th.appendChild(elems);
-            etheadTr.appendChild(th);
-            return th;
-        }
-
         const etoggleAll = document.createElement("input");
         etoggleAll.type = "checkbox";
         etoggleAll.checked = true;
@@ -1513,9 +1506,9 @@ or if your using Firefox, click on the search bar while on this page and click t
                 }
             });
         });
-        ecreateTH(etoggleAll);
-        ecreateTH(document.createTextNode("Symbol"));
-        ecreateTH(document.createTextNode("URL"));
+        createTH(etoggleAll,etheadTr);
+        createTH(document.createTextNode("Symbol"),etheadTr);
+        createTH(document.createTextNode("URL"),etheadTr);
 
         etableHead.appendChild(etheadTr);
         enginesTable.appendChild(etableHead);
@@ -1668,8 +1661,14 @@ or if your using Firefox, click on the search bar while on this page and click t
         };
     };
 
-    document.querySelector(".skipnav").addEventListener("click",(e)=>{
+    document.querySelector("#skip2engines").addEventListener("click",(e)=>{
+        e.stopPropagation();
         document.querySelector("#enginelist").focus();
+    });
+    document.querySelector("#skip2enginetools").addEventListener("click",(e)=>{
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        document.querySelector('.toolbar>.oh>button').focus();
     });
     document.addEventListener("keydown",(e)=>keyBinds(e));
 
