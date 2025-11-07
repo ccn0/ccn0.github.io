@@ -40,12 +40,8 @@
         </footer>
     </div>
     <script>
-        function whichsoon(param) {
-            const params = new URLSearchParams(window.location.search);
-            return params.get(param);
-        };
         const soonContainer = document.getElementById('comingsoonitem');
-        const toBeSoon = whichsoon('p');
+        const toBeSoon = new URLSearchParams(window.location.search).get("p");
 
         switch (toBeSoon) {
             case 'qogapp':
@@ -59,6 +55,10 @@
             case 'aboutccn0':
                 soonContainer.innerHTML = "About page is coming soon!";
                 soonContainer.title = "you can see a shitty one on my blog";
+                break;
+            case 'faq':
+                soonContainer.innerHTML = "FAQ is coming soon!";
+                soonContainer.title = "this shit is ass";
                 break;
             default:
             soonContainer.innerHTML = "Something is coming soon!";

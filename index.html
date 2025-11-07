@@ -14,14 +14,13 @@
     <meta property="og:type" content="website">
     <meta name="author" content="CCN0">
     <meta name="description" content="The official website for all of CCN0's projects, things, and other stuff.">
-    <meta name="keywords" content="ccn0,ccn0 website,ccno,ccno website,ccn0 things,ccn0 website,ccn0 net,ccn0net,ccno net,ccn0.net">
     <meta name="theme-color" content="#ff0000" data-react-helmet="true">
 </head>
 <body>
     <div class="main" id="top">
         <div class="col">
             <hgroup>
-                <h1><cr>CC</cr><cg>N</cg><cb>0</cb></h1>
+                <h1 title="pronounced see-see-no"><cr>CC</cr><cg>N</cg><cb>0</cb></h1>
                 <p>An awful site filled with awful things.</p>
                 <div class="topnav">
                     <a href="/info/">Wiki</a> |
@@ -42,7 +41,7 @@
                             <p class="big">LATEST BSKY</p>
                             <p>
                                 <q id="skeetquote">...</q><br>
-                                <a id="linkToSkeet"><time datetime="" id="skeetbirth"></time></a>
+                                <a id="linkToSkeet" aria-label="View post on bluesky"><time datetime="" id="skeetbirth"></time></a>
                             </p>
                         </div>
                     </li>
@@ -50,7 +49,7 @@
                         <div class="words" title="head to my blog">
                             <p class="big">LATEST BLOG POST</p>
                             <p>
-                                <a id="blogposttitle" href="https://blog.ccn0.net/">...</a>
+                                <a id="blogposttitle" href="https://blog.ccn0.net/" aria-label="view post on ccn0 blog">...</a>
                             </p>
                         </div>
                     </li>
@@ -128,7 +127,7 @@
     </div>
     <script>
     async function getLastestSkeet() {
-        fetch("https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=ccn0.net&limit=1&filter=posts_and_author_threads")
+        fetch("https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=ccn0.net&limit=2&filter=posts_and_author_threads")
             .then(response => response.json())
             .then(resp => {
                 try {

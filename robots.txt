@@ -113,7 +113,7 @@ Disallow: /rad/
 Disallow: /pages/updates/
 Disallow: /blah/
 Disallow: /things/searchpluspremium/search.html
-Disallow: /things/blog/
+Disallow: /things/blog/*
 Disallow: /pages/snitches*
 Disallow: /settings.html
 Allow: /rad/whatisthis.html
