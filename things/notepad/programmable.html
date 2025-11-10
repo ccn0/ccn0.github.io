@@ -85,695 +85,720 @@
     </noscript>
     <textarea spellcheck="false" id="textarea" aria-label="Notepad"></textarea>
     <script>
-        const textarea = document.getElementById('textarea');
-        const NP = {
-            version: "0.017",
-            progName: "Programmable Notepad",
-            X: textarea,
-            filename: "text.txt",
-            filetype: "text/plain",
-            history: [""],
-            cursorPosition: [0,0],
-            saved: false,
-            askbeforeleaving: true,
-            lastEvent: "",
-            flags: {
-                ups: 0,
-                repWid: 0,
-            },
-            smartIndent: false,
-            prefix: ">",
-            tab:"    ",
-            nativeCommands: [
-                "help",
-                "?",
-                "eval",
-                "js",
-                "replace",
-                "dark",
-                "wrap",
-                "spellcheck",
-                "open",
-                "name",
-                "filename",
-                "filetype",
-                "color",
-                "background",
-                "font",
-                "fontsize",
-                "saveas",
-                "save",
-                "web",
-                "askbeforeleaving",
-                "repeat",
-                "clear",
-                "default",
-                ">",
-            ],
-            updateXHeight: () => {
-                const scrollTop = window.scrollY;
-                const scrollLeft = window.scrollX;
+    const textarea = document.getElementById('textarea');
+    const NP = {
+        version: "0.018",
+        progName: "Programmable Notepad",
+        X: textarea,
+        filename: "text.txt",
+        filetype: "text/plain",
+        lineHistory: [""],
+        fileHistory:[""],
+        cursorPosition: [0,0],
+        saved: false,
+        askbeforeleaving: true,
+        lastEvent: "",
+        flags: {
+            ups: 0,
+            repWid: 0,
+        },
+        smartIndent: false,
+        prefix: ">",
+        tab:"    ",
+        nativeCommands: [
+            "help",
+            "?",
+            "eval",
+            "js",
+            "replace",
+            "dark",
+            "wrap",
+            "spellcheck",
+            "open",
+            "name",
+            "filename",
+            "filetype",
+            "color",
+            "background",
+            "font",
+            "fontsize",
+            "saveas",
+            "save",
+            "web",
+            "askbeforeleaving",
+            "repeat",
+            "clear",
+            "undoclear",
+            "default",
+            ">",
+        ],
+        updateXHeight: () => {
+            const scrollTop = window.scrollY;
+            const scrollLeft = window.scrollX;
 
-                textarea.style.height = "auto";
-                textarea.style.height = `${textarea.scrollHeight}px`;
-                textarea.style.width = "auto";
-                textarea.style.width = `${textarea.scrollWidth}px`;
+            textarea.style.height = "auto";
+            textarea.style.height = `${textarea.scrollHeight}px`;
+            textarea.style.width = "auto";
+            textarea.style.width = `${textarea.scrollWidth}px`;
 
-                window.scrollTo(scrollLeft, scrollTop);
+            window.scrollTo(scrollLeft, scrollTop);
+        },
+        inf: {
+            args:[],
+            fromModal: false,
+        },
+        help: {
+            "help": {
+                "args": "<command?>",
+                "text": "shows this or gives info on what a command does"
             },
-            inf: {
-                args:[],
-                fromModal: false,
+            "?": {
+                "args": "<command?>",
+                "text": "shows this or gives info on what a command does, synonym of help"
             },
-            help: {
-                "help": {
-                    "args": "<command?>",
-                    "text": "shows this or gives info on what a command does"
-                },
-                "?": {
-                    "args": "<command?>",
-                    "text": "shows this or gives info on what a command does, synonym of help"
-                },
-                "replace": {
-                    "args": "<regex> <text> <line-number?>",
-                    "text": "replaces text that matches regex, if line number, only for that line"
-                },
-                "open": {
-                    "text": "append a file to notepad"
-                },
-                "web": {
-                    "args": "<url>",
-                    "text": "fetch and append a file to notepad"
-                },
-                "save": {
-                    "text": "save current file as current filename"
-                },
-                "saveas": {
-                    "args": "<filename>",
-                    "text": "save current file as filename"
-                },
-                "filename": {
-                    "args": "<filename>",
-                    "text": "set the current file name"
-                },
-                "name": {
-                    "args": "<filename>",
-                    "text": "set the current file name, synonym of filename"
-                },
-                "filetype": {
-                    "args": "<mime type>",
-                    "text": "set the files mime type (you might wanna rename file without extension)"
-                },
-                "clear": {
-                    "text": "erase the notepad of everything, and not reversible"
-                },
-                "eval": {
-                    "args": "<code>",
-                    "text": "run JavaScript and print to line"
-                },
-                "js": {
-                    "args": "<code>",
-                    "text": "run JavaScript and print to line without new line"
-                },
-                "repeat": {
-                    "args": "<amount?>",
-                    "text": "get last line entered or go back amount"
-                },
-                ">": {
-                    "args": "<amount?>",
-                    "text": "get last line entered or go back amount, synonym of >repeat"
-                },
-                "spellcheck": {
-                    "args": "[boolean?]",
-                    "text": "toggle or set spellcheck (only works on some browsers)"
-                },
-                "askbeforeleaving": {
-                    "args": "[boolean?]",
-                    "text": "toggle or set asking before leaving"
-                },
-                "dark": {
-                    "args": "[boolean?]",
-                    "text": "toggle or set dark mode"
-                },
-                "wrap": {
-                    "args": "[boolean?]",
-                    "text": "toggle or set line wrap"
-                },
-                "color": {
-                    "args": "<color?>",
-                    "text": "specify or reset text color"
-                },
-                "background": {
-                    "args": "<color?>",
-                    "text": "specify or reset background color"
-                },
-                "font": {
-                    "args": "<font-name?>",
-                    "text": "specify or reset font"
-                },
-                "fontsize": {
-                    "args": "<size?>",
-                    "text": "change the fontsize of the page"
-                },
-            }
-        };
-        const Notepad = NP;
-        const COMMANDS = {
-            help:(inf)=>{
-                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],"");
-                let helpmessage = "";
-                function makeMsg(key,i) {
-                    if (!NP.nativeCommands.includes(key)) helpmessage += "(NON-NATIVE) ";
-                    helpmessage += `${key}${NP.help[key].args ? " "+NP.help[key].args+":": ":"} ${NP.help[key].text}`;
-                    if (i != Object.keys(NP.help).length-1) helpmessage += "\n";
-                };
-                if (NP.help[inf.args]) {
-                    if (inf.args && inf.args.join(" ").length > 0) {
-                        makeMsg(inf.args.join(" "),0);
-                    } else {
-                        Object.keys(NP.help).forEach((key, i) => {
-                            makeMsg(key,i);
-                        });
-                    };
+            "replace": {
+                "args": "<regex> <text> <[perline]>",
+                "text": "replaces text that matches regex, if perline specified, for each individual line"
+            },
+            "open": {
+                "text": "insert file at cursor"
+            },
+            "web": {
+                "args": "<url>",
+                "text": "fetch and insert a file at cursor"
+            },
+            "save": {
+                "text": "save current file as current file name"
+            },
+            "saveas": {
+                "args": "<filename>",
+                "text": "save current file as file name"
+            },
+            "filename": {
+                "args": "<filename>",
+                "text": "set the current file name"
+            },
+            "name": {
+                "args": "<filename>",
+                "text": "set the current file name, synonym of filename"
+            },
+            "filetype": {
+                "args": "<mime type>",
+                "text": "set the files mime type (you might wanna rename file without extension)"
+            },
+            "clear": {
+                "text": "erase the notepad of everything"
+            },
+            "undoclear": {
+                "text": "undoes clear to notepad right before it was cleared"
+            },
+            "eval": {
+                "args": "<code>",
+                "text": "run JavaScript and print to line with newline"
+            },
+            "js": {
+                "args": "<code>",
+                "text": "run JavaScript and print to line without newline"
+            },
+            "repeat": {
+                "args": "<amount?>",
+                "text": "get last line entered or go back amount"
+            },
+            ">": {
+                "args": "<amount?>",
+                "text": "get last line entered or go back amount, synonym of >repeat"
+            },
+            "spellcheck": {
+                "args": "[boolean?]",
+                "text": "toggle or set spellcheck (only works on some browsers)"
+            },
+            "askbeforeleaving": {
+                "args": "[boolean?]",
+                "text": "toggle or set asking before leaving"
+            },
+            "dark": {
+                "args": "[boolean?]",
+                "text": "toggle or set dark mode"
+            },
+            "wrap": {
+                "args": "[boolean?]",
+                "text": "toggle or set line wrap"
+            },
+            "color": {
+                "args": "<color?>",
+                "text": "specify or reset text color"
+            },
+            "background": {
+                "args": "<color?>",
+                "text": "specify or reset background color"
+            },
+            "font": {
+                "args": "<font-name?>",
+                "text": "specify or reset font"
+            },
+            "fontsize": {
+                "args": "<size?>",
+                "text": "change the fontsize of the page"
+            },
+        }
+    };
+    const Notepad = NP;
+    const COMMANDS = {
+        help:(inf)=>{
+            if (!inf.fromModal) replaceLine(NP.cursorPosition[0],"");
+            let helpmessage = "";
+            function makeMsg(key,i) {
+                if (!NP.nativeCommands.includes(key)) helpmessage += "(NON-NATIVE) ";
+                helpmessage += `${key}${NP.help[key].args ? " "+NP.help[key].args+":": ":"} ${NP.help[key].text}`;
+                if (i != Object.keys(NP.help).length-1) helpmessage += "\n";
+            };
+            if (NP.help[inf.args]) {
+                if (inf.args && inf.args.join(" ").length > 0) {
+                    makeMsg(inf.args.join(" "),0);
                 } else {
                     Object.keys(NP.help).forEach((key, i) => {
                         makeMsg(key,i);
                     });
                 };
-                if (typeof textarea.value === "undefined") {
-                    textarea.value = helpmessage;
-                } else {
-                    replaceLine(NP.cursorPosition[0],helpmessage);
-                };
-                moveCursorTo(NP.cursorPosition[0],0);
-            },
-            eval:(inf)=>{
-                try {
-                    replaceLine(NP.cursorPosition[0], eval(inf.args.join(' ') || "") + "\n");
-                } catch (error) {
-                    replaceLine(NP.cursorPosition[0], error + "\n");
-                };
-            },
-            js:(inf)=>{
-                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],"");
+            } else {
+                Object.keys(NP.help).forEach((key, i) => {
+                    makeMsg(key,i);
+                });
+            };
+            if (typeof textarea.value === "undefined") {
+                textarea.value = helpmessage;
+            } else {
+                replaceLine(NP.cursorPosition[0],helpmessage);
+            };
+            moveCursorTo(NP.cursorPosition[0],0);
+        },
+        eval:(inf)=>{
+            try {
+                replaceLine(NP.cursorPosition[0], eval(inf.args.join(' ') || "") + "\n");
+            } catch (error) {
+                replaceLine(NP.cursorPosition[0], error + "\n");
+            };
+        },
+        js:(inf)=>{
+            if (!inf.fromModal) {
+                replaceLine(NP.cursorPosition[0],"");
                 try {
                     replaceLine(NP.cursorPosition[0], eval(inf.args.join(' ') || ""));
                 } catch (error) {
                     replaceLine(NP.cursorPosition[0], error);
                 };
-            },
-            replace:(inf)=>{
-                let regex = new RegExp(inf.args[0], 'g');
-                replaceLine(NP.cursorPosition[0],'');
-                if (!isNaN(Number(inf.args[2]))) {
-                    replaceLine(inf.args[2], getLine(inf.args[2]).replace(regex, inf.args[1]));
-                } else if (inf.args[2] == "perline") {
-                    let buff = [];
-                    getLines().forEach((line,i)=>{
-                        buff[i] = line.replace(regex, inf.args[1]);
-                    });
-                    textarea.value = buff.join("\n");
-                } else {
-                    let comb = inf.args.slice(1).join(" ");
-                    textarea.value = textarea.value.replace(regex, comb);
-                };
-            },
-            dark:(inf)=>{
-                replaceLine(NP.cursorPosition[0],'');
-                let locationhref = new URL(window.location.href);
-                if (inf.argsExist) {
-                    if (inf.args.join(" ") == "true") {
-                        textarea.setAttribute('dark','');
-                        document.body.setAttribute('dark','');
-                        locationhref.searchParams.set('dark','');
-                    } else {
-                        textarea.removeAttribute('dark');
-                        document.body.removeAttribute('dark');
-                        locationhref.searchParams.delete('dark');
-                    };
-                    history.replaceState(null, '', locationhref.href);
-                } else {
-                    toggleDark();
-                };
-            },
-            wrap:(inf)=>{
-                replaceLine(NP.cursorPosition[0],'');
-                if (!inf.argsExist) { 
-                    toggleWrap();
-                } else {
-                    if (inf.args.join(' ') == "true") {
-                        textarea.setAttribute('wrap','');
-                    } else {
-                        textarea.removeAttribute('wrap');
-                    };
-                };
-                NP.updateXHeight();
-            },
-            spellcheck:(inf)=>{
-                replaceLine(NP.cursorPosition[0],'');
-                if (inf.argsExist) {
-                    if (inf.args.join(" ") == "true") {
-                        textarea.spellcheck = true;
-                    } else {
-                        textarea.removeAttribute('spellcheck');
-                    };
-                } else {
-                    if (textarea.getAttribute("spellcheck")) {
-                        textarea.removeAttribute('spellcheck');
-                    } else {
-                        textarea.spellcheck = true;
-                    };
-                };
-            },
-            open:(inf)=>{
-                openFile();
-            },
-            filename:(inf)=>{
-                if (inf.argsExist) {
-                    NP.filename = inf.args.join(" ");
-                } else {
-                    NP.filename = "text.txt";
-                };
-                refreshTitle();
-                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
-            },
-            filetype:(inf)=>{
-                if (inf.argsExist) {
-                    NP.filetype = inf.args.join(" ");
-                } else {
-                    NP.filetype = "text/plain";
-                };
-                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
-            },
-            color:(inf)=>{
-                if (inf.argsExist) {
-                    textarea.style.color = inf.args.join(" ");
-                } else {
-                    textarea.style.color = "";
-                };
-                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
-            },
-            background:(inf)=>{
-                if (inf.argsExist) {
-                    textarea.style.background = inf.args.join(" ");
-                } else {
-                    textarea.style.background = "";
-                };
-                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
-            },
-            font:(inf)=>{
-                if (inf.argsExist) {
-                    textarea.style.fontFamily = inf.args.join(" ");
-                } else {
-                    textarea.style.fontFamily = "monospace";
-                };
-                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
-            },
-            fontsize:(inf)=>{
-                if (inf.argsExist) {
-                    textarea.style.fontSize = inf.args.join(" ");
-                } else {
-                    textarea.style.fontSize = "12px"
-                };
-                if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
-            },
-            saveas:(inf)=>{
-                if (!inf.fromModal) deleteLine(NP.cursorPosition[0]);
-                saveToFile(inf.args.join(" "));
-            },
-            save:(inf)=>{
-                if (!inf.fromModal) deleteLine(NP.cursorPosition[0]);
-                saveToFile();
-            },
-            web:(inf)=>{
-                let url = inf.args.join(" ");
-                if (confirm(`Are you sure you want to load this file from "${url}"?`)) {
-                    fetch(url)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`http error ${response.status}`);
-                            }
-                            return response.text();
-                        })
-                        .then(text => {
-                            replaceLine(NP.cursorPosition[0],text);
-                        })
-                        .catch(error => {
-                            insertAtCursor(error);
-                        });
-                    NP.updateXHeight();
-                };},
-            askbeforeleaving:(inf)=>{
-                deleteLine(NP.cursorPosition[0]);
-                if (inf.argsExist) {
-                    NP.askbeforeleaving = inf.args.join(' ') == "true" ? true: false;
-                } else {
-                    NP.askbeforeleaving = !NP.askbeforeleaving;
-                };
-            },
-            repeat: (inf) => {
-                NP.history.shift();
-                let tohistory = inf.args[0] || 1;
-                if (tohistory > 0) {
-                    tohistory = tohistory-1 % NP.history.length;
-                } else {
-                    tohistory = (NP.history.length - Math.abs(tohistory)) % NP.history.length;
-                };
-                replaceLine(NP.cursorPosition[0], NP.history[tohistory]);
-            },
-            clear:(inf)=>{
-                textarea.value = "";
-            },
-            default:(inf)=>{
-                if (inf.fromModal) return;
-                insertAtCursor("\n");
-                console.warn('Malformed command was entered, proceeding new line.');
-            },
-        };
-        COMMANDS[">"] = COMMANDS.repeat;
-        COMMANDS["name"] = COMMANDS.filename;
-        COMMANDS["?"] = COMMANDS.help;
-
-        const params = new URLSearchParams(window.location.search);
-        if (params.has('dark')) {
-            textarea.setAttribute('dark','');
-        };
-        NP.updateXHeight();
-
-        function randomInteger(min = 0, max = 9) {
-            const rmin = min;
-            const rmax = max;
-            const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
-            return targetNumber;
-        };
-        function seed(leng = 0) {
-            let digits = "";
-            const HX = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
-            for (let i = 0; i < leng; i++) {
-                digits += String(HX[randomInteger(0,HX.length-1)]);
-            };
-            return digits;
-        };
-
-        function openFile() {
-            const input = document.createElement("input");
-            input.type = "file";
-            input.accept = "text/*";
-            input.addEventListener("change", (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const content = e.target.result;
-                        replaceLine(NP.cursorPosition[0],content);
-                    };
-                    reader.readAsText(file);
-                    NP.filename = file.name;
-                    NP.filetype = file.type;
-                    refreshTitle();
-                }
-            });
-            input.click();
-        };
-        function saveToFile(x) {
-            const content = textarea.value;
-            const blob = new Blob([content], { type: NP.filetype });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            if (x) {
-                a.download = x;
             } else {
-                a.download = NP.filename;
-            };
-            a.click();
-            a.remove();
-            NP.saved = true;
-            refreshTitle();
-        };
-        function refreshTitle() {
-            document.title = `${!NP.saved && NP.askbeforeleaving ? "*":""}${NP.filename} - ${NP.progName || ""}`;
-        };
-
-        function moveCursorTo(row, col) {
-            const lines = getLines();
-            let pos = 0;
-
-            for (let i = 0; i < row - 1; i++) {
-                pos += lines[i].length + 1;
-            };
-
-            pos += col;
-
-            NP.X.setSelectionRange(pos, pos);
-            NP.X.focus();
-        };
-        function replaceLine(lineNumber, newContent) {
-            const ogLoc = NP.cursorPosition;
-            const lines = getLines();
-            if (lineNumber > 0 && lineNumber <= lines.length) {
-                lines[lineNumber - 1] = newContent;
-                textarea.value = lines.join("\n");
-            } else {
-                console.error(`No line exists at this location: ${lineNumber}`);
-                textarea.value += "\n";
-            };
-            moveCursorTo(ogLoc[0], ogLoc[1]+1);
-        };
-        function deleteLine(lineNumber) {
-            const lines = getLines();
-            if (lineNumber < 1 || lineNumber > lines.length) {
-                console.error("No line exists at this location.");
-                return;
-            };
-            lines.splice(lineNumber - 1, 1);
-            textarea.value = lines.join("\n");
-        };
-        function insertAtCursor(text) {
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            textarea.value = textarea.value.substring(0, start) + text + textarea.value.substring(end);
-            textarea.selectionStart = textarea.selectionEnd = start + text.length;
-        };
-        function getLineAtCursor() {
-            return getLine(NP.cursorPosition[0]);
-        };
-        function getLine(lineNumber) {
-            const lines = getLines();
-            const line = lines[lineNumber - 1];
-            if (line !== undefined) {
-                return line;
-            } else {
-                return null;
-            };
-        };
-        function getLines() {
-            return textarea.value.split("\n");
-        };
-        function updateCursorPosition() {
-            const location = textarea.selectionStart;
-            const text = textarea.value;
-            const lines = text.substring(0, location).split("\n");
-            const row = lines.length;
-            const column = lines[lines.length - 1].length;
-            return [row,column];
-        };
-
-        function toggleDark() {
-            let locationhref = new URL(window.location.href);
-            if (textarea.hasAttribute('dark')) {
-                textarea.removeAttribute('dark');
-                document.body.removeAttribute('dark');
-                locationhref.searchParams.delete('dark');
-            } else {
-                textarea.setAttribute('dark', '');
-                document.body.setAttribute('dark', '');
-                locationhref.searchParams.set('dark', '');
-            };
-            history.replaceState(null, '', locationhref.href);
-        };
-        function toggleWrap() {
-            if (textarea.getAttribute('wrap') === '') {
-                textarea.removeAttribute('wrap');
-            } else {
-                textarea.setAttribute('wrap','');
-            };
-        };
-        
-        function createModal(params = { placeholder: "modal", onSubmit: () => {} }) {
-            const ogLoc = NP.cursorPosition;
-            const modal = document.createElement("input");
-            modal.id = "modal";
-            modal.type = "text";
-            modal.placeholder = params.placeholder;
-            modal.style.borderColor = window.getComputedStyle(NP.X)["color"];
-            modal.style.background = window.getComputedStyle(NP.X)["background"];
-            modal.style.color = window.getComputedStyle(NP.X)["color"];
-            modal.style.fontFamily = window.getComputedStyle(NP.X)["font-family"];
-
-            modal.addEventListener("keydown", (e) => {
-                if (e.key == "Escape") {
-                    modal.remove();
-                    NP.X.focus();
+                try {
+                    insertAtCursor(NP.cursorPosition[0], eval(inf.args.join(' ') || ""));
+                } catch (error) {
+                    insertAtCursor(NP.cursorPosition[0], error);
                 };
-                if (e.key === "Enter") {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    const value = modal.value;
-                    params.onSubmit(value);
-
-                    modal.remove();
-                    moveCursorTo(ogLoc[0], ogLoc[1]);
-                };
-            });
-
-            document.body.appendChild(modal);
-            modal.focus();
-        };
-
-        window.addEventListener('beforeunload', (e)=>{
-            if (!NP.saved && NP.askbeforeleaving) {
-                e.preventDefault();
-                e.returnValue = true;
-                return 'Are you sure you want to leave without saving?';
-            };
-        });
-        textarea.addEventListener('click',()=>{
-            NP.updateXHeight();
-            NP.cursorPosition = updateCursorPosition();
-        });
-        textarea.addEventListener('select',()=>{
-            NP.updateXHeight();
-            NP.cursorPosition = updateCursorPosition();
-        });
-        textarea.addEventListener('input', (e)=>{
-            NP.updateXHeight();
-            NP.cursorPosition = updateCursorPosition();
-            refreshTitle();
-            NP.saved = false;
-        });
-        textarea.addEventListener('keydown', (e) => {
-            NP.cursorPosition = updateCursorPosition();
-
-            if (e.ctrlKey && e.key === 'o') {
-                e.preventDefault();
-                openFile()
-            };
-            if (e.ctrlKey && e.key === 's') {
-                e.preventDefault();
-                saveToFile();
-            };
-            if (e.ctrlKey && e.key === 'S') {
-                e.preventDefault();
-                createModal({
-                    placeholder:"name of file? e.g. File.txt or File.js",
-                    onSubmit: saveToFile
+            }
+        },
+        replace:(inf)=>{
+            let regex = new RegExp(inf.args[0], 'g');
+            replaceLine(NP.cursorPosition[0],'');
+            if (!isNaN(Number(inf.args[2]))) {
+                replaceLine(inf.args[2], getLine(inf.args[2]).replace(regex, inf.args[1]));
+            } else if (inf.args[2] == "perline") {
+                let buff = [];
+                getLines().forEach((line,i)=>{
+                    buff[i] = line.replace(regex, inf.args[1]);
                 });
+                textarea.value = buff.join("\n");
+            } else {
+                let comb = inf.args.slice(1).join(" ");
+                textarea.value = textarea.value.replace(regex, comb);
             };
-            if (e.key === 'Tab' && !e.shiftKey) {
-                e.preventDefault();
-                insertAtCursor(NP.tab);
-            };
-            if (e.ctrlKey && e.key === 'd') {
-                e.preventDefault();
+        },
+        dark:(inf)=>{
+            if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
+            let locationhref = new URL(window.location.href);
+            if (inf.argsExist) {
+                if (inf.args.join(" ") == "true") {
+                    textarea.setAttribute('dark','');
+                    document.body.setAttribute('dark','');
+                    locationhref.searchParams.set('dark','');
+                } else {
+                    textarea.removeAttribute('dark');
+                    document.body.removeAttribute('dark');
+                    locationhref.searchParams.delete('dark');
+                };
+                history.replaceState(null, '', locationhref.href);
+            } else {
                 toggleDark();
             };
-            if (e.ctrlKey && e.altKey && e.key === 'w') {
-                e.preventDefault();
+        },
+        wrap:(inf)=>{
+            if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
+            if (!inf.argsExist) { 
                 toggleWrap();
-            };
-            if (e.ctrlKey && e.key === 'k') {
-                e.preventDefault();
-                insertAtCursor(NP.history[0]);
-            };
-            if (e.key === "ArrowUp" && e.ctrlKey) {
-                e.preventDefault();
-
-                if (NP.lastEvent !== "backonce") {
-                    NP.lastEvent = "backonce";
-                    NP.flags.ups = 0;
-
-                    insertAtCursor(NP.history[0]);
-                    NP.flags.repWid = NP.history[0].length;
-
-                    textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+            } else {
+                if (inf.args.join(' ') == "true") {
+                    textarea.setAttribute('wrap','');
                 } else {
-                    NP.flags.ups = (NP.flags.ups + 1) % NP.history.length;
-
-                    replaceLine(NP.cursorPosition[0], NP.history[NP.flags.ups]);
-
-                    textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+                    textarea.removeAttribute('wrap');
                 };
             };
-            if (e.key === "ArrowDown" && e.ctrlKey) {
-                e.preventDefault();
-
-                if (NP.lastEvent !== "forwardonce") {
-                    NP.lastEvent = "forwardonce";
-                    NP.flags.downs = 0;
-
-                    insertAtCursor(NP.history[0]);
-                    NP.flags.repWid = NP.history[0].length;
-
-                    textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+            NP.updateXHeight();
+        },
+        spellcheck:(inf)=>{
+            replaceLine(NP.cursorPosition[0],'');
+            if (inf.argsExist) {
+                if (inf.args.join(" ") == "true") {
+                    textarea.spellcheck = true;
                 } else {
-                    NP.flags.downs = (NP.flags.downs + 1) % NP.history.length;
-
-                    replaceLine(NP.cursorPosition[0], NP.history[NP.flags.downs]);
-
-                    textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+                    textarea.removeAttribute('spellcheck');
+                };
+            } else {
+                if (textarea.getAttribute("spellcheck")) {
+                    textarea.removeAttribute('spellcheck');
+                } else {
+                    textarea.spellcheck = true;
                 };
             };
-            if (e.key == ">" && e.ctrlKey) {
-                if (!document.querySelector("#modal")) {
-                    function runCommand(value) {
-                        const [command, ...args] = value.split(' ');
-                        const argsExist = args.length > 0 && args[0].length > 0;
-
-                        NP.lastEvent = "modalcommand:" + command;
-
-                        NP.inf = {
-                            args: args,
-                            argsExist: argsExist,
-                            command: command,
-                            fromModal: true,
+        },
+        open:(inf)=>{
+            openFile(inf);
+        },
+        filename:(inf)=>{
+            if (inf.argsExist) {
+                NP.filename = inf.args.join(" ");
+            } else {
+                NP.filename = "text.txt";
+            };
+            refreshTitle();
+            if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
+        },
+        filetype:(inf)=>{
+            if (inf.argsExist) {
+                NP.filetype = inf.args.join(" ");
+            } else {
+                NP.filetype = "text/plain";
+            };
+            if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
+        },
+        color:(inf)=>{
+            if (inf.argsExist) {
+                textarea.style.color = inf.args.join(" ");
+            } else {
+                textarea.style.color = "";
+            };
+            if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
+        },
+        background:(inf)=>{
+            if (inf.argsExist) {
+                textarea.style.background = inf.args.join(" ");
+            } else {
+                textarea.style.background = "";
+            };
+            if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
+        },
+        font:(inf)=>{
+            if (inf.argsExist) {
+                textarea.style.fontFamily = inf.args.join(" ");
+            } else {
+                textarea.style.fontFamily = "monospace";
+            };
+            if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
+        },
+        fontsize:(inf)=>{
+            if (inf.argsExist) {
+                textarea.style.fontSize = inf.args.join(" ");
+            } else {
+                textarea.style.fontSize = "12px"
+            };
+            if (!inf.fromModal) replaceLine(NP.cursorPosition[0],'');
+        },
+        saveas:(inf)=>{
+            if (!inf.fromModal) deleteLine(NP.cursorPosition[0]);
+            saveToFile(inf.args.join(" "));
+        },
+        save:(inf)=>{
+            if (!inf.fromModal) deleteLine(NP.cursorPosition[0]);
+            saveToFile();
+        },
+        web:(inf)=>{
+            let url = inf.args.join(" ");
+            if (confirm(`Are you sure you want to load this file from "${url}"?`)) {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`http error ${response.status}`);
                         };
-
-                        (COMMANDS[command] ?? COMMANDS.default)(NP.inf);
-                    };
-
-                    createModal({ placeholder: "enter a command without prefix (e.g. help, ?, color red)", onSubmit: runCommand });
-                };
-                document.querySelector("#modal").focus();
+                        return response.text();
+                    })
+                    .then(text => {
+                        if (inf.fromModal) {
+                            insertAtCursor(text);
+                        } else {
+                            replaceLine(NP.cursorPosition[0],text);
+                        };
+                    })
+                    .catch(error => {
+                        insertAtCursor(error);
+                    });
+                NP.updateXHeight();
+            };},
+        askbeforeleaving:(inf)=>{
+            if (!inf.fromModal) deleteLine(NP.cursorPosition[0]);
+            if (inf.argsExist) {
+                NP.askbeforeleaving = inf.args.join(' ') == "true" ? true: false;
+            } else {
+                NP.askbeforeleaving = !NP.askbeforeleaving;
             };
+        },
+        repeat: (inf) => {
+            NP.lineHistory.shift();
+            let tohistory = inf.args[0] || 1;
+            if (tohistory > 0) {
+                tohistory = tohistory-1 % NP.lineHistory.length;
+            } else {
+                tohistory = (NP.lineHistory.length - Math.abs(tohistory)) % NP.lineHistory.length;
+            };
+            replaceLine(NP.cursorPosition[0], NP.lineHistory[tohistory]);
+        },
+        clear:(inf)=>{
+            NP.fileHistory.unshift(textarea.value);                
+            textarea.value = "";
+        },
+        undoclear:(inf)=>{
+            textarea.value = NP.fileHistory[0];
+        },
+        default:(inf)=>{
+            if (inf.fromModal) return;
+            insertAtCursor("\n");
+            console.warn('Malformed command was entered, proceeding new line.');
+        },
+    };
+    COMMANDS[">"] = COMMANDS.repeat;
+    COMMANDS["name"] = COMMANDS.filename;
+    COMMANDS["?"] = COMMANDS.help;
 
-            if (e.key === "Enter") {
-                const currentLine = getLineAtCursor();
-                if (currentLine !== "" && currentLine !== "\n" && NP.history[0] !== currentLine) {
-                    NP.history.unshift(currentLine);
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('dark')) {
+        textarea.setAttribute('dark','');
+    };
+    NP.updateXHeight();
+
+    function randomInteger(min = 0, max = 9) {
+        const rmin = min;
+        const rmax = max;
+        const targetNumber = Math.floor(Math.random() * (rmax - rmin + 1)) + rmin;
+        return targetNumber;
+    };
+    function seed(leng = 0) {
+        let digits = "";
+        const HX = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
+        for (let i = 0; i < leng; i++) {
+            digits += String(HX[randomInteger(0,HX.length-1)]);
+        };
+        return digits;
+    };
+
+    function openFile(inf) {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "text/*";
+        input.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const content = e.target.result;
+                    if (inf.fromModal) {
+                        insertAtCursor(content);
+                    } else {
+                        replaceLine(NP.cursorPosition[0], content);
+                    }
                 };
-                NP.lastEvent = "newline";
+                reader.readAsText(file);
+                NP.filename = file.name;
+                NP.filetype = file.type;
+                refreshTitle();
+            }
+        });
+        input.click();
+    };
+    function saveToFile(x) {
+        const content = textarea.value;
+        const blob = new Blob([content], { type: NP.filetype });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        if (x) {
+            a.download = x;
+        } else {
+            a.download = NP.filename;
+        };
+        a.click();
+        a.remove();
+        NP.saved = true;
+        refreshTitle();
+    };
+    function refreshTitle() {
+        document.title = `${!NP.saved && NP.askbeforeleaving ? "*":""}${NP.filename} - ${NP.progName || ""}`;
+    };
 
-                const cursorLine = getLines()[textarea.value.substring(0, textarea.selectionStart).split('\n').length - 1];
-                const [command, ...args] = cursorLine.split(' ');
-                const argsExist = (args[0] && args[0].length > 0);
+    function moveCursorTo(row, col) {
+        const lines = getLines();
+        let pos = 0;
 
-                if (command?.startsWith(NP.prefix)) {
-                    e.preventDefault();
-                    NP.lastEvent = "command:"+command;
+        for (let i = 0; i < row - 1; i++) {
+            pos += lines[i].length + 1;
+        };
+
+        pos += col;
+
+        NP.X.setSelectionRange(pos, pos);
+        NP.X.focus();
+    };
+    function replaceLine(lineNumber, newContent) {
+        const ogLoc = NP.cursorPosition;
+        const lines = getLines();
+        if (lineNumber > 0 && lineNumber <= lines.length) {
+            lines[lineNumber - 1] = newContent;
+            textarea.value = lines.join("\n");
+        } else {
+            console.error(`No line exists at this location: ${lineNumber}`);
+            textarea.value += "\n";
+        };
+        moveCursorTo(ogLoc[0], ogLoc[1]+1);
+    };
+    function deleteLine(lineNumber) {
+        const lines = getLines();
+        if (lineNumber < 1 || lineNumber > lines.length) {
+            console.error("No line exists at this location.");
+            return;
+        };
+        lines.splice(lineNumber - 1, 1);
+        textarea.value = lines.join("\n");
+    };
+    function insertAtCursor(text) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        textarea.value = textarea.value.substring(0, start) + text + textarea.value.substring(end);
+        textarea.selectionStart = textarea.selectionEnd = start + text.length;
+    };
+    function getLineAtCursor() {
+        return getLine(NP.cursorPosition[0]);
+    };
+    function getLine(lineNumber) {
+        const lines = getLines();
+        const line = lines[lineNumber - 1];
+        if (line !== undefined) {
+            return line;
+        } else {
+            return null;
+        };
+    };
+    function getLines() {
+        return textarea.value.split("\n");
+    };
+    function updateCursorPosition() {
+        const location = textarea.selectionStart;
+        const text = textarea.value;
+        const lines = text.substring(0, location).split("\n");
+        const row = lines.length;
+        const column = lines[lines.length - 1].length;
+        return [row,column];
+    };
+
+    function toggleDark() {
+        let locationhref = new URL(window.location.href);
+        if (textarea.hasAttribute('dark')) {
+            textarea.removeAttribute('dark');
+            document.body.removeAttribute('dark');
+            locationhref.searchParams.delete('dark');
+        } else {
+            textarea.setAttribute('dark', '');
+            document.body.setAttribute('dark', '');
+            locationhref.searchParams.set('dark', '');
+        };
+        history.replaceState(null, '', locationhref.href);
+    };
+    function toggleWrap() {
+        if (textarea.getAttribute('wrap') === '') {
+            textarea.removeAttribute('wrap');
+        } else {
+            textarea.setAttribute('wrap','');
+        };
+    };
+    
+    function createModal(params = { placeholder: "modal", onSubmit: () => {} }) {
+        const ogLoc = NP.cursorPosition;
+        const modal = document.createElement("input");
+        modal.id = "modal";
+        modal.type = "text";
+        modal.placeholder = params.placeholder;
+        modal.style.borderColor = window.getComputedStyle(NP.X)["color"];
+        modal.style.background = window.getComputedStyle(NP.X)["background"];
+        modal.style.color = window.getComputedStyle(NP.X)["color"];
+        modal.style.fontFamily = window.getComputedStyle(NP.X)["font-family"];
+
+        modal.addEventListener("keydown", (e) => {
+            if (e.key == "Escape") {
+                modal.remove();
+                NP.X.focus();
+            };
+            if (e.key === "Enter") {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const value = modal.value;
+                params.onSubmit(value);
+
+                modal.remove();
+                moveCursorTo(ogLoc[0], ogLoc[1]);
+            };
+        });
+
+        document.body.appendChild(modal);
+        modal.focus();
+    };
+
+    window.addEventListener('beforeunload', (e)=>{
+        if (!NP.saved && NP.askbeforeleaving) {
+            e.preventDefault();
+            e.returnValue = true;
+            return 'Are you sure you want to leave without saving?';
+        };
+    });
+    textarea.addEventListener('click',()=>{
+        NP.updateXHeight();
+        NP.cursorPosition = updateCursorPosition();
+    });
+    textarea.addEventListener('select',()=>{
+        NP.updateXHeight();
+        NP.cursorPosition = updateCursorPosition();
+    });
+    textarea.addEventListener('input', (e)=>{
+        NP.updateXHeight();
+        NP.cursorPosition = updateCursorPosition();
+        refreshTitle();
+        NP.saved = false;
+    });
+    textarea.addEventListener('keydown', (e) => {
+        NP.cursorPosition = updateCursorPosition();
+
+        if (e.ctrlKey && e.key === 'o') {
+            e.preventDefault();
+            openFile()
+        };
+        if (e.ctrlKey && e.key === 's') {
+            e.preventDefault();
+            saveToFile();
+        };
+        if (e.ctrlKey && e.key === 'S') {
+            e.preventDefault();
+            createModal({
+                placeholder:"name of file? e.g. File.txt or File.js",
+                onSubmit: saveToFile
+            });
+        };
+        if (e.key === 'Tab' && !e.shiftKey) {
+            e.preventDefault();
+            insertAtCursor(NP.tab);
+        };
+        if (e.ctrlKey && e.key === 'd') {
+            e.preventDefault();
+            toggleDark();
+        };
+        if (e.ctrlKey && e.altKey && e.key === 'w') {
+            e.preventDefault();
+            toggleWrap();
+        };
+        if (e.ctrlKey && e.key === 'k') {
+            e.preventDefault();
+            insertAtCursor(NP.lineHistory[0]);
+        };
+        if (e.key === "ArrowUp" && e.ctrlKey) {
+            e.preventDefault();
+
+            if (NP.lastEvent !== "backonce") {
+                NP.lastEvent = "backonce";
+                NP.flags.ups = 0;
+
+                insertAtCursor(NP.lineHistory[0]);
+                NP.flags.repWid = NP.lineHistory[0].length;
+
+                textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+            } else {
+                NP.flags.ups = (NP.flags.ups + 1) % NP.lineHistory.length;
+
+                replaceLine(NP.cursorPosition[0], NP.lineHistory[NP.flags.ups]);
+
+                textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+            };
+        };
+        if (e.key === "ArrowDown" && e.ctrlKey) {
+            e.preventDefault();
+
+            if (NP.lastEvent !== "forwardonce") {
+                NP.lastEvent = "forwardonce";
+                NP.flags.downs = 0;
+
+                insertAtCursor(NP.lineHistory[0]);
+                NP.flags.repWid = NP.lineHistory[0].length;
+
+                textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+            } else {
+                NP.flags.downs = (NP.flags.downs + 1) % NP.lineHistory.length;
+
+                replaceLine(NP.cursorPosition[0], NP.lineHistory[NP.flags.downs]);
+
+                textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+            };
+        };
+        if (e.key == ">" && e.ctrlKey) {
+            if (!document.querySelector("#modal")) {
+                function runCommand(value) {
+                    const [command, ...args] = value.split(' ');
+                    const argsExist = args.length > 0 && args[0].length > 0;
+
+                    NP.lastEvent = "modalcommand:" + command;
 
                     NP.inf = {
                         args: args,
                         argsExist: argsExist,
                         command: command,
-                        fromModal: false,
+                        fromModal: true,
                     };
 
-                    (COMMANDS[command.slice(NP.prefix.length)] ?? COMMANDS.default)(NP.inf);
-                    NP.updateXHeight();
+                    (COMMANDS[command] ?? COMMANDS.default)(NP.inf);
                 };
+
+                createModal({ placeholder: "enter a command without prefix (e.g. help, ?, color red)", onSubmit: runCommand });
             };
-        });
+            document.querySelector("#modal").focus();
+        };
+
+        if (e.key === "Enter") {
+            const currentLine = getLineAtCursor();
+            if (currentLine !== "" && currentLine !== "\n" && NP.lineHistory[0] !== currentLine) {
+                NP.lineHistory.unshift(currentLine);
+            };
+            NP.lastEvent = "newline";
+
+            const cursorLine = getLines()[textarea.value.substring(0, textarea.selectionStart).split('\n').length - 1];
+            const [command, ...args] = cursorLine.split(' ');
+            const argsExist = (args[0] && args[0].length > 0);
+
+            if (command?.startsWith(NP.prefix) && !e.shiftKey) {
+                e.preventDefault();
+                NP.lastEvent = "command:"+command;
+
+                NP.inf = {
+                    args: args,
+                    argsExist: argsExist,
+                    command: command,
+                    fromModal: false,
+                };
+
+                (COMMANDS[command.slice(NP.prefix.length)] ?? COMMANDS.default)(NP.inf);
+                NP.updateXHeight();
+            };
+        };
+    });
     </script>
 </body>
 </html>
