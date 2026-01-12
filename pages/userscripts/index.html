@@ -169,7 +169,27 @@
                     description:{
                         html:"Hold Alt + Right Click on an image to see its alt text"
                     }
-                }
+                },
+                {
+                    name:"Example Commands for Programmable Notepad",
+                    links:{
+                        greasyfork:"https://greasyfork.org/en/scripts/562346-example-commands-for-programmable-notepad",
+                        source:"https://other.qog.app/pnp/examples-pnp.user.js"
+                    },
+                    description:{
+                        html:"Adds a &gt;hello, &gt;aahhh, and &gt;random command to Programmable Notepad"
+                    }
+                },
+                {
+                    name:"fweb Command for Programmable Notepad",
+                    links:{
+                        greasyfork:"https://greasyfork.org/en/scripts/562347-fweb-command-for-programmable-notepad",
+                        source:"https://other.qog.app/pnp/fweb-pnp.user.js"
+                    },
+                    description:{
+                        html:"Adds a &gt;fweb command to fetch any file without CORS restrictions to Programmable Notepad"
+                    }
+                },
             ]
         }
         function loadBoxes() {
@@ -188,7 +208,9 @@
                 itemBox.classList.add("itembox");
 
                 const nameH2 = document.createElement("h2");
-                USEMPOR.getUSMetadata(usdata.links.githubraw).then(meta =>{
+                let choice = "githubraw";
+                if (!usdata.links[choice]) choice = "source";
+                USEMPOR.getUSMetadata(usdata.links[choice]).then(meta =>{
                     nameH2.innerHTML = `<img src="${meta.icon}">${usdata.name} v${meta.version}`;
                 });
 
