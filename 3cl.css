@@ -1,7 +1,7 @@
 /*
     3CL / 3 COLUMN LAYOUT / made for CCN0.net
     MADE BY CCN0 / https://github.com/ccn0
-    v1B07
+    v1B08
 */
 
 :root {
@@ -151,6 +151,9 @@ hgroup {
             }
             div.words {
                 flex: 1;
+                overflow-wrap: anywhere;
+                white-space: normal;
+                max-width: 100%;
             }
             h3,p,q {
                 margin: 6px;

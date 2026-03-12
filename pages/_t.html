@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCN0 / Coming Soon</title>
+    <title>CCN0.net</title>
     <link rel="stylesheet" href="/3cl.css">
     <meta name="ccn0:pagetype" content="3cl-v1">
     <link rel="icon" type="image/png" href="https://ccn0.net/img/ccn0logo.png">
@@ -29,14 +29,13 @@
                     <a href="https://blog.ccn0.net">Blog</a>
                 </div>
             </hgroup>
-        </div>
-        <div class="col">
             <div class="section">
-                <h2 id="featured">COMING SOON</h2>
+                <h2 id="recent">RECENT</h2>
                 <ul>
                     <li>
-                        <div class="words" title="its like a search engine but multiple at once yada yada">
-                            <p class="big" id="comingsoonitem">Something is coming soon!</p>
+                        <div class="words" title="from ugly to ugly to eh">
+                            <a href="https://blog.ccn0.net/2025/08/3cl-and-redesigning-ccn0net-second-time.html" title="3 columns???? layout???? css?????"><p>3CL</p></a>
+                            <p>Redesigning my website for the second time</p>
                         </div>
                     </li>
                 </ul>
@@ -44,15 +43,26 @@
         </div>
         <div class="col">
             <div class="section">
-                <h2>Other Projects</h2>
+                <h2 id="featured">FEATURED</h2>
                 <ul>
                     <li>
-                        <iframe src="https://ccn0.net/rad/"
-                        width="200px" height="200px"
-                        id="rAdBOX" title="rAdBOX"
-                        style="border:none;margin-left: auto;margin-right: auto;"
-                        aria-label="rAdBOX"></iframe>
+                        <div class="photo">
+                            <img src="https://ccn0.net/things/searchpluspremium/logo.png" alt="SearchPlusPREMIUM Logo" draggable="false">
+                        </div>
+                        <div class="words" title="its like a search engine but multiple at once yada yada">
+                            <a href="/things/searchpluspremium/">
+                                <p>SearchPlusPREMIUM</p>
+                            </a>
+                            <p>The only search engine that takes you exactly where you want to go</p>
+                        </div>
                     </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col">
+            <div class="section">
+                <h2 id="comingsoon">COMING SOON</h2>
+                <ul>
                     <li>
                         <iframe src="https://ccn0.net/rad/"
                         width="200px" height="200px"
@@ -64,31 +74,5 @@
             </div>
         </div>
     </div>
-    <script>
-        const soonContainer = document.getElementById('comingsoonitem');
-        const toBeSoon = new URLSearchParams(window.location.search).get("p");
-
-        switch (toBeSoon) {
-            case 'qogapp':
-                soonContainer.innerHTML = "QOG.app is coming soon!";
-                soonContainer.title = "cant wait to host actual bullshit";
-                break;
-            case 'sv':
-                soonContainer.innerHTML = "Screensavers are coming soon!";
-                soonContainer.title = "or not, depends how i feel";
-                break;
-            case 'aboutccn0':
-                soonContainer.innerHTML = "About page is coming soon!";
-                soonContainer.title = "you can see a shitty one on my blog";
-                break;
-            case 'faq':
-                soonContainer.innerHTML = "FAQ is coming soon!";
-                soonContainer.title = "this shit is ass";
-                break;
-            default:
-            soonContainer.innerHTML = "Something is coming soon!";
-            soonContainer.title = "we dont know what though";
-        };
-    </script>
 </body>
 </html>
