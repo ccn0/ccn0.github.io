@@ -87,13 +87,14 @@
     <script>
     const textarea = document.getElementById('textarea');
     const NP = {
-        version: "0.018",
+        version: "0.019",
         progName: "Programmable Notepad",
         X: textarea,
         filename: "text.txt",
         filetype: "text/plain",
         lineHistory: [""],
         fileHistory:[""],
+        maxFileHistory: 16,
         cursorPosition: [0,0],
         saved: false,
         askbeforeleaving: true,
@@ -102,35 +103,37 @@
             ups: 0,
             repWid: 0,
         },
-        smartIndent: false,
+        smartIndent: true,
         prefix: ">",
-        tab:"    ",
+        tab:"  ",
         nativeCommands: [
-            "help",
-            "?",
-            "eval",
-            "js",
-            "replace",
-            "dark",
-            "wrap",
-            "spellcheck",
-            "open",
-            "name",
-            "filename",
-            "filetype",
-            "color",
-            "background",
-            "font",
-            "fontsize",
-            "saveas",
-            "save",
-            "web",
-            "askbeforeleaving",
-            "repeat",
-            "clear",
-            "undoclear",
-            "default",
-            ">",
+"help",
+"?",
+"npinfo",
+"eval",
+"js",
+"replace",
+"dark",
+"wrap",
+"spellcheck",
+"smartindent",
+"open",
+"name",
+"filename",
+"filetype",
+"color",
+"background",
+"font",
+"fontsize",
+"saveas",
+"save",
+"web",
+"askbeforeleaving",
+"repeat",
+"clear",
+"undoclear",
+"default",
+">",
         ],
         updateXHeight: () => {
             const scrollTop = window.scrollY;
@@ -148,98 +151,106 @@
             fromModal: false,
         },
         help: {
-            "help": {
-                "args": "<command?>",
-                "text": "shows this or gives info on what a command does"
-            },
-            "?": {
-                "args": "<command?>",
-                "text": "shows this or gives info on what a command does, synonym of help"
-            },
-            "replace": {
-                "args": "<regex> <text> <[perline]>",
-                "text": "replaces text that matches regex, if perline specified, for each individual line"
-            },
-            "open": {
-                "text": "insert file at cursor"
-            },
-            "web": {
-                "args": "<url>",
-                "text": "fetch and insert a file at cursor"
-            },
-            "save": {
-                "text": "save current file as current file name"
-            },
-            "saveas": {
-                "args": "<filename>",
-                "text": "save current file as file name"
-            },
-            "filename": {
-                "args": "<filename>",
-                "text": "set the current file name"
-            },
-            "name": {
-                "args": "<filename>",
-                "text": "set the current file name, synonym of filename"
-            },
-            "filetype": {
-                "args": "<mime type>",
-                "text": "set the files mime type (you might wanna rename file without extension)"
-            },
-            "clear": {
-                "text": "erase the notepad of everything"
-            },
-            "undoclear": {
-                "text": "undoes clear to notepad right before it was cleared"
-            },
-            "eval": {
-                "args": "<code>",
-                "text": "run JavaScript and print to line with newline"
-            },
-            "js": {
-                "args": "<code>",
-                "text": "run JavaScript and print to line without newline"
-            },
-            "repeat": {
-                "args": "<amount?>",
-                "text": "get last line entered or go back amount"
-            },
-            ">": {
-                "args": "<amount?>",
-                "text": "get last line entered or go back amount, synonym of >repeat"
-            },
-            "spellcheck": {
-                "args": "[boolean?]",
-                "text": "toggle or set spellcheck (only works on some browsers)"
-            },
-            "askbeforeleaving": {
-                "args": "[boolean?]",
-                "text": "toggle or set asking before leaving"
-            },
-            "dark": {
-                "args": "[boolean?]",
-                "text": "toggle or set dark mode"
-            },
-            "wrap": {
-                "args": "[boolean?]",
-                "text": "toggle or set line wrap"
-            },
-            "color": {
-                "args": "<color?>",
-                "text": "specify or reset text color"
-            },
-            "background": {
-                "args": "<color?>",
-                "text": "specify or reset background color"
-            },
-            "font": {
-                "args": "<font-name?>",
-                "text": "specify or reset font"
-            },
-            "fontsize": {
-                "args": "<size?>",
-                "text": "change the fontsize of the page"
-            },
+"help": {
+    "args": "<command?>",
+    "text": "shows this or gets info on what a command does"
+},
+"npinfo": {
+    "args": "<property?>",
+    "text": "shows or gets information about the notepad"
+},
+"?": {
+    "args": "<command?>",
+    "text": "shows this or gets info on what a command does, synonym of help"
+},
+"replace": {
+    "args": "<regex> <text> <[perline]>",
+    "text": "replaces text that matches regex, if perline specified, for each individual line"
+},
+"open": {
+    "text": "insert file at cursor"
+},
+"web": {
+    "args": "<url>",
+    "text": "fetch and insert a file at cursor"
+},
+"save": {
+    "text": "save current file as current file name"
+},
+"saveas": {
+    "args": "<filename>",
+    "text": "save current file as file name"
+},
+"filename": {
+    "args": "<filename>",
+    "text": "set the current file name"
+},
+"name": {
+    "args": "<filename>",
+    "text": "set the current file name, synonym of filename"
+},
+"filetype": {
+    "args": "<mime type>",
+    "text": "set the files mime type (you might wanna rename file without extension)"
+},
+"clear": {
+    "text": "erase the notepad of everything"
+},
+"undoclear": {
+    "text": "undoes clear to notepad right before it was cleared"
+},
+"eval": {
+    "args": "<code>",
+    "text": "run JavaScript and print to line with newline"
+},
+"js": {
+    "args": "<code>",
+    "text": "run JavaScript and print to line without newline"
+},
+"repeat": {
+    "args": "<amount?>",
+    "text": "get last line entered or go back amount"
+},
+">": {
+    "args": "<amount?>",
+    "text": "get last line entered or go back amount, synonym of >repeat"
+},
+"spellcheck": {
+    "args": "[boolean?]",
+    "text": "toggle or set spellcheck (only works on some browsers)"
+},
+"smartindent": {
+    "args": "[boolean?]",
+    "text": "toggle or set new line appending indentation of previous line"
+},
+"askbeforeleaving": {
+    "args": "[boolean?]",
+    "text": "toggle or set asking before leaving"
+},
+"dark": {
+    "args": "[boolean?]",
+    "text": "toggle or set dark mode"
+},
+"wrap": {
+    "args": "[boolean?]",
+    "text": "toggle or set line wrap"
+},
+"color": {
+    "args": "<color?>",
+    "text": "specify or reset text color"
+},
+"background": {
+    "args": "<color?>",
+    "text": "specify or reset background color"
+},
+"font": {
+    "args": "<font-name?>",
+    "text": "specify or reset font"
+},
+"fontsize": {
+    "args": "<size?>",
+    "text": "change the fontsize of the page"
+},
         }
     };
     const Notepad = NP;
@@ -293,7 +304,7 @@
                 } catch (error) {
                     insertAtCursor(NP.cursorPosition[0], error);
                 };
-            }
+            };
         },
         replace:(inf)=>{
             let regex = new RegExp(inf.args[0], 'g');
@@ -303,11 +314,15 @@
             } else if (inf.args[2] == "perline") {
                 let buff = [];
                 getLines().forEach((line,i)=>{
-                    buff[i] = line.replace(regex, inf.args[1]);
+                    buff[i] = line.replace(regex, inf.args[1]
+                            .replace(/\\n/g,"\n")
+                            .replace(/\\s/g," "));
                 });
                 textarea.value = buff.join("\n");
             } else {
-                let comb = inf.args.slice(1).join(" ");
+                let comb = inf.args.slice(1).join(" ")
+                .replace(/\\n/g,"\n")
+                .replace(/\\s/g," ");
                 textarea.value = textarea.value.replace(regex, comb);
             };
         },
@@ -357,6 +372,16 @@
                     textarea.spellcheck = true;
                 };
             };
+        },
+        smartindent:(inf)=>{
+            replaceLine(NP.cursorPosition[0],'');
+            if (inf.argsExist) {
+                if (inf.args.join(" ") == "true") {
+                    NP.smartIndent = true;
+                } else {
+                    NP.smartIndent = false;
+                };
+            } else {NP.smartIndent = !NP.smartIndent};
         },
         open:(inf)=>{
             openFile(inf);
@@ -462,8 +487,59 @@
             NP.fileHistory.unshift(textarea.value);                
             textarea.value = "";
         },
-        undoclear:(inf)=>{
-            textarea.value = NP.fileHistory[0];
+        npinfo:(inf)=>{
+            if (!inf.fromModal) replaceLine(NP.cursorPosition[0],"");
+            let helpmessage = "";
+            function makeMsg(key,i) {
+                let displayed = "";
+                if ((["updateXHeight","X"]).includes(key)) return;
+                displayed = NP[key];
+                if ((["fileHistory","lineHistory","nativeCommands"]).includes(key)) displayed = `[Array] with ${NP[key].length} items`;
+                if ((["flags"]).includes(key)) displayed = JSON.stringify(NP[key], null, 2);
+                if ((["inf","help"]).includes(key)) displayed = `{Object} with ${Object.keys(NP[key]).length} keys`;
+                helpmessage += `${key}: ${displayed}`;
+                if (i != Object.keys(NP).length-1) helpmessage += "\n";
+            };
+            if (NP[inf.args]) {
+                if (inf.args && inf.args.join(" ").length > 0) {
+                    makeMsg(inf.args.join(" "),0);
+                } else {
+                    Object.keys(NP).forEach((key, i) => {
+                        makeMsg(key,i);
+                    });
+                };
+            } else {
+                Object.keys(NP).forEach((key, i) => {
+                    makeMsg(key,i);
+                });
+            };
+            if (typeof textarea.value === "undefined") {
+                textarea.value = helpmessage;
+            } else {
+                replaceLine(NP.cursorPosition[0],helpmessage);
+            };
+            moveCursorTo(NP.cursorPosition[0],0);
+        },
+        dl:(inf)=>{
+            fetch("")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`http error ${response.status}`);
+                    };
+                    return response.text();
+                })
+                .then(text => {
+                    const blob = new Blob([text], { type: "text/html" });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = "programmable.html";
+                    a.click();
+                    a.remove();
+                })
+                .catch(error => {
+                    insertAtCursor(error);
+                });
+            NP.updateXHeight();
         },
         default:(inf)=>{
             if (inf.fromModal) return;
@@ -480,6 +556,12 @@
         textarea.setAttribute('dark','');
     };
     NP.updateXHeight();
+
+    function updateFileHistory() {
+        NP.fileHistory.unshift(textarea.value);
+        if (NP.fileHistory.length > NP.maxFileHistory) NP.fileHistory.length = NP.maxFileHistory;
+        console.log(NP.fileHistory)
+    };
 
     function randomInteger(min = 0, max = 9) {
         const rmin = min;
@@ -553,7 +635,7 @@
         NP.X.focus();
     };
     function replaceLine(lineNumber, newContent) {
-        const ogLoc = NP.cursorPosition;
+        const ogLoc = [...NP.cursorPosition];
         const lines = getLines();
         if (lineNumber > 0 && lineNumber <= lines.length) {
             lines[lineNumber - 1] = newContent;
@@ -562,7 +644,7 @@
             console.error(`No line exists at this location: ${lineNumber}`);
             textarea.value += "\n";
         };
-        moveCursorTo(ogLoc[0], ogLoc[1]+1);
+        moveCursorTo(ogLoc[0], getLine(ogLoc[0]).length);
     };
     function deleteLine(lineNumber) {
         const lines = getLines();
@@ -679,7 +761,15 @@
     });
     textarea.addEventListener('keydown', (e) => {
         NP.cursorPosition = updateCursorPosition();
-
+        if (e.ctrlKey && e.key === 'z') {
+            if (NP.lastEvent == "newline" || NP.lastEvent.startsWith("command:")) {
+                e.preventDefault();
+                const ogLoc = [...NP.cursorPosition];
+                NP.X.value = NP.fileHistory[0];
+                moveCursorTo(ogLoc[0],ogLoc[1]);
+                NP.lastEvent = "undo";
+            };
+        };
         if (e.ctrlKey && e.key === 'o') {
             e.preventDefault();
             openFile()
@@ -695,9 +785,13 @@
                 onSubmit: saveToFile
             });
         };
-        if (e.key === 'Tab' && !e.shiftKey) {
+        if (e.key === 'Tab') {
             e.preventDefault();
-            insertAtCursor(NP.tab);
+            if (e.shiftKey) {
+                replaceLine(NP.cursorPosition[0], getLine(NP.cursorPosition[0]).replace(new RegExp('^' + NP.tab.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), ''));
+            } else {
+                insertAtCursor(NP.tab);
+            };
         };
         if (e.ctrlKey && e.key === 'd') {
             e.preventDefault();
@@ -773,6 +867,7 @@
         };
 
         if (e.key === "Enter") {
+            updateFileHistory();
             const currentLine = getLineAtCursor();
             if (currentLine !== "" && currentLine !== "\n" && NP.lineHistory[0] !== currentLine) {
                 NP.lineHistory.unshift(currentLine);
@@ -796,6 +891,26 @@
 
                 (COMMANDS[command.slice(NP.prefix.length)] ?? COMMANDS.default)(NP.inf);
                 NP.updateXHeight();
+                return;
+            };
+            if (NP.smartIndent) {
+                e.preventDefault();
+                const before = textarea.value.substring(0, textarea.selectionStart);
+                const after = textarea.value.substring(textarea.selectionEnd);
+                const lm = cursorLine.match(/^[\t ]*/);
+                const leading = lm ? lm[0] : "";
+                let indent = leading;
+                if (NP.tab && NP.tab.length > 0) {
+                    const repeated = new RegExp(`^(?:${NP.tab.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})+`);
+                    const repMatch = leading.match(repeated);
+                    if (repMatch) indent = repMatch[0];
+                };
+                const insertText = "\n" + indent;
+                textarea.value = before + insertText + after;
+                const newPos = before.length + insertText.length;
+                textarea.selectionStart = textarea.selectionEnd = newPos;
+                NP.updateXHeight();
+                NP.cursorPosition = updateCursorPosition();
             };
         };
     });
