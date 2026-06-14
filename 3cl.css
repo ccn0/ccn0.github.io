@@ -1,7 +1,7 @@
 /*
     3CL / 3 COLUMN LAYOUT / made for CCN0.net
     MADE BY CCN0 / https://github.com/ccn0
-    v1B08
+    v1B09
 */
 
 :root {
@@ -55,6 +55,15 @@ img {
     }
 }
 
+.col:has(.content) {
+    flex: 2;
+}
+
+.content {
+    padding: 10px 16px;
+    overflow: auto;
+}
+
 cr {
     color: var(--R);
 }
@@ -99,6 +108,25 @@ hgroup {
     }
     .topnav {
         cursor: default;
+    }
+}
+
+nav.breadcrumbs {
+    max-width: 100%;
+    padding: 16px;
+    border-bottom: var(--dashedborder);
+    ol {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+    }
+    li::after {
+        display: inline-block;
+        font-family: monospace;
+        margin: 0 0.75rem;
+        content: " / ";
     }
 }
 

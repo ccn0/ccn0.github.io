@@ -87,7 +87,7 @@
     <script>
     const textarea = document.getElementById('textarea');
     const NP = {
-        version: "0.019",
+        version: "0.020",
         progName: "Programmable Notepad",
         X: textarea,
         filename: "text.txt",
@@ -152,16 +152,13 @@
         },
         help: {
 "help": {
+    "aliases":"?",
     "args": "<command?>",
     "text": "shows this or gets info on what a command does"
 },
 "npinfo": {
     "args": "<property?>",
     "text": "shows or gets information about the notepad"
-},
-"?": {
-    "args": "<command?>",
-    "text": "shows this or gets info on what a command does, synonym of help"
 },
 "replace": {
     "args": "<regex> <text> <[perline]>",
@@ -228,14 +225,17 @@
     "text": "toggle or set asking before leaving"
 },
 "dark": {
+    "aliases":"dk",
     "args": "[boolean?]",
     "text": "toggle or set dark mode"
 },
 "wrap": {
+    "aliases":"wp",
     "args": "[boolean?]",
     "text": "toggle or set line wrap"
 },
 "color": {
+    "aliases":"cl",
     "args": "<color?>",
     "text": "specify or reset text color"
 },
@@ -250,6 +250,26 @@
 "fontsize": {
     "args": "<size?>",
     "text": "change the fontsize of the page"
+},
+"copy":{
+    "args":"<all|line-num>",
+    "text":"copy text at a specific line number or whole notepad"
+},
+"cut":{
+    "args":"<all|line-num>",
+    "text":"cut text at a specific line number or whole notepad"
+},
+"rep":{
+    "aliases":"rp",
+    "text":"copies the above line down"
+},
+"len":{
+    "args":"<string>",
+    "text":"prints the number of characters in a string"
+},
+"wordcount":{
+    "aliases":"wc",
+    "text":"prints the number of words in the notepad"
 },
         }
     };
@@ -541,6 +561,34 @@
                 });
             NP.updateXHeight();
         },
+        copy:(inf)=>{
+            if (!inf.fromModal) deleteLine(NP.cursorPosition[0]);
+            if (inf.args[0] == "all") {
+                navigator.clipboard.writeText(NP.X.value);
+            } else {
+                navigator.clipboard.writeText(getLine(parseInt(inf.args[0])));
+            };
+        },
+        cut:(inf)=>{
+            if (!inf.fromModal) deleteLine(NP.cursorPosition[0]);
+                NP.fileHistory.unshift(textarea.value);
+            if (inf.args[0] == "all") {
+                navigator.clipboard.writeText(NP.X.value);
+                textarea.value = "";
+            } else {
+                navigator.clipboard.writeText(getLine(parseInt(inf.args[0])));
+                deleteLine(parseInt(inf.args[0]))
+            };
+        },
+        rep:(inf)=>{
+            replaceLine(NP.cursorPosition[0], getLine(NP.cursorPosition[0]-1));
+        },
+        len:(inf)=>{
+            replaceLine(NP.cursorPosition[0], String(inf.args.join(" ")).length);
+        },
+        wordcount:(inf)=>{
+            replaceLine(NP.cursorPosition[0], NP.X.value.split(" ").length);
+        },
         default:(inf)=>{
             if (inf.fromModal) return;
             insertAtCursor("\n");
@@ -550,6 +598,11 @@
     COMMANDS[">"] = COMMANDS.repeat;
     COMMANDS["name"] = COMMANDS.filename;
     COMMANDS["?"] = COMMANDS.help;
+    COMMANDS["dk"] = COMMANDS.dark;
+    COMMANDS["wp"] = COMMANDS.wrap;
+    COMMANDS["cl"] = COMMANDS.color;
+    COMMANDS["wc"] = COMMANDS.wordcount;
+    COMMANDS["rp"] = COMMANDS.rep;
 
     const params = new URLSearchParams(window.location.search);
     if (params.has('dark')) {
