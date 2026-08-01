@@ -41,6 +41,9 @@
         text-align: center;
         border-radius: var(--brdrrds);
     }
+    .mmm {
+        background-color: var(--superdark);
+    }
     a {
         color: var(--cyan);
         &:hover,&:focus-within {
@@ -60,6 +63,8 @@ button {
             padding: 4px;
             color: #fff;
             font-weight: bold;
+            font-family: monospace;
+            min-width: 33%;
             background-color: #0051ff;
             cursor: pointer;
             border: none;
@@ -73,10 +78,20 @@ button {
                 background-color: #0013c0;
                 transform: translateY(2px);
             }}
+            
+@media (max-width: 500px) {
+    button {
+        min-width: 100%;
+    }
+    body {
+        align-content: center;
+        height: 100vh;
+    }
+}
     </style>
 </head>
 <body>
-    <div>
+    <div class="mmm">
         <a href="https://blog.ccn0.net/2026/08/searchpluspremium-is-splitting-from.html"><h2>SearchPlusPremium is splitting from CCN0&nbsp;Things</h2></a>
     </div>
     <div>
@@ -88,7 +103,7 @@ button {
         </p>
     </div>
     <div>
-        <button onclick="yeahOk()">Continue to Search</button>
+        <button onclick="yeahOk()">TAKE ME (USING THE NEW SPP)</button>
     </div>
     <script>
         function yeahOk() {
