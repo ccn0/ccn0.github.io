@@ -1,5 +1,5 @@
 /*
-    3CL / 3 COLUMN LAYOUT / made for CCN0.net
+    CCN0 3CL / 3 COLUMN LAYOUT / made for CCN0.net
     MADE BY CCN0 / https://github.com/ccn0
     v1B09
 */
@@ -215,6 +215,42 @@ nav.breadcrumbs {
     }
 }
 
+.game {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.gametxt>p {
+    padding: 10px 16px;
+    text-align: left;
+}
+
+.gametools {
+	display: flex;
+	height: 32px;
+    justify-content: center;
+    gap: 8px;
+    button {
+        background: #000;
+        color: #fff;
+        border: 2px solid #fff;
+        font-family: monospace;
+        cursor: pointer;
+        &:hover {
+            border: 2px solid #ff0;
+        }
+        &:active {
+            border: 2px solid #f0f;
+        }
+    }
+}
+
+iframe {
+    flex: 1;
+    height: auto;
+}
+
 @media (max-width: 480px) {
     .main {
         flex-direction: column;
@@ -226,5 +262,8 @@ nav.breadcrumbs {
     }
     .section {
         border-bottom: var(--sectionborder);
+    }
+    .game {
+        height: 100vh;
     }
 }
