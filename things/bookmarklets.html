@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Bookmarklets My bookmarklet collection, of my creations and other oddities I've found. https://ccn0.net/things/bookmarklets -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCN0 / Bookmarklets</title>
+    <link rel="stylesheet" href="/3cl.css">
+    <meta name="ccn0:pagetype" content="3cl-v1,big,bookmarklets">
+    <link rel="icon" type="image/png" href="https://ccn0.net/img/ccn0logo.png">
+    <link rel="canonical" href="https://ccn0.net/things/bookmarklets">
+    <meta name="og:title" content="CCN0 / Bookmarklets">
+    <meta property="og:description" content="My bookmarklet collection, of my creations and other oddities I've found.">
+    <meta property="og:url" content="https://ccn0.net/things/bookmarklets">
+    <meta property="og:type" content="website">
+    <meta name="author" content="CCN0">
+    <meta name="description" content="My bookmarklet collection, of my creations and other oddities I've found.">
+    <meta name="theme-color" content="#ff0000" data-react-helmet="true">
+</head>
+<body>
+    <div class="main" id="top">
+        <div class="col">
+            <hgroup>
+                <h1 title="pronounced see-see-no">Bookmarklets</h1>
+                <p>My bookmarklet collection, of my creations and other oddities I've found.</p>
+                <div class="topnav">
+                    <a href="/">Home</a> |
+                    <a href="/things">Things</a> |
+                    <a href="/games/">Games</a> |
+                    <a href="https://blog.ccn0.net">Blog</a>
+                </div>
+            </hgroup>
+        </div>
+        <div class="col">
+            <div class="content">
+                <h2>Original List</h2>
+                <ul>
+                    <li title="education - Google Search">
+                        <a href='javascript:(function(){var title=prompt("New title?");document.title=title})();'>
+                            <h3>Rename Tab</h3>
+                        </a>
+                        <p>Change the name of the current tab.</p>
+                    </li>
+                    <li title="top ten ways to crash a chromebook">
+                        <a href='javascript:var num=prompt("Enter #%20of%20times%20you%20want%20this%20site%20to%20appear%20in%20your%20history%22);done=false;x=window.location.href;for%20(var%20i=1;%20i%3C=num;%20i++){history.pushState(0,%200,%20i==num?x:i.toString());if(i==num){done=true}}if(done===true){alert(%22History%20Flooding%20Successful!\n%20%22+window.location.href+%22%20\nNow%20Appears%20In%20Your%20History%20%22+num+(num==1?%22%20time.%22:%22%20Times.%20\nYoinked%20by%202emk7%22))}'>
+                            <h3>History Flooder</h3>
+                        </a>
+                        <p>Flood your history with the current tab. (up to 1000) (might freeze computer)</p>
+                    </li>
+                    <li title="it almost technically works, also fuck the TEA">
+                        <a href="javascript:(function(){    /* Ad-B-Gone: The simple bookmarklet that removes ads from web pages! Made by 3kh0 and errors and bugs fixed by 2EMK7. - Dont forget to replace your double quotation marks with &quot;! */    var selectors = [    /* By ID: */    '#sidebar-wrap',%20'#advert',%20'#xrail',%20'#middle-article-advert-container',%20%20%20%20'#sponsored-recommendations',%20'#around-the-web',%20'#sponsored-recommendations',%20%20%20%20'#taboola-content',%20'#taboola-below-taboola-native-thumbnails',%20'#inarticle_wrapper_div',%20%20%20%20'#rc-row-container',%20'#ads',%20'#at-share-dock',%20'#at4-share',%20'#at4-follow',%20'#right-ads-rail',%20%20%20%20'div#ad-interstitial',%20'div#advert-article',%20'div#ac-lre-player-ph',%20%20%20%20/*%20By%20Class:%20*/%20%20%20%20'.ad',%20'.avert',%20'.avert__wrapper',%20'.middle-banner-ad',%20'.advertisement',%20%20%20%20'.GoogleActiveViewClass',%20'.advert',%20'.cns-ads-stage',%20'.teads-inread',%20'.ad-banner',%20%20%20%20'.ad-anchored',%20'.js_shelf_ads',%20'.ad-slot',%20'.antenna',%20'.xrail-content',%20%20%20%20'.advertisement__leaderboard',%20'.ad-leaderboard',%20'.trc_rbox_outer',%20'.ks-recommended',%20%20%20%20'.article-da',%20'div.sponsored-stories-component',%20'div.addthis-smartlayers',%20%20%20%20'div.article-adsponsor',%20'div.signin-prompt',%20'div.article-bumper',%20'div.video-placeholder',%20%20%20%20'div.top-ad-container',%20'div.header-ad',%20'div.ad-unit',%20'div.demo-block',%20'div.OUTBRAIN',%20%20%20%20'div.ob-widget',%20'div.nwsrm-wrapper',%20'div.announcementBar',%20'div.partner-resources-block',%20%20%20%20'div.arrow-down',%20'div.m-ad',%20'div.story-interrupt',%20'div.taboola-recommended',%20%20%20%20'div.ad-cluster-container',%20'div.ctx-sidebar',%20'div.incognito-modal',%20'.OUTBRAIN',%20'.subscribe-button',%20%20%20%20'.ads9',%20'.leaderboards',%20'.GoogleActiveViewElement',%20'.mpu-container',%20'.ad-300x600',%20'.tf-ad-block',%20%20%20%20'.sidebar-ads-holder-top',%20'.ads-one',%20'.FullPageModal__scroller',%20%20%20%20'.content-ads-holder',%20'.widget-area',%20'.social-buttons',%20'.ac-player-ph',%20%20%20%20/*%20Other:%20*/%20%20%20%20'script',%20'iframe',%20'video',%20'aside#sponsored-recommendations',%20'aside[role=&quot;banner&quot;]',%20'aside',%20%20%20%20'amp-ad',%20'span[id^=ad_is_]',%20'div[class*=&quot;indianapolis-optin&quot;]',%20'div[id^=google_ads_iframe]',%20%20%20%20'div[data-google-query-id]',%20'section[data-response]',%20'ins.adsbygoogle',%20'div[data-google-query-id]',%20%20%20%20'div[data-test-id=&quot;fullPageSignupModal&quot;]',%20'div[data-test-id=&quot;giftWrap&quot;]'%20];%20%20%20%20for(let%20i%20in%20selectors)%20{%20%20%20%20%20%20%20%20let%20nodesList%20=%20document.querySelectorAll(selectors[i]);%20%20%20%20%20%20%20%20for(let%20i%20=%200;%20i%20&lt;%20nodesList.length;%20i++)%20{%20%20%20%20%20%20%20%20%20%20%20%20let%20el%20=%20nodesList[i];%20%20%20%20%20%20%20%20%20%20%20%20if(el%20&amp;&amp;%20el.parentNode)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20el.parentNode.removeChild(el);%20%20%20%20%20%20%20%20}%20%20%20%20}})();">
+                            <h3>Ad-B-Gone</h3>
+                        </a>
+                        <p>The simple bookmarklet that removes ads from web pages!</p>
+                    </li>
+                    <li title="are you sure you want to leave? are you really?">
+                        <a href='javascript:window.onbeforeunload = function() { return "Do you want to close"; }; alert("Tab Secured");'>
+                            <h3>Artificial Pin</h3>
+                        </a>
+                        <p>Asks you before closing or refreshing the tab.</p>
+                    </li>
+                    <li title="glasses glasses">
+                        <h3><a href="javascript: (function () { document.body.style.filter = 'blur(5px)'; })();">Blur</a> and <a href="javascript:(function () {document.body.style.filter = 'none';})();">Unblur</a></h3>
+                        <p>Blur the current page. Likewise for the other.</p>
+                    </li>
+                    <li title="this shit is ass">
+                        <a href="javascript:(function()%7B(function()%20%7Bvar%20x%20%3D%20document.createElement(%22script%22)%3Bx.src%20%3D%20%22https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FSnowLord7%2Fdevconsole%40master%2Fmain.js%22%3Bx.onload%20%3D%20console.log('wowzies')%3Bdocument.head.appendChild(x)%3B%7D)()%7D)()">
+                            <h3>Snowlord7 Developer Console</h3>
+                        </a>
+                        <p>I modified it so that it doesn't alert you when you start it up.</p>
+                    </li>
+                    <li title="went triple platinum on ontrack">
+                        <a href="javascript:(function () { var script = document.createElement('script'); script.src='https://cdn.jsdelivr.net/npm/eruda'; document.body.append(script); script.onload = function () { eruda.init(); } })();">
+                            <h3>Eruda Dev Console</h3>
+                        </a>
+                        <p>Dev console that works on mobile</p>
+                    </li>
+                </ul>
+                <h2>Graphics</h2>
+                <ul>
+                    <li title="yeah its the blur thing">
+                        <a href='URL'>
+                            <h3><a href="javascript: (function () {  document.body.style.filter = 'saturate(100)'; })();">Saturation 10000%</a> and <a href="javascript: (function () { document.body.style.filter = 'saturate(1)'; })();">Saturation 100%</a></h3>
+                        </a>
+                        <p>boost saturation</p>
+                    </li>
+                </ul>
+                <h2>Development</h2>
+                <ul>
+                    <li title="i think this was vibecoded">
+                        <a href="javascript:/*search entire dom for string*/(function() {     function searchDOMForString(searchString) {     let matchingElements = [];     function checkElement(element) {         if (element.textContent.includes(searchString)) {             matchingElements.push(element);         };          for (let attr of element.attributes) {             if (attr.value.includes(searchString)) {                 matchingElements.push(element);                 break;             };         };     };      function traverseDOM(node) {         if (node.nodeType === 1) {             checkElement(node);         };          for (let child of node.children) {             traverseDOM(child);         };     };      traverseDOM(document.body);      return matchingElements; }; let searchString = prompt('What string would you like to search for?'); let results = searchDOMForString(searchString); console.log(results); })();">
+                            <h3>DOMsearch</h3>
+                        </a>
+                        <p>Search for a string in the DOM and logs in the console how many elements include it and how many times it matches</p>
+                    </li>
+                </ul>
+                <h2>Funny</h2>
+                <ul>
+                    <li title="some bullshit idea i had one day">
+                        <a id="mitosis">
+                            <h3>Mitosis</h3>
+                        </a>
+                        <script>
+                            document.getElementById("mitosis").href = `javascript: (function() { document.body.remove(); const dual = document.createElement('body'); dual.style.margin = "0"; dual.innerHTML = \` <div style="display:flex;max-width:100%;flex-direction:row;">      <div style="max-width:50vw;flex:1;">         <iframe src="${location.href}" style="width:calc(100% - 0px);height:100vh;border:none;"></iframe>     </div>     <div style="max-width:50vw;flex:1;">         <iframe src="${location.href}" style="width:calc(100% - 0px);height:100vh;border:none;"></iframe>     </div> </div>\`; document.head.parentElement.appendChild(dual); })();`;
+                        </script>
+                        <p>Formerly dualtube, creates 2 iframes to show the pages content twice. Click the bookmark again to go to the page on the last active frame.</p>
+                    </li>
+                    <li title="also some bullshit idea i had one day">
+                        <a href="javascript:(function() {     'use strict';          var overlayFrame = document.createElement('iframe');     overlayFrame.style.position = 'fixed';     overlayFrame.style.top = 0;     overlayFrame.style.left = 0;     overlayFrame.style.width = '100%';     overlayFrame.style.height = '100vh';     overlayFrame.style.opacity = '0.3';     var url = prompt('Enter URL');     if (url) {         overlayFrame.src = url;         document.body.appendChild(overlayFrame);     } })();">
+                            <h3>overlayframe</h3>
+                        </a>
+                        <p>Opens a translucent iframe over the entire page with any URL that supports being an iframe</p>
+                    </li>
+                    <li title="back when the best exploit ever was found (me, i found it)">
+                        <a href="javascript:(function () {var js = document.createElement('script');js.src='https://ccplayground.qog.app/lib/bunch.js';document.body.appendChild(js);})();">
+                            <h3>CCPlayground</h3>
+                        </a>
+                        <p>CCPlayground is a fun thing to place windows wherever you want!</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

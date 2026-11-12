@@ -32,8 +32,6 @@
         background-color: #000;
         color: #fff;
         font-family: Arial, Helvetica, sans-serif;
-        align-content: center;
-        height: 100vh;
     }
     div {
         background-color: var(--muted);
@@ -60,7 +58,7 @@
         color: #fff;
         user-select: all;
     }
-button,.buttonlike {
+button {
             transition: all 0.2s;
             padding: 4px;
             color: #fff;
@@ -91,10 +89,12 @@ button,.buttonlike {
     }
 }
     </style>
+    <meta name="robots" content="noindex">
 </head>
 <body>
-    <div>
-        <a href="https://blog.ccn0.net/2026/08/searchpluspremium-is-splitting-from.html"><h2>SearchPlusPremium is splitting from CCN0&nbsp;Things</h2></a>
+    <div class="mmm">
+        <h2>SearchPlusPremium has been split from CCN0&nbsp;Things</h2>
+        <a href="https://blog.ccn0.net/2026/08/searchpluspremium-is-splitting-from.html">Read on the CCN0 Blog</a>
     </div>
     <div>
         <p>
@@ -103,7 +103,14 @@ button,.buttonlike {
         <p>
             You must update your ! engine manually to use <a href="https://ccn0.net/searchpluspremium/">https://ccn0.net/searchpluspremium/</a> while I work on a solution.
         </p>
-        <a href="https://ccn0.net/searchpluspremium/">GO TO THE NEW SEARCHPLUSPREMIUM</a>
     </div>
+    <div>
+        <button onclick="yeahOk()">TAKE ME TO THE NEW SPP</button>
+    </div>
+    <script>
+        function yeahOk() {
+            location.href = `https://ccn0.net/searchpluspremium/`;
+        };
+    </script>
 </body>
 </html>
